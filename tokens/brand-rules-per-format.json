@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "3.2.1",
+    "version": "3.2.2",
     "generated": "2026-04-25",
     "description": "Format-specific design rules. Every value exact. Pair with brand-tokens.json. Convention: mm partout (SSOT). Inches noted in comments only when pptxgenjs requires it.",
     "changes_from_3.1.0": [
