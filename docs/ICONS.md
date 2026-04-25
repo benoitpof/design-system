@@ -1,7 +1,7 @@
 # ICONS.md — POF Curated Icon Set (Tabler Icons)
 
 **Library:** Tabler Icons — MIT License — https://tabler.io/icons
-**CDN base:** `https://unpkg.com/@tabler/icons/icons/[name].svg`
+**CDN base:** `https://unpkg.com/@tabler/icons/icons/outline/[name].svg`
 **In pptxgenjs:** rasterize via `sharp` + `react-icons` or fetch SVG from CDN, convert to base64 PNG at 256px
 **Default color on light bg:** `#1C1F3B` navy · **On dark bg:** `#FFFFFF` white
 **Never use:** coral `#E8546C` for icons — emphasis color only
@@ -11,6 +11,24 @@
 - Inline header icon: 0.4"×0.4"
 - Full-width hero: 1.0"×1.0"
 - Process step: 0.5"×0.5"
+
+---
+
+## ♻️ ENVIRONNEMENT & DURABILITÉ — Icônes prioritaires recyclage/écologie
+
+> Fichiers SVG disponibles localement dans `assets/icons/ecology/`
+> Usage direct sans CDN : `../assets/icons/ecology/[name].svg`
+
+| Fichier | Local | Usage principal | Contexte interdit |
+|---|:---:|---|---|
+| `recycle.svg` | ✅ | Boucle plastique, circularité, slide 1.1 | — |
+| `leaf.svg` | ✅ | Durabilité, impact environnemental | Pas pour section finance |
+| `solar-panel.svg` | ✅ | Énergie solaire, solar-ready factories | — |
+| `droplet.svg` | ✅ | Closed-loop water, eau recyclée | — |
+| `planet.svg` | ✅ | Planète, pollution globale, planetary boundary | Pas pour métriques financières |
+| `fish.svg` | ✅ | Océan, plastic leakage, contexte marin | — |
+| `bolt.svg` | ✅ | Énergie, efficacité opérationnelle | — |
+| `flame.svg` | ✅ | Incinération, burning déchets, contexte Acte 1 | **Jamais** dans section Solution ou Impact |
 
 ---
 
@@ -46,7 +64,7 @@
 | `trending-up.svg`        | Scalabilité, croissance réseau                                 | -                                          |
 | `clipboard-list.svg`     | Reporting ESG, audit, due diligence                            | -                                          |
 | `users.svg`              | Emplois créés, équipe, 10 000 jobs                             | -                                          |
-| **ENVIRONNEMENT & DURABILITÉ**                                                                                                |||
+| **ENVIRONNEMENT & DURABILITÉ** *(voir section dédiée en tête de doc)*                                                        |||
 | `recycle.svg`            | Boucle plastique, circularité, slide 1.1                       | -                                          |
 | `leaf.svg`               | Durabilité, impact environnemental                             | Pas pour section finance                   |
 | `solar-panel.svg`        | Énergie solaire, solar-ready factories                         | -                                          |
