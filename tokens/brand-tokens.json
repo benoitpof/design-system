@@ -1,0 +1,460 @@
+{
+  "_meta": {
+    "version": "3.2.1",
+    "generated": "2026-04-25",
+    "schema": "design-tokens-v3",
+    "source_of_truth": "GitHub repo benoitpof/design-system tokens/brand-tokens.json",
+    "mirror": "Notion database 'Brand Tokens' (read-only, synced via GAS)",
+    "previous_version": "3.1.0",
+    "changes": "See CHANGELOG-v3.2.1.md. Aligned with Template POF XML (LAYOUT_WIDE 16:9, 508x285.75mm). Coordinate convention unified to mm.",
+    "wcag_compliance": {
+      "standard": "WCAG 2.1 AA",
+      "normal_text_min": "4.5:1",
+      "large_text_min": "3:1 (>18pt or >14pt bold)",
+      "flagged_combinations": [
+        {"pair": "white on teal #80C7C2", "ratio": "1.64:1", "status": "FAIL_ALL", "rule": "NEVER. Use navy text on teal."},
+        {"pair": "coral #E8546C on white", "ratio": "3.55:1", "status": "FAIL_NORMAL_PASS_LARGE", "rule": "Large text (>18pt) only."},
+        {"pair": "light_steel #5F7D95 on white", "ratio": "4.33:1", "status": "FAIL_NORMAL_PASS_LARGE", "rule": "Non-textual UI only. For hover states, use teal_dark #2BA595."},
+        {"pair": "white on academy_blue #8ED1E8", "ratio": "1.69:1", "status": "FAIL_ALL", "rule": "NEVER. Use navy text on Academy blue."}
+      ]
+    }
+  },
+
+  "brand": {
+    "name": "Plastic Odyssey Factories",
+    "mission": "Deploy plastic recycling as a containerized franchise in developing countries.",
+    "audience_primary": "Institutional partners, industrial investors, government procurement officers.",
+    "audience_secondary": "NGO field teams, recycling entrepreneurs, press.",
+    "personality": ["technical", "credible", "impact-driven", "industrial", "professional"],
+    "tone": ["direct", "evidence-based", "operational", "warm but serious"],
+    "avoid": ["NGO softness", "greenwashing cliches", "corporate jargon", "AI-generated feel"],
+    "visual_dna": "Engineering documentation meets impact report. Wave waveform as signature element. Navy + teal as institutional duo. Coral as surgical emphasis.",
+    "entities": ["factories", "academy", "sunu_po"]
+  },
+
+  "colors": {
+    "primary": {
+      "navy": {"hex": "#1C1F3B", "rgb": [29, 30, 58], "cmyk": [83, 81, 37, 34], "pantone": "282 C",
+        "usage": "Headings, header bars, slide backgrounds, body text on light (slides), primary data series, nav, footer."
+      },
+      "teal": {"hex": "#80C7C2", "rgb": [117, 219, 205], "cmyk": [47, 0, 24, 0], "pantone": "3242 C",
+        "usage": "Accent bars, logo waves (Factories), highlight boxes, buttons, pill badges. Second brand color.",
+        "_wcag": "NEVER white text on teal. Navy only."
+      }
+    },
+    "accent": {
+      "coral": {"hex": "#E8546C", "rgb": [232, 84, 108], "cmyk": [0, 75, 40, 0], "pantone": "185 C",
+        "usage": "Emphasis keywords ONLY. Max 1-2 per page/slide. ALLOWED in highlight_badge (max 8x30mm). FORBIDDEN as bg fill of text blocks. Large text only on white.",
+        "_verification": "Hex estimated from PDF."
+      },
+      "steel_blue_gray": {"hex": "#435D74", "rgb": [67, 93, 116], "cmyk": [60, 35, 18, 25],
+        "usage": "Chart secondary series, shape fills on dark layouts, subtitle text."
+      },
+      "light_steel": {"hex": "#5F7D95", "rgb": [95, 125, 149], "cmyk": [50, 25, 12, 15],
+        "usage": "Non-textual UI only (dividers, muted fills, chart 3rd series alt). Large text only on white (4.33:1)."
+      },
+      "teal_dark": {"hex": "#2BA595", "rgb": [43, 165, 149],
+        "usage": "Hover state on teal, gradient start for teal_accent gradient, emphasis text on light."
+      },
+      "teal_deep": {"hex": "#09414A", "rgb": [9, 65, 74],
+        "usage": "Strong-emphasis text on teal backgrounds (subtitle color in teal scheme)."
+      }
+    },
+    "neutral": {
+      "white": {"hex": "#FFFFFF", "cmyk": [0, 0, 0, 0], "usage": "Text on dark bg, default page/slide bg."},
+      "body_text": {"hex": "#3C3C3C", "cmyk": [0, 0, 0, 80],
+        "usage": "Body text in long-form (DOCX, PDF). Softer than navy for extended reading."
+      },
+      "neutral_light": {"hex": "#F0F0F0", "cmyk": [0, 0, 0, 6],
+        "usage": "Section bg, card surface, table alternating rows (odd)."
+      },
+      "neutral_mid": {"hex": "#EAEBED", "cmyk": [0, 0, 0, 8],
+        "usage": "Data-heavy slide bg, dividers, form borders."
+      },
+      "gray_400": {"hex": "#CED4DA", "usage": "Disabled state borders."},
+      "gray_600": {"hex": "#6C757D", "usage": "Secondary/muted text, captions, footnotes."},
+      "near_black": {"hex": "#090911", "usage": "Link color on teal backgrounds (high contrast)."}
+    },
+    "semantic": {
+      "success": {"hex": "#28A745", "cmyk": [70, 0, 75, 0], "usage": "Validation checkmarks, positive indicators."},
+      "warning": {"hex": "#E5A100", "usage": "Caution badges, attention states."},
+      "error": {"hex": "#DC3545", "cmyk": [0, 85, 70, 0], "usage": "Error states, destructive actions."},
+      "info": {"hex": "#0D6EFD", "usage": "Informational badges, neutral-emphasis callouts."}
+    },
+    "gradients": {
+      "navy_overlay": {
+        "value": "linear-gradient(135deg, #1C1F3B 0%, rgba(29,30,58,0.58) 100%)",
+        "usage": "Photo overlay on cover/divider/hero slides. POF visual signature."
+      },
+      "teal_accent": {
+        "value": "linear-gradient(345deg, #2BA595 0%, #80C7C2 100%)",
+        "usage": "Teal gradient for accent bars and product sheet header strip."
+      }
+    },
+    "chart_palette": {
+      "rules": "Strict 3-shade default. No gridlines. No chart borders. No ad-hoc colors. If >3 series, collapse tail into 'Other' or use extended palette.",
+      "series_1": {"hex": "#1C1F3B", "usage": "Primary. Always navy."},
+      "series_2": {"hex": "#435D74", "usage": "Secondary. Steel blue-gray."},
+      "series_3": {"hex": "#CFD9E0", "usage": "Tertiary. Light steel wash."},
+      "extended_series_4": {"hex": "#80C7C2", "usage": "Only if 4+ series required. Teal."},
+      "extended_series_5": {"hex": "#E8546C", "usage": "Only if 5+ series required. Coral. Rare."},
+      "extended_series_6": {"hex": "#5F7D95", "usage": "Only if 6+ series. Light steel. Last resort."}
+    },
+    "_removed_in_v3.1.0": {
+      "gray_300_E9ECEF": "Identical perceptually to neutral_mid. Removed.",
+      "teal_gradient_start_319B8C": "Merged with teal_dark.",
+      "teal_variants_category": "Restructured into accent sub-palette."
+    }
+  },
+
+  "typography": {
+    "families": {
+      "heading": {
+        "value": "Poppins",
+        "fallback": "Arial, Helvetica, sans-serif",
+        "weights": [400, 500, 600, 700],
+        "usage": "All headings, titles, button text, navigation, stat numbers, UI labels."
+      },
+      "body": {
+        "value": "Raleway",
+        "fallback": "Arial, Helvetica, sans-serif",
+        "weights": [300, 400],
+        "usage": "Body text, paragraphs, list items, table cells, captions, footnotes."
+      }
+    },
+    "weights": {
+      "light": 300,
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    "scale": {
+      "xs": {"px": 10, "pt": 7.5, "usage": "Footnotes, legal, micro-labels."},
+      "sm": {"px": 12, "pt": 9, "usage": "Captions, chart axis labels, slide footer."},
+      "md": {"px": 16, "pt": 12, "usage": "Default body screen (web, slides). body_screen."},
+      "lg": {"px": 18, "pt": 13.5, "usage": "Large body on slides, H4 in docs."},
+      "xl": {"px": 24, "pt": 18, "usage": "H3 headings, slide header title."},
+      "2xl": {"px": 28, "pt": 21, "usage": "H2 headings, slide content H1."},
+      "3xl": {"px": 36, "pt": 27, "usage": "H1 headings in docs, cover slide title."},
+      "4xl": {"px": 48, "pt": 36, "usage": "Hero titles, stat callout numbers, display."}
+    },
+    "body_variants": {
+      "body_screen": {"size_pt": 12, "size_px": 16, "line_height": 1.5, "usage": "Web + slides."},
+      "body_print": {"size_pt": 11, "line_height": 1.5, "usage": "DOCX + PDF. Print minimum respected."}
+    },
+    "line_heights": {
+      "tight": 1.2,
+      "normal": 1.4,
+      "relaxed": 1.5,
+      "loose": 1.75
+    },
+    "letter_spacing": {
+      "tight": "-0.5px",
+      "normal": "0px",
+      "wide": "1px",
+      "extra_wide": "2px"
+    },
+    "rules": {
+      "max_families": 2,
+      "all_caps": "Titles only, max 2 lines, always letter-spacing wide (1px).",
+      "no_serif": "Full sans-serif stack. No serif anywhere.",
+      "max_heading_levels": 3
+    }
+  },
+
+  "spacing": {
+    "_grid": "8px base. All values multiples of 4px.",
+    "4":  {"px": 4,  "mm": 1,  "usage": "Micro: icon-to-label gap."},
+    "8":  {"px": 8,  "mm": 2,  "usage": "Tight: form padding, compact gap."},
+    "12": {"px": 12, "mm": 3,  "usage": "Small: button vertical padding."},
+    "16": {"px": 16, "mm": 4,  "usage": "Base: paragraph spacing, card padding."},
+    "24": {"px": 24, "mm": 6,  "usage": "Medium: section inner padding, column gutters."},
+    "32": {"px": 32, "mm": 8,  "usage": "Large: section gaps."},
+    "48": {"px": 48, "mm": 12, "usage": "XL: page section separation."},
+    "64": {"px": 64, "mm": 16, "usage": "2XL: major section breaks, slide content zone padding."},
+    "96": {"px": 96, "mm": 24, "usage": "3XL: maximum section separation, hero margins."}
+  },
+
+  "borders": {
+    "radius": {
+      "none":   "0px",
+      "sm":     "4px",
+      "md":     "8px",
+      "lg":     "16px",
+      "xl":     "24px",
+      "pill":   "100px",
+      "circle": "50%"
+    },
+    "width": {
+      "0":        "0px",
+      "hairline": "0.5px",
+      "1":        "1px",
+      "2":        "2px",
+      "3":        "3px"
+    }
+  },
+
+  "shadows": {
+    "sm": "0px 1px 3px 0px rgba(0,0,0,0.1)",
+    "md": "0px 4px 12px 0px rgba(0,0,0,0.15)",
+    "lg": "0px 12px 32px 0px rgba(29,30,58,0.2)"
+  },
+
+  "opacity": {
+    "gradient_overlay_min": 0.5,
+    "gradient_overlay_max": 0.7,
+    "card_tint": 0.05,
+    "disabled": 0.4,
+    "hover": 0.08
+  },
+
+  "z_index": {
+    "base": 0,
+    "dropdown": 100,
+    "sticky": 200,
+    "overlay": 300,
+    "modal": 400,
+    "toast": 500
+  },
+
+  "components": {
+    "header_bar": {
+      "description": "Signature POF horizontal strip. Every slide + document section header.",
+      "background": "#1C1F3B",
+      "height_mm": 20,
+      "height_px_equiv": 56.7,
+      "width": "100%",
+      "title_font": "Poppins Bold",
+      "title_size_pt": 24,
+      "title_color": "#FFFFFF",
+      "title_transform": "uppercase",
+      "title_letter_spacing": "1px",
+      "subtitle_font": "Poppins Regular",
+      "subtitle_size_pt": 14,
+      "subtitle_color": "#80C7C2",
+      "pipe_accent": {
+        "width_mm": 1,
+        "height_mm": 12,
+        "color": "#80C7C2",
+        "position": "left of title, 4mm offset from left margin"
+      }
+    },
+    "list_bullet_wave": {
+      "description": "Wave character as list bullet. Distinctive POF mark. Factories entity only.",
+      "character": "≈",
+      "font": "Poppins SemiBold",
+      "size_pt": 14,
+      "color_on_light": "#80C7C2",
+      "color_on_dark": "#FFFFFF",
+      "indent_mm": 6,
+      "text_offset_mm": 4,
+      "line_gap_mm": 2
+    },
+    "gradient_overlay": {
+      "description": "Navy gradient on photo backgrounds. POF visual signature.",
+      "value": "linear-gradient(135deg, #1C1F3B 0%, rgba(29,30,58,0.58) 100%)",
+      "min_opacity": 0.5,
+      "max_opacity": 0.7
+    },
+    "highlight_badge": {
+      "description": "Key phrase in colored rectangle. Max dimensions: 8mm × 30mm.",
+      "factories": {"bg": "#E8546C", "text": "#FFFFFF"},
+      "academy": {"bg": "#8ED1E8", "text": "#1C1F3B"},
+      "font": "Poppins SemiBold",
+      "size_pt": 14,
+      "transform": "uppercase",
+      "border_radius": "4px",
+      "padding": "4px 12px",
+      "max_per_slide": 3
+    },
+    "stat_callout": {
+      "description": "Large number + small label for KPIs.",
+      "number_font": "Poppins Bold",
+      "number_size_pt_min": 36,
+      "number_size_pt_max": 48,
+      "number_color": "#1C1F3B",
+      "label_font": "Raleway Regular",
+      "label_size_pt": 12,
+      "label_color": "#6C757D",
+      "spacing_number_to_label": "8px"
+    },
+    "content_card": {
+      "description": "Light-background text block.",
+      "background_default": "#F0F0F0",
+      "background_teal_tint": "#F1FBFA",
+      "border_radius": "8px",
+      "padding": "24px",
+      "heading_font": "Poppins SemiBold",
+      "heading_size_pt": 16,
+      "heading_color": "#1C1F3B",
+      "body_font": "Raleway Regular",
+      "body_size_pt": 12,
+      "body_color": "#3C3C3C"
+    },
+    "logo_lockup": {
+      "description": "Logo placement. Top-right mandatory on every slide + page.",
+      "structure": "PLASTIC ODYSSEY (small) / ENTITY (bold) + waves icon + dot",
+      "parent_font": "Poppins Regular",
+      "parent_size_pt": 8,
+      "entity_font": "Poppins Bold",
+      "entity_size_pt": 12,
+      "waves_color_factories": "#80C7C2",
+      "waves_color_academy": "#8ED1E8",
+      "clear_space": "Equal to height of 'P' in PLASTIC",
+      "slide_position": {"x_mm": 421.3, "y_mm": 20.6, "width_mm": 64.5, "height_mm": 16.4, "_inches": "x=16.587 y=0.810 w=2.541 h=0.645", "_fixed_in_v3.2.1": "Was x=224 y=4 w=26 h=12 (4:3 obsolete). Now anchored on LAYOUT_WIDE 16:9 from Template POF XML."}
+    },
+    "table": {
+      "description": "No visible grid. Alternating row fills.",
+      "header_bg": "#1C1F3B",
+      "header_text": "#FFFFFF",
+      "header_font": "Poppins SemiBold",
+      "header_size_pt": 11,
+      "row_even_bg": "#FFFFFF",
+      "row_odd_bg": "#F0F0F0",
+      "cell_font": "Raleway Regular",
+      "cell_size_pt": 10,
+      "cell_color": "#3C3C3C",
+      "cell_padding": "8px 12px",
+      "border": "none",
+      "border_alternative": "0.5px solid #EAEBED"
+    }
+  },
+
+  "color_schemes": {
+    "_count_rationale": "Reduced from 5 to 4 schemes. dark_alt merged into dark via heading_style variant flag.",
+    "light": {
+      "name": "Light (default)",
+      "background": "#FFFFFF",
+      "text": "#3C3C3C",
+      "heading": "#1C1F3B",
+      "subtitle": "#435D74",
+      "btn_primary_bg": "#1C1F3B",
+      "btn_primary_text": "#FFFFFF",
+      "btn_secondary_bg": "#80C7C2",
+      "btn_secondary_text": "#1C1F3B",
+      "link": "#1C1F3B",
+      "link_hover": "#2BA595",
+      "border": "#EAEBED",
+      "usage": "Default. Standard content slides, doc bodies."
+    },
+    "gray": {
+      "name": "Gray",
+      "background": "#EAEBED",
+      "text": "#3C3C3C",
+      "heading": "#1C1F3B",
+      "subtitle": "#435D74",
+      "btn_primary_bg": "#1C1F3B",
+      "btn_primary_text": "#FFFFFF",
+      "link_hover": "#2BA595",
+      "usage": "Data-heavy slides, org charts, secondary sections."
+    },
+    "teal": {
+      "name": "Teal",
+      "background": "#80C7C2",
+      "text": "#1C1F3B",
+      "heading": "#1C1F3B",
+      "subtitle": "#09414A",
+      "btn_primary_bg": "#1C1F3B",
+      "btn_primary_text": "#FFFFFF",
+      "link": "#090911",
+      "usage": "Accent sections, CTA zones. NEVER white text (WCAG). Navy only.",
+      "_wcag_warning": "No white text allowed."
+    },
+    "dark": {
+      "name": "Dark",
+      "background": "#1C1F3B",
+      "text": "#FFFFFF",
+      "heading": "#FFFFFF",
+      "subtitle": "#80C7C2",
+      "btn_primary_bg": "#80C7C2",
+      "btn_primary_text": "#1C1F3B",
+      "link": "#80C7C2",
+      "link_hover": "#FFFFFF",
+      "border": "#435D74",
+      "variants": {
+        "heading_style_teal": {"heading": "#80C7C2", "usage": "Impact/results slides. Replaces former dark_alt."}
+      },
+      "usage": "Title slides, section dividers, hero sections, footer bars."
+    }
+  },
+
+  "entity_overrides": {
+    "_base": "Master tokens apply unless overridden here.",
+    "factories": {
+      "name": "Plastic Odyssey Factories",
+      "header_bg": "#1C1F3B",
+      "accent": "#80C7C2",
+      "logo_waves": "#80C7C2",
+      "emphasis": "#E8546C",
+      "tone": "Corporate, institutional, B2B."
+    },
+    "academy": {
+      "name": "Plastic Odyssey Academy",
+      "header_bg": "#8ED1E8",
+      "header_text": "#1C1F3B",
+      "accent": "#8ED1E8",
+      "logo_waves": "#8ED1E8",
+      "emphasis": "#E8546C",
+      "background_tint": "#D4EEF7",
+      "tone": "Lighter, warmer, humanitarian.",
+      "_wcag": "Text on Academy blue must be navy. Never white.",
+      "_verification": "Hex estimated from PDF."
+    },
+    "sunu_po": {
+      "name": "Sunu PO (Senegal)",
+      "header_bg": "#1C1F3B",
+      "accent": "#80C7C2",
+      "logo_waves": "Senegal flag icon",
+      "logo_text": "SUNU. (replaces FACTORIES.)",
+      "local_green": {"hex": "#009639", "cmyk": [90, 0, 80, 20]},
+      "local_red": {"hex": "#EF3340", "cmyk": [0, 85, 65, 0]},
+      "local_usage": "Local accent only. Section markers, partnership badges. NOT headings/body.",
+      "tone": "Factories structure + Senegalese identity."
+    }
+  },
+
+  "photography": {
+    "_ref_db": "Notion 'Media Assets' database (collection://8ca51a75-2413-4f72-8f2a-c44d445fa1d0) is the single source for all POF photos. All image selections MUST query this DB and filter by Entity, Type, Usage.",
+    "subject_matter": "Industrial equipment, plastic processing lines, raw materials, hands at work, containers, deployment sites.",
+    "color_grading": {
+      "treatment": "High-contrast, natural grading.",
+      "avoid": "Filters, artificial warmth, Instagram-style grading, black-and-white conversions.",
+      "target_contrast": "Contrast ratio 6-8 on histogram. Sharpness high but not over-processed.",
+      "saturation": "Neutral to slightly desaturated. Never pushed."
+    },
+    "integration": {
+      "format": "Full-bleed or half-slide. object-fit: cover (no distortion).",
+      "overlay_when_text": "Navy gradient overlay at 0.5-0.7 opacity.",
+      "cropping": "Wide-angle for scale, tight for detail."
+    },
+    "avoid": ["Stock-photo feel", "posed shots", "greenwashing cliches (hands/earth, generic nature)"],
+    "resolution": {
+      "print": "300dpi min",
+      "web": "72-150dpi, WebP/PNG",
+      "slides": "150dpi min"
+    }
+  },
+
+  "icons": {
+    "_status": "Slot definitions. SVGs to be created in Phase 4.",
+    "style": "Thin-line (1-2px stroke), no fill, 24x24 base grid, monochrome via currentColor.",
+    "sizes": {
+      "xs": 16,
+      "sm": 24,
+      "md": 32,
+      "lg": 48
+    },
+    "slots": {
+      "section_marker_circle": {"base": 24, "stroke": 1.5, "usage": "Section markers, step indicators."},
+      "process_arrow": {"base": 24, "stroke": 1.5, "usage": "Process flow connectors."},
+      "content_frame_border": {"stroke": 0.5, "color": "#1C1F3B", "usage": "Technical slide frames ONLY."}
+    },
+    "recycling_icons_todo": [
+      "shredder", "extruder", "mold", "pelletizer",
+      "wash_line", "conveyor_belt", "sorting", "compacting",
+      "container_ship", "franchise", "impact_co2", "impact_jobs",
+      "impact_tons_processed", "contract", "training", "partnership"
+    ]
+  }
+}

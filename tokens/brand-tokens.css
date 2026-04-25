@@ -1,0 +1,384 @@
+/* ============================================================
+   POF Design System — CSS Custom Properties
+   Version: 3.1.0 | Generated: 2026-04-19
+   Source of truth: GitHub pof-brand/tokens/brand-tokens.json
+   Changes from 3.0.0: see CHANGELOG-v3.1.0.md
+   ============================================================ */
+
+:root {
+
+  /* --------------------------------------------------------
+     COLORS: Primary
+     -------------------------------------------------------- */
+  --pof-navy:                  #1C1F3B;  /* Headings, header bars, bg, primary data */
+  --pof-teal:                  #80C7C2;  /* Accent bars, waves, buttons, secondary data */
+
+  /* --------------------------------------------------------
+     COLORS: Accent
+     -------------------------------------------------------- */
+  --pof-coral:                 #E8546C;  /* Emphasis keywords ONLY. Max 1-2 per page. Allowed in highlight_badge. */
+  --pof-steel-blue-gray:       #435D74;  /* Chart series 2, subtitles, card bg on dark */
+  --pof-light-steel:           #5F7D95;  /* Non-textual UI only. NOT for hover (use teal-dark). */
+  --pof-teal-dark:             #2BA595;  /* Hover state, gradient start */
+  --pof-teal-deep:             #09414A;  /* Emphasis text on teal */
+
+  /* --------------------------------------------------------
+     COLORS: Neutral
+     -------------------------------------------------------- */
+  --pof-white:                 #FFFFFF;
+  --pof-body-text:             #3C3C3C;  /* Body text long-form (DOCX, PDF) */
+  --pof-neutral-light:         #F9FCFF;  /* Section bg, card surface, table odd */
+  --pof-neutral-mid:           #EAEBED;  /* Data-heavy slide bg, dividers, form borders */
+  --pof-gray-400:              #CED4DA;  /* Disabled borders */
+  --pof-gray-600:              #6C757D;  /* Secondary text, captions */
+  --pof-near-black:            #090911;  /* Link on teal bg */
+
+  /* --------------------------------------------------------
+     COLORS: Semantic
+     -------------------------------------------------------- */
+  --pof-success:               #28A745;
+  --pof-warning:               #E5A100;
+  --pof-error:                 #DC3545;
+  --pof-info:                  #0D6EFD;
+
+  /* --------------------------------------------------------
+     COLORS: Chart Palette (strict 3-shade. Extend only if mandatory.)
+     -------------------------------------------------------- */
+  --pof-chart-series-1:        #1C1F3B;  /* Primary */
+  --pof-chart-series-2:        #435D74;  /* Secondary */
+  --pof-chart-series-3:        #CFD9E0;  /* Tertiary */
+  --pof-chart-series-4:        #80C7C2;  /* Extended only */
+  --pof-chart-series-5:        #E8546C;  /* Extended only. Rare. */
+  --pof-chart-series-6:        #5F7D95;  /* Last resort */
+
+  /* --------------------------------------------------------
+     COLORS: Entity Overrides
+     -------------------------------------------------------- */
+  --pof-factories-header:      #1C1F3B;
+  --pof-factories-accent:      #80C7C2;
+  --pof-factories-emphasis:    #E8546C;
+
+  --pof-academy-header:        #8ED1E8;  /* Replaces navy for header bars */
+  --pof-academy-accent:        #8ED1E8;  /* Replaces teal */
+  --pof-academy-emphasis:      #E8546C;  /* Shared */
+  --pof-academy-bg-tint:       #D4EEF7;
+
+  --pof-sunu-local-green:      #009639;
+  --pof-sunu-local-red:        #EF3340;
+
+  /* --------------------------------------------------------
+     GRADIENTS
+     -------------------------------------------------------- */
+  --pof-gradient-navy-overlay: linear-gradient(135deg, #1C1F3B 0%, rgba(29, 30, 58, 0.58) 100%);
+  --pof-gradient-teal:         linear-gradient(345deg, #2BA595 0%, #80C7C2 100%);
+
+  /* --------------------------------------------------------
+     TYPOGRAPHY: Families (2 only)
+     -------------------------------------------------------- */
+  --pof-font-heading:          "Poppins", Arial, Helvetica, sans-serif;
+  --pof-font-body:             "Raleway", Arial, Helvetica, sans-serif;
+
+  /* --------------------------------------------------------
+     TYPOGRAPHY: Weights
+     -------------------------------------------------------- */
+  --pof-fw-light:              300;
+  --pof-fw-regular:            400;
+  --pof-fw-medium:             500;
+  --pof-fw-semibold:           600;
+  --pof-fw-bold:               700;
+
+  /* --------------------------------------------------------
+     TYPOGRAPHY: Size Scale (8 levels, removed `base` and `5xl`)
+     -------------------------------------------------------- */
+  --pof-fs-xs:                 10px;   /* 7.5pt — footnotes */
+  --pof-fs-sm:                 12px;   /* 9pt — captions, chart labels */
+  --pof-fs-md:                 16px;   /* 12pt — body_screen default */
+  --pof-fs-lg:                 18px;   /* 13.5pt — slide body, H4 docs */
+  --pof-fs-xl:                 24px;   /* 18pt — H3, slide header title */
+  --pof-fs-2xl:                28px;   /* 21pt — H2, slide content H1 */
+  --pof-fs-3xl:                36px;   /* 27pt — H1 docs, cover slide title */
+  --pof-fs-4xl:                48px;   /* 36pt — hero titles, stat numbers */
+
+  /* Print-specific body size (DOCX/PDF uses 11pt, not 12pt) */
+  --pof-fs-body-print-pt:      11;
+  --pof-fs-body-screen-pt:     12;
+
+  /* --------------------------------------------------------
+     TYPOGRAPHY: Line Heights
+     -------------------------------------------------------- */
+  --pof-lh-tight:              1.2;
+  --pof-lh-normal:             1.4;
+  --pof-lh-relaxed:            1.5;
+  --pof-lh-loose:              1.75;
+
+  /* --------------------------------------------------------
+     TYPOGRAPHY: Letter Spacing
+     -------------------------------------------------------- */
+  --pof-ls-tight:              -0.5px;
+  --pof-ls-normal:             0px;
+  --pof-ls-wide:               1px;
+  --pof-ls-extra-wide:         2px;
+
+  /* --------------------------------------------------------
+     SPACING (8px grid)
+     -------------------------------------------------------- */
+  --pof-space-4:               4px;
+  --pof-space-8:               8px;
+  --pof-space-12:              12px;
+  --pof-space-16:              16px;
+  --pof-space-24:              24px;
+  --pof-space-32:              32px;
+  --pof-space-48:              48px;
+  --pof-space-64:              64px;
+  --pof-space-96:              96px;
+
+  /* --------------------------------------------------------
+     BORDERS
+     -------------------------------------------------------- */
+  --pof-radius-none:           0px;
+  --pof-radius-sm:             4px;
+  --pof-radius-md:             8px;
+  --pof-radius-lg:             16px;
+  --pof-radius-xl:             24px;
+  --pof-radius-pill:           100px;
+  --pof-radius-circle:         50%;
+
+  --pof-border-0:              0px;
+  --pof-border-hairline:       0.5px;
+  --pof-border-1:              1px;
+  --pof-border-2:              2px;
+  --pof-border-3:              3px;
+
+  /* --------------------------------------------------------
+     SHADOWS
+     -------------------------------------------------------- */
+  --pof-shadow-sm:             0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  --pof-shadow-md:             0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+  --pof-shadow-lg:             0px 12px 32px 0px rgba(29, 30, 58, 0.2);
+
+  /* --------------------------------------------------------
+     OPACITY
+     -------------------------------------------------------- */
+  --pof-opacity-overlay-min:   0.5;   /* Renamed from photo-overlay-* */
+  --pof-opacity-overlay-max:   0.7;
+  --pof-opacity-card:          0.05;
+  --pof-opacity-disabled:      0.4;
+  --pof-opacity-hover:         0.08;
+
+  /* --------------------------------------------------------
+     Z-INDEX
+     -------------------------------------------------------- */
+  --pof-z-base:                0;
+  --pof-z-dropdown:            100;
+  --pof-z-sticky:              200;
+  --pof-z-overlay:             300;
+  --pof-z-modal:               400;
+  --pof-z-toast:               500;
+
+  /* --------------------------------------------------------
+     ICONS
+     -------------------------------------------------------- */
+  --pof-icon-xs:               16px;
+  --pof-icon-sm:               24px;
+  --pof-icon-md:               32px;
+  --pof-icon-lg:               48px;
+
+  /* --------------------------------------------------------
+     BREAKPOINTS
+     -------------------------------------------------------- */
+  --pof-bp-xs:                 0px;
+  --pof-bp-sm:                 576px;
+  --pof-bp-md:                 768px;
+  --pof-bp-lg:                 992px;
+  --pof-bp-xl:                 1200px;
+  --pof-bp-xxl:                1400px;
+
+  /* --------------------------------------------------------
+     CONTAINER MAX-WIDTHS
+     -------------------------------------------------------- */
+  --pof-container-sm:          540px;
+  --pof-container-md:          720px;
+  --pof-container-lg:          960px;
+  --pof-container-xl:          1140px;
+  --pof-container-xxl:         1320px;
+}
+
+
+/* ============================================================
+   COLOR SCHEME PRESETS (4 schemes — dark_alt merged into dark)
+   ============================================================ */
+
+.pof-scheme-light {
+  --scheme-bg:                 var(--pof-white);
+  --scheme-text:               var(--pof-body-text);
+  --scheme-heading:            var(--pof-navy);
+  --scheme-subtitle:           var(--pof-steel-blue-gray);
+  --scheme-btn-primary-bg:     var(--pof-navy);
+  --scheme-btn-primary-text:   var(--pof-white);
+  --scheme-btn-secondary-bg:   var(--pof-teal);
+  --scheme-btn-secondary-text: var(--pof-navy);
+  --scheme-link:               var(--pof-navy);
+  --scheme-link-hover:         var(--pof-teal-dark);
+  --scheme-border:             var(--pof-neutral-mid);
+}
+
+.pof-scheme-gray {
+  --scheme-bg:                 var(--pof-neutral-mid);
+  --scheme-text:               var(--pof-body-text);
+  --scheme-heading:            var(--pof-navy);
+  --scheme-subtitle:           var(--pof-steel-blue-gray);
+  --scheme-btn-primary-bg:     var(--pof-navy);
+  --scheme-btn-primary-text:   var(--pof-white);
+  --scheme-btn-secondary-bg:   var(--pof-teal);
+  --scheme-btn-secondary-text: var(--pof-navy);
+  --scheme-link:               var(--pof-navy);
+  --scheme-link-hover:         var(--pof-teal-dark);
+  --scheme-border:             var(--pof-gray-400);
+}
+
+.pof-scheme-teal {
+  /* NEVER white text on teal — WCAG 1.64:1 */
+  --scheme-bg:                 var(--pof-teal);
+  --scheme-text:               var(--pof-navy);
+  --scheme-heading:            var(--pof-navy);
+  --scheme-subtitle:           var(--pof-teal-deep);
+  --scheme-btn-primary-bg:     var(--pof-navy);
+  --scheme-btn-primary-text:   var(--pof-white);
+  --scheme-btn-secondary-bg:   var(--pof-neutral-mid);
+  --scheme-btn-secondary-text: var(--pof-navy);
+  --scheme-link:               var(--pof-near-black);
+  --scheme-link-hover:         var(--pof-navy);
+  --scheme-border:             var(--pof-teal-dark);
+}
+
+.pof-scheme-dark {
+  --scheme-bg:                 var(--pof-navy);
+  --scheme-text:               var(--pof-white);
+  --scheme-heading:            var(--pof-white);
+  --scheme-subtitle:           var(--pof-teal);
+  --scheme-btn-primary-bg:     var(--pof-teal);
+  --scheme-btn-primary-text:   var(--pof-navy);
+  --scheme-btn-secondary-bg:   transparent;
+  --scheme-btn-secondary-text: var(--pof-white);
+  --scheme-link:               var(--pof-teal);
+  --scheme-link-hover:         var(--pof-white);
+  --scheme-border:             var(--pof-steel-blue-gray);
+}
+
+/* Dark variant: teal heading (replaces former dark_alt scheme) */
+.pof-scheme-dark.pof-heading-teal {
+  --scheme-heading:            var(--pof-teal);
+  --scheme-subtitle:           var(--pof-white);
+}
+
+
+/* ============================================================
+   ACADEMY ENTITY OVERRIDE
+   ============================================================ */
+
+.pof-academy {
+  --pof-teal:                  var(--pof-academy-accent);
+  --pof-neutral-light:         var(--pof-academy-bg-tint);
+}
+
+.pof-academy .pof-scheme-dark {
+  --scheme-bg:                 var(--pof-academy-header);
+  --scheme-text:               var(--pof-navy);   /* WCAG 9.57:1 */
+  --scheme-heading:            var(--pof-navy);
+}
+
+
+/* ============================================================
+   COMPONENT HELPERS
+   ============================================================ */
+
+.pof-header-bar {
+  background-color: var(--pof-navy);
+  width: 100%;
+  padding: var(--pof-space-12) var(--pof-space-24);
+  color: var(--pof-white);
+  font-family: var(--pof-font-heading);
+  font-weight: var(--pof-fw-bold);
+  font-size: var(--pof-fs-xl);
+  text-transform: uppercase;
+  letter-spacing: var(--pof-ls-wide);
+}
+
+.pof-stat-callout__number {
+  font-family: var(--pof-font-heading);
+  font-weight: var(--pof-fw-bold);
+  font-size: var(--pof-fs-4xl);
+  color: var(--pof-navy);
+  line-height: var(--pof-lh-tight);
+}
+
+.pof-stat-callout__label {
+  font-family: var(--pof-font-body);
+  font-weight: var(--pof-fw-regular);
+  font-size: var(--pof-fs-sm);
+  color: var(--pof-gray-600);
+  margin-top: var(--pof-space-8);
+}
+
+.pof-content-card {
+  background-color: var(--pof-neutral-light);
+  border-radius: var(--pof-radius-md);
+  padding: var(--pof-space-24);
+}
+
+.pof-highlight-badge {
+  display: inline-block;
+  background-color: var(--pof-coral);
+  color: var(--pof-white);
+  font-family: var(--pof-font-heading);
+  font-weight: var(--pof-fw-semibold);
+  font-size: var(--pof-fs-md);
+  text-transform: uppercase;
+  padding: var(--pof-space-4) var(--pof-space-12);
+  border-radius: var(--pof-radius-sm);
+  max-height: 8mm;
+  max-width: 30mm;
+}
+
+.pof-academy .pof-highlight-badge {
+  background-color: var(--pof-academy-accent);
+  color: var(--pof-navy);
+}
+
+.pof-table th {
+  background-color: var(--pof-navy);
+  color: var(--pof-white);
+  font-family: var(--pof-font-heading);
+  font-weight: var(--pof-fw-semibold);
+  font-size: var(--pof-fs-sm);
+  padding: var(--pof-space-8) var(--pof-space-12);
+  border: none;
+}
+
+.pof-table td {
+  font-family: var(--pof-font-body);
+  font-weight: var(--pof-fw-regular);
+  font-size: var(--pof-fs-sm);
+  color: var(--pof-body-text);
+  padding: var(--pof-space-8) var(--pof-space-12);
+  border: none;
+}
+
+.pof-table tr:nth-child(odd) td  { background-color: var(--pof-neutral-light); }
+.pof-table tr:nth-child(even) td { background-color: var(--pof-white); }
+
+
+/* ============================================================
+   ODOO COMPATIBILITY MAPPING
+   ============================================================ */
+
+.o_website_preview,
+#wrapwrap {
+  --o-color-1: var(--pof-white);
+  --o-color-2: var(--pof-neutral-mid);
+  --o-color-3: var(--pof-teal);
+  --o-color-4: var(--pof-navy);
+  --o-color-5: var(--pof-navy);
+  --o-font-family-heading: var(--pof-font-heading);
+  --o-font-family-body: var(--pof-font-body);
+}

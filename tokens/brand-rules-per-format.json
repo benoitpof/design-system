@@ -1,0 +1,312 @@
+{
+  "_meta": {
+    "version": "3.2.1",
+    "generated": "2026-04-25",
+    "description": "Format-specific design rules. Every value exact. Pair with brand-tokens.json. Convention: mm partout (SSOT). Inches noted in comments only when pptxgenjs requires it.",
+    "changes_from_3.1.0": [
+      "slides: bloc rewritten for LAYOUT_WIDE 16:9 (508x285.75mm). Old 4:3 254x190.5mm block was obsolete and contradicted LAYOUTS.md and Template POF XML.",
+      "slides.content_zone: x=26.7 y=50.8 max_width=454.6 max_height=223.5 mm (verified from Template POF XML).",
+      "slides.logo_zone: x=421.3 y=20.6 w=64.5 h=16.4 mm (top-right anchor verified).",
+      "slides.corner_marks: teal grpSp at TL (x=19.0 y=16.3) and BR (x=483.2 y=265.5), 7.7x7.7mm.",
+      "slides.header_bar: removed (DESIGN.md forbids full-width colored header bars under titles).",
+      "Convention unifiee: mm partout. Inches en commentaire pour pptxgenjs."
+    ]
+  },
+  "slides": {
+    "_format": "PPTX",
+    "_layout_name": "LAYOUT_WIDE",
+    "_dimensions": {"width_mm": 508, "height_mm": 285.75, "aspect_ratio": "16:9", "_inches_for_pptxgenjs": "20 x 11.25"},
+    "_verified_from": "Template POF - Claude.pptx ppt/presentation.xml: cx=18288000 cy=10287000 EMU",
+    "margins": {"top_mm": 50.8, "bottom_mm": 11.4, "left_mm": 26.7, "right_mm": 26.7},
+    "title_zone": {
+      "x_mm": 26.7,
+      "y_mm": 20.6,
+      "width_mm": 231.3,
+      "height_mm": 10.3,
+      "font": "Poppins ExtraBold",
+      "size_pt": 26,
+      "color_on_light": "#80C7C2",
+      "color_on_dark": "#FFFFFF",
+      "transform": "none",
+      "_inches": "x=1.051 y=0.810 w=9.106 h=0.404"
+    },
+    "subtitle_zone": {
+      "x_mm": 26.7,
+      "y_mm": 31.4,
+      "width_mm": 243.1,
+      "height_mm": 12.0,
+      "font": "Raleway SemiBold",
+      "size_pt": 26,
+      "color": "#1C1F3B",
+      "_inches": "x=1.051 y=1.237 w=9.570 h=0.471"
+    },
+    "pipe_accent": {
+      "x_mm": 19.0,
+      "y_mm": 19.05,
+      "width_mm": 1.4,
+      "height_mm": 12.2,
+      "color": "#80C7C2",
+      "position": "left of title, replaces full-width header bar",
+      "_inches": "x=0.748 y=0.75 w=0.055 h=0.48"
+    },
+    "corner_marks": {
+      "_description": "Teal grpSp marks at top-left and bottom-right, signature POF anchors.",
+      "color": "#80C7C2",
+      "size_mm": 7.7,
+      "top_left": {"x_mm": 19.0, "y_mm": 16.3, "_inches": "x=0.748 y=0.642 w=0.303 h=0.303"},
+      "bottom_right": {"x_mm": 483.2, "y_mm": 265.5, "_inches": "x=19.025 y=10.454 w=0.303 h=0.303"}
+    },
+    "content_zone": {
+      "x_mm": 26.7,
+      "y_mm": 50.8,
+      "max_width_mm": 454.6,
+      "max_height_mm": 223.5,
+      "_inches": "x=1.051 y=2.0 max_w=17.898 max_h=8.8",
+      "_verified_against": "docs/LAYOUTS.md global anchors"
+    },
+    "footer_zone": {
+      "y_mm": 274.3,
+      "height_mm": 11.4,
+      "slide_number_x_mm": 470.7,
+      "slide_number_y_mm": 259.1,
+      "slide_number_width_mm": 30.5,
+      "slide_number_height_mm": 21.9,
+      "slide_number_font": "Raleway Regular",
+      "slide_number_size_pt": 9,
+      "slide_number_color": "#6C757D",
+      "slide_number_alignment": "right",
+      "_inches": "slide_number x=18.531 y=10.200 w=1.200 h=0.861"
+    },
+    "logo_zone": {
+      "x_mm": 421.3,
+      "y_mm": 20.6,
+      "width_mm": 64.5,
+      "height_mm": 16.4,
+      "position": "top-right",
+      "logo_on_light_bg": "assets/logos/pof-logo-color.svg",
+      "logo_on_dark_bg": "assets/logos/pof-logo-white.svg",
+      "_inches": "x=16.587 y=0.810 w=2.541 h=0.645",
+      "_verified_from": "Template POF XML"
+    },
+    "grid": {"columns": 12, "gutter_mm": 6.4, "column_width_mm": 35.5, "_note": "12 cols across 454.6mm content zone with 6.4mm gutter"},
+    "font_size_mapping": {
+      "slide_title": {"font": "Poppins ExtraBold", "size_pt": 26, "color_on_light": "#80C7C2", "color_on_dark": "#FFFFFF", "_note": "Replaces former slide_header_title. No uppercase by default."},
+      "slide_subtitle": {"font": "Raleway SemiBold", "size_pt": 26, "color": "#1C1F3B"},
+      "H2": {"font": "Poppins SemiBold", "size_pt": 22, "color": "#1C1F3B", "line_height": 1.2},
+      "H3": {"font": "Poppins SemiBold", "size_pt": 18, "color": "#1C1F3B", "line_height": 1.3},
+      "body_screen": {"font": "Raleway Regular", "size_pt": 22, "color": "#1C1F3B", "line_height": 1.5, "_note": "Bumped from 12pt to 22pt for LAYOUT_WIDE legibility (per DESIGN.md typography scale)."},
+      "body_large": {"font": "Raleway Regular", "size_pt": 24, "color": "#1C1F3B", "line_height": 1.5},
+      "stat_number": {"font": "Raleway ExtraBold", "size_pt": 120, "color_on_dark": "#80C7C2", "color_on_light": "#1C1F3B"},
+      "stat_unit": {"font": "Raleway Black", "size_pt": 41, "color_on_dark": "#FFFFFF"},
+      "caption": {"font": "Raleway Light", "size_pt": 18, "color": "#435D74", "line_height": 1.4, "italic": true}
+    },
+    "list_bullet_wave": {
+      "character": "≈",
+      "font": "Poppins SemiBold",
+      "size_pt": 14,
+      "color_on_light": "#80C7C2",
+      "color_on_dark": "#FFFFFF",
+      "indent_mm": 6,
+      "text_offset_mm": 4,
+      "line_gap_mm": 2
+    },
+    "slide_types": {
+      "cover": "Full-bleed photo + navy gradient overlay + logo top-right + title center-left + subtitle below",
+      "section_divider": "Full-bleed photo + dark overlay + section number + title white centered",
+      "content_image": "50/50 split: text left (content zone), full-bleed image right",
+      "value_proposition": "Header bar + 3 equal-width content cards below",
+      "big_number": "1-3 stat callouts centered, minimal layout",
+      "comparison": "2-column with thin navy divider (0.5pt)",
+      "process_flow": "Header bar + numbered steps with 0.5pt navy arrow connectors",
+      "table": "Header bar + borderless table with alternating fills",
+      "team": "Header bar + circular portrait grid (3-4 per row)",
+      "timeline": "Horizontal timeline with navy line + teal dots + dated milestones",
+      "callout_quote": "Large centered quote, Poppins SemiBold, teal left border",
+      "closing": "Same as cover treatment with contact info overlay"
+    }
+  },
+  "documents": {
+    "_format": "DOCX",
+    "_dimensions": {"width_mm": 210, "height_mm": 297, "paper": "A4"},
+    "margins": {"top_mm": 25, "bottom_mm": 25, "left_mm": 25, "right_mm": 25},
+    "header": {
+      "height_mm": 15,
+      "logo_position": "top-right",
+      "logo_width_mm": 30,
+      "line_below": true,
+      "line_color": "#1C1F3B",
+      "line_width_pt": 0.5,
+      "content": "Document title left-aligned, logo right-aligned"
+    },
+    "footer": {
+      "height_mm": 10,
+      "page_number_position": "right",
+      "page_number_font": "Raleway Regular",
+      "page_number_size_pt": 9,
+      "page_number_color": "#6C757D"
+    },
+    "title_page": {
+      "background": "#1C1F3B",
+      "title_font": "Poppins Bold",
+      "title_size_pt": 36,
+      "title_color": "#FFFFFF",
+      "title_transform": "uppercase",
+      "subtitle_font": "Poppins Regular",
+      "subtitle_size_pt": 18,
+      "subtitle_color": "#80C7C2",
+      "logo_position": "top-right, white version",
+      "date_font": "Raleway Regular",
+      "date_size_pt": 12,
+      "date_color": "#FFFFFF",
+      "date_position": "bottom-left"
+    },
+    "heading_styles": {
+      "H1": {"font": "Poppins Bold", "size_pt": 24, "weight": 700, "color": "#1C1F3B", "spacing_before_pt": 24, "spacing_after_pt": 12, "transform": "uppercase", "letter_spacing_pt": 0.75},
+      "H2": {"font": "Poppins SemiBold", "size_pt": 18, "weight": 600, "color": "#1C1F3B", "spacing_before_pt": 18, "spacing_after_pt": 8},
+      "H3": {"font": "Poppins SemiBold", "size_pt": 14, "weight": 600, "color": "#435D74", "spacing_before_pt": 14, "spacing_after_pt": 6},
+      "H4": {"font": "Poppins Medium", "size_pt": 12, "weight": 500, "color": "#435D74", "spacing_before_pt": 12, "spacing_after_pt": 4}
+    },
+    "body": {
+      "font": "Raleway Regular",
+      "size_pt": 11,
+      "_note": "body_print = 11pt for DOCX/PDF. body_screen = 12pt for web/slides.",
+      "weight": 400,
+      "color": "#3C3C3C",
+      "line_height_multiplier": 1.5,
+      "spacing_after_pt": 6
+    },
+    "table_styles": {
+      "header_row_bg": "#1C1F3B",
+      "header_row_text": "#FFFFFF",
+      "header_row_font": "Poppins SemiBold",
+      "header_row_size_pt": 10,
+      "header_row_height_mm": 8,
+      "borders": "none",
+      "row_even_bg": "#FFFFFF",
+      "row_odd_bg": "#F0F0F0",
+      "cell_font": "Raleway Regular",
+      "cell_size_pt": 10,
+      "cell_color": "#3C3C3C",
+      "cell_padding_mm": "2mm 3mm"
+    },
+    "callout_block": {
+      "left_border_color": "#80C7C2",
+      "left_border_width_pt": 3,
+      "padding_left_mm": 8,
+      "padding_top_mm": 4,
+      "padding_bottom_mm": 4,
+      "background": "#F1FBFA",
+      "font": "Raleway Regular",
+      "size_pt": 11,
+      "color": "#1C1F3B"
+    }
+  },
+  "print_pdf": {
+    "_format": "PDF (A4 + 3mm bleed)",
+    "_dimensions": {"width_mm": 210, "height_mm": 297, "bleed_mm": 3},
+    "total_with_bleed": {"width_mm": 216, "height_mm": 303},
+    "margins": {"top_mm": 20, "bottom_mm": 20, "left_mm": 20, "right_mm": 20},
+    "safe_zone_from_trim_mm": 5,
+    "cmyk_conversions": {
+      "navy_1C1F3B": {"cmyk": [83, 81, 37, 34], "pantone_nearest": "282 C"},
+      "teal_80C7C2": {"cmyk": [47, 0, 24, 0], "pantone_nearest": "3242 C", "_warning": "Outside standard CMYK gamut. Expect slight desaturation. Test print required."},
+      "coral_E8546C": {"cmyk": [0, 75, 40, 0], "pantone_nearest": "185 C"},
+      "steel_435D74": {"cmyk": [60, 35, 18, 25]},
+      "body_text_3C3C3C": {"cmyk": [0, 0, 0, 80]},
+      "white_FFFFFF": {"cmyk": [0, 0, 0, 0]},
+      "neutral_light_F0F0F0": {"cmyk": [0, 0, 0, 6]},
+      "neutral_mid_EAEBED": {"cmyk": [0, 0, 0, 8]},
+      "success_28A745": {"cmyk": [70, 0, 75, 0]},
+      "error_DC3545": {"cmyk": [0, 85, 70, 0]},
+      "academy_blue_8ED1E8": {"cmyk": [35, 0, 5, 0]},
+      "sunu_green_009639": {"cmyk": [90, 0, 80, 20]},
+      "sunu_red_EF3340": {"cmyk": [0, 85, 65, 0]}
+    },
+    "image_resolution_dpi": 300,
+    "grid": {"columns": 12, "gutter_mm": 4, "column_width_mm": 10.3, "baseline_grid_mm": 4},
+    "footer_bar": {
+      "position": "bottom full-width including bleed",
+      "height_mm": 15,
+      "background": "#1C1F3B",
+      "text_color": "#FFFFFF",
+      "text_font": "Raleway Regular",
+      "text_size_pt": 8,
+      "logo_position": "left",
+      "contact_position": "right"
+    },
+    "body_text_min_pt": 11
+  },
+  "excel": {
+    "_format": "XLSX",
+    "header_row": {"background": "#1C1F3B", "font": "Poppins SemiBold", "size_pt": 10, "text_color": "#FFFFFF", "row_height_pt": 24, "alignment": "center", "wrap_text": true},
+    "data_cell": {"font": "Raleway Regular", "size_pt": 10, "color": "#3C3C3C", "alignment_text": "left", "alignment_numbers": "right", "alignment_dates": "center", "vertical_alignment": "center", "padding_pt": 4, "row_height_pt": 20},
+    "number_formats": {
+      "currency_eur": "#,##0.00 €",
+      "currency_usd": "$#,##0.00",
+      "currency_xof": "#,##0 FCFA",
+      "percentage": "0.0%",
+      "percentage_integer": "0%",
+      "date_iso": "YYYY-MM-DD",
+      "date_eu": "DD/MM/YYYY",
+      "integer": "#,##0",
+      "decimal_2": "#,##0.00"
+    },
+    "alternating_rows": {"even_bg": "#FFFFFF", "odd_bg": "#F0F0F0"},
+    "conditional_formatting_palette": {
+      "green_success": "#28A745", "green_bg": "#D4EDDA",
+      "red_danger": "#DC3545", "red_bg": "#F8D7DA",
+      "amber_warning": "#E5A100", "amber_bg": "#FFF3CD",
+      "teal_highlight": "#80C7C2", "teal_bg": "#F1FBFA"
+    },
+    "frozen_panes": {"row": 1, "column": 0}
+  },
+  "web": {
+    "_format": "HTML/CSS",
+    "breakpoints": {
+      "xs": {"min_px": 0, "max_px": 575},
+      "sm": {"min_px": 576, "max_px": 767},
+      "md": {"min_px": 768, "max_px": 991},
+      "lg": {"min_px": 992, "max_px": 1199},
+      "xl": {"min_px": 1200, "max_px": 1399},
+      "xxl": {"min_px": 1400, "max_px": null}
+    },
+    "container_max_widths": {"sm": "540px", "md": "720px", "lg": "960px", "xl": "1140px", "xxl": "1320px"},
+    "odoo_class_mapping": {
+      "o_cc1": "pof-scheme-light",
+      "o_cc2": "pof-scheme-gray",
+      "o_cc3": "pof-scheme-teal",
+      "o_cc4": "pof-scheme-dark",
+      "o_cc5": "pof-scheme-dark pof-heading-teal",
+      "_note": "5 combos mapped to 4 schemes (dark_alt merged into dark with variant flag)."
+    }
+  },
+  "linkedin": {
+    "_format": "PNG via HTML/Puppeteer",
+    "canvas_sizes": {
+      "share": {"width_px": 1200, "height_px": 627},
+      "square": {"width_px": 1080, "height_px": 1080},
+      "carousel": {"width_px": 1080, "height_px": 1350}
+    },
+    "safe_zones": {
+      "share": {"top_px": 40, "bottom_px": 40, "left_px": 60, "right_px": 60},
+      "square": {"top_px": 48, "bottom_px": 48, "left_px": 48, "right_px": 48},
+      "carousel": {"top_px": 56, "bottom_px": 56, "left_px": 48, "right_px": 48}
+    },
+    "background_treatments": {
+      "solid_navy": {"background": "#1C1F3B", "text_color": "#FFFFFF", "heading_color": "#FFFFFF", "accent": "#80C7C2"},
+      "gradient_photo": {"overlay": "linear-gradient(135deg, #1C1F3B 0%, rgba(29,30,58,0.58) 100%)", "text_color": "#FFFFFF"},
+      "teal_strip": {"background": "#FFFFFF", "strip_color": "#80C7C2", "strip_width_px": 8, "strip_position": "left", "text_color": "#1C1F3B"}
+    },
+    "text_overlay_rules": {
+      "min_font_size_px": 24,
+      "max_lines_title": 3,
+      "max_lines_body": 5,
+      "title_font": "Poppins Bold",
+      "title_size_px": 48,
+      "body_font": "Raleway Regular",
+      "body_size_px": 28,
+      "contrast_enforcement": "All text must meet WCAG AA for large text (3:1 minimum)."
+    },
+    "logo_placement": {"position": "bottom-right", "margin_px": 32, "max_width_px": 120}
+  }
+}
