@@ -1,9 +1,28 @@
 # DESIGN.md — Plastic Odyssey Factories Design System
 
-**Version:** 3.2.2 | **Updated:** 2026-04-25
+**Version:** 3.2.3 | **Updated:** 2026-04-26
 **Source of truth:** `tokens/brand-tokens.json` + `tokens/brand-rules-per-format.json`
 **Template reference:** `Template_POF_Claude.pptx` (LAYOUT_WIDE 20"×11.25" / 508×285.75 mm)
 **Coordinate convention:** mm partout (SSOT). Inches en commentaire pour pptxgenjs.
+
+## Hard locks (v3.2.3) — STRICT ENFORCEMENT
+
+These rules are non-negotiable. Any violation in generated content (deck, web, report) must be flagged red in QA before delivery.
+
+### Type-scale lock
+Only 7 allowed sizes (pt): **9, 11, 14, 18, 22, 26, 36**. Plus stat-only: 72, 120. No other sizes anywhere.
+
+### Weight lock
+Regular weights allowed: **300, 400, 600, 700**. ExtraBold (800) restricted to: cover slide title (L01), section divider title (L02), stat number (L04). Black (900) **forbidden**.
+
+### Gradient overlay lock
+Single canonical value: `linear-gradient(135deg, rgba(28,31,59,0.85) 0%, rgba(28,31,59,0.45) 100%)`. CSS variable `--pof-photo-overlay`. No alternatives. No `105deg`. No different opacity stops.
+
+### Corner marks lock
+L-brackets in 4 orientations: `assets/brand-elements/corner-bracket-{tl,tr,bl,br}.svg`. Size 12 mm. Color #80C7C2. Stroke 5px square cap. Default pair on every slide = TL + BR. Solid filled squares (deprecated v3.2.2) **forbidden**.
+
+### Verbatim content mode
+When user brief contains `<final_content>...</final_content>` tags or the phrase "this is final content / verbatim / do not edit": preserve wording exactly, only redistribute across layout slots. Never substitute with examples from CONTENT-RULES.md.
 
 ---
 

@@ -1,6 +1,6 @@
 # POF Design System — `benoitpof/design-system`
 
-**Version:** 3.2.2 | **Updated:** 2026-04-25
+**Version:** 3.2.3 | **Updated:** 2026-04-26
 **Format slides :** LAYOUT_WIDE 20×11.25" (508×285.75 mm), 16:9
 **Coordonnées :** mm partout (SSOT). Inches en commentaire pour pptxgenjs.
 

@@ -214,3 +214,42 @@ These patterns must be rejected regardless of what the user requests:
 6. **White text on teal** — prohibited by WCAG. Always refuse this combination.
 7. **More than 2 font families** — Poppins + Raleway only.
 8. **Coral as background** — coral is emphasis only, never a fill color for text blocks.
+
+---
+
+## VERBATIM CONTENT MODE (v3.2.3)
+
+When the user brief contains content marked as final, Claude must NOT paraphrase, summarize, expand, or substitute with examples from this document.
+
+### Activation triggers (any of):
+- Brief includes `<final_content>...</final_content>` XML tags
+- Brief contains the phrases: "verbatim", "this is final content", "do not edit", "preserve wording", "ne pas modifier", "contenu final"
+- Brief is uploaded as a file (.docx, .pdf, .md) and user says "use this content"
+
+### Behavior in verbatim mode:
+1. Place the provided text into layout slots WITHOUT changing words
+2. Only allowed transformations: line breaks for fitting, slot redistribution across slides
+3. NEVER pull examples from this CONTENT-RULES.md as substitute content (they are format references, not scripts)
+4. If the provided content does not fit the chosen layout, propose a different layout — never trim or paraphrase
+
+### Behavior outside verbatim mode (default):
+- Free interpretation of the brief into layout slots
+- Examples from this document may be used as inspiration
+- Words can be reformulated for slot fit and tone
+
+### Failure mode to flag in QA:
+If a deck contains the literal example text "Transforming Waste into Local Wealth" or "200-factory franchise network" (the CONTENT-RULES.md L01 example) when the user provided different content, this is a verbatim mode failure.
+
+### MANDATORY confirmation step before generation
+
+Before generating any slide, deck, page, or report, Claude MUST explicitly confirm with the user the nature of the provided content using one of these two states:
+
+- **RAW MATERIAL** — content is reference / source / draft. Claude is allowed to summarize, restructure, paraphrase, expand, or condense to fit the layout. Examples are pulled from CONTENT-RULES.md as needed.
+- **FINAL CONTENT** — content is locked verbatim. Claude must preserve wording exactly, only redistribute across slots. No paraphrase, no example substitution.
+
+Default ambiguous behaviour : ask one explicit clarification question — "Is the content I just received RAW MATERIAL (I can rephrase) or FINAL CONTENT (verbatim only)?" — and wait for the answer before generating.
+
+If the user does not specify and the brief is short or note-form (< 200 words), default to RAW MATERIAL.
+If the user provides a structured document (.docx, .pdf, full sentences with proper punctuation, > 500 words), default to FINAL CONTENT and confirm with the user.
+
+This confirmation is non-skippable for any first-time generation in a chat session. Subsequent regenerations in the same chat inherit the previously-confirmed mode unless the user states otherwise.
