@@ -95,3 +95,97 @@
 | `file-text.svg`          | Étude de faisabilité, rapport, annexes deck                    | -                                          |
 | `presentation.svg`       | Pitch, deck investisseur, slide header                         | -                                          |
 | `tag.svg`                | Label Impact Plastic, marque produit                           | -                                          |
+
+---
+
+## 🆕 ICÔNES GÉNÉRALES — Extension emoji coverage
+
+> Fichiers SVG dans `assets/icons/` — stroke="#1A2B4A" (POF dark-blue)
+> Source: Tabler Icons v3.41.1 (MIT) — https://tabler.io/icons
+
+### Outils & Actions
+| Fichier | Emoji | Usage |
+|---|:---:|---|
+| `tool.svg` | 🔧 | Maintenance, réparation, technique |
+| `settings.svg` | ⚙️ | Configuration, paramètres |
+| `writing.svg` | ✍🏻 | Rédaction, signature, contenu |
+| `pencil.svg` | ✏️ | Édition, annotation |
+| `notes.svg` | 📝 | Notes, mémos, suivi |
+| `paperclip.svg` | 📎 | Pièce jointe, document lié |
+| `refresh.svg` | 🔄 | Mise à jour, synchronisation |
+| `arrows-shuffle.svg` | 🔀 | Réorganisation, shuffle |
+| `player-play.svg` | ▶️ | Lancer, démarrer, vidéo |
+| `circle-x.svg` | ❌ | Annulation, refus, erreur |
+| `copyright.svg` | ©️ | Droits, propriété intellectuelle |
+
+### Communication & Médias
+| Fichier | Emoji | Usage |
+|---|:---:|---|
+| `mail.svg` | ✉️ | Email, correspondance |
+| `microphone.svg` | 🎙️ | Podcast, prise de parole, interview |
+| `camera.svg` | 📷 | Photo, documentation visuelle |
+| `video.svg` | 🎥 | Vidéo, formation, contenu |
+| `device-mobile.svg` | 📲 | App mobile, communication terrain |
+| `antenna.svg` | 📡 | Connectivité, signal, IoT |
+
+### Documents & Savoir
+| Fichier | Emoji | Usage |
+|---|:---:|---|
+| `book.svg` | 📗 | Formation, guide |
+| `books.svg` | 📚 | Bibliothèque, ressources |
+| `inbox.svg` | 📥 | Réception, collecte |
+| `key.svg` | 🔑 | Accès, sécurité, licence |
+| `pin.svg` | 📌 | Point clé, épinglé |
+| `bulb.svg` | 💡 | Idée, innovation, insight |
+| `sparkles.svg` | ✨ | Nouveauté, excellence, IA |
+
+### Finances & Business
+| Fichier | Emoji | Usage |
+|---|:---:|---|
+| `cash.svg` | 💰 | Revenus, investissement, cash |
+| `trophy.svg` | 🏆 | Performance, succès, KPI |
+| `star.svg` | ⭐️ | Priorité, qualité |
+| `flag.svg` | 🏳️ | Pays, territoire, jalons |
+| `barrel.svg` | 🛢️ | Matière, stock plastique |
+| `microscope.svg` | 🔬 | R&D, analyse, lab |
+| `hourglass.svg` | ⏳ | Délai, durée, deadline |
+
+### Personnes & Relations
+| Fichier | Emoji | Usage |
+|---|:---:|---|
+| `hand-stop.svg` | 🙌🏻 | Collaboration, validation |
+| `heart.svg` | ❤️ | Impact social, bien-être |
+
+### Nature & Environnement
+| Fichier | Emoji | Usage |
+|---|:---:|---|
+| `leaf-2.svg` | 🌿 | Naturalité, bio, organique |
+| `seedling.svg` | 🌱 | Croissance, démarrage, germination |
+| `plant-2.svg` | 🪴 | Culture, soin |
+| `tree.svg` | 🌳 | Forêt, reforestation, CO₂ |
+
+### Transport & Logistique
+| Fichier | Emoji | Usage |
+|---|:---:|---|
+| `plane.svg` | ✈️ | Voyage, export, international |
+| `plane-departure.svg` | 🛫 | Départ, début de mission |
+| `plane-arrival.svg` | 🛬 | Arrivée, réception |
+| `ship.svg` | ⛴️ | Transport maritime, conteneur |
+| `lifebuoy.svg` | 🛟 | Support, sécurité, secours |
+| `rocket.svg` | 🚀 | Lancement, scale-up, ambition |
+
+### Infrastructure
+| Fichier | Emoji | Usage |
+|---|:---:|---|
+| `building.svg` | 🏢 | Bureau, siège, partenaire |
+| `plug.svg` | 🔌 | Connexion électrique, intégration |
+| `tool.svg` | 🔧 | Maintenance, mécanique |
+
+### Alimentation
+| Fichier | Emoji | Usage |
+|---|:---:|---|
+| `tools-kitchen.svg` | 🍽️ | Restauration, alimentation locale |
+
+---
+
+*Icônes manquantes dans Tabler v3.41.1 : `palm-tree` (→ utiliser `tree`), `handshake` (→ utiliser `users-group`), `wrench` (→ utiliser `tool`), `file-cabinet` (→ utiliser `database`)*
