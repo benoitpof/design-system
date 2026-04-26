@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "3.2.3",
+    "version": "3.2.4",
     "generated": "2026-04-26",
     "description": "Format-specific design rules. Every value exact. Pair with brand-tokens.json. Convention: mm partout (SSOT). Inches noted in comments only when pptxgenjs requires it.",
     "changes_from_3.1.0": [
@@ -17,6 +17,13 @@
       "Gradient overlay canonique unique: linear-gradient(135deg, rgba(28,31,59,0.85) 0%, rgba(28,31,59,0.45) 100%). Other gradients = brand violation.",
       "Corner marks migrated from solid squares to L-brackets (4 orientations: TL/TR/BL/BR). 12mm size, teal stroke 5px square cap. Asset: assets/brand-elements/corner-bracket-{tl,tr,bl,br}.svg.",
       "Mode 'final_content' documented in CONTENT-RULES.md to prevent paraphrasing of provided verbatim content."
+    ],
+    "changes_from_3.2.3": [
+      "Integrated 16 chart templates in /examples/charts/ (KPI, bar, stacked, grouped, line, donut, progress, funnel, timeline, gantt, sankey, process, org, tables, radar). Maps excluded — Benoit iterating separately.",
+      "Fixed assets/icons/*.svg: stroke=currentColor (was hardcoded #1A2B4A) — enables CSS recoloring on dark/light backgrounds.",
+      "Fixed assets/icons/*.svg: hex #1A2B4A → #1C1F3B (canonical navy) — alignment with tokens.",
+      "Fixed examples/charts/styles.css: weight 500 → 600, hex #2a3147 → #1C1F3B, #3a4a66 → #435D74, #9db1c2 → #CFD9E0, #eff2f6 → #F9FCFF (canonical palette compliance).",
+      "Rewrote docs/ASSETS.md: full Notion Media Assets DB schema (11 fields), query protocol with filter combinations per use case, ranking heuristic, default values."
     ]
   },
   "slides": {

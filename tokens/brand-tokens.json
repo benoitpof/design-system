@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "3.2.3",
+    "version": "3.2.4",
     "generated": "2026-04-26",
     "schema": "design-tokens-v3",
     "source_of_truth": "GitHub repo benoitpof/design-system tokens/brand-tokens.json",
