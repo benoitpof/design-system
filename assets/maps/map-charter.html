@@ -162,7 +162,7 @@ body {
 /* Spec table */
 .spec-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   gap: 0;
   border: 1px solid var(--neutral);
   border-radius: 8px;
@@ -328,8 +328,11 @@ body {
   width: 14cqw; height: 0.65cqw;
   border-radius: 0.2cqw;
 }
-.heat-teal { background: linear-gradient(to right, #EAEBED 0%, #B8D8D6 25%, #80C7C2 50%, #2BA595 75%, #09414A 100%); }
-.heat-coral { background: linear-gradient(to right, #F9FCFF 0%, #F5C4CB 25%, #E8546C 50%, #B83050 75%, #7A1B2E 100%); }
+.heat-teal         { background: linear-gradient(to right, #EAEBED 0%, #B8D8D6 25%, #80C7C2 50%, #2BA595 75%, #09414A 100%); }
+.heat-coral        { background: linear-gradient(to right, #F9FCFF 0%, #F5C4CB 25%, #E8546C 50%, #B83050 75%, #7A1B2E 100%); }
+.heat-navy-white   { background: linear-gradient(to right, #FFFFFF 0%, #CFD9E0 25%, #7A9BB5 50%, #3A5375 75%, #1C1F3B 100%); }
+.heat-navy-neutral { background: linear-gradient(to right, #EAEBED 0%, #BCCCDB 25%, #7494AD 50%, #3A5375 75%, #1C1F3B 100%); }
+.heat-navy-steel   { background: linear-gradient(to right, #CFD9E0 0%, #8AABB8 25%, #435D74 50%, #2A3B55 75%, #1C1F3B 100%); }
 
 /* Text colors */
 .on-dark .eyebrow { color: var(--teal); }
@@ -472,6 +475,24 @@ body {
     <span class="doc-heat-vals">#F9FCFF → #7A1B2E</span>
     <span class="doc-desc">Risque, urgence, vulnérabilité (usage : 1 seul par deck)</span>
   </div>
+  <div class="doc-heat-row">
+    <span class="doc-label">Navy N1</span>
+    <div class="doc-heat-bar" style="background:linear-gradient(to right,#FFFFFF,#CFD9E0,#7A9BB5,#1C1F3B)"></div>
+    <span class="doc-heat-vals">#FFFFFF → #1C1F3B</span>
+    <span class="doc-desc">Contraste maximal (fond blanc)</span>
+  </div>
+  <div class="doc-heat-row">
+    <span class="doc-label">Navy N2</span>
+    <div class="doc-heat-bar" style="background:linear-gradient(to right,#EAEBED,#BCCCDB,#7494AD,#1C1F3B)"></div>
+    <span class="doc-heat-vals">#EAEBED → #1C1F3B</span>
+    <span class="doc-desc">Fondu naturel depuis le fond de carte</span>
+  </div>
+  <div class="doc-heat-row">
+    <span class="doc-label">Navy N3</span>
+    <div class="doc-heat-bar" style="background:linear-gradient(to right,#CFD9E0,#8AABB8,#435D74,#1C1F3B)"></div>
+    <span class="doc-heat-vals">#CFD9E0 → #1C1F3B</span>
+    <span class="doc-desc">Monochrome bleu, rapport formel</span>
+  </div>
   <div class="doc-note">Règle coral : max 1 heatmap coral par deck. Ne pas combiner teal + coral sur la même slide.</div>
 </div>
 
@@ -539,6 +560,24 @@ body {
   </div>
   <div class="spec-cell">
     <div class="num">E</div>
+    <div class="swatch" style="background:linear-gradient(to right,#FFFFFF,#CFD9E0,#7A9BB5,#1C1F3B)"></div>
+    <div class="name">Navy N1</div>
+    <div class="desc">Blanc → navy · contraste max.</div>
+  </div>
+  <div class="spec-cell">
+    <div class="num">F</div>
+    <div class="swatch" style="background:linear-gradient(to right,#EAEBED,#BCCCDB,#7494AD,#1C1F3B)"></div>
+    <div class="name">Navy N2</div>
+    <div class="desc">Fond carte → navy · fondu naturel.</div>
+  </div>
+  <div class="spec-cell">
+    <div class="num">G</div>
+    <div class="swatch" style="background:linear-gradient(to right,#CFD9E0,#8AABB8,#435D74,#1C1F3B)"></div>
+    <div class="name">Navy N3</div>
+    <div class="desc">Steel-pale → navy · bleu monochrome.</div>
+  </div>
+  <div class="spec-cell">
+    <div class="num">H</div>
     <div class="swatch" style="background:var(--navy);position:relative"><span style="position:absolute;left:20%;top:20%;width:60%;height:60%;background:rgba(128,199,194,0.4);border-radius:4px"></span></div>
     <div class="name">Fond navy</div>
     <div class="desc">Dark mode · teal highlight.</div>
@@ -720,6 +759,138 @@ body {
 </section>
 
 <!-- =============================================
+     E — HEATMAP NAVY · N1 : blanc → navy
+     ============================================= -->
+<section class="var-section">
+  <div class="var-head">
+    <div class="lbl"><span class="badge">E</span>Heatmap navy N1 · blanc → navy · contraste maximum</div>
+    <div class="meta">1920 × 1080 · light</div>
+  </div>
+  <div class="var-body gris-bg">
+    <div class="slide-wrap">
+      <div class="slide" data-map data-config='{
+        "viewBox":"180 100 2220 1000",
+        "heatmap":"navy-white",
+        "heatData":{
+          "PH":0.95,"ID":0.88,"VN":0.74,"TH":0.65,"MY":0.52,"MM":0.48,"IN":0.92,"BD":0.72,"LK":0.38,"PK":0.44,
+          "CN":0.85,"JP":0.20,"KR":0.18,
+          "NG":0.71,"EG":0.55,"DZ":0.28,"MA":0.32,"ZA":0.22,"CI":0.68,"GH":0.55,"SN":0.62,"KE":0.42,"TZ":0.35,"MG":0.58,"CM":0.50,
+          "BR":0.42,"MX":0.38,"CO":0.22,"PE":0.18,"AR":0.14,
+          "US":0.30,"CA":0.10,"FR":0.12,"ES":0.16,"IT":0.18,"GB":0.10,"DE":0.08,"TR":0.36,"GR":0.18,
+          "AU":0.12,"NZ":0.06,"RU":0.18
+        },
+        "fadeEdges":["top","bottom"],
+        "bg":"light"
+      }'>
+        <div class="fade-layer" id="fadeE"></div>
+        <div class="map-layer" id="mapE"></div>
+        <div class="slide-header overlay-light on-light">
+          <div class="eyebrow">Heatmap navy · N1 · blanc → navy</div>
+          <h3 class="map-title">Intensité — échelle blanc → navy</h3>
+          <p class="map-sub">Contraste maximal · fond blanc · usage : données à forte amplitude</p>
+        </div>
+        <div class="slide-footer overlay-light on-light">
+          <div class="heat-bar-wrap">
+            <span>0</span>
+            <div class="heat-bar heat-navy-white"></div>
+            <span>100%</span>
+          </div>
+          <span class="source-line">Exemple · données normalisées</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     F — HEATMAP NAVY · N2 : fond carte → navy
+     ============================================= -->
+<section class="var-section">
+  <div class="var-head">
+    <div class="lbl"><span class="badge">F</span>Heatmap navy N2 · fond carte → navy · fondu naturel</div>
+    <div class="meta">1920 × 1080 · light</div>
+  </div>
+  <div class="var-body gris-bg">
+    <div class="slide-wrap">
+      <div class="slide" data-map data-config='{
+        "viewBox":"180 100 2220 1000",
+        "heatmap":"navy-neutral",
+        "heatData":{
+          "PH":0.95,"ID":0.88,"VN":0.74,"TH":0.65,"MY":0.52,"MM":0.48,"IN":0.92,"BD":0.72,"LK":0.38,"PK":0.44,
+          "CN":0.85,"JP":0.20,"KR":0.18,
+          "NG":0.71,"EG":0.55,"DZ":0.28,"MA":0.32,"ZA":0.22,"CI":0.68,"GH":0.55,"SN":0.62,"KE":0.42,"TZ":0.35,"MG":0.58,"CM":0.50,
+          "BR":0.42,"MX":0.38,"CO":0.22,"PE":0.18,"AR":0.14,
+          "US":0.30,"CA":0.10,"FR":0.12,"ES":0.16,"IT":0.18,"GB":0.10,"DE":0.08,"TR":0.36,"GR":0.18,
+          "AU":0.12,"NZ":0.06,"RU":0.18
+        },
+        "fadeEdges":["top","bottom"],
+        "bg":"light"
+      }'>
+        <div class="fade-layer" id="fadeF"></div>
+        <div class="map-layer" id="mapF"></div>
+        <div class="slide-header overlay-light on-light">
+          <div class="eyebrow">Heatmap navy · N2 · neutre → navy</div>
+          <h3 class="map-title">Intensité — départ fond de carte #EAEBED</h3>
+          <p class="map-sub">Les pays à 0 se fondent dans le fond · usage : mise en valeur des forts scores</p>
+        </div>
+        <div class="slide-footer overlay-light on-light">
+          <div class="heat-bar-wrap">
+            <span>0</span>
+            <div class="heat-bar heat-navy-neutral"></div>
+            <span>100%</span>
+          </div>
+          <span class="source-line">Exemple · données normalisées</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     G — HEATMAP NAVY · N3 : steel-pale → navy
+     ============================================= -->
+<section class="var-section">
+  <div class="var-head">
+    <div class="lbl"><span class="badge">G</span>Heatmap navy N3 · steel-pale → navy · monochrome bleu</div>
+    <div class="meta">1920 × 1080 · light</div>
+  </div>
+  <div class="var-body gris-bg">
+    <div class="slide-wrap">
+      <div class="slide" data-map data-config='{
+        "viewBox":"180 100 2220 1000",
+        "heatmap":"navy-steel",
+        "heatData":{
+          "PH":0.95,"ID":0.88,"VN":0.74,"TH":0.65,"MY":0.52,"MM":0.48,"IN":0.92,"BD":0.72,"LK":0.38,"PK":0.44,
+          "CN":0.85,"JP":0.20,"KR":0.18,
+          "NG":0.71,"EG":0.55,"DZ":0.28,"MA":0.32,"ZA":0.22,"CI":0.68,"GH":0.55,"SN":0.62,"KE":0.42,"TZ":0.35,"MG":0.58,"CM":0.50,
+          "BR":0.42,"MX":0.38,"CO":0.22,"PE":0.18,"AR":0.14,
+          "US":0.30,"CA":0.10,"FR":0.12,"ES":0.16,"IT":0.18,"GB":0.10,"DE":0.08,"TR":0.36,"GR":0.18,
+          "AU":0.12,"NZ":0.06,"RU":0.18
+        },
+        "fadeEdges":["top","bottom"],
+        "bg":"light"
+      }'>
+        <div class="fade-layer" id="fadeG"></div>
+        <div class="map-layer" id="mapG"></div>
+        <div class="slide-header overlay-light on-light">
+          <div class="eyebrow">Heatmap navy · N3 · steel-pale → navy</div>
+          <h3 class="map-title">Intensité — palette steel monochrome</h3>
+          <p class="map-sub">Toute la gamme dans la famille bleue · usage : rapport formel, sans couleur chaude</p>
+        </div>
+        <div class="slide-footer overlay-light on-light">
+          <div class="heat-bar-wrap">
+            <span>0</span>
+            <div class="heat-bar heat-navy-steel"></div>
+            <span>100%</span>
+          </div>
+          <span class="source-line">Exemple · données normalisées</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
      H — DARK MODE · pays colorés + heatmap
      ============================================= -->
 <section class="var-section">
@@ -800,6 +971,29 @@ body {
   };
 
   /* ------ HEATMAP SCALES ------ */
+  /* Navy heatmap — 3 déclinaisons */
+  const SCALE_NAVY_WHITE = [   // N1 : blanc → navy (contraste max)
+    [0.00, [255,255,255]],
+    [0.25, [207,217,224]],
+    [0.50, [122,155,181]],
+    [0.75, [58, 83,106]],
+    [1.00, [28, 31, 59]]
+  ];
+  const SCALE_NAVY_NEUTRAL = [ // N2 : fond carte → navy (fondu naturel)
+    [0.00, [234,235,237]],
+    [0.25, [188,204,215]],
+    [0.50, [116,148,173]],
+    [0.75, [58, 83,106]],
+    [1.00, [28, 31, 59]]
+  ];
+  const SCALE_NAVY_STEEL = [   // N3 : steel-pale → steel → navy (monochrome bleu)
+    [0.00, [207,217,224]],
+    [0.25, [138,171,184]],
+    [0.50, [67, 93,116]],
+    [0.75, [42, 59, 85]],
+    [1.00, [28, 31, 59]]
+  ];
+
   const SCALE_TEAL = [
     [0.00, [234,235,237]],
     [0.25, [184,216,214]],
@@ -955,7 +1149,10 @@ body {
 
     // Heatmap
     if (cfg.heatmap && cfg.heatData) {
-      const scale = cfg.heatmap === 'coral' ? SCALE_CORAL
+      const scale = cfg.heatmap === 'coral'        ? SCALE_CORAL
+                  : cfg.heatmap === 'navy-white'   ? SCALE_NAVY_WHITE
+                  : cfg.heatmap === 'navy-neutral' ? SCALE_NAVY_NEUTRAL
+                  : cfg.heatmap === 'navy-steel'   ? SCALE_NAVY_STEEL
                   : dark ? SCALE_TEAL_DARK : SCALE_TEAL;
       Object.entries(cfg.heatData).forEach(([iso, val]) => {
         const el = svgEl.querySelector(`[data-iso2="${iso}"]`);
@@ -1023,6 +1220,9 @@ body {
     { slideId: 'mapB', fadeId: 'fadeB' },
     { slideId: 'mapC', fadeId: 'fadeC' },
     { slideId: 'mapD', fadeId: 'fadeD' },
+    { slideId: 'mapE', fadeId: 'fadeE' },
+    { slideId: 'mapF', fadeId: 'fadeF' },
+    { slideId: 'mapG', fadeId: 'fadeG' },
     { slideId: 'mapH', fadeId: 'fadeH' }
   ];
 
