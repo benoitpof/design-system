@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "3.2.4",
+    "version": "3.2.5",
     "generated": "2026-04-26",
     "description": "Format-specific design rules. Every value exact. Pair with brand-tokens.json. Convention: mm partout (SSOT). Inches noted in comments only when pptxgenjs requires it.",
     "changes_from_3.1.0": [
@@ -24,6 +24,9 @@
       "Fixed assets/icons/*.svg: hex #1A2B4A → #1C1F3B (canonical navy) — alignment with tokens.",
       "Fixed examples/charts/styles.css: weight 500 → 600, hex #2a3147 → #1C1F3B, #3a4a66 → #435D74, #9db1c2 → #CFD9E0, #eff2f6 → #F9FCFF (canonical palette compliance).",
       "Rewrote docs/ASSETS.md: full Notion Media Assets DB schema (11 fields), query protocol with filter combinations per use case, ranking heuristic, default values."
+    ],
+    "changes_from_3.2.4": [
+      "Explicit shadow_forbidden rule on corner_marks (L-brackets). No drop-shadow, no filter, no blur, no opacity reduction, ever. Audit confirmed clean SVG assets — rule is documented for future-proofing against rendering-side injection (CSS, PowerPoint shape effects, artifact iframes)."
     ]
   },
   "slides": {
@@ -114,8 +117,23 @@
       "_violation_examples": [
         "solid filled rectangles (deprecated v3.2.2)",
         "blank squares without stroke",
-        "different color than #80C7C2"
-      ]
+        "different color than #80C7C2",
+        "any shadow",
+        "any blur",
+        "any opacity reduction",
+        "PowerPoint shape effect 'Shadow' applied",
+        "CSS filter:drop-shadow on parent container"
+      ],
+      "shadow_forbidden": true,
+      "effects_forbidden": [
+        "drop-shadow",
+        "inner-shadow",
+        "filter:blur",
+        "filter:drop-shadow",
+        "PowerPoint shape shadow",
+        "css opacity < 1"
+      ],
+      "rendering_rule": "Render as flat L-bracket strokes only. No depth effect of any kind. Brand mark is geometric, not skeuomorphic."
     },
     "content_zone": {
       "x_mm": 26.7,

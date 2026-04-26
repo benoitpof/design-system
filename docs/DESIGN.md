@@ -1,6 +1,6 @@
 # DESIGN.md — Plastic Odyssey Factories Design System
 
-**Version:** 3.2.4 | **Updated:** 2026-04-26
+**Version:** 3.2.5 | **Updated:** 2026-04-26
 **Source of truth:** `tokens/brand-tokens.json` + `tokens/brand-rules-per-format.json`
 **Template reference:** `Template_POF_Claude.pptx` (LAYOUT_WIDE 20"×11.25" / 508×285.75 mm)
 **Coordinate convention:** mm partout (SSOT). Inches en commentaire pour pptxgenjs.
@@ -20,6 +20,8 @@ Single canonical value: `linear-gradient(135deg, rgba(28,31,59,0.85) 0%, rgba(28
 
 ### Corner marks lock
 L-brackets in 4 orientations: `assets/brand-elements/corner-bracket-{tl,tr,bl,br}.svg`. Size 12 mm. Color #80C7C2. Stroke 5px square cap. Default pair on every slide = TL + BR. Solid filled squares (deprecated v3.2.2) **forbidden**.
+
+**No shadow, ever.** Corner marks are flat geometric strokes. Forbidden : drop-shadow (CSS or SVG `filter`), PowerPoint shape effect 'Shadow', `opacity < 1`, blur. The L-brackets must render exactly as authored — pure teal strokes on transparent background, zero depth effect. This rule applies whether the rendering target is a slide, a web page, a report, an artifact preview, or any other medium.
 
 ### Verbatim content mode
 When user brief contains `<final_content>...</final_content>` tags or the phrase "this is final content / verbatim / do not edit": preserve wording exactly, only redistribute across layout slots. Never substitute with examples from CONTENT-RULES.md.
