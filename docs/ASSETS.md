@@ -1,6 +1,6 @@
 # ASSETS.md — POF Brand Asset Index
 
-**Version:** 3.2.4 | **Updated:** 2026-04-26
+**Version:** 3.3.0 | **Updated:** 2026-04-26
 All paths relative to `/assets/` unless stated otherwise.
 
 This document covers two complementary asset stores:
@@ -37,7 +37,13 @@ This document covers two complementary asset stores:
 
 These are the brand symbol (waves stacked). Use as: standalone mark, loading states, favicon, decorative corner, internal asset only. **NOT a UI icon.** For UI icons see `/assets/icons/` below.
 
-### UI icons — `/assets/icons/` (curated Tabler shortlist)
+### UI icons — `/assets/icons/` — see `docs/ICONS.md`
+
+170 SVG icons in 2 folders (v3.2.6):
+- `ecology/` — 8 themes × 4 variants (currentColor, _navy, _teal, _white) = 32 SVG
+- `environment/` — 46 themes × 3 variants (_navy, _teal, _white) = 138 SVG
+
+For full inventory and selection workflow, see `docs/ICONS.md`. For Tabler CDN fallback, see same doc section 2.
 
 55 SVG icons (47 root + 8 in `/ecology/` subfolder) covering POF use cases:
 factory & production (barrel, tools, cash, flag), ecology (leaf-2, plant-2, seedling, tree, recycle), logistics (ship, plane, plane-arrival, plane-departure, truck), people & impact (heart, hand-stop, lifebuoy, trophy, sparkles), data & process (chart, refresh, settings, arrows-shuffle), comms (mail, microphone, video, camera).
@@ -70,6 +76,29 @@ For full list, browse `/assets/icons/`. To add new icons, source from Tabler Ico
 | `bg-wave-02.svg` | 1920×1080 px | Full navy gradient + waves | Full-bleed dark slides |
 
 Always full-bleed when used. Text on top: white only (never navy or teal). For text legibility over photo + bg: layer the canonical photo overlay gradient (`tokens.gradient_overlay_lock.canonical_value`).
+
+---
+
+
+### Maps — `/assets/maps/`
+
+POF cartographic system — see `docs/MAPS.md` for full charter.
+
+| File | Type | Description |
+|------|------|-------------|
+| `pof-world-map-blank.svg` | Master vector | World map, 175 country paths with ISO-2/3 IDs and group metadata (UEMOA, CEDEAO, AU). Source for all map work. |
+| `pof-world-map-annotated.svg` | Master with labels | Same as blank + country labels for priority POF countries |
+| `pof-world-map.svg` | Legacy alias | Same as blank, kept for backward references |
+| `pof-world-map-doc.md`, `POF-WORLD-MAP-GUIDE.md` | Docs | Country IDs, group definitions, JS query examples |
+| `pof-world-map-v1.1.0.zip` | Release | Versioned package |
+| `svg/01-monde.svg` to `svg/07-ocean-indien-est.svg` | 7 regional crops | Pre-cropped views (Monde, SE Asia, Africa, Indonesia, Philippines, West Africa, East Africa & Indian Ocean) |
+| `png-source/01..07.png` | PNG raster source | High-res rasters for the 7 regional views |
+| `map-charter.html` | Interactive charter | 5 patterns visualized (heatmap, categorical, neutral dots, data dots, anchored faded) + 3 navy heatmap N1/N2/N3 variants |
+| `USAGE.md` | Asset guide | Use case + layer structure for each regional SVG |
+| `_map-data.js` | Data utility | JS helpers for country selection and coloring |
+
+For map patterns spec (heatmap, categorical, dots, anchored), see `docs/MAPS.md`.
+
 
 ---
 

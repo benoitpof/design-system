@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "3.2.5",
+    "version": "3.3.0",
     "generated": "2026-04-26",
     "description": "Format-specific design rules. Every value exact. Pair with brand-tokens.json. Convention: mm partout (SSOT). Inches noted in comments only when pptxgenjs requires it.",
     "changes_from_3.1.0": [
@@ -27,6 +27,20 @@
     ],
     "changes_from_3.2.4": [
       "Explicit shadow_forbidden rule on corner_marks (L-brackets). No drop-shadow, no filter, no blur, no opacity reduction, ever. Audit confirmed clean SVG assets — rule is documented for future-proofing against rendering-side injection (CSS, PowerPoint shape effects, artifact iframes)."
+    ],
+    "changes_from_3.2.5": [
+      "FIX: 162 icons regression — sed #1A2B4A → #1C1F3B + #80c8c3 → #80C7C2 (canonical palette restored).",
+      "ADD charts_lock block: max 1 legend per chart, palette enforcement, cross-medium constraints.",
+      "ADD maps_lock block: 5 patterns canonical, 3 region overlays canonical, anchoring rules, cross-medium constraints.",
+      "ADD docs/MAPS.md (1.0) — 5 patterns + region overlays charter.",
+      "ADD docs/CHARTS.md (1.0) — 16 templates catalog.",
+      "REWRITE docs/ICONS.md (2.0) — 3 sources (curated, Tabler CDN, brand picto).",
+      "SYNC docs/ASSETS.md (3.3.0) — full Notion DB schema + Maps section.",
+      "REWRITE README.md — cross-medium philosophy + structure complete.",
+      "ADD examples/email-signatures/ — 3 entities HTML signatures Outlook+Gmail compatible.",
+      "ADD examples/excel/pof-dashboard-template.xlsx — 3 sheets (Dashboard KPI, Data, Chart).",
+      "VECTORIZE assets/maps/svg/02-07.svg — 6 regional crops now proper vector (was PNG-embedded). 4-layer structure (bg, base, overlay, fade).",
+      "Notion DB 'Design System Feedback' created (collection a3f73a10-caf3-4726-b37f-421244a9cc6f) for weekly feedback consolidation."
     ]
   },
   "slides": {
@@ -735,6 +749,168 @@
       "linear-gradient(105deg, ...)",
       "linear-gradient(135deg, rgba(28,31,59,0.92) ...)",
       "Any gradient with stops different from 0.85 -> 0.45"
+    ]
+  },
+  "charts_lock": {
+    "_enforcement": "STRICT",
+    "_description": "Format rules for charts in examples/charts/ and any newly-generated chart asset.",
+    "catalog_path": "examples/charts/",
+    "catalog_count": 16,
+    "max_legends_per_chart": 1,
+    "max_series": 6,
+    "max_pie_slices": 5,
+    "palette_required": "tokens/brand-tokens.json colors.chart_palette",
+    "forbidden": [
+      "gridlines",
+      "chart borders / plot area outlines",
+      "3D effects",
+      "perspective / depth shading",
+      "drop-shadow blur > 12px",
+      "auto color schemes from chart libraries",
+      "two legends on one chart",
+      "animated transitions in print/PPTX exports"
+    ],
+    "cross_medium_constraints": {
+      "no_css_gradients_on_data_series": true,
+      "no_backdrop_filter": true,
+      "no_mix_blend_mode": true,
+      "no_mask_image": true,
+      "min_stroke_width_pt": 0.25,
+      "raster_export_for_pptx": true,
+      "_rationale": "Cross-renderer parity (web / PowerPoint / print)"
+    },
+    "mandatory_elements": [
+      "title",
+      "axis labels (when applicable)",
+      "source caption (when data sourced)"
+    ]
+  },
+  "maps_lock": {
+    "_enforcement": "STRICT",
+    "_description": "POF cartographic system. Source of truth: assets/maps/pof-world-map-blank.svg.",
+    "patterns_canonical": {
+      "1_heatmap": {
+        "stops": [
+          "#F9FCFF",
+          "#CFD9E0",
+          "#80C7C2",
+          "#435D74",
+          "#1C1F3B"
+        ],
+        "no_data_fill": "#EAEBED",
+        "stroke": "#FFFFFF",
+        "stroke_width_pt": 0.8
+      },
+      "2_categorical": {
+        "active": "#1C1F3B",
+        "pipeline": "#435D74",
+        "featured": "#80C7C2",
+        "context": "#EAEBED",
+        "no_data": "#F9FCFF"
+      },
+      "3_neutral_dots": {
+        "fill": "#1C1F3B",
+        "stroke": "#FFFFFF",
+        "diameter_px": 12
+      },
+      "4_data_dots": {
+        "fill": "#1C1F3B",
+        "stroke": "#FFFFFF",
+        "scaling_formula": "r = sqrt(value / max_value) * R_max",
+        "R_max_range_px": [
+          12,
+          36
+        ],
+        "label_inside": "Raleway Bold white, font_size = clamp(9pt, r/3, 18pt)"
+      },
+      "5_anchored_faded": {
+        "map_opacity": 0.5,
+        "gradient_white_to_transparent_stop": 0.6,
+        "anchor_required": true,
+        "_inline_pptx": "<a:alphaModFix amt=\"50000\"/>"
+      }
+    },
+    "region_overlays_canonical": {
+      "WEST_AFRICA_REGION": [
+        "SN",
+        "ML",
+        "BF",
+        "NE",
+        "NG",
+        "CI",
+        "GH",
+        "TG",
+        "BJ",
+        "GN",
+        "SL",
+        "LR",
+        "MR",
+        "GW",
+        "GM",
+        "CV"
+      ],
+      "EAST_AFRICA_INDIAN_OCEAN": [
+        "KE",
+        "TZ",
+        "UG",
+        "RW",
+        "BI",
+        "ET",
+        "SO",
+        "ER",
+        "DJ",
+        "SS",
+        "SD",
+        "MG",
+        "KM",
+        "MU",
+        "SC",
+        "MZ",
+        "MW",
+        "ZM",
+        "ZW"
+      ],
+      "SOUTH_EAST_ASIA": [
+        "MM",
+        "TH",
+        "LA",
+        "VN",
+        "KH",
+        "MY",
+        "SG",
+        "BN",
+        "ID",
+        "PH",
+        "TL"
+      ]
+    },
+    "region_label_color": "#E8546C",
+    "region_label_forbidden_color": "#FF5A60",
+    "region_ellipse": {
+      "fill": "none",
+      "stroke": "#1C1F3B",
+      "stroke_width_pt": 1.5,
+      "stroke_dasharray": "6 4",
+      "stroke_linecap": "round"
+    },
+    "anchoring_required": true,
+    "max_legends_per_map": 1,
+    "cross_medium_constraints": {
+      "country_fills_solid_only": true,
+      "heatmap_stops_pre_computed_no_interpolation": true,
+      "only_allowed_gradient": "Pattern 5 anchored white-to-transparent fade",
+      "no_filter_no_dropshadow_no_blur_anywhere": true,
+      "raster_export_for_pptx_when_alpha_used": true
+    },
+    "forbidden": [
+      "map floating centered with whitespace on all sides",
+      "Mercator projection (use Robinson)",
+      "country borders > 0.8pt",
+      "graticule",
+      "scale bar",
+      "compass / north arrow",
+      "two legends on one map",
+      "shadow / drop-shadow / blur on any element"
     ]
   }
 }

@@ -1,6 +1,6 @@
 # DESIGN.md — Plastic Odyssey Factories Design System
 
-**Version:** 3.2.5 | **Updated:** 2026-04-26
+**Version:** 3.3.0 | **Updated:** 2026-04-26
 **Source of truth:** `tokens/brand-tokens.json` + `tokens/brand-rules-per-format.json`
 **Template reference:** `Template_POF_Claude.pptx` (LAYOUT_WIDE 20"×11.25" / 508×285.75 mm)
 **Coordinate convention:** mm partout (SSOT). Inches en commentaire pour pptxgenjs.

@@ -1,223 +1,109 @@
-# POF Design System — Icon Library
+# ICONS.md — POF Icon System
 
-> **101 pictos** · 3 variantes couleur chacun · 303 fichiers SVG totaux
-> Tous les fichiers sont auto-suffisants — **aucune dépendance CDN**.
+**Version:** 2.0 | **Updated:** 2026-04-26 | **Design system:** v3.3.0
+
+POF icon system uses three sources, in priority order :
+
+1. **POF curated icons in repo** (`/assets/icons/ecology/` and `/assets/icons/environment/`)
+2. **Tabler Icons via CDN** (fallback for generic UI icons)
+3. **POF brand pictos** (`/assets/pictos/`) — brand mark only, NOT a UI icon
 
 ---
 
-## Utilisation
+## 1. POF curated icons — `/assets/icons/`
 
-Chaque picto existe en 3 variantes couleur dans le repo :
+### `ecology/` — 8 themes × 4 variants = 32 SVG
 
-```
-{nom}_{couleur}.svg
-```
+Themes : `bolt`, `droplet`, `fish`, `flame`, `leaf`, `planet`, `recycle`, `solar-panel`
 
-| Variante | Couleur | Usage |
+Variant pattern :
+
+| Suffix | Color strategy | Use |
 |---|---|---|
-| `_navy.svg` | `#1A2B4A` | Fond blanc ou clair — usage par défaut |
-| `_white.svg` | `#FFFFFF` | Fond marine, teal, sombre |
-| `_teal.svg` | `#80C8C3` | Accent, mise en valeur sur fond marine |
+| `<name>.svg` | `stroke="currentColor"` | Recolor via CSS (`color: ...`). Preferred when context allows CSS theming. |
+| `<name>_navy.svg` | hardcoded `#1C1F3B` | Embed in PPTX, DOCX, PDF — anywhere CSS does not apply. Default for light backgrounds. |
+| `<name>_teal.svg` | hardcoded `#80C7C2` | Accent / highlight on white or navy backgrounds. |
+| `<name>_white.svg` | hardcoded `#FFFFFF` | On dark / navy backgrounds. |
 
-### Intégration dans pptxgenjs
+### `environment/` — 46 themes × 3 variants = 138 SVG
 
-```js
-const fs = require("fs");
-const svgData = path =>
-  "image/svg+xml;base64," + Buffer.from(fs.readFileSync(path, "utf8")).toString("base64");
+Themes covering POF operations : agriculture, arbre, borne-collecte, borne-depot, circularite, cle-outil, contenant-eco, contenant-reutilisable, eau-propre, mobilite-electrique, plastique-1 à plastique-7 (resin codes), produit-eco-concu, produit-marin, verre-recyclable, etc.
 
-// Icône "tool" en navy sur fond blanc
-slide.addImage({ data: svgData("assets/icons/tool_navy.svg"), x:1, y:1, w:0.6, h:0.6 });
+Variant pattern : `_navy`, `_teal`, `_white` (no unsuffixed `currentColor` variant in this folder yet — to be added in v3.2.7).
 
-// Picto env "poubelle-de-tri" blanc sur fond marine
-slide.addImage({ data: svgData("assets/icons/environment/poubelle-de-tri_white.svg"), x:1, y:1, w:1, h:1 });
+### Selection workflow
+
+1. Identify icon need → look in `ecology/` first, then `environment/`
+2. Pick the right variant for the medium :
+   - Slide on light bg → `_navy` (or unsuffixed if CSS-controlled HTML)
+   - Slide on dark bg → `_white`
+   - Accent / call-out → `_teal`
+   - Web (HTML/CSS) → unsuffixed + CSS `color: var(--pof-navy)`
+
+### Canonical colors enforcement
+
+All POF icons in repo use only canonical hex :
+- navy `#1C1F3B`
+- teal `#80C7C2`
+- white `#FFFFFF`
+- `currentColor` (CSS-controlled)
+
+Forbidden in icons : `#1A2B4A`, `#1D1E3A`, `#75DBCD`, `#80C8C3`, `#1C2D2B`, any other variant. Audited and enforced as of v3.2.6.
+
+---
+
+## 2. Tabler Icons — fallback CDN
+
+When POF curated icons do not cover a need, use Tabler Icons via CDN :
+
+```
+https://unpkg.com/@tabler/icons/icons/outline/[name].svg
 ```
 
-### Tailles recommandées (LAYOUT_WIDE 13.3"×7.5")
+Examples : `building-factory-2`, `container`, `package`, `truck`, `arrows-exchange`, `chart-bar`, `users`, `settings`, `mail`.
 
-| Contexte | Taille |
+When integrating a Tabler icon :
+1. Fetch SVG from CDN
+2. Replace `stroke="currentColor"` is already there — keep it
+3. For PPTX / DOCX / PDF : recolor by adding `style="color: #1C1F3B"` on parent or rasterize at target color
+4. Document the icon used in the deliverable's source caption when relevant
+
+Do NOT commit Tabler icons back into this repo. The CDN is the source.
+
+---
+
+## 3. POF pictos — brand mark — `/assets/pictos/`
+
+Two files only :
+
+| File | Color | Use |
+|---|---|---|
+| `pof-picto-color.svg` | Teal `#80C7C2` | Mark on light backgrounds |
+| `pof-picto-white.svg` | White | Mark on dark backgrounds |
+
+This is the POF brand symbol (waves stacked). Use cases : favicon, loading state, decorative corner mark, internal asset.
+
+**NOT a UI icon.** Do not place it inline in body text or as a generic icon for content.
+
+---
+
+## Size guide (LAYOUT_WIDE slides)
+
+| Use case | Render size |
 |---|---|
-| Icône feature card | 0.6"×0.6" |
-| Icône inline header | 0.4"×0.4" |
-| Hero full-width | 1.0"×1.0" |
-| Picto environnement | 0.9"×0.9" |
+| Feature card icon | 0.6 × 0.6" (rasterize at 256px for PPTX) |
+| Inline header icon | 0.4 × 0.4" |
+| Full-width hero icon | 1.0 × 1.0" |
+| Process step icon | 0.5 × 0.5" |
+| Web (HTML/CSS) | 24 × 24 px to 64 × 64 px depending on context |
 
 ---
 
-## Structure du repo
+## Forbidden
 
-```
-assets/icons/
-├── environment/          # 46 pictos environnement + conteneurs + plastiques (Étapes 2&3) × 3 couleurs
-│   ├── poubelle-de-tri_navy.svg
-│   ├── poubelle-de-tri_white.svg
-│   ├── poubelle-de-tri_teal.svg
-│   └── ...
-├── ecology/              # 8 icônes écologie redesignées (Étape 2) × 3 couleurs
-│   ├── recycle_navy.svg
-│   └── ...
-├── tool_navy.svg         # 47 icônes générales (Tabler v3.41.1) × 3 couleurs — Étape 1
-└── ...
-```
-
----
-
-## Section 1 — Pictos Environnement (custom POF)
-
-> Source : vectorisation filaire OpenCV depuis PPTX POF · ViewBox 984×984 · sw=45
-> Dossier : `assets/icons/environment/`
-
-| Fichier slug | Nom FR | Description |
-|---|---|---|
-| `poubelle-de-tri` | Poubelle de tri | Collecte et tri des ressources plastiques |
-| `recyclage` | Recyclage | Symbole recyclage, boucle matière générale |
-| `eau-recyclee` | Eau recyclée | Circuit eau fermé, ressource hydrique |
-| `circularite` | Circularité | Économie circulaire, boucle produit |
-| `collecte-mobile` | Collecte mobile | Camion collecte et transport matière |
-| `emballage-recycle` | Emballage recyclé | Sac / emballage recyclable en fin de vie |
-| `cle-outil` | Clé / outil | Équipement, maintenance, accès technique |
-| `don-vegetal` | Don végétal | Apport de matière, collecte verte |
-| `contenant-eco` | Contenant éco | Bouteille / emballage environnemental |
-| `co2` | CO2 | Émissions carbone, bilan GES |
-| `affichage-eco` | Affichage éco | Information environnementale, reporting |
-| `document-recycle` | Document recyclé | Fiche de tri, documentation recyclage |
-| `innovation-verte` | Innovation verte | Idée éco, R&D, solution durable |
-| `etiquette-recyclable` | Étiquette recyclable | Label écologique, certification produit |
-| `contenant-reutilisable` | Contenant réutilisable | Bocal / emballage réutilisable |
-| `produit-eco-concu` | Produit éco-conçu | Spray, produit chimique écologique |
-| `plastique-marin` | Plastique marin | Pollution océan, recyclage mer |
-| `verre-recyclable` | Verre recyclable | Verre, matière fragile, recyclage verre |
-| `agriculture` | Agriculture | Culture locale, main verte, agriculture |
-| `borne-de-collecte` | Borne de collecte | Point de collecte digital / kiosque |
-| `vegetal` | Végétal | Nature, espace vert, reforestation |
-| `textile-recycle` | Textile recyclé | Mode éco, fast fashion circulaire |
-| `industrie-verte` | Industrie verte | Usine écologique, ville durable |
-| `usine-recyclage` | Usine recyclage | Site de traitement des ressources plastiques |
-| `eau-propre` | Eau propre | Eau potable, robinet, économie eau |
-| `energie-verte` | Énergie verte | Centrale éco, production d'énergie propre |
-| `energie-solaire` | Énergie solaire | Panneaux solaires, solaire off-grid |
-| `point-de-collecte` | Point de collecte | Corbeille, bac de collecte |
-| `produit-marin` | Produit marin | Pêche, produit de la mer, plastique océan |
-| `sac-recyclable` | Sac recyclable | Emballage collecte, sac réutilisable |
-| `arbre` | Arbre | Reforestation, nature, séquestration CO2 |
-| `borne-depot` | Borne dépôt | Borne de dépôt matière, point fixe |
-| `eolien` | Éolien | Énergie éolienne, vent, renouvelable |
-| `mobilite-electrique` | Mobilité électrique | Véhicule électrique, recharge, logistique verte |
-| `economie-circulaire` | Économie circulaire | Cycle complet, réutilisation, boucle fermée |
-| `liquide-huile` | Liquide / huile | Produit liquide, huile, matière fluide |
-| `danger-nucleaire` | Danger / nucléaire | Symbole danger, matière radioactive |
-| `velo` | Vélo | Mobilité douce, transport durable, vélo |
-
----
-
-## Section 2 — Écologie (Tabler outline)
-
-> Source : Tabler Icons v3.41.1 (MIT) — stockés localement, pas de CDN
-> ViewBox 24×24 · sw=2 · Dossier : `assets/icons/ecology/`
-
-| Fichier slug | Usage |
-|---|---|
-| `recycle` | Boucle plastique, circularité |
-| `leaf` | Durabilité, impact environnemental |
-| `solar-panel` | Énergie solaire, solar-ready |
-| `droplet` | Circuit eau fermé, eau recyclée |
-| `planet` | Planète, pollution globale |
-| `fish` | Océan, plastic leakage, contexte marin |
-| `bolt` | Énergie, efficacité opérationnelle |
-| `flame` | Thermique, valorisation énergétique |
-
----
-
-## Section 3 — Icônes générales (Tabler v3.41.1)
-
-> Source : Tabler Icons v3.41.1 (MIT) — stockés localement, pas de CDN
-> ViewBox 24×24 · sw=2 · Dossier : `assets/icons/`
-
-| Fichier slug | Usage |
-|---|---|
-| `tool` | Maintenance, réparation, technique |
-| `settings` | Configuration, paramètres système |
-| `writing` | Rédaction, signature, contenu |
-| `pencil` | Édition, annotation |
-| `notes` | Notes, mémos, suivi terrain |
-| `paperclip` | Pièce jointe, document lié |
-| `refresh` | Synchronisation, mise à jour |
-| `arrows-shuffle` | Réorganisation, allocation matière |
-| `player-play` | Lancer, démarrer, activer |
-| `circle-x` | Annulation, refus, erreur |
-| `copyright` | Droits, propriété intellectuelle |
-| `mail` | Email, correspondance officielle |
-| `microphone` | Podcast, prise de parole |
-| `camera` | Photo, documentation terrain |
-| `video` | Vidéo, formation, contenu |
-| `star` | Favori, excellence |
-| `heart` | Impact social, valeurs |
-| `home` | Siège, accueil, local |
-| `building-factory-2` | Site de production, usine |
-| `map-pin` | Localisation, site, terrain |
-| `users` | Équipe, communauté, partenaires |
-| `user-check` | Validation, certification |
-| `chart-bar` | Métriques, KPIs, reporting |
-| `trending-up` | Croissance, progression |
-| `coin` | Budget, coût, investissement |
-| `currency-dollar` | Revenus, pricing |
-| `shopping-cart` | Achat, marketplace |
-| `package` | Produit, livraison, kit |
-| `truck` | Logistique, transport |
-| `building-warehouse` | Entrepôt, stockage, hub |
-| `certificate` | Certification, label |
-| `shield-check` | Sécurité, conformité |
-| `file-text` | Document, rapport |
-| `clipboard-list` | Checklist, protocole |
-| `world` | International, global |
-| `plane` | Déplacement, mission, export |
-| `tree` | Nature, reforestation |
-| `hand-stop` | Stop, refus |
-| `users-group` | Partenariat, réseau |
-| `server` | Infrastructure, data |
-| `cloud` | Cloud, sauvegarde |
-| `link` | Connexion, intégration |
-| `qrcode` | QR code, traçabilité |
-| `barcode` | Code barre, identification |
-| `lock` | Sécurité, accès restreint |
-| `key` | Accès, authentification |
-
----
-
-## Charte couleur
-
-| Couleur | Hex | Usage |
-|---|---|---|
-| Marine POF | `#1A2B4A` | Fond clair — standard |
-| Blanc | `#FFFFFF` | Fond sombre / marine |
-| Teal | `#80C8C3` | Accent sur fond marine |
-
-> Jamais coral `#E8546C` pour les icônes.
-
----
-
-## Licence
-
-- Pictos environnement : © Plastic Odyssey Factories — tous droits réservés
-- Tabler Icons : MIT License — https://tabler.io/icons
-
----
-
-## Section 4 — Conteneurs ISO & Codes plastiques SPI (Étape 2)
-
-> Source : vectorisation filaire POF custom · ViewBox 984×984 · sw=45
-> Dossier : `assets/icons/environment/`
-
-| Fichier slug | Nom FR | Description |
-|---|---|---|
-| `conteneur-20ft` | Conteneur 20' | Conteneur ISO 20 pieds avec nervures + coins |
-| `conteneur-40ft` | Conteneur 40' | Conteneur ISO 40 pieds (8 nervures) |
-| `plastique-1-pet` | Plastique 1 — PET | Polyéthylène téréphtalate, bouteilles boissons |
-| `plastique-2-hdpe` | Plastique 2 — HDPE | Polyéthylène haute densité, bidons, tuyaux |
-| `plastique-3-pvc` | Plastique 3 — PVC | Polychlorure de vinyle, profilés, tuyaux |
-| `plastique-4-ldpe` | Plastique 4 — LDPE | Polyéthylène basse densité, films, sachets |
-| `plastique-5-pp` | Plastique 5 — PP | Polypropylène, capsules, pots, fibres |
-| `plastique-6-ps` | Plastique 6 — PS | Polystyrène, barquettes, emballages rigides |
-
-> Icône triangle Möbius avec numéro SPI centré — standard de codage plastiques recyclables.
-
+- Any color outside the canonical palette
+- Coral `#E8546C` for icons (emphasis only, not iconography)
+- Adding shadow, drop-shadow, blur, filter to icons
+- Using brand picto as a UI icon
+- Stretching, rotating, or distorting icons
+- Mixing Tabler icons and POF curated icons in the same row / context (visual inconsistency)
