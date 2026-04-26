@@ -1,6 +1,6 @@
 # POF Design System — Icon Library
 
-> **93 pictos** · 3 variantes couleur chacun · 279 fichiers SVG totaux
+> **101 pictos** · 3 variantes couleur chacun · 303 fichiers SVG totaux
 > Tous les fichiers sont auto-suffisants — **aucune dépendance CDN**.
 
 ---
@@ -48,15 +48,15 @@ slide.addImage({ data: svgData("assets/icons/environment/poubelle-de-tri_white.s
 
 ```
 assets/icons/
-├── environment/          # 38 pictos environnement custom (filaire POF) × 3 couleurs
+├── environment/          # 46 pictos environnement + conteneurs + plastiques (Étapes 2&3) × 3 couleurs
 │   ├── poubelle-de-tri_navy.svg
 │   ├── poubelle-de-tri_white.svg
 │   ├── poubelle-de-tri_teal.svg
 │   └── ...
-├── ecology/              # 8 icônes écologie (Tabler outline) × 3 couleurs
+├── ecology/              # 8 icônes écologie redesignées (Étape 2) × 3 couleurs
 │   ├── recycle_navy.svg
 │   └── ...
-├── tool_navy.svg         # 47 icônes générales (Tabler v3.41.1) × 3 couleurs
+├── tool_navy.svg         # 47 icônes générales (Tabler v3.41.1) × 3 couleurs — Étape 1
 └── ...
 ```
 
@@ -200,3 +200,24 @@ assets/icons/
 
 - Pictos environnement : © Plastic Odyssey Factories — tous droits réservés
 - Tabler Icons : MIT License — https://tabler.io/icons
+
+---
+
+## Section 4 — Conteneurs ISO & Codes plastiques SPI (Étape 2)
+
+> Source : vectorisation filaire POF custom · ViewBox 984×984 · sw=45
+> Dossier : `assets/icons/environment/`
+
+| Fichier slug | Nom FR | Description |
+|---|---|---|
+| `conteneur-20ft` | Conteneur 20' | Conteneur ISO 20 pieds avec nervures + coins |
+| `conteneur-40ft` | Conteneur 40' | Conteneur ISO 40 pieds (8 nervures) |
+| `plastique-1-pet` | Plastique 1 — PET | Polyéthylène téréphtalate, bouteilles boissons |
+| `plastique-2-hdpe` | Plastique 2 — HDPE | Polyéthylène haute densité, bidons, tuyaux |
+| `plastique-3-pvc` | Plastique 3 — PVC | Polychlorure de vinyle, profilés, tuyaux |
+| `plastique-4-ldpe` | Plastique 4 — LDPE | Polyéthylène basse densité, films, sachets |
+| `plastique-5-pp` | Plastique 5 — PP | Polypropylène, capsules, pots, fibres |
+| `plastique-6-ps` | Plastique 6 — PS | Polystyrène, barquettes, emballages rigides |
+
+> Icône triangle Möbius avec numéro SPI centré — standard de codage plastiques recyclables.
+
