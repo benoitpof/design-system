@@ -116,3 +116,11 @@ The catalog is the source. Single chats producing one-off charts must NOT be the
 - Weights : `[300, 400, 600, 700]`. No 500.
 - Colors : canonical palette + chart_palette extensions only.
 - No shadow on chart elements (except subtle drop shadow on stat callout if needed, max 12px blur).
+
+---
+
+## Memory — capitalisation Rex (v3.4.0)
+
+<!-- ds-iterate écrit ici. Format : ### YYYY-MM-DD — <titre> -->
+
+(vide pour l'instant)

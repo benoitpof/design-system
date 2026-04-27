@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POF Design System · Architecture v3.4.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Raleway:ital,wght@0,300;0,400;0,600;0,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--neutral-mid);padding:14px 32px;display:flex;align-items:center;gap:16px}
+.topbar .brand img{height:26px}
+.topbar .crumbs{font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;color:var(--gray-600);letter-spacing:1px;text-transform:uppercase}
+.topbar .version{font-family:'Poppins',sans-serif;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal-dark);background:rgba(128,199,194,.12);padding:3px 8px;border-radius:3px}
+.topbar-nav{margin-left:auto;display:flex;gap:8px}
+.topbar-nav a{font-family:'Poppins',sans-serif;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase}
+.topbar-nav a:hover,.topbar-nav a.active{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.page{max-width:1280px;margin:0 auto;padding:48px 32px 96px}
+.hero h1{font-family:'Poppins',sans-serif;font-weight:800;font-size:36px;color:var(--navy);margin:0 0 8px}
+.hero p{font-family:'Raleway',sans-serif;color:var(--steel);max-width:720px}
+.diagram{background:#fff;border:1px solid var(--neutral-mid);border-radius:8px;padding:32px;margin-top:32px;overflow-x:auto}
+.section h2{font-family:'Poppins',sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-600);margin:48px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--neutral-mid)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="brand" href="index.html"><img src="https://raw.githubusercontent.com/benoitpof/design-system/main/assets/logos/pof-logo-color.svg" alt="POF"></a>
+  <span class="crumbs">Design System · Architecture</span>
+  <span class="version">v3.4.0</span>
+  <nav class="topbar-nav">
+    <a href="index.html">Overview</a>
+    <a href="architecture.html" class="active">Architecture</a>
+    <a href="https://github.com/benoitpof/design-system">GitHub</a>
+  </nav>
+</div>
+
+<main class="page">
+  <header class="hero">
+    <h1>Architecture v3.4.0</h1>
+    <p>Diagramme des couches du design system : SSOT GitHub, working memory Notion, skills Cowork, génération output. Cliquer sur un nœud du diagramme pour ouvrir la doc associée.</p>
+  </header>
+
+  <section class="section">
+    <h2>Couches du système</h2>
+    <div class="diagram">
+      <pre class="mermaid">
+flowchart TB
+    subgraph SSOT["GitHub - SSOT"]
+        TOK["tokens/"]
+        DR["docs/rules/"]
+        DL["docs/layouts/"]
+        MEM["memory/"]
+        EX["examples/"]
+        GO["golden/"]
+        TPL["templates/"]
+    end
+
+    subgraph NOTION["Notion - Working memory"]
+        MA["Media Assets DB"]
+        FB["DS Feedback DB"]
+        IC["Illustrations en cours"]
+    end
+
+    subgraph SKILLS["Cowork Skills"]
+        DZ["DS-Dataviz-generator"]
+        FA["ds-file-assembler"]
+        IT["ds-iterate"]
+        FBS["ds-feedback"]
+    end
+
+    subgraph OUT["Outputs"]
+        DECK["Slide decks"]
+        REP["Reports"]
+        WEB["Web pages"]
+        SOC["Social posts"]
+    end
+
+    SSOT -- "lit règles" --> SKILLS
+    NOTION -- "lit assets en cours" --> SKILLS
+    SKILLS -- "génère" --> OUT
+    SKILLS -- "log" --> NOTION
+    IT -- "PR sur SSOT" --> SSOT
+    FBS -- "log feedback" --> NOTION
+
+    classDef ssot fill:#1C1F3B,color:#fff,stroke:#80C7C2,stroke-width:2px
+    classDef notion fill:#F9FCFF,color:#1C1F3B,stroke:#435D74,stroke-width:1px
+    classDef skill fill:#80C7C2,color:#1C1F3B,stroke:#1C1F3B,stroke-width:1px
+    classDef out fill:#fff,color:#1C1F3B,stroke:#E8546C,stroke-width:1px
+    class SSOT,TOK,DR,DL,MEM,EX,GO,TPL ssot
+    class NOTION,MA,FB,IC notion
+    class SKILLS,DZ,FA,IT,FBS skill
+    class OUT,DECK,REP,WEB,SOC out
+      </pre>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Flux de génération (deck/report/web/social)</h2>
+    <div class="diagram">
+      <pre class="mermaid">
+sequenceDiagram
+    participant U as Benoît
+    participant FA as ds-file-assembler
+    participant DZ as DS-Dataviz-generator
+    participant N as Notion
+    participant G as GitHub SSOT
+    participant O as Output
+
+    U->>FA: brief (type=deck/report/web/social)
+    FA->>G: lit docs/layouts/<TYPE>.md + rules
+    FA->>N: cherche assets existants
+    alt asset manque
+        FA->>DZ: génère asset
+        DZ->>G: lit rules + memory
+        DZ->>N: cherche similar
+        DZ->>N: pousse asset (état=En cours)
+        DZ->>U: notifie pour review
+        U->>N: commente
+        DZ->>N: itère jusqu'à validation
+    end
+    FA->>O: assemble document final
+    FA->>U: livre output
+    U->>FBS: log Rex (optional)
+    FBS->>N: stocke feedback
+      </pre>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Cycle d'itération du design system</h2>
+    <div class="diagram">
+      <pre class="mermaid">
+flowchart LR
+    A["Production livrable"] --> B["ds-feedback log"]
+    B --> C{"Mode ds-iterate"}
+    C -->|"manuel ad-hoc"| D["Capitalisation immédiate"]
+    C -->|"scheduled weekly"| E["Cluster + diagnostic"]
+    D --> F["PR sur memory/*.md"]
+    E --> F
+    F --> G{"Type modif"}
+    G -->|"rules-only"| H["Auto-merge (review minute)"]
+    G -->|"Skill / DB"| I["Validation Benoît obligatoire"]
+    I --> J["Merge manuel"]
+    H --> K["DS v+1"]
+    J --> K
+
+    classDef accent fill:#80C7C2,color:#1C1F3B
+    classDef warn fill:#E8546C,color:#fff
+    class C,G accent
+    class I warn
+      </pre>
+    </div>
+  </section>
+</main>
+
+<script>
+mermaid.initialize({startOnLoad:true,theme:'base',themeVariables:{
+  primaryColor:'#F9FCFF',primaryTextColor:'#1C1F3B',primaryBorderColor:'#1C1F3B',
+  lineColor:'#435D74',secondaryColor:'#80C7C2',tertiaryColor:'#fff',
+  fontFamily:'Poppins, sans-serif'
+}});
+</script>
+
+</body>
+</html>

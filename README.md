@@ -1,102 +1,107 @@
 # POF Design System — `benoitpof/design-system`
 
-**Version:** 3.3.10 | **Updated:** 2026-04-26
+**Version:** 3.4.0 | **Updated:** 2026-04-27
 **Slide format:** LAYOUT_WIDE 20 × 11.25" (508 × 285.75 mm), 16:9
 **Coordinates:** mm primary (SSOT). Inches in comments for pptxgenjs.
 
-Source of truth for all Plastic Odyssey Factories brand assets, design tokens, and layout specifications. Cross-medium consistent (web / PowerPoint / print).
+Source de vérité unique pour tous les assets, layouts, et règles de génération de contenus Plastic Odyssey Factories. Cross-medium consistent : web, slide deck, report A4, social media.
+
+**Galerie visuelle :** https://benoitpof.github.io/design-system/ (à activer dans Settings → Pages → main / `/site` folder)
 
 ---
 
-## How to use this repo
+## Comment utiliser ce repo
 
-Before generating any asset (slide, page, report, chart, map, icon usage, photo selection), read these files in this order:
+Avant de générer un asset (slide, page, report, chart, map, icon, photo), lire ces fichiers dans cet ordre :
 
-1. `docs/DESIGN.md` — brand DNA, hard locks (type-scale, weight, gradient, corner marks)
+1. `docs/rules/DESIGN.md` — brand DNA, hard locks (type-scale, weight, gradient, corner marks)
 2. `tokens/brand-tokens.json` — colors, typography, spacing, components, entity overrides
 3. `tokens/brand-rules-per-format.json` — slides, docs, web, excel, linkedin, charts, maps, icons rules
-4. `docs/LAYOUTS.md` — 15 canonical slide layouts L01–L15
-5. `docs/CONTENT-RULES.md` — narrative content rules + RAW vs FINAL confirmation step
+4. `docs/layouts/<MEDIUM>.md` — DECK / REPORT / WEB / SOCIAL selon le livrable
+5. `docs/rules/CONTENT-RULES.md` — narrative content rules + RAW vs FINAL confirmation step
 
-Specialized references on demand:
+Références spécialisées sur demande :
 
-- `docs/ASSETS.md` — asset index + Notion Media Assets DB schema and query protocol
-- `docs/ICONS.md` — POF curated icons (ecology, environment) + Tabler CDN fallback + brand pictos
-- `docs/MAPS.md` — 5 map patterns (heatmap, categorical, neutral dots, data dots, anchored faded) + region overlays
-- `docs/CHARTS.md` — 16 chart templates catalog (bar, line, donut, funnel, gantt, sankey, tables, etc.)
+- `docs/rules/ASSETS.md` — index assets + Notion Media Assets DB schema et query protocol
+- `docs/rules/ICONS.md` — Tabler CDN + brand pictos POF
+- `docs/rules/MAPS.md` — 5 patterns (heatmap, categorical, neutral dots, data dots, anchored faded)
+- `docs/rules/CHARTS.md` — 16 chart templates catalog
+- `docs/rules/PHOTOS.md` — sources autorisées, recadrage, overlay system 5 presets
+- `docs/rules/TABLES.md` — règles tableaux par medium (slide, report, web, excel)
 - `assets/maps/map-charter.html` — interactive visual charter for map patterns
-- `examples/charts/` — 16 ready-to-use chart templates HTML+CSS
+- `examples/charts/index.html` — 16 ready-to-use chart templates HTML+CSS
 
 ---
 
-## Repo structure
+## Repo structure (v3.4.0)
 
 ```
-/tokens/
-  brand-tokens.json              ← colors, typography, components (SSOT)
-  brand-tokens.css               ← CSS custom properties version
-  brand-rules-per-format.json    ← format rules: slides, docs, web, charts, maps, etc.
-
-/assets/
-  /logos/                        ← 5 SVG (color, white, navy-bg, variant-1, variant-2)
-  /pictos/                       ← 2 SVG brand mark (color, white) — NOT a UI icon
-  /icons/
-    /ecology/                    ← 8 themes × 4 variants = 32 SVG
-    /environment/                ← 46 themes × 3 variants = 138 SVG
-  /brand-elements/               ← waves + 4 corner brackets (TL/TR/BL/BR + canonical alias)
-  /backgrounds/                  ← 2 SVG full-bleed
-  /maps/                         ← world map base + 7 regional crops + interactive charter
+/tokens/                   ← SSOT colors, typography, components
+  brand-tokens.json
+  brand-tokens.css
+  brand-rules-per-format.json
 
 /docs/
-  DESIGN.md                      ← brand DNA + hard locks v3.2.6
-  LAYOUTS.md                     ← 15 canonical slide layouts
-  CONTENT-RULES.md               ← narrative rules + RAW vs FINAL mode
-  ASSETS.md                      ← asset index + Notion DB schema
-  ICONS.md                       ← icon system (3 sources)
-  MAPS.md                        ← map system (5 patterns)
-  CHARTS.md                      ← chart catalog (16 templates)
+  /rules/                  ← règles par sujet (transverses)
+    DESIGN.md  CONTENT-RULES.md  ASSETS.md
+    CHARTS.md  MAPS.md  ICONS.md  PHOTOS.md  TABLES.md
+  /layouts/                ← layouts par medium
+    DECK.md  REPORT.md  WEB.md  SOCIAL.md
 
-/examples/
-  /charts/                       ← 16 chart HTML+CSS templates ready to use
+/memory/                   ← Rex capitalisés par ds-iterate
+  deck.md  report.md  web.md  social.md
+  chart.md  map.md  photo.md  icon.md
+
+/assets/                   ← static brand assets
+  /logos/  /pictos/  /icons/  /brand-elements/  /backgrounds/  /maps/
+
+/examples/                 ← exemples par type (avec subdirs)
+  /charts/  /maps/  /deck/  /report/  /web/  /social/
+  /email-signatures/  /excel/
+
+/golden/                   ← golden references (hard limit 5 par type)
+  /deck/  /chart/  /map/  /report/  /web/  /social/  /photo/
+
+/templates/                ← master files binaires (pptx, docx, html)
+
+/site/                     ← GitHub Pages V1
+  index.html  architecture.html  styles.css  _nav.js
+
+/scripts/                  ← générateurs et outils
+  generate-docx-templates.js
+  generate-pptx-layouts.js
+  (à venir : pof-asset-render.py, composition-qa.py, build-gallery.py)
+
+/.archive/                 ← archives (ne pas modifier)
+  /changelogs/             ← 16 CHANGELOG-v3.X.X.md historiques
+
+CHANGELOG.md               ← historique consolidé
+ITERATE.md                 ← guide ds-iterate
+VISUALIZE.md               ← URL gallery + local preview
+README.md                  ← ce fichier
 ```
 
 ---
 
-## Cross-medium philosophy
+## Architecture v3.4.0 — 3 skills
 
-Every asset must render consistently across web (HTML/CSS), PowerPoint (PPTX), and print (PDF). To ensure this:
-- Solid fills only on data series (no CSS gradients on bars, country fills, etc.)
-- Web fonts Poppins + Raleway with `sans-serif` fallback
-- No `backdrop-filter`, no `mix-blend-mode`, no `mask-image`
-- Single canonical photo overlay gradient (no other gradients allowed)
-- Pre-rasterize SVG to PNG at 2× when alpha channel is used in PPTX export
+1. **DS-Dataviz-generator** — génère charts, maps, tables. Cherche d'abord dans Notion, sinon génère.
+2. **ds-file-assembler** — assemble decks, reports, web pages, social posts. Orchestre DS-Dataviz-generator.
+3. **ds-iterate** — capitalise les apprentissages dans `memory/` et propose des modifs sur les `rules/`.
 
-Detailed cross-medium constraints in each lock block of `tokens/brand-rules-per-format.json` (`charts_lock.cross_medium_constraints`, `maps_lock.cross_medium_constraints`).
+Loops :
+- **ds-feedback** (skill atomique) — log ingest des Rex en mode quick / iterate.
+- **Notion = working memory** uniquement (Media Assets DB, DS Feedback DB).
+- **GitHub = SSOT** : règles, golden, code, templates.
 
----
-
-## Entity scope
-
-POF Factories only (v3.3.3). Academy and Sunu PO removed from the design system per scope decision.
+Voir `site/architecture.html` pour les diagrammes mermaid.
 
 ---
 
-## Photos / dynamic media
+## Versioning et release
 
-Stored in Notion (not in this repo). Database: `collection://8ca51a75-2413-4f72-8f2a-c44d445fa1d0`. Schema and query protocol in `docs/ASSETS.md` section 2.
+- Modif règles (rules/) ou layouts (layouts/) = bump patch (v3.4.1 → v3.4.2)
+- Modif tokens/ = bump minor (v3.4.x → v3.5.0)
+- Modif structure repo / Skills = bump major (v3.x.x → v4.0.0)
+- Toute modif passe par PR (jamais commit direct sur main). Voir `ITERATE.md`.
 
-This repo is the **index and protocol** for photos. Notion is the **source**.
-
----
-
-## Hard locks (v3.2.6 — STRICT)
-
-Summarized here, full details in `docs/DESIGN.md` and `tokens/brand-rules-per-format.json`:
-
-- Sizes (pt) ONLY in `[9, 11, 14, 18, 22, 26, 36]` + stat-only `[72, 120]`
-- Weights ONLY in `[300, 400, 600, 700]`. ExtraBold (800) restricted. Black (900) forbidden.
-- Photo overlay ONLY: `linear-gradient(135deg, rgba(28,31,59,0.85) 0%, rgba(28,31,59,0.45) 100%)`
-- Corner marks: L-brackets only. NO shadow, NO drop-shadow, NO blur, NO opacity reduction.
-- Canonical colors only. No `#1A2B4A`, `#1D1E3A`, `#75DBCD`, `#80C8C3`, `#FF5A60`.
-- Charts: max 1 legend per chart, no gridlines, no chart borders, no 3D.
-- Maps: anchored to slide edge required. 5 canonical patterns. Region overlays from canonical list only.

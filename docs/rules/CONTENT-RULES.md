@@ -253,3 +253,11 @@ If the user does not specify and the brief is short or note-form (< 200 words), 
 If the user provides a structured document (.docx, .pdf, full sentences with proper punctuation, > 500 words), default to FINAL CONTENT and confirm with the user.
 
 This confirmation is non-skippable for any first-time generation in a chat session. Subsequent regenerations in the same chat inherit the previously-confirmed mode unless the user states otherwise.
+
+---
+
+## Memory — capitalisation Rex (v3.4.0)
+
+<!-- ds-iterate écrit ici. Format : ### YYYY-MM-DD — <titre> -->
+
+(vide pour l'instant)

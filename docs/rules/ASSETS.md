@@ -214,3 +214,11 @@ When in doubt about a brand value:
 6. **This file (`docs/ASSETS.md`)** — asset index, photo DB schema and query protocol
 
 For dynamic media (photos), Notion DB is the source. This repo is the index and protocol.
+
+---
+
+## Memory — capitalisation Rex (v3.4.0)
+
+<!-- ds-iterate écrit ici. Format : ### YYYY-MM-DD — <titre> -->
+
+(vide pour l'instant)

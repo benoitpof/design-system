@@ -226,3 +226,11 @@ Query via MCP. Filter by `Entité (BU)`, `Type`, `Usage recommandé`, `Orientati
 - Hex codes outside the token set
 - Header bar accent lines under titles (per PPTX skill guidance)
 - Any color not listed in section 2
+
+---
+
+## Memory — capitalisation Rex (v3.4.0)
+
+<!-- ds-iterate écrit ici. Format : ### YYYY-MM-DD — <titre> -->
+
+(vide pour l'instant)
