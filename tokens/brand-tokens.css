@@ -57,7 +57,7 @@
      GRADIENTS
      -------------------------------------------------------- */
   --pof-gradient-navy-overlay: linear-gradient(135deg, rgba(28, 31, 59, 0.85) 0%, rgba(28, 31, 59, 0.45) 100%); /* canonical lock v3.2.3 */
-  --pof-gradient-navy-depth:   linear-gradient(180deg, #1C1F3B 0%, #80C7C2 100%); /* navy → teal v3.3.2 */
+  --pof-gradient-navy-depth:   linear-gradient(45deg, rgba(128,199,194,0.38) 0%, rgba(128,199,194,0) 60%), #1C1F3B; /* bottom-left teal glow on navy v3.3.5 */
   --pof-gradient-teal:         linear-gradient(345deg, #2BA595 0%, #80C7C2 100%);
 
   /* --------------------------------------------------------

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "3.3.4",
+    "version": "3.3.5",
     "generated": "2026-04-27",
     "description": "Format-specific design rules. Every value exact. Pair with brand-tokens.json. Convention: mm partout (SSOT). Inches noted in comments only when pptxgenjs requires it.",
     "changes_from_3.1.0": [
@@ -69,6 +69,14 @@
       "Add body_slide (22pt / 30px) and body_print (11pt / 15px) to typography.scale.",
       "Refine typography.body_variants with 3 explicit entries (slide / print / web) — visible in Claude Design preview.",
       "No change to slides.font_size_mapping or print_lock — values were already correct, just explicit in scale now."
+    ],
+    "changes_from_3.3.4": [
+      "ADD assets/maps/svg/00-monde-cropped.svg — new master basemap (Americas + Antarctica dropped, 3 fades baked-in: top/left/bottom). 148 countries, no labels. Use as default world view for slides.",
+      "ADD maps_lock.heatmap_palettes.teal_only — 5 stops #F1FBFA → #80C7C2 → #2BA595 → #09414A. Use for Pattern 1 + R3 regional examples instead of navy palette.",
+      "ADD maps_lock.fade_rules — fade gradient must NOT overlap colored highlights (use clipPath if needed). Legends rendered LAST in z-order, never inside fade region.",
+      "ADD components.button_ghost spec — light: steel #435D74 border + text, hover #CFD9E0 bg. Dark: light-steel #5F7D95 border + text, hover white 8%. Hierarchy: Primary > Secondary > Danger > Ghost (lowest emphasis).",
+      "REFINE colors.gradients.navy_depth_subtle — direction from bottom-left corner, transition to fully transparent (not solid teal end). Final teal opacity 38% on solid navy base. Per user iterations 2026-04-27.",
+      "ARCHIVE environment icons — moved to assets/icons/_archived/environment/. Removed from active scope per user feedback. Reversible by un-archiving."
     ]
   },
   "slides": {
@@ -966,7 +974,55 @@
       "compass / north arrow",
       "two legends on one map",
       "shadow / drop-shadow / blur on any element"
-    ]
+    ],
+    "heatmap_palettes": {
+      "N1_white_to_navy": {
+        "stops": [
+          "#F9FCFF",
+          "#CFD9E0",
+          "#80C7C2",
+          "#435D74",
+          "#1C1F3B"
+        ],
+        "use": "Default heatmap on white bg"
+      },
+      "N2_neutral_to_navy": {
+        "stops": [
+          "#EAEBED",
+          "#CFD9E0",
+          "#80C7C2",
+          "#435D74",
+          "#1C1F3B"
+        ],
+        "use": "Heatmap on light gray bg"
+      },
+      "N3_steel_to_navy": {
+        "stops": [
+          "#CFD9E0",
+          "#80C7C2",
+          "#2BA595",
+          "#435D74",
+          "#1C1F3B"
+        ],
+        "use": "Heatmap with skewed-high data"
+      },
+      "T1_teal_only": {
+        "stops": [
+          "#F1FBFA",
+          "#80C7C2",
+          "#2BA595",
+          "#09414A"
+        ],
+        "use": "Teal-only — Pattern 1 section header + R3 regional Indian Ocean. NO navy.",
+        "_added_in": "v3.3.5"
+      }
+    },
+    "fade_rules": {
+      "no_overlap_with_colored": true,
+      "_description": "Fade gradient overlay must not cover colored country highlights or data dots. Use clipPath excluding colored geometry, OR position fade only on side(s) without colored elements.",
+      "legend_z_order": "top — always rendered LAST in SVG, never inside fade region",
+      "fade_start_at_viewbox_edge": "Pattern 5 fade gradient START coordinate must coincide with viewBox edge, not start inside the visible area"
+    }
   },
   "color_hierarchy_lock": {
     "_enforcement": "STRICT",
