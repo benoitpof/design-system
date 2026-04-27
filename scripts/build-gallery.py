@@ -40,6 +40,60 @@ shutil.copytree(ROOT / 'examples', BUILD / 'examples')
 shutil.copytree(ROOT / 'assets', BUILD / 'assets')
 print(f'[2] Copied examples/ + assets/ -> _site/')
 
+
+# ---------- 2b. Rewrap chart pages with DS topbar ----------
+def rewrap_chart_pages():
+    """Wrap each examples/charts/*.html with a DS topbar at the top of body.
+    The chart content stays as-is (preserves the SVG previews and chart-specific styles).
+    """
+    charts_dir = BUILD / 'examples' / 'charts'
+    if not charts_dir.exists():
+        return 0
+    
+    DS_TOPBAR = """
+<style>
+.ds-topbar{{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid #EAEBED;padding:12px 32px;display:flex;align-items:center;gap:14px;font-family:'Poppins',sans-serif}}
+.ds-topbar img{{height:24px}}
+.ds-topbar .crumbs{{font-size:10px;font-weight:600;color:#6C757D;letter-spacing:1px;text-transform:uppercase}}
+.ds-topbar .version{{font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#2BA595;background:rgba(128,199,194,.12);padding:3px 8px;border-radius:3px}}
+.ds-topbar .nav{{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}}
+.ds-topbar .nav a{{font-size:9px;font-weight:600;color:#1C1F3B;text-decoration:none;padding:7px 12px;border:1px solid #EAEBED;border-radius:4px;text-transform:uppercase;letter-spacing:.5px}}
+.ds-topbar .nav a:hover{{border-color:#80C7C2;background:rgba(128,199,194,.07)}}
+</style>
+<div class="ds-topbar">
+  <a href="/design-system/index.html"><img src="/design-system/assets/logos/pof-logo-color.svg" alt="POF"></a>
+  <span class="crumbs">{breadcrumb}</span>
+  <span class="version">v3.4.0</span>
+  <nav class="nav">
+    <a href="/design-system/index.html">Overview</a>
+    <a href="/design-system/charts.html">All charts</a>
+    <a href="/design-system/maps.html">Maps</a>
+    <a href="/design-system/icons.html">Icons</a>
+    <a href="/design-system/architecture.html">Architecture</a>
+    <a href="/design-system/workflows.html">Workflows</a>
+  </nav>
+</div>
+"""
+    
+    count = 0
+    for html_file in charts_dir.glob('*.html'):
+        if html_file.name.startswith('_'):
+            continue
+        text = html_file.read_text()
+        # Determine breadcrumb from filename
+        stem = html_file.stem
+        breadcrumb = f'Chart Bank / {stem}'
+        topbar = DS_TOPBAR.format(breadcrumb=breadcrumb)
+        # Inject after <body> tag
+        if '<body>' in text and 'ds-topbar' not in text:
+            text = text.replace('<body>', '<body>\n' + topbar, 1)
+            html_file.write_text(text)
+            count += 1
+    return count
+
+charts_rewrapped = rewrap_chart_pages()
+print(f'[2b] Rewrapped {charts_rewrapped} chart pages with DS topbar')
+
 # ---------- 3. Markdown -> HTML rendering ----------
 import markdown
 md = markdown.Markdown(extensions=['fenced_code', 'tables', 'codehilite', 'sane_lists', 'toc'])
@@ -206,17 +260,17 @@ print(f'[3d] Rendered root md files')
 def build_icons_gallery():
     icons_dir = ROOT / 'assets/icons'
     cats = []
-    # Root-level SVG (the active set)
-    root_svgs = sorted(icons_dir.glob('*.svg'))
+    # Root-level SVG (the active set) — filter out _archived
+    root_svgs = sorted([f for f in icons_dir.glob('*.svg')])
     if root_svgs:
-        cats.append(('environment (active)', root_svgs))
-    # Subdirectories (e.g. _archived/ecology, _archived/environment)
-    for cat_dir in sorted([d for d in icons_dir.iterdir() if d.is_dir()]):
+        cats.append(('environment · active', root_svgs))
+    # Subdirectories — SKIP _archived
+    for cat_dir in sorted([d for d in icons_dir.iterdir() if d.is_dir() and not d.name.startswith('_')]):
         svgs = sorted(cat_dir.glob('*.svg'))
         if svgs:
             cats.append((cat_dir.name, svgs))
         for sub in cat_dir.iterdir():
-            if sub.is_dir():
+            if sub.is_dir() and not sub.name.startswith('_'):
                 ssvgs = sorted(sub.glob('*.svg'))
                 if ssvgs:
                     cats.append((f'{cat_dir.name}/{sub.name}', ssvgs))
@@ -282,8 +336,7 @@ def build_icons_gallery():
     <a href="charts.html">Charts</a>
     <a href="maps.html">Maps</a>
     <a href="icons.html" class="active">Icons</a>
-    <a href="workflows.html">Workflows</a>
-    <a href="databases.html">DBs</a>
+    <a href="workflows.html">Workflows &amp; DBs</a>
     <a href="https://github.com/benoitpof/design-system">GitHub</a>
   </nav>
 </div>
@@ -329,6 +382,30 @@ def build_architecture():
     def walk(p, prefix='', is_last=True):
         entries = sorted([e for e in p.iterdir() if e.name not in skip_dirs and not e.name.startswith('.')], 
                         key=lambda x: (x.is_file(), x.name))
+        # Truncate at 5 entries per dir if all entries are files of same type
+        if len(entries) > 5 and all(e.is_file() for e in entries):
+            same_ext = len({e.suffix for e in entries}) == 1
+            if same_ext:
+                truncated = entries[:5]
+                hidden = len(entries) - 5
+                for i, e in enumerate(truncated):
+                    last = i == len(truncated) - 1 and hidden == 0
+                    connector = '└── ' if last else '├── '
+                    display = e.name
+                    size = ''
+                    try:
+                        s = e.stat().st_size
+                        if s < 1024: size = f' ({s} B)'
+                        elif s < 1024*1024: size = f' ({s//1024} KB)'
+                        else: size = f' ({s//(1024*1024)} MB)'
+                    except: pass
+                    rel = e.relative_to(ROOT).as_posix()
+                    link = f' <a href="{GH_BLOB}/{rel}" target="_blank">→ GitHub</a>'
+                    tree_lines.append(f'<div class="tline">{prefix}{connector}<span class="f">{display}</span><span class="meta">{size}{link}</span></div>')
+                # Show "..."
+                rel_dir = p.relative_to(ROOT).as_posix()
+                tree_lines.append(f'<div class="tline">{prefix}└── <span class="more">... {hidden} autres .{entries[0].suffix.lstrip(".")} (<a href="{GH_TREE}/{rel_dir}" target="_blank">voir tout sur GitHub</a>)</span></div>')
+                return
         for i, e in enumerate(entries):
             last = i == len(entries) - 1
             connector = '└── ' if last else '├── '
@@ -404,8 +481,7 @@ def build_architecture():
     <a href="charts.html">Charts</a>
     <a href="maps.html">Maps</a>
     <a href="icons.html">Icons</a>
-    <a href="workflows.html">Workflows</a>
-    <a href="databases.html">DBs</a>
+    <a href="workflows.html">Workflows &amp; DBs</a>
     <a href="https://github.com/benoitpof/design-system">GitHub</a>
   </nav>
 </div>
@@ -472,6 +548,7 @@ def workflow_card_svg(slug):
 
 def build_workflows():
     cards = []
+    db_cards = []
     for w in WORKFLOW_DEFS:
         triggers_html = ' '.join(f'<code>{t}</code>' for t in w['triggers'])
         cards.append(f'''
@@ -485,10 +562,23 @@ def build_workflows():
   </div>
 </a>''')
     
+    for db in DB_DEFS:
+        props_html = ' · '.join(f"<code>{p}</code>" for p in db['props'][:5])
+        if len(db['props']) > 5:
+            props_html += '...'
+        db_cards.append(f'''
+<a class="card db-card" href="databases/{db['slug']}.html">
+  <div class="meta">
+    <div class="num">{db['num']} · NOTION DB</div>
+    <div class="name">{db['name']}</div>
+    <div class="desc">{db['desc']}</div>
+    <div class="props">{props_html}</div>
+  </div>
+</a>''')
     page = f'''<!DOCTYPE html>
 <html lang="fr">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>POF · Workflows · v3.4.0</title>
+<title>POF · Workflows et DBs · v3.4.0</title>
 <link rel="stylesheet" href="styles.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -514,6 +604,9 @@ def build_workflows():
 .desc{{font-family:Raleway;font-size:13px;color:var(--gray-600);line-height:1.5;margin-bottom:10px}}
 .triggers{{font-family:Poppins;font-size:9px;font-weight:600;letter-spacing:1px;color:var(--teal-dark);border-top:1px solid var(--neutral-mid);padding-top:10px;margin-top:8px}}
 .triggers code{{background:rgba(128,199,194,.12);padding:2px 6px;border-radius:3px;color:var(--teal-dark);margin-right:4px;display:inline-block;margin-bottom:3px;font-family:Poppins;font-size:9px}}
+.db-card .meta{{padding:24px}}
+.db-card .props{{border-top:1px solid var(--neutral-mid);padding-top:12px;margin-top:14px;font-family:Raleway;font-size:11px;color:var(--steel)}}
+.db-card .props code{{font-family:'Roboto Mono',monospace;font-size:10px;background:rgba(128,199,194,.1);padding:1px 5px;border-radius:3px;color:var(--teal-dark);margin:0 2px}}
 @media(max-width:960px){{.grid{{grid-template-columns:1fr}}}}
 </style>
 </head>
@@ -528,19 +621,22 @@ def build_workflows():
     <a href="charts.html">Charts</a>
     <a href="maps.html">Maps</a>
     <a href="icons.html">Icons</a>
-    <a href="workflows.html" class="active">Workflows</a>
-    <a href="databases.html">DBs</a>
+    <a href="workflows.html" class="active">Workflows &amp; DBs</a>
     <a href="https://github.com/benoitpof/design-system">GitHub</a>
   </nav>
 </div>
 <header class="hero">
-  <h1>Workflows · 4 skills</h1>
-  <p>Skills Cowork qui pilotent la génération, l'assemblage, la capitalisation et le log. Chaque skill a sa page dédiée + sa spec Notion self-contained.</p>
+  <h1>Workflows et bases de données</h1>
+  <p>Skills Cowork qui pilotent la génération, l'assemblage, la capitalisation et le log + bases Notion (working memory). Chaque skill a sa page dédiée + sa spec Notion self-contained. Chaque DB pointe vers son schéma et ses utilisateurs.</p>
 </header>
 <div class="gallery">
-<h2>4 skills · 1 scheduled task</h2>
+<h2>Skills · 4 + 1 scheduled task</h2>
 <div class="grid">
 {''.join(cards)}
+</div>
+<h2 style="margin-top:64px">Bases de données · 2 Notion DBs · working memory</h2>
+<div class="grid grid-db">
+{''.join(db_cards)}
 </div>
 </div>
 </body>
@@ -676,8 +772,7 @@ def build_databases():
 </div>
 </div>
 </body></html>'''
-    (BUILD / 'databases.html').write_text(page)
-
+    # Standalone databases.html removed (merged into workflows.html)
     (BUILD / 'databases').mkdir(exist_ok=True)
     for db in DB_DEFS:
         sub = f'''<!DOCTYPE html>
