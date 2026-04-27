@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>16 · Maps · POF Chart Bank · v3.3.5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Raleway:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS (v3.3.5 canonical) ──────────────────────────────── */
+:root {
+  --navy:        #1C1F3B;
+  --steel:       #435D74;
+  --steel-light: #5F7D95;
+  --steel-pale:  #CFD9E0;
+  --teal:        #80C7C2;
+  --teal-dark:   #2BA595;
+  --teal-deep:   #09414A;
+  --coral:       #E8546C;
+  --gris-pof:    #F9FCFF;
+  --neutral-mid: #EAEBED;
+  --gray-600:    #6C757D;
+  --white:       #FFFFFF;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Raleway', sans-serif;
+  background: var(--gris-pof);
+  color: var(--navy);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── TOPBAR ─────────────────────────────────────────────────── */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--white);
+  border-bottom: 1px solid var(--neutral-mid);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 16px;
+}
+.topbar .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.topbar .brand img { height: 26px; display: block; }
+.topbar .crumbs {
+  font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600;
+  color: var(--gray-600); letter-spacing: 1px; text-transform: uppercase;
+}
+.topbar .crumbs a { color: var(--steel); text-decoration: none; }
+.topbar .crumbs a:hover { color: var(--teal-dark); }
+.topbar .version {
+  margin-left: auto;
+  font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--teal-dark);
+  background: rgba(128,199,194,0.12);
+  padding: 3px 8px; border-radius: 3px;
+}
+
+/* ── PAGE ───────────────────────────────────────────────────── */
+.page { max-width: 1280px; margin: 0 auto; padding: 48px 32px 96px; }
+.page-header {
+  margin-bottom: 48px; padding-bottom: 24px;
+  border-bottom: 1px solid var(--neutral-mid);
+}
+.pipe-title { display: flex; gap: 16px; align-items: flex-start; }
+.pipe { width: 3px; background: var(--steel-light); align-self: stretch; margin-top: 6px; border-radius: 2px; min-height: 48px; }
+.eyebrow-sm {
+  font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600;
+  letter-spacing: 2px; color: var(--steel-light); text-transform: uppercase; margin-bottom: 8px;
+}
+.page-header h1 {
+  font-family: 'Poppins', sans-serif; font-size: 36px; font-weight: 700;
+  color: var(--navy); margin: 0 0 8px; letter-spacing: -0.5px;
+}
+.page-header p { font-size: 14px; color: var(--gray-600); max-width: 580px; margin: 0; line-height: 1.6; }
+
+/* ── VARIATIONS ─────────────────────────────────────────────── */
+.variations { display: grid; grid-template-columns: 1fr; gap: 28px; }
+.variation {
+  background: var(--white); border-radius: 8px;
+  border: 1px solid var(--neutral-mid); overflow: hidden;
+}
+.variation-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; border-bottom: 1px solid var(--neutral-mid);
+  background: var(--gris-pof);
+}
+.variation-head .lbl {
+  font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600;
+  letter-spacing: 1.5px; color: var(--steel); text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px;
+}
+.variation-head .lbl .num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; background: var(--navy); color: var(--white);
+  border-radius: 50%; font-size: 10px; font-weight: 700; flex-shrink: 0;
+}
+.variation-head .meta { font-family: 'Raleway', sans-serif; font-size: 11px; color: var(--gray-600); white-space: nowrap; }
+.variation-body { padding: 32px; display: flex; align-items: center; justify-content: center; }
+.variation-body.gris { background: var(--gris-pof); }
+
+/* ── SECTION LABEL ──────────────────────────────────────────── */
+.section-label {
+  padding: 14px 24px 12px; background: var(--navy);
+  border-radius: 8px; margin-top: 4px;
+}
+.section-label h2 {
+  font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin: 0 0 3px;
+}
+.section-label p { font-family: 'Raleway', sans-serif; font-size: 11px; color: var(--steel-pale); margin: 0; }
+.section-label code { font-family: 'Poppins', monospace; font-size: 10px; color: var(--teal); opacity: 0.85; }
+
+/* ── SLIDE FRAME ─────────────────────────────────────────────── */
+.slide-wrap { width: 100%; max-width: 1100px; }
+.slide {
+  position: relative; width: 100%; aspect-ratio: 16 / 9;
+  overflow: hidden; background: white; isolation: isolate;
+  container-type: inline-size;
+}
+.map-layer {
+  position: absolute; inset: 0; pointer-events: none; z-index: 1;
+}
+.map-layer svg { display: block; width: 100%; height: 100%; }
+
+/* ── SLIDE HEADER / FOOTER ───────────────────────────────────── */
+.slide-header {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 4;
+  padding: 3.2cqw 4cqw 2.4cqw;
+  display: flex; flex-direction: column; gap: 0.4cqw;
+}
+.ov-light { background: linear-gradient(to bottom, rgba(249,252,255,0.94) 0%, rgba(249,252,255,0) 100%); }
+.ov-dark  { background: linear-gradient(to bottom, rgba(28,31,59,0.86)   0%, rgba(28,31,59,0)    100%); }
+
+.slide-footer {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 4;
+  padding: 1.8cqw 4cqw 2.4cqw;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 2cqw;
+}
+.ov-light-b { background: linear-gradient(to top, rgba(249,252,255,0.94) 0%, rgba(249,252,255,0) 100%); }
+.ov-dark-b  { background: linear-gradient(to top, rgba(28,31,59,0.80)   0%, rgba(28,31,59,0)    100%); }
+
+/* ── SLIDE TYPOGRAPHY ────────────────────────────────────────── */
+.slide .eyebrow   { font-family:'Poppins',sans-serif; font-size:0.72cqw; font-weight:600; letter-spacing:0.18cqw; text-transform:uppercase; }
+.slide .map-title { font-family:'Poppins',sans-serif; font-size:1.85cqw; font-weight:700; margin:0; letter-spacing:-0.03cqw; line-height:1.2; }
+.slide .map-sub   { font-family:'Raleway',sans-serif; font-size:0.95cqw; font-weight:400; margin:0; line-height:1.45; opacity:0.85; }
+.slide .source-line { font-family:'Raleway',sans-serif; font-size:0.72cqw; font-weight:300; font-style:italic; opacity:0.7; }
+
+/* on-light / on-dark color tokens */
+.on-light .eyebrow    { color: var(--teal-dark); }
+.on-light .map-title  { color: var(--navy); }
+.on-light .map-sub    { color: var(--steel); }
+.on-light .source-line { color: var(--steel); }
+.on-dark  .eyebrow    { color: var(--teal); }
+.on-dark  .map-title  { color: white; }
+.on-dark  .map-sub    { color: var(--steel-pale); }
+.on-dark  .source-line { color: var(--steel-pale); }
+
+/* ── LEGEND — solid white panel (v3.3.5: always above fade) ── */
+/* The HTML footer sits at z-index:4, above any SVG fade (z:1).
+   An additional white panel ensures legibility when the map
+   is dark under the semi-transparent footer gradient. */
+.legend-panel {
+  display: inline-flex; align-items: center; gap: 1.4cqw; flex-wrap: wrap;
+  background: rgba(255,255,255,1);
+  padding: 0.5cqw 1cqw; border-radius: 0.4cqw;
+}
+.legend-item {
+  display: inline-flex; align-items: center; gap: 0.5cqw;
+  font-family:'Raleway',sans-serif; font-size:0.82cqw; font-weight:600;
+  color: var(--navy); white-space: nowrap;
+}
+.legend-swatch { width:1.0cqw; height:1.0cqw; border-radius:0.12cqw; flex-shrink:0; }
+.legend-swatch.dot { border-radius:50%; width:0.85cqw; height:0.85cqw; }
+
+/* Heat bar */
+.heat-bar-panel {
+  display: inline-flex; align-items: center; gap: 0.7cqw;
+  background: rgba(255,255,255,0.92);
+  padding: 0.5cqw 1cqw; border-radius: 0.4cqw;
+}
+.heat-bar-panel span { font-family:'Raleway',sans-serif; font-size:0.75cqw; font-weight:600; color:var(--navy); }
+.heat-bar { width:12cqw; height:0.6cqw; border-radius:0.2cqw; }
+/* T1 teal-only (v3.3.5 NEW) */
+.heat-t1 { background: linear-gradient(to right, #F1FBFA 0%, #80C7C2 33%, #2BA595 67%, #09414A 100%); }
+/* N1 navy */
+.heat-n1 { background: linear-gradient(to right, #F9FCFF 0%, #CFD9E0 25%, #80C7C2 50%, #435D74 75%, #1C1F3B 100%); }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a class="brand" href="../examples/index.html">
+    <img src="../assets/logos/pof-logo-color.svg" alt="POF">
+  </a>
+  <span class="crumbs">
+    <a href="../examples/index.html">Chart bank</a>
+    &nbsp;<span style="color:var(--neutral-mid)">/</span>&nbsp;
+    16 · Maps
+  </span>
+  <span class="version">v3.3.5</span>
+</div>
+
+<div class="page">
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="pipe-title">
+    <div class="pipe"></div>
+    <div>
+      <div class="eyebrow-sm">Chart 16 · Charte cartographique</div>
+      <h1>Maps</h1>
+      <p>5 patterns canoniques sur le nouveau basemap <code style="font-family:Poppins,monospace;font-size:12px;color:var(--teal-dark)">00-monde-cropped.svg</code> (no Americas, no Antarctica). Heatmap T1 teal-only nouveau en v3.3.5. Fades positionnés pour ne jamais couvrir les pays colorés. Légendes toujours au-dessus du fade (z-order top).</p>
+    </div>
+  </div>
+</header>
+
+<div class="variations">
+
+<!-- ══════════════════════════════════════════════════════
+     PATTERN 1 — HEATMAP T1 (teal-only, NEW v3.3.5)
+     ══════════════════════════════════════════════════════ -->
+<section class="variation">
+  <div class="variation-head">
+    <div class="lbl"><span class="num">1</span>Pattern 1 — Heatmap · T1 teal-only (v3.3.5) · #F1FBFA → #09414A · données continues</div>
+    <div class="meta">00-monde-cropped · fadeEdges: top, bottom</div>
+  </div>
+  <div class="variation-body gris">
+    <div class="slide-wrap">
+      <div class="slide" id="s1">
+        <div class="map-layer" id="ml1"></div>
+        <div class="slide-header ov-light on-light">
+          <div class="eyebrow">Fuites plastiques océaniques · 2024</div>
+          <h3 class="map-title">Intensité du déversement plastique par pays côtier — kt/an</h3>
+          <p class="map-sub">Heatmap T1 teal-only : #F1FBFA → #80C7C2 → #2BA595 → #09414A</p>
+        </div>
+        <div class="slide-footer ov-light-b on-light">
+          <div class="heat-bar-panel">
+            <span>0 kt</span>
+            <div class="heat-bar heat-t1"></div>
+            <span>~3 000 kt/an</span>
+          </div>
+          <span class="source-line">Source : illustrative data — POF design system v3.3.5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     PATTERN 2 — CATEGORICAL
+     ══════════════════════════════════════════════════════ -->
+<section class="variation">
+  <div class="variation-head">
+    <div class="lbl"><span class="num">2</span>Pattern 2 — Pays colorés · catégoriel · navy / steel / pipeline</div>
+    <div class="meta">00-monde-cropped · fadeEdges: top, bottom · fade hors zones colorées</div>
+  </div>
+  <div class="variation-body gris">
+    <div class="slide-wrap">
+      <div class="slide" id="s2">
+        <div class="map-layer" id="ml2"></div>
+        <div class="slide-header ov-light on-light">
+          <div class="eyebrow">Réseau POF · T1 2026</div>
+          <h3 class="map-title">Présence mondiale Plastic Odyssey Factories</h3>
+          <p class="map-sub">4 usines opérationnelles · 8 en pipeline · 8 en exploration</p>
+        </div>
+        <div class="slide-footer ov-light-b on-light">
+          <div class="legend-panel">
+            <span class="legend-item"><span class="legend-swatch" style="background:#1C1F3B"></span>Opérationnel · 4</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:#435D74"></span>Pipeline · 8</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:#B0C8D4;border:1px solid #8AABB8"></span>Exploration · 8</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:#EAEBED;border:1px solid #CFD9E0"></span>Hors périmètre</span>
+          </div>
+          <span class="source-line">Source : POF Operations · T1 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     PATTERN 3 — NEUTRAL DOTS
+     ══════════════════════════════════════════════════════ -->
+<section class="variation">
+  <div class="variation-head">
+    <div class="lbl"><span class="num">3</span>Pattern 3 — Points neutres · présence · r = 6 px · fill #1C1F3B</div>
+    <div class="meta">00-monde-cropped · fadeEdges: top, bottom</div>
+  </div>
+  <div class="variation-body gris">
+    <div class="slide-wrap">
+      <div class="slide" id="s3">
+        <div class="map-layer" id="ml3"></div>
+        <div class="slide-header ov-light on-light">
+          <div class="eyebrow">Villes-cibles POF · présence sans données</div>
+          <h3 class="map-title">Localisations d'implantation — Pattern 3</h3>
+          <p class="map-sub">Points fixes r = 6 px · stroke #FFFFFF 1.5 pt · label Raleway 600 navy</p>
+        </div>
+        <div class="slide-footer ov-light-b on-light">
+          <div class="legend-panel">
+            <span class="legend-item">
+              <span class="legend-swatch dot" style="background:#1C1F3B;box-shadow:0 0 0 1.5px white,0 0 0 2.5px #1C1F3B"></span>
+              Ville-cible POF
+            </span>
+          </div>
+          <span class="source-line">Source : POF Strategy · 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     PATTERN 4 — DATA DOTS
+     ══════════════════════════════════════════════════════ -->
+<section class="variation">
+  <div class="variation-head">
+    <div class="lbl"><span class="num">4</span>Pattern 4 — Points de données · r = √(v/max) × R_max · label intérieur</div>
+    <div class="meta">00-monde-cropped · fadeEdges: top, bottom · R_max = 36 px</div>
+  </div>
+  <div class="variation-body gris">
+    <div class="slide-wrap">
+      <div class="slide" id="s4">
+        <div class="map-layer" id="ml4"></div>
+        <div class="slide-header ov-light on-light">
+          <div class="eyebrow">Capacité installée · T1 2026</div>
+          <h3 class="map-title">Volume traité par site — usines POF déployées</h3>
+          <p class="map-sub">Taille proportionnelle au tonnage · chiffre = nombre d'usines · R_max = 36 px</p>
+        </div>
+        <div class="slide-footer ov-light-b on-light">
+          <div class="legend-panel">
+            <span class="legend-item"><span class="legend-swatch dot" style="background:#1C1F3B"></span>Volume t/an — chiffre = nb usines</span>
+          </div>
+          <span class="source-line">Source : POF Operations Report · 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     PATTERN 5 — ANCHORED FADED
+     ══════════════════════════════════════════════════════ -->
+<section class="variation">
+  <div class="variation-head">
+    <div class="lbl"><span class="num">5</span>Pattern 5 — Carte estompée ancrée · opacity 50 % · ancrage gauche · fade droit 60 %</div>
+    <div class="meta">00-monde-cropped · fadeEdge: right 60 % · aucun pays coloré dans la zone de fade</div>
+  </div>
+  <div class="variation-body gris">
+    <div class="slide-wrap">
+      <div class="slide" id="s5">
+        <div class="map-layer" id="ml5"></div>
+        <div class="slide-header ov-light on-light">
+          <div class="eyebrow">Pattern 5 · Décoratif ancré bord gauche</div>
+          <h3 class="map-title">Carte en fond — estompée depuis le bord droit</h3>
+          <p class="map-sub">Opacity 50 % · gradient blanc → transparent 60 % depuis bord droit · aucun pays coloré dans la zone fade</p>
+        </div>
+        <div class="slide-footer ov-light-b on-light">
+          <div class="legend-panel">
+            <span class="legend-item" style="font-style:italic;color:var(--gray-600);font-weight:400">Carte illustrative — fond décoratif slide section</span>
+          </div>
+          <span class="source-line">Usage : fond décoratif slide section ou couverture</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION LABEL -->
+<div class="section-label">
+  <h2>Crops régionaux</h2>
+  <p>4 exemples embarquant directement les SVG de <code>assets/maps/svg/</code>.
+     ❷ base map réutilisé · ❸ overlay injecté · ❹ fades positionnés hors zones colorées · légendes z-order top.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     R1 — WORLD · 00-monde-cropped · PATTERN 2 CATEGORICAL
+     ══════════════════════════════════════════════════════ -->
+<section class="variation">
+  <div class="variation-head">
+    <div class="lbl"><span class="num">R1</span>Monde · 00-monde-cropped.svg · Pattern 2 · pays colorés POF</div>
+    <div class="meta">assets/maps/svg/00-monde-cropped.svg · fadeEdges: top, bottom</div>
+  </div>
+  <div class="variation-body gris">
+    <div class="slide-wrap">
+      <div class="slide" id="sR1">
+        <div class="map-layer" id="mlR1"></div>
+        <div class="slide-header ov-light on-light">
+          <div class="eyebrow">Vue mondiale · 00-monde-cropped.svg · Robinson</div>
+          <h3 class="map-title">Réseau POF — vue globale · Pattern 2 catégoriel</h3>
+          <p class="map-sub">Base map : assets/maps/svg/00-monde-cropped.svg · viewBox 950 0 1468 1000 · no Americas</p>
+        </div>
+        <div class="slide-footer ov-light-b on-light">
+          <div class="legend-panel">
+            <span class="legend-item"><span class="legend-swatch" style="background:#1C1F3B"></span>Opérationnel</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:#435D74"></span>Pipeline</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:#B0C8D4;border:1px solid #8AABB8"></span>Exploration</span>
+          </div>
+          <span class="source-line">Source : POF Operations · T1 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     R2 — AFRICA · 03-afrique.svg · PATTERN 4 DATA DOTS
+     v3.3.5: legend on white panel (no navy-on-navy)
+     ══════════════════════════════════════════════════════ -->
+<section class="variation">
+  <div class="variation-head">
+    <div class="lbl"><span class="num">R2</span>Afrique · 03-afrique.svg · Pattern 4 · points de données proportionnels</div>
+    <div class="meta">assets/maps/svg/03-afrique.svg · fadeEdges: top, right · légende panel blanc (fix v3.3.5)</div>
+  </div>
+  <div class="variation-body gris">
+    <div class="slide-wrap">
+      <div class="slide" id="sR2">
+        <div class="map-layer" id="mlR2"></div>
+        <div class="slide-header ov-light on-light">
+          <div class="eyebrow">Déploiements POF · Afrique · 03-afrique.svg</div>
+          <h3 class="map-title">Afrique — Pattern 4 · points de données proportionnels</h3>
+          <p class="map-sub">Base map : assets/maps/svg/03-afrique.svg · overlay ❸ + fades ❹ top, right</p>
+        </div>
+        <div class="slide-footer ov-light-b on-light">
+          <div class="legend-panel">
+            <span class="legend-item"><span class="legend-swatch dot" style="background:#1C1F3B"></span>Volume traité · taille ∝ tonnage</span>
+          </div>
+          <span class="source-line">Source : POF Africa Program · 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     R3 — INDIAN OCEAN · 07-ocean-indien-est.svg · PATTERN 1 T1
+     v3.3.5: teal-only T1, fade start at viewBox edge, updated caption
+     ══════════════════════════════════════════════════════ -->
+<section class="variation">
+  <div class="variation-head">
+    <div class="lbl"><span class="num">R3</span>Océan Indien · 07-ocean-indien-est.svg · Pattern 1 · heatmap T1 teal-only</div>
+    <div class="meta">assets/maps/svg/07-ocean-indien-est.svg · fadeEdges: left, top, bottom · fade start = viewBox edge</div>
+  </div>
+  <div class="variation-body gris">
+    <div class="slide-wrap">
+      <div class="slide" id="sR3">
+        <div class="map-layer" id="mlR3"></div>
+        <div class="slide-header ov-light on-light">
+          <div class="eyebrow">Flux plastiques · Océan Indien · 07-ocean-indien-est.svg</div>
+          <h3 class="map-title">Océan Indien & Afrique de l'Est — Heatmap T1 teal-only</h3>
+          <p class="map-sub">Base map : assets/maps/svg/07-ocean-indien-est.svg · T1 : #F1FBFA → #80C7C2 → #2BA595 → #09414A</p>
+        </div>
+        <div class="slide-footer ov-light-b on-light">
+          <div class="heat-bar-panel">
+            <span>Faible</span>
+            <div class="heat-bar heat-t1"></div>
+            <span>Élevé</span>
+          </div>
+          <span class="source-line">Source : illustrative data — POF design system v3.3.5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     R4 — SE ASIA · 02-asie-du-sud-est.svg · PATTERN 2 CATEGORICAL
+     ══════════════════════════════════════════════════════ -->
+<section class="variation">
+  <div class="variation-head">
+    <div class="lbl"><span class="num">R4</span>Asie du Sud-Est · 02-asie-du-sud-est.svg · Pattern 2 · pays colorés POF</div>
+    <div class="meta">assets/maps/svg/02-asie-du-sud-est.svg · fadeEdges: top, bottom · pays colorés hors zone fade</div>
+  </div>
+  <div class="variation-body gris">
+    <div class="slide-wrap">
+      <div class="slide" id="sR4">
+        <div class="map-layer" id="mlR4"></div>
+        <div class="slide-header ov-light on-light">
+          <div class="eyebrow">Réseau POF · Asie du Sud-Est · 02-asie-du-sud-est.svg</div>
+          <h3 class="map-title">Asie du Sud-Est — Pattern 2 · pays colorés POF</h3>
+          <p class="map-sub">Base map : assets/maps/svg/02-asie-du-sud-est.svg · overlay ❸ + fades ❹ top, bottom</p>
+        </div>
+        <div class="slide-footer ov-light-b on-light">
+          <div class="legend-panel">
+            <span class="legend-item"><span class="legend-swatch" style="background:#1C1F3B"></span>Opérationnel</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:#435D74"></span>Pipeline</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:#80C7C2"></span>Focus stratégique</span>
+          </div>
+          <span class="source-line">Source : POF Operations · T1 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /variations -->
+</div><!-- /page -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     ENGINE
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ─── Brand tokens ──────────────────────────────────────────── */
+  const FILLS = {
+    navy:     '#1C1F3B',
+    steel:    '#435D74',
+    teal:     '#80C7C2',
+    pipeline: '#B0C8D4',
+    coral:    '#E8546C',
+    neutral:  '#EAEBED'
+  };
+
+  /* ─── Heatmap scales ────────────────────────────────────────── */
+  /* T1 teal-only (v3.3.5 NEW) : 4 stops */
+  const SCALE_T1 = [
+    [0.00, [241, 251, 250]],
+    [0.33, [128, 199, 194]],
+    [0.67, [43,  165, 149]],
+    [1.00, [9,   65,  74 ]]
+  ];
+  /* N1 white→navy (legacy, kept for reference) */
+  const SCALE_N1 = [
+    [0.00, [249, 252, 255]],
+    [0.25, [207, 217, 224]],
+    [0.50, [128, 199, 194]],
+    [0.75, [67,  93,  116]],
+    [1.00, [28,  31,  59 ]]
+  ];
+
+  function lerp(a, b, t) { return Math.round(a + (b - a) * t); }
+  function sampleScale(scale, v) {
+    v = Math.max(0, Math.min(1, v));
+    for (let i = 1; i < scale.length; i++) {
+      if (v <= scale[i][0]) {
+        const [t0, c0] = scale[i - 1], [t1, c1] = scale[i];
+        const k = (v - t0) / (t1 - t0);
+        return `rgb(${lerp(c0[0],c1[0],k)},${lerp(c0[1],c1[1],k)},${lerp(c0[2],c1[2],k)})`;
+      }
+    }
+    const c = scale[scale.length - 1][1];
+    return `rgb(${c.join(',')})`;
+  }
+
+  /* ─── SVG fetch cache ───────────────────────────────────────── */
+  const SVG_CACHE = {};
+  async function fetchSVG(url) {
+    if (!SVG_CACHE[url]) {
+      const r = await fetch(url);
+      if (!r.ok) throw new Error(`${r.status} ${url}`);
+      const text = await r.text();
+      const doc = new DOMParser().parseFromString(text, 'image/svg+xml');
+      SVG_CACHE[url] = doc.querySelector('svg');
+    }
+    return SVG_CACHE[url].cloneNode(true);
+  }
+
+  /* ─── Ensure gradient defs (adds g_RL if missing) ───────────── */
+  function ensureGradDefs(svgEl) {
+    let defs = svgEl.querySelector('defs');
+    if (!defs) {
+      defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      svgEl.insertBefore(defs, svgEl.firstChild);
+    }
+    /* Add right-edge fade gradient if not present */
+    if (!defs.querySelector('#g_RL')) {
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+      g.setAttribute('id', 'g_RL');
+      g.setAttribute('x1', '1'); g.setAttribute('y1', '0');
+      g.setAttribute('x2', '0'); g.setAttribute('y2', '0');
+      [['0%', '0.95'], ['100%', '0']].forEach(([off, op]) => {
+        const s = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+        s.setAttribute('offset', off);
+        s.setAttribute('stop-color', 'white');
+        s.setAttribute('stop-opacity', op);
+        g.appendChild(s);
+      });
+      defs.appendChild(g);
+    }
+    /* Ensure other standard grads exist */
+    const needed = [
+      { id: 'g_LR', x1:'0', y1:'0', x2:'1', y2:'0', s0:'0.95', s1:'0' },
+      { id: 'g_TB', x1:'0', y1:'0', x2:'0', y2:'1', s0:'0',    s1:'0.95' },
+      { id: 'g_BT', x1:'0', y1:'1', x2:'0', y2:'0', s0:'0',    s1:'0.95' }
+    ];
+    needed.forEach(n => {
+      if (!defs.querySelector('#' + n.id)) {
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+        g.setAttribute('id', n.id);
+        g.setAttribute('x1', n.x1); g.setAttribute('y1', n.y1);
+        g.setAttribute('x2', n.x2); g.setAttribute('y2', n.y2);
+        [[n.s0], [n.s1]].forEach(([op], i) => {
+          const s = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+          s.setAttribute('offset', i === 0 ? '0%' : '100%');
+          s.setAttribute('stop-color', 'white');
+          s.setAttribute('stop-opacity', op);
+          g.appendChild(s);
+        });
+        defs.appendChild(g);
+      }
+    });
+    return defs;
+  }
+
+  /* ─── Add fade rects (❹) ────────────────────────────────────── */
+  /* v3.3.5 fade rules:
+     - fade_start_at_viewbox_edge: gradient rect starts exactly at vb edge
+     - no_overlap_with_colored: caller ensures edges point away from colored countries
+     - For Pattern 5 right fade: 60% coverage per maps_lock          */
+  function addFadeRects(svgEl, edges, vb, opts = {}) {
+    const [vx, vy, vw, vh] = vb;
+    /* Remove any existing fade group */
+    const old = svgEl.querySelector('#pof-fade-overlay');
+    if (old) old.remove();
+
+    const fadeG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    fadeG.setAttribute('id', 'pof-fade-overlay');
+    fadeG.setAttribute('pointer-events', 'none');
+
+    /* Coverage — per-slide overrides via opts.fadeCovH / opts.fadeCovV */
+    const covH = opts.rightSixty ? vw * 0.60 : vw * (opts.fadeCovH != null ? opts.fadeCovH : 0.28);
+    const covV = vh * (opts.fadeCovV != null ? opts.fadeCovV : 0.26);
+
+    /* grad id → {x, y, w, h} */
+    const specs = {
+      left:   { grad: 'g_LR', x: vx,           y: vy,        w: covH, h: vh   },
+      right:  { grad: 'g_RL', x: vx + vw - covH, y: vy,      w: covH, h: vh   },
+      top:    { grad: 'g_BT', x: vx,            y: vy,        w: vw,   h: covV },
+      bottom: { grad: 'g_TB', x: vx,            y: vy+vh-covV, w: vw,  h: covV }
+    };
+
+    edges.forEach(edge => {
+      const s = specs[edge];
+      if (!s) return;
+      const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      r.setAttribute('x', s.x); r.setAttribute('y', s.y);
+      r.setAttribute('width', s.w); r.setAttribute('height', s.h);
+      r.setAttribute('fill', `url(#${s.grad})`);
+      fadeG.appendChild(r);
+    });
+
+    svgEl.appendChild(fadeG); /* ← LAST child = always above ❷❸ */
+  }
+
+  /* ─── Apply fills / heatmap ─────────────────────────────────── */
+  function applyFills(svgEl, fills) {
+    if (!fills) return;
+    Object.entries(fills).forEach(([bucket, isos]) => {
+      const color = FILLS[bucket] || FILLS.navy;
+      isos.forEach(iso => {
+        svgEl.querySelectorAll(`[data-iso2="${iso}"]`).forEach(el => {
+          el.setAttribute('fill', color);
+        });
+      });
+    });
+  }
+  function applyHeatmap(svgEl, heatData, scale) {
+    Object.entries(heatData).forEach(([iso, val]) => {
+      svgEl.querySelectorAll(`[data-iso2="${iso}"]`).forEach(el => {
+        el.setAttribute('fill', sampleScale(scale, val));
+      });
+    });
+  }
+
+  /* ─── Build overlay group (❸): dots / bubbles ───────────────── */
+  function buildOverlay(svgEl, pins, bubbles, overlayOpts = {}) {
+    if (!pins && !bubbles) return;
+    const fid = 'hf_' + Math.random().toString(36).slice(2, 6);
+    ensureGradDefs(svgEl); // ensures defs exist
+    const defs = svgEl.querySelector('defs');
+    const filterEl = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+    filterEl.setAttribute('id', fid);
+    filterEl.setAttribute('x', '-20%'); filterEl.setAttribute('y', '-20%');
+    filterEl.setAttribute('width', '140%'); filterEl.setAttribute('height', '140%');
+    filterEl.innerHTML = `
+      <feGaussianBlur stdDeviation="9" result="b"/>
+      <feFlood flood-color="#F9FCFF" flood-opacity="0.86" result="c"/>
+      <feComposite in="c" in2="b" operator="in" result="s"/>
+      <feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/></feMerge>`;
+    defs.appendChild(filterEl);
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('id', 'pof-country-overlay');
+
+    if (pins) {
+      pins.forEach(p => {
+        const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        c.setAttribute('cx', p.cx); c.setAttribute('cy', p.cy); c.setAttribute('r', p.r || 6);
+        c.setAttribute('fill', FILLS.navy); c.setAttribute('stroke', '#FFFFFF');
+        c.setAttribute('stroke-width', '1.5'); c.setAttribute('vector-effect', 'non-scaling-stroke');
+        g.appendChild(c);
+        if (p.label) {
+          let tx = p.cx, ty, anchor = 'middle';
+          const r = p.r || 6;
+          if (p.anchor === 'above')       { ty = p.cy - r - 10; }
+          else if (p.anchor === 'right')  { tx = p.cx + r + 10; ty = p.cy + 5; anchor = 'start'; }
+          else                            { ty = p.cy - r - 10; }
+          const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          t.setAttribute('x', tx); t.setAttribute('y', ty);
+          t.setAttribute('font-family', 'Poppins,sans-serif');
+          t.setAttribute('font-size', overlayOpts.labelFontSize || 22); t.setAttribute('font-weight', '600');
+          t.setAttribute('fill', FILLS.navy); t.setAttribute('text-anchor', anchor);
+          t.setAttribute('filter', `url(#${fid})`);
+          t.textContent = p.label;
+          g.appendChild(t);
+        }
+      });
+    }
+
+    if (bubbles) {
+      bubbles.forEach(b => {
+        const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        c.setAttribute('cx', b.cx); c.setAttribute('cy', b.cy); c.setAttribute('r', b.r);
+        c.setAttribute('fill', FILLS.navy); c.setAttribute('fill-opacity', '0.88');
+        c.setAttribute('stroke', '#FFFFFF'); c.setAttribute('stroke-width', '1.5');
+        c.setAttribute('vector-effect', 'non-scaling-stroke');
+        g.appendChild(c);
+        if (b.val) {
+          const vScale = overlayOpts.valFontScale || 0.65;
+          const fs = Math.max(overlayOpts.valFontMin || 14, Math.round(b.r * vScale));
+          const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          t.setAttribute('x', b.cx); t.setAttribute('y', b.cy);
+          t.setAttribute('font-family', 'Poppins,sans-serif');
+          t.setAttribute('font-size', fs); t.setAttribute('font-weight', '700');
+          t.setAttribute('fill', 'white'); t.setAttribute('text-anchor', 'middle');
+          t.setAttribute('dominant-baseline', 'central');
+          t.textContent = b.val;
+          g.appendChild(t);
+        }
+        if (b.label) {
+          let tx = b.cx, ty, anchor = 'middle';
+          const gap = overlayOpts.labelGap || 16;
+          if (b.anchor === 'above')      { ty = b.cy - b.r - gap; }
+          else if (b.anchor === 'below') { ty = b.cy + b.r + gap; }
+          else if (b.anchor === 'right') { tx = b.cx + b.r + gap * 0.75; ty = b.cy + 3; anchor = 'start'; }
+          else                           { ty = b.cy - b.r - gap; }
+          const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          t.setAttribute('x', tx); t.setAttribute('y', ty);
+          t.setAttribute('font-family', 'Poppins,sans-serif');
+          t.setAttribute('font-size', overlayOpts.labelFontSize || 20); t.setAttribute('font-weight', '600');
+          t.setAttribute('fill', FILLS.navy); t.setAttribute('text-anchor', anchor);
+          t.setAttribute('filter', `url(#${fid})`);
+          t.textContent = b.label;
+          g.appendChild(t);
+        }
+      });
+    }
+
+    svgEl.appendChild(g); /* appended BEFORE fades — fades come after */
+  }
+
+  /* ─── Main render function ──────────────────────────────────── */
+  async function renderSlide(containerId, svgUrl, opts) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    let svgEl;
+    try {
+      svgEl = await fetchSVG(svgUrl);
+    } catch (err) {
+      console.warn('[POF Maps]', err);
+      container.innerHTML = `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Poppins,sans-serif;font-size:11px;color:#6C757D;opacity:0.6">${svgUrl}</div>`;
+      return;
+    }
+
+    /* Responsive display */
+    svgEl.setAttribute('width',  '100%');
+    svgEl.setAttribute('height', '100%');
+    svgEl.setAttribute('preserveAspectRatio', opts.aspectRatio || 'xMidYMid slice');
+    svgEl.style.display = 'block';
+    if (opts.mapOpacity != null) svgEl.style.opacity = opts.mapOpacity;
+
+    /* Remove AQ / GL */
+    ['c-AQ', 'c-GL'].forEach(id => { const e = svgEl.querySelector('#' + id); if (e) e.remove(); });
+
+    /* viewBox values for fade rect placement */
+    const vbArr = svgEl.getAttribute('viewBox').split(/[\s,]+/).map(Number);
+
+    /* ❸ Fills / heatmap */
+    if (opts.fills)   applyFills(svgEl, opts.fills);
+    if (opts.heatmap) applyHeatmap(svgEl, opts.heatData, opts.heatmap === 't1' ? SCALE_T1 : SCALE_N1);
+
+    /* ❸ Overlay dots/bubbles */
+    if (opts.pins || opts.bubbles) buildOverlay(svgEl, opts.pins, opts.bubbles, opts.overlayOpts || {});
+
+    /* ❹ Fades — ALWAYS LAST (v3.3.5: fade start = viewBox edge) */
+    ensureGradDefs(svgEl);
+    addFadeRects(svgEl, opts.fadeEdges || [], vbArr, { rightSixty: opts.rightSixty, fadeCovH: opts.fadeCovH, fadeCovV: opts.fadeCovV });
+
+    container.style.display  = 'block';
+    container.style.position = 'absolute';
+    container.style.inset    = '0';
+    container.appendChild(svgEl);
+  }
+
+  /* ─── Slide definitions ─────────────────────────────────────── */
+  const BASE_WORLD = '../assets/maps/svg/00-monde-cropped.svg';
+
+  /* Heatmap T1 data — plastic waste */
+  const HEAT_T1 = {
+    PH:0.95, ID:0.88, IN:0.92, BD:0.72, CN:0.85, VN:0.74,
+    TH:0.65, MY:0.52, MM:0.48, LK:0.38, PK:0.44,
+    NG:0.71, EG:0.55, CI:0.68, GH:0.55, SN:0.62, CM:0.50,
+    TZ:0.35, MG:0.58, KE:0.42, MZ:0.38, MA:0.32, ZA:0.22,
+    TR:0.36, RU:0.18, FR:0.12
+  };
+
+  /* POF categorical fills */
+  const CAT_WORLD = {
+    navy:     ['SN','CI','ID','PH'],
+    steel:    ['NG','KE','MA','CM','MG','RW','VN','TH'],
+    pipeline: ['IN','BD','EG','GH','TZ','MZ','SL','LR']
+  };
+
+  /* Pattern 3 neutral dots — POF city presence */
+  const PINS_P3 = [
+    { cx:1109, cy:511, r:6, label:'Dakar',          anchor:'above' },
+    { cx:1178, cy:574, r:6, label:'Abidjan',         anchor:'above' },
+    { cx:1975, cy:634, r:6, label:'Jakarta',          anchor:'above' },
+    { cx:2087, cy:512, r:6, label:'Manila',           anchor:'above' },
+    { cx:1261, cy:554, r:6, label:'Lagos',            anchor:'right' },
+    { cx:1456, cy:621, r:6, label:'Nairobi',          anchor:'above' },
+    { cx:1294, cy:578, r:6, label:'Douala',           anchor:'right' },
+    { cx:1895, cy:544, r:6, label:'Hô Chi Minh',      anchor:'above' }
+  ];
+
+  /* Pattern 4 data dots — POF deployments */
+  const BUBBLES_P4 = [
+    { cx:1109, cy:511, r:30, val:'3', label:'Dakar',   anchor:'above' },
+    { cx:1178, cy:574, r:24, val:'2', label:'Abidjan', anchor:'above' },
+    { cx:1975, cy:634, r:34, val:'4', label:'Jakarta', anchor:'above' },
+    { cx:2087, cy:512, r:30, val:'3', label:'Manila',  anchor:'above' },
+    { cx:1261, cy:554, r:18, val:'1', label:'Lagos',   anchor:'right' },
+    { cx:1456, cy:621, r:18, val:'1', label:'Nairobi', anchor:'right' }
+  ];
+
+  /* Africa data dots — sized for xMidYMid meet (scale ~1.60 vs slice 3.29)
+     Radii and fonts ~2× the slice values so they render at the same screen size */
+  const BUBBLES_AFRICA = [
+    { cx:1109, cy:498, r:26, val:'3', label:'Dakar',   anchor:'above' },
+    { cx:1178, cy:568, r:21, val:'2', label:'Abidjan', anchor:'below' },
+    { cx:1294, cy:573, r:16, val:'1', label:'Douala',  anchor:'right' },
+    { cx:1207, cy:561, r:14, val:'1', label:'Accra',   anchor:'above' },
+    { cx:1261, cy:548, r:16, val:'1', label:'Lagos',   anchor:'above' }
+  ];
+
+  /* Indian Ocean heatmap T1 */
+  const HEAT_OCEAN = {
+    MG:0.72, KE:0.65, TZ:0.52, MZ:0.55,
+    MU:0.25, KM:0.30, SC:0.18, SO:0.40,
+    ER:0.20, DJ:0.18, ET:0.28
+  };
+
+  /* SE Asia — 1 seule couleur (navy) per feedback v3.3.5 */
+  const CAT_SEA = {
+    navy: ['ID','PH','VN','TH','MY','MM','KH','LA','SG','BN','TL']
+  };
+
+  /* ─── Initialise all slides ─────────────────────────────────── */
+  async function init() {
+    /* P1 — Heatmap T1, fades top+bottom (no left/right, heatmap covers full width) */
+    renderSlide('ml1', BASE_WORLD, {
+      heatmap: 't1', heatData: HEAT_T1,
+      fadeEdges: ['top', 'bottom']
+    });
+
+    /* P2 — Categorical, fades top+bottom ONLY
+       v3.3.5: SN/CI on left edge → no left fade to avoid overlap */
+    renderSlide('ml2', BASE_WORLD, {
+      fills: CAT_WORLD,
+      fadeEdges: ['top', 'bottom']
+    });
+
+    /* P3 — Neutral dots, top fade 33% (closer to Africa, stops above y≈390) */
+    renderSlide('ml3', BASE_WORLD, {
+      pins: PINS_P3,
+      fadeEdges: ['top', 'bottom'],
+      fadeCovV: 0.33
+    });
+
+    /* P4 — Data dots, top fade 33% */
+    renderSlide('ml4', BASE_WORLD, {
+      bubbles: BUBBLES_P4,
+      fadeEdges: ['top', 'bottom'],
+      fadeCovV: 0.33
+    });
+
+    /* P5 — Anchored faded, opacity 0.5, right fade 60%
+       No colored countries → no overlap risk */
+    renderSlide('ml5', BASE_WORLD, {
+      mapOpacity: 0.5,
+      fadeEdges: ['right'],
+      rightSixty: true
+    });
+
+    /* R1 — World categorical, left fade trimmed to 10% (stops before Senegal at x+159) */
+    renderSlide('mlR1', BASE_WORLD, {
+      fills: { ...CAT_WORLD, pipeline: ['GH','TZ','MZ','SL','LR','EG','SD','ET'] },
+      fadeEdges: ['left', 'top', 'bottom'],
+      fadeCovH: 0.10
+    });
+
+    /* R2 — Africa, Pattern 4 data dots
+       fadeEdges: top (empty Sahara), right (Indian Ocean — no dots there) */
+    renderSlide('mlR2', '../assets/maps/svg/03-afrique.svg', {
+      bubbles: BUBBLES_AFRICA,
+      fadeEdges: ['top', 'right'],
+      aspectRatio: 'xMidYMid meet',
+      overlayOpts: { labelFontSize: 18, valFontMin: 11, valFontScale: 0.55, labelGap: 14 }
+    });
+
+    /* R3 — Indian Ocean, Pattern 1 T1
+       fadeEdges: left+top+bottom; fade start = viewBox edge (no adjustment needed,
+       addFadeRects places rects exactly at vb origin) */
+    renderSlide('mlR3', '../assets/maps/svg/07-ocean-indien-est.svg', {
+      heatmap: 't1', heatData: HEAT_OCEAN,
+      fadeEdges: ['left', 'top', 'bottom']
+    });
+
+    /* R4 — SE Asia, 1 seule couleur navy, meet = full viewBox incl. Indonesia + Philippines */
+    renderSlide('mlR4', '../assets/maps/svg/02-asie-du-sud-est.svg', {
+      fills: CAT_SEA,
+      fadeEdges: ['top', 'bottom'],
+      aspectRatio: 'xMidYMid meet'
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

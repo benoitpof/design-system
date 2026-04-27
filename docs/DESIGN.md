@@ -1,6 +1,6 @@
 # DESIGN.md — Plastic Odyssey Factories Design System
 
-**Version:** 3.3.8 | **Updated:** 2026-04-26
+**Version:** 3.3.9 | **Updated:** 2026-04-26
 **Source of truth:** `tokens/brand-tokens.json` + `tokens/brand-rules-per-format.json`
 **Template reference:** `Template_POF_Claude.pptx` (LAYOUT_WIDE 20"×11.25" / 508×285.75 mm)
 **Coordinate convention:** mm partout (SSOT). Inches en commentaire pour pptxgenjs.
@@ -26,11 +26,11 @@ POF photo overlay system has TWO families :
 - `medium` 60% : `rgba(28,31,59,0.60)` — photo as ambiance, text readable on top
 - `heavy` 90% : `rgba(28,31,59,0.90)` — photo as texture only
 
-**B. Gradient (4 directions × 4 coverages × 2 colors × 2 intensities = 64 valid combinations)** :
+**B. Gradient (4 directions × 4 coverages × 2 colors × 3 intensities = 96 valid combinations)** :
 - Direction (exclusive, no cumulation) : `from_left` / `from_right` / `from_top` / `from_bottom`
 - Coverage extent (hold percentage) : `quarter` 25% · `third` 33% · `half` 50% · `full` 75%
 - Color : `navy_pure` OR `navy_with_teal_reflet` (radial teal anchored bottom-left)
-- Intensity : `full` (opaque hold → transparent) OR `soft` (50% hold → transparent)
+- Intensity : `full` (opaque hold → transparent) · **`medium` (75% hold → transparent)** · `soft` (50% hold → transparent)
 - Pattern `full` : `linear-gradient(<angle>, #1C1F3B 0%, #1C1F3B <hold_pct>%, transparent 100%)`
 - Pattern `soft` : `linear-gradient(<angle>, rgba(28,31,59,0.50) 0%, rgba(28,31,59,0.50) <hold_pct>%, transparent 100%)`
 

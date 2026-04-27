@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "3.3.8",
+    "version": "3.3.9",
     "generated": "2026-04-27",
     "description": "Format-specific design rules. Every value exact. Pair with brand-tokens.json. Convention: mm partout (SSOT). Inches noted in comments only when pptxgenjs requires it.",
     "changes_from_3.1.0": [
@@ -93,6 +93,11 @@
     "changes_from_3.3.7": [
       "ADD overlay_system.gradient.intensity — 'full' (default, opaque hold→transparent) and 'soft' (semi-transparent 50% hold→transparent). Combinations now 4×4×2×2 = 64 valid.",
       "Both intensities always end 100% transparent."
+    ],
+    "changes_from_3.3.8": [
+      "ADD overlay_system.gradient.intensity.medium (start_opacity 0.75) — between full (1.0) and soft (0.5). Combinations now 4×4×2×3 = 96 valid.",
+      "INTEGRATE charts/16-map.html updated, charts/17-icons.html (Tabler 106 icons), charts/18-images.html (live Notion photos) — output of Graphs & maps project test.",
+      "ADD examples/charts/Tableaux-financiers.html — financial tables variant."
     ]
   },
   "slides": {
@@ -1154,7 +1159,7 @@
       "_forbidden": "Other opacities (45%, 75%, etc.). Use only the 3 levels."
     },
     "gradient": {
-      "_description": "Navy gradient from one edge, fading to transparent. Direction × coverage × color × intensity = 64 valid combinations.",
+      "_description": "Navy gradient from one edge, fading to transparent. Direction × coverage × color × intensity = 96 valid combinations.",
       "direction": {
         "_options": [
           "from_left",
@@ -1225,6 +1230,12 @@
           "css_pattern": "linear-gradient(<angle>, rgba(28,31,59,0.50) 0%, rgba(28,31,59,0.50) <hold_pct>%, transparent 100%)",
           "use": "Subtle overlay, photo always visible through tint, then fades. Use for warm photos where dimming would lose context.",
           "_added_in": "v3.3.8"
+        },
+        "medium": {
+          "start_opacity": 0.75,
+          "css_pattern": "linear-gradient(<angle>, rgba(28,31,59,0.75) 0%, rgba(28,31,59,0.75) <hold_pct>%, transparent 100%)",
+          "use": "Balanced overlay between full opacity and soft. Photo dimmed but still visible through tint.",
+          "_added_in": "v3.3.9"
         }
       }
     },

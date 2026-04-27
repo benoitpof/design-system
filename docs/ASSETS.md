@@ -1,6 +1,6 @@
 # ASSETS.md — POF Brand Asset Index
 
-**Version:** 3.3.8 | **Updated:** 2026-04-26
+**Version:** 3.3.9 | **Updated:** 2026-04-26
 All paths relative to `/assets/` unless stated otherwise.
 
 This document covers two complementary asset stores:
