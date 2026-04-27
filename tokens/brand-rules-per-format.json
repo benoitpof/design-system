@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "3.3.5",
+    "version": "3.3.6",
     "generated": "2026-04-27",
     "description": "Format-specific design rules. Every value exact. Pair with brand-tokens.json. Convention: mm partout (SSOT). Inches noted in comments only when pptxgenjs requires it.",
     "changes_from_3.1.0": [
@@ -77,6 +77,11 @@
       "ADD components.button_ghost spec — light: steel #435D74 border + text, hover #CFD9E0 bg. Dark: light-steel #5F7D95 border + text, hover white 8%. Hierarchy: Primary > Secondary > Danger > Ghost (lowest emphasis).",
       "REFINE colors.gradients.navy_depth_subtle — direction from bottom-left corner, transition to fully transparent (not solid teal end). Final teal opacity 38% on solid navy base. Per user iterations 2026-04-27.",
       "ARCHIVE environment icons — moved to assets/icons/_archived/environment/. Removed from active scope per user feedback. Reversible by un-archiving."
+    ],
+    "changes_from_3.3.5": [
+      "Archive assets/icons/ecology/ (stroke-width 28 too thick vs Tabler outline standard).",
+      "Switch ICONS.md to Tabler CDN as primary source. POF curated icons no longer active.",
+      "Add Drive folder reference in ASSETS.md (https://drive.google.com/drive/folders/1oqm8Wkh_lfH4Vw4j7vBJNtoO8aji9GIn) as raw source for Notion URL fichier values."
     ]
   },
   "slides": {

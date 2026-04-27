@@ -1,6 +1,6 @@
 # ASSETS.md — POF Brand Asset Index
 
-**Version:** 3.3.5 | **Updated:** 2026-04-26
+**Version:** 3.3.6 | **Updated:** 2026-04-26
 All paths relative to `/assets/` unless stated otherwise.
 
 This document covers two complementary asset stores:
@@ -107,6 +107,8 @@ For map patterns spec (heatmap, categorical, dots, anchored), see `docs/MAPS.md`
 **Source of truth for all photos, videos, illustrations, raster pictograms.**
 Database ID: `8ca51a75-2413-4f72-8f2a-c44d445fa1d0`
 URL: `collection://8ca51a75-2413-4f72-8f2a-c44d445fa1d0`
+Notion URL: https://www.notion.so/25bd7cc0e7454f0f9cb8607870f59738?v=342c2ce245e880fabb97000cc87a1cbb
+Drive folder (raw files, source for URL fichier): https://drive.google.com/drive/folders/1oqm8Wkh_lfH4Vw4j7vBJNtoO8aji9GIn
 
 This repo is **agnostic of the photo content** — Git stores only static brand assets (above). Dynamic media (photos, videos, country-specific imagery) lives in Notion and is queried by Claude Design at generation time.
 

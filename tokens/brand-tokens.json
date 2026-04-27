@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "version": "3.3.5",
+    "version": "3.3.6",
     "generated": "2026-04-27",
     "schema": "design-tokens-v3",
     "source_of_truth": "GitHub repo benoitpof/design-system tokens/brand-tokens.json",
     "mirror": "Notion database 'Brand Tokens' (read-only, synced via GAS)",
     "previous_version": "3.1.0",
-    "changes": "See CHANGELOG-v3.3.5.md. Button Ghost spec, refined navy_depth gradient (corner bottom-left, transparent end), new world basemap, heatmap teal palette, environment icons archived.",
+    "changes": "See CHANGELOG-v3.3.6.md. Ecology archived. Tabler CDN primary. Drive folder doc.",
     "wcag_compliance": {
       "standard": "WCAG 2.1 AA",
       "normal_text_min": "4.5:1",
