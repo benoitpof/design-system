@@ -362,55 +362,13 @@
       "_inches": "x=1.04 y=0.81 max_w=17.93 max_h=9.63",
       "_verified_from": "Charte Trame deck V2.pptx slide 'zone utile' (uploaded 2026-04-26)"
     },
-    "layout_defaults": {
-      "L00_TITLE": {
-        "icons_required": 0,
-        "reason": "Cover slide, no icon needed"
-      },
-      "L01_SECTION_HEADER": {
-        "icons_required": 0,
-        "reason": "Section divider, photo only"
-      },
-      "L02_TITLE_AND_BODY": {
-        "icons_required": 1,
-        "reason": "Body slide should have at least 1 picto for visual anchor"
-      },
-      "L03_TITLE_AND_TWO_COLUMNS": {
-        "icons_required": 2,
-        "reason": "Each column gets its own picto (max 2)"
-      },
-      "L04_TITLE_ONLY": {
-        "icons_required": 1,
-        "reason": "Free zone : 1 picto recommended for visual anchor"
-      },
-      "L05_ONE_COLUMN_TEXT": {
-        "icons_required": 1,
-        "reason": "1 picto en haut de la colonne"
-      },
-      "L06_MAIN_POINT": {
-        "icons_required": 1,
-        "reason": "1 picto pour ancrer le point cle"
-      },
-      "L07_SECTION_TITLE_AND_DESCRIPTION": {
-        "icons_required": 1,
-        "reason": "1 picto cote section title"
-      },
-      "L08_CAPTION_ONLY": {
-        "icons_required": 0,
-        "reason": "Image only, no icon"
-      },
-      "L09_BIG_NUMBER": {
-        "icons_required": 1,
-        "reason": "1 picto en haut du big number pour donner contexte"
-      },
-      "L10_BLANK": {
-        "icons_required": 0,
-        "reason": "Custom layout, free"
-      },
-      "L11_GENERATED": {
-        "icons_required": 0,
-        "reason": "Custom layout, free"
-      }
+    "layout_defaults": {},
+    "picto_policy": {
+      "description": "Politique pictogrammes : pas d'imposition stricte mais lecture de docs/Rules/ICONS.md obligatoire avant generation. Forcer la question : ce slide gagnerait-il en clarte avec un picto pour structurer ou illustrer un propos ?",
+      "mandatory_read": "docs/Rules/ICONS.md",
+      "consideration_required": true,
+      "enforcement": "soft",
+      "rationale": "Trop de pictos = bruit visuel. Pas de pictos = slides moins lisibles. La skill doit lire la doc et se poser la question slide par slide, sans seuil mecanique."
     }
   },
   "documents": {

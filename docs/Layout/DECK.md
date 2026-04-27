@@ -1,347 +1,302 @@
-# LAYOUTS.md — POF Canonical Slide Layouts
+# DECK.md — POF Canonical Slide Layouts (15)
 
-**Format:** LAYOUT_WIDE — 20" × 11.25" (508 × 285.75 mm), 16:9 (pptxgenjs `pres.layout = 'LAYOUT_WIDE'`)
-**Colors:** navy=#1C1F3B · teal=#80C7C2 · coral=#E8546C · light=#F9FCFF · steel=#435D74
-**Status:** ✅ VALIDATED | 🔄 DRAFT — validate before generating at scale
+**Version:** 3.4.1 | **Updated:** 2026-04-27
+**Format:** LAYOUT_WIDE — 20" × 11.25" (508 × 285.75 mm), 16:9
+**SSOT binaire :** `templates/master-deck-v3.4.0.pptx`
+**Status:** ✅ VALIDATED layouts L01-L09 · 🔄 DRAFT L10-L15 (à remplir au fil des productions)
 
-**Convention:** SSOT en mm (`tokens/brand-rules-per-format.json`). Inches conservés ci-dessous pour pptxgenjs (× 25.4 → mm).
-
----
-
-## Global anchors (all layouts — verified from Template POF XML)
-
-```
-Canvas:          20" × 11.25"   (508 × 285.75 mm)
-Logo:            x=16.587 y=0.810 w=2.541 h=0.645   (mm: x=421.3 y=20.6 w=64.5 h=16.4)
-Corner TL:       x=0.748  y=0.642 w=0.303 h=0.303   (mm: x=19.0  y=16.3 w=7.7  h=7.7)   teal grpSp mark
-Corner BR:       x=19.025 y=10.454 w=0.303 h=0.303  (mm: x=483.2 y=265.5 w=7.7 h=7.7)   teal grpSp mark
-Slide number:    x=18.531 y=10.200 w=1.200 h=0.861  (mm: x=470.7 y=259.1 w=30.5 h=21.9)
-Title:           x=1.051  y=0.810 w=9.106 h=0.404   (mm: x=26.7 y=20.6 w=231.3 h=10.3)  Poppins ExtraBold 26pt teal or white
-Subtitle:        x=1.051  y=1.237 w=9.570 h=0.471   (mm: x=26.7 y=31.4 w=243.1 h=12.0)  Raleway SemiBold 26pt navy
-Pipe accent:     x=0.748  y=0.75  w=0.055 h=0.48    (mm: x=19.0 y=19.05 w=1.4 h=12.2)   teal vertical bar left of title
-Content zone:    x=1.051  y=2.0   max-w=17.898 max-h=8.8  (mm: x=26.7 y=50.8 max-w=454.6 max-h=223.5)
-```
-
-**Zone utile (safe zone) :** marges symétriques 26.7 mm L/R, 50.8 mm top (header logo+title+subtitle), 11.4 mm bottom (footer slide number). Aucun contenu critique en dehors. Les corner marks teal sont décoratifs et débordent volontairement de la zone utile.
+**Convention coords :** mm partout (SSOT). Inches conservés en commentaires pour pptxgenjs (× 25.4 → mm).
 
 ---
 
-## L01 — COVER (dark, full-bleed)
-
-**Status:** 🔄 DRAFT
-**Use:** Opening slide — photo right half, text left, dark bg
+## Ancrages globaux (tous layouts)
 
 ```
-bg:              navy #1C1F3B (or bg-wave-02.svg full-bleed)
-No logo on master — add pof-logo-white x=1.051 y=0.5 w=3.5 (larger on cover)
-Photo zone:      x=9.54 y=1.53 w=10.46 h=6.08  full-bleed right — sizing=cover
-Navy overlay:    x=9.54 y=0 w=10.46 h=11.25    bg=1C1F3B transparency=45
-Wave:            assets/brand-elements/wave-white.svg x=0 y=8.5 w=7 opacity=0.3
-Title:           x=1.051 y=3.2 w=8.0 Poppins ExtraBold 36pt white uppercase
-Subtitle:        x=1.051 y=4.8 w=8.0 Raleway SemiBold 26pt teal
-Date/context:    x=1.051 y=5.8 w=6.0 Raleway Regular 22pt F9FCFF
-Slogan:          x=1.051 y=7.0 w=7.0 Raleway ExtraBold 26pt — words alternating white/teal
+Canvas:          20.0"  × 11.25"   (508.0 × 285.75 mm)
+Logo:            x=421.3 y=20.6 w=64.5 h=16.4 mm   (top-right, sauf L01)
+Logo L01 cover:  x=26.7  y=12.7 w=88.9 h=22.6 mm   (top-left, format élargi)
+Corner TL:       x=19.0  y=16.3 w=7.7  h=7.7 mm    teal grpSp décoratif
+Corner BR:       x=483.2 y=265.5 w=7.7 h=7.7 mm    teal grpSp décoratif
+Slide number:    x=470.7 y=259.1 w=30.5 h=21.9 mm  Raleway 11pt steel
+Title:           x=26.7  y=20.6 w=231.3 h=10.3 mm  Poppins ExtraBold 26pt teal ou white
+Subtitle:        x=26.7  y=31.4 w=243.1 h=12.0 mm  Raleway SemiBold 26pt navy
+Pipe accent:     x=19.0  y=19.05 w=1.4 h=12.2 mm   teal vertical bar à gauche du titre
+Content zone:    x=26.7  y=50.8 max-w=454.6 max-h=223.5 mm
+Footer source:   x=26.7  y=270.0 w=350.0 h=8.0 mm  Raleway Light 9pt steel italique
 ```
+
+**Zone utile (safe zone) :** marges 26.7 mm L/R, 50.8 mm top, 11.4 mm bottom. Aucun contenu critique en dehors. Corner marks teal débordent volontairement.
 
 ---
 
-## L02 — SECTION DIVIDER
+## Backgrounds canoniques (4 types)
 
-**Status:** 🔄 DRAFT
-**Use:** Between major sections in long decks
+| ID | Type | Usage | Asset |
+|---|---|---|---|
+| BG_LIGHT | Fond clair `#F9FCFF` | Layouts texte standard (L02-L08, L13-L14) | none |
+| BG_DARK | Fond navy `#1C1F3B` plein | L01 cover, L15 callout | none |
+| BG_PHOTO_OVERLAY | Photo full-bleed + overlay 3-type system | L01 cover, L02 section, L09 map | `assets/backgrounds/bg-wave-02.svg` ou photo Notion |
+| BG_WAVE_BAND | Bandeau navy gradient + waves | L04 KPI, L11 quote | `assets/backgrounds/bg-wave-01.svg` 1920×540 |
 
-```
-bg:              navy #1C1F3B (or bg-wave-01.svg full-bleed)
-Section number:  Poppins Bold 120pt teal opacity=0.2 x=14.0 y=0.5
-Section title:   Poppins ExtraBold 40pt white uppercase x=1.051 y=4.0
-Subtitle:        Raleway SemiBold 26pt teal x=1.051 y=5.8
-Logo:            pof-logo-white x=16.587 y=0.810 w=2.541
-Corners:         standard teal grpSp marks
-```
-
----
-
-## L03 — CONTENT + IMAGE (50/50 split)
-
-**Status:** 🔄 DRAFT
-**Use:** Product presentation, site description, case study
-
-```
-bg:              white #FFFFFF
-Title:           standard (teal)
-Subtitle:        standard (navy)
-Text zone:       x=1.051 y=2.0 w=8.4 h=8.8
-  H2:            Poppins SemiBold 22pt navy
-  Body:          Raleway Regular 22pt #1C1F3B
-  Bullets:       bullet=true Raleway 22pt, indentLevel=0
-Image zone:      x=9.54 y=0 w=10.46 h=11.25 — full-bleed right — sizing=cover
-  (Matches slide 12/13 pattern: x=9.54 y=1.53 w=10.46 h=6.08 for smaller image)
-```
+**Overlay system (3 types — voir `docs/Rules/PHOTOS.md`) :**
+- `type_1_white_fade` : carte ou photo avec fade blanc sur les bords (default L09 maps, L13 timeline si photo)
+- `type_2_navy_gradient` : photo + gradient navy from-bottom (default L01 cover)
+- `type_3_solid_dark` : photo + voile navy uniforme medium (default L02 section)
 
 ---
 
-## L04 — BIG NUMBER / STATS (1–3 callouts)
+## L01 — COVER (full-bleed photo + overlay navy)
 
-**Status:** 🔄 DRAFT
-**Use:** Impact KPIs — matches slide 5 and 15 patterns
+**Background :** BG_PHOTO_OVERLAY type_2_navy_gradient
+**Logo :** top-LEFT format élargi (x=26.7, y=12.7, w=88.9, h=22.6 mm) — couleur `pof-logo-teal-white.svg`
+**Title :** centré horizontalement, y=140-180mm. Poppins ExtraBold 36pt white. Max 4 mots, 3 lignes.
+**Subtitle :** sous title, Poppins SemiBold 22pt white. 1 phrase max.
+**Eyebrow :** top, y=70mm, Poppins SemiBold 11pt teal letter-spacing 2px UPPERCASE. Format `<TYPE> · <YEAR>`.
+**Date/lieu :** bottom-left, y=260mm, Raleway Regular 14pt white. Format `Dakar, Senegal · April 2026`.
+**Corner marks :** **NONE** (incompatible avec logo top-left).
+**Pipe :** **NONE** (cover sans pipe).
 
-```
-bg:              navy #1C1F3B or white
-Photo zone:      x=1.051 y=2.45 w=8.71 h=7.99  left image (slide 5 pattern)
-Stats zone:      x=10.25 y=3.69 to right edge — stacked teal boxes
-
-Per stat box:
-  Outer box:     x=10.25 y=3.69 w=8.71 h=2.27 bg=05387B
-  Inner text:    x=11.44 y=3.69 w=7.29 h=2.02
-    Number:      Raleway ExtraBold 120pt teal
-    Label:       Raleway Bold 24pt white
-  Second box:    x=10.25 y=6.33 w=8.71 h=2.43 (same pattern)
-
-Variant (3 cols on white):
-  3 cols:        w=5.6" each, gutter=0.4" y=3.0
-    Number:      Raleway ExtraBold 72pt navy centered
-    Unit:        Poppins SemiBold 30pt teal
-    Label:       Raleway Regular 22pt steel
-    Wave:        wave-teal.svg w=2.5" centered below
-```
+**Forbidden :** 
+- Logo en top-right (réservé aux autres layouts)
+- Photos stock / IA / hands holding earth
+- Plus de 4 mots dans le title
 
 ---
 
-## L05 — VALUE PROPOSITION (3 cards)
+## L02 — SECTION DIVIDER (photo + overlay navy heavy)
 
-**Status:** 🔄 DRAFT
-**Use:** What we provide — machines, training, market, finance
+**Background :** BG_PHOTO_OVERLAY type_3_solid_dark (overlay navy 80%)
+**Logo :** top-right standard
+**Roman numeral :** centré horizontalement, y=120mm. Poppins ExtraBold 120pt teal `#80C7C2` opacity 0.4. Format `I`, `II`, `III`...
+**Section title :** sous le numeral, y=180mm, Poppins ExtraBold 36pt white. UPPERCASE ou Title Case.
+**Section descriptor :** sous title, Raleway Regular 18pt white opacity 0.85. 1 phrase 12 mots max.
+**Corner marks :** TL + BR teal.
+**Pipe :** none.
 
-```
-bg:              white
-Title:           standard
-3 cards:         y=2.0 h=8.0 gutter=0.4" x_start=1.051
-  card-w:        5.8"
-  bg:            F9FCFF
-  Teal top bar:  w=full h=0.25" bg=80C7C2
-  Icon:          Tabler 48×48px navy x=0.3" y=0.5" from card
-  Title:         Poppins SemiBold 22pt navy x=0.3" y=1.1"
-  Body:          Raleway Regular 20pt #1C1F3B x=0.3" y=1.7" max 5 lines
-```
+**Forbidden :**
+- Section title en multi-ligne (1 ligne stricte)
+- Photo de transition générique (doit être contextuelle au sujet de la section)
 
 ---
 
-## L06 — PROCESS FLOW (3–5 steps)
+## L03 — CONTENT + IMAGE (split 50/50)
 
-**Status:** 🔄 DRAFT
-**Use:** How the franchise works, deployment steps
+**Background :** BG_LIGHT
+**Logo :** top-right standard
+**Title :** standard (x=26.7, y=20.6) Poppins ExtraBold 26pt teal
+**Subtitle :** standard Raleway SemiBold 22pt navy
+**Pipe :** TL teal, à gauche du titre
+**Content gauche :** 50% width (w=216 mm), texte en bullet points ou paragraphes courts. Max 3 niveaux d'indentation.
+**Image droite :** 50% width (x=270, y=80, w=212, h=148 mm), overlay type_1_white_fade si photo paysage.
+**Source caption :** bottom-left, Raleway Light 9pt steel italique
+**Corner marks :** TL + BR teal
 
-```
-bg:              white
-Title:           standard
-Connector line:  y=5.2" x=1.5" w=17.0" h=0 line=0.5pt navy
-Steps (max 5):   y=4.0" centered row
-  Circle:        d=1.4" bg=1C1F3B number Poppins Bold 28pt white centered
-  Title:         Poppins SemiBold 22pt navy below circle centered w=3.0"
-  Body:          Raleway 20pt #1C1F3B below title w=3.0" 3 lines max
-  Arrows:        → 0.5pt navy between circles
-```
+---
+
+## L04 — BIG NUMBER / KPI (1 à 3 callouts)
+
+**Background :** BG_LIGHT ou BG_WAVE_BAND
+**Logo :** top-right standard
+**Title :** standard
+**Subtitle :** standard, court
+**Pipe :** TL teal
+**KPI block(s) :** centrés verticalement, y=130-200mm.
+- **1 KPI :** centré horizontalement. Number 120pt Poppins ExtraBold navy. Label sous-jacent 18pt Raleway Regular steel.
+- **2 KPIs :** alignés horizontalement, gap 60mm. Number 72pt.
+- **3 KPIs :** alignés horizontalement, gap 30mm. Number 64pt.
+**Source caption :** bottom-left
+**Corner marks :** TL + BR teal
+
+**Couleurs :** Number en navy `#1C1F3B`. Si highlight critique : 1 number en coral `#E8546C` max sur 3.
+**Forbidden :** 4 KPIs ou plus sur la même slide (split en 2 slides).
+
+---
+
+## L05 — VALUE PROPOSITION (3 cards horizontal)
+
+**Background :** BG_LIGHT
+**Logo :** top-right standard
+**Title :** standard Poppins ExtraBold 26pt teal
+**Subtitle :** standard
+**Pipe :** TL teal
+**3 cards :** alignés horizontalement, y=80mm, w=140mm chacune, gap 20mm.
+- Card header : Poppins SemiBold 18pt navy, max 3 mots
+- Card icon (optional) : 32px Tabler ou POF picto, navy. **Considérer mais pas imposer**
+- Card body : Raleway Regular 14pt body, max 4 lignes
+- Card border : 1px steel-pale, border-radius 4mm
+
+**Forbidden :** 4 cards ou plus (si besoin, splitter ou utiliser L08 table).
+
+---
+
+## L06 — PROCESS FLOW (3 à 5 steps horizontal)
+
+**Background :** BG_LIGHT
+**Logo :** top-right standard
+**Title :** standard
+**Subtitle :** standard
+**Pipe :** TL teal
+**Steps :** alignés horizontalement, y=120mm.
+- Numéroter 01, 02, 03 (Poppins ExtraBold 22pt teal)
+- Header step : Poppins SemiBold 18pt navy
+- Body step : Raleway Regular 12pt body, 1 ligne
+- Connector arrow : SVG path UNIQUE (M x1 y1 L x2 y2 + markerEnd integré). **Jamais 2 éléments séparés.**
+- Color sequence : navy → navy_medium → steel → steel_light → teal (highlight final si critical)
+
+**Forbidden :** 6 steps ou plus.
 
 ---
 
 ## L07 — BAR CHART
 
-**Status:** 🔄 DRAFT
-**Use:** Revenue by year, factories deployed, tonnage — inspired by Corn Farm slide 11/12
+**Background :** BG_LIGHT
+**Logo :** top-right standard
+**Title :** standard (titre du chart)
+**Subtitle :** standard (sous-titre du chart, contexte)
+**Pipe :** TL teal
+**Chart :** centré, y=80mm, w=400, h=180 mm. SVG embedded, généré via `DS-Dataviz-generator type=chart template=02-bar`.
+**Source caption :** bottom-left, OBLIGATOIRE pour chart.
+**Corner marks :** TL + BR
 
-```
-bg:              white
-Title:           standard
-Chart:           pptxgenjs addChart BAR x=1.051 y=2.0 w=14.0 h=8.0
-  barDir:        'col'
-  chartColors:   ['1C1F3B', '435D74', 'CFD9E0', '80C7C2']
-  chartArea:     fill white, no border
-  valGridLine:   color=EAEBED size=0.5
-  catGridLine:   style='none'
-  catAxisLabelColor: '6C757D'
-  valAxisLabelColor: '6C757D'
-  showValue:     true  dataLabelPosition='outEnd'  dataLabelColor='1C1F3B'
-  showLegend:    true if >1 series, legendPos='r'
-
-Stat callout:    optional — x=15.5 y=2.0 w=3.5 h=3.0
-  bg:            1C1F3B
-  Number:        Raleway ExtraBold 48pt teal centered
-  Label:         Raleway Regular 22pt white centered
-
-Source note:     x=1.051 y=10.5 Raleway Light 18pt steel italic
-```
+**Voir `docs/Rules/CHARTS.md`** pour palette, forbidden, data accuracy.
 
 ---
 
-## L08 — TABLE
+## L08 — TABLE (financial / comparison)
 
-**Status:** 🔄 DRAFT
-**Use:** Comparative specs, financial summary, franchise terms — inspired by Corn Farm slide 12
+**Background :** BG_LIGHT
+**Logo :** top-right standard
+**Title :** standard
+**Subtitle :** standard (contexte du tableau)
+**Pipe :** TL teal
+**Table :** centrée, y=80mm.
+- Header row : navy `#1C1F3B`, white text, Poppins SemiBold 11pt
+- Data rows : alternance white / `#F9FCFF` (zebra)
+- Numbers right-align, max 2 décimales sauf %
+- Negatives en coral `#E8546C` (pas de parenthèses)
+- Max 8 cols, max 12 rows par slide
+**Source caption :** bottom-left
 
-```
-bg:              white
-Title:           standard
-Table:           x=1.051 y=2.0 w=17.898 (addTable)
-  Header row:    fill={color:'1C1F3B'} Poppins SemiBold 18pt white bold=true h=0.55"
-  Data rows:     h=0.45" alternating bg FFFFFF / F9FCFF
-  Cell font:     Raleway Regular 18pt #1C1F3B
-  No borders
-  First col:     Poppins SemiBold 18pt navy w=3.5" (row label)
-  Max rows:      12 — split beyond that
-  colW:          distribute based on content — first col wider
-
-Caption:         x=1.051 y=10.5 Raleway Light 18pt steel italic — source/note
-```
+**Voir `docs/Rules/TABLES.md`.**
 
 ---
 
 ## L09 — MAP / GEOGRAPHIC
 
-**Status:** 🔄 DRAFT
-**Use:** Deployment countries, 3 regional clusters
+**Background :** BG_LIGHT ou BG_PHOTO_OVERLAY (si carte sur photo)
+**Logo :** top-right standard
+**Title :** standard
+**Subtitle :** standard
+**Pipe :** TL teal
+**Map :** anchored faded-edge Pattern 5 (jamais centrée flottante). x=170mm right-anchored ou left-anchored.
+- Edge fade overlays type_1_white_fade obligatoires sur les bords
+- Pays POF actifs en navy `#1C1F3B`
+- Pays pipeline en steel `#435D74`
+- Pays featured en teal `#80C7C2`
+- Cluster overlays : circles (single r), JAMAIS ellipses
 
-```
-bg:              white
-Title:           standard
-Map zone:        x=1.051 y=2.0 w=12.5 h=8.5
-  SVG flat map   generated or inserted as image
-  Inactive:      EAEBED · Active: 1C1F3B · Pipeline: 435D74
-  Deployed dot:  80C7C2 circle
-Legend:          x=14.0 y=2.5 w=4.9
-  Items:         Raleway 20pt navy, dot icon, gap=0.4"
-Stat callout:    x=14.0 y=6.0 w=4.9 h=2.5 bg=1C1F3B
-  Number:        Raleway ExtraBold 48pt teal
-  Label:         Raleway Regular 22pt white
-```
+**Voir `docs/Rules/MAPS.md` pour 5 patterns.**
 
 ---
 
-## L10 — SWOT
+## L10 — SWOT (2x2 grid)
 
-**Status:** 🔄 DRAFT
-**Use:** Strategic analysis — inspired by Biomass slide 12 (lettered quadrants)
+**Background :** BG_LIGHT
+**Logo :** top-right standard
+**Title :** standard
+**Pipe :** TL teal
+**4 quadrants :** y=80mm, alignés en grille 2x2, gap 10mm chacun.
+- Top-left : Strengths (header navy, body steel)
+- Top-right : Weaknesses (header coral, body steel)
+- Bottom-left : Opportunities (header teal, body steel)
+- Bottom-right : Threats (header navy_medium, body steel)
+- Header quadrant : Poppins SemiBold 14pt UPPERCASE
+- Body : Raleway Regular 11pt, bullets max 4 par quadrant
 
-```
-bg:              white
-Title:           standard
-4 quadrants:     2×2 grid gutter=0.24" x=1.051 y=2.0
-  Each cell:     w=8.8" h=4.2"
-  S top-left:    bg=1C1F3B — giant letter "S" Poppins Bold 96pt teal opacity=0.15
-                 title Poppins SemiBold 22pt white — items Raleway 20pt white
-  W top-right:   bg=F9FCFF — letter "W" navy opacity=0.1 — title+items navy
-  O bot-left:    bg=80C7C2 — letter "O" navy opacity=0.15 — title+items NAVY (never white on teal)
-  T bot-right:   bg=EAEBED — letter "T" navy opacity=0.1 — title+items navy
-  Max items:     4 per cell — Raleway Regular 20pt
-```
+🔄 DRAFT — à valider avec exemple golden.
 
 ---
 
 ## L11 — QUOTE / TESTIMONIAL
 
-**Status:** 🔄 DRAFT
-**Use:** Franchisee quote, partner statement — inspired by Biomass slide 7
+**Background :** BG_WAVE_BAND ou BG_LIGHT
+**Logo :** top-right standard
+**Title :** none (le quote est le focus)
+**Subtitle :** none
+**Quote :** centrée, y=120mm, w=350mm. Poppins SemiBold 28pt navy italique. Max 3 lignes, 25 mots.
+**Author photo :** circulaire, w=60mm h=60mm, à gauche du quote OU sous le quote centré
+**Author name :** Poppins SemiBold 16pt navy
+**Author role :** Raleway Regular 12pt steel
+**Pipe :** none
 
-```
-bg:              white
-Title:           standard
-Left border:     x=1.051 y=2.2 w=0.22" h=5.5" bg=80C7C2
-Quote text:      x=1.5 y=2.4 w=14.0 Poppins SemiBold 28pt navy italic line-height=1.3
-Attribution:     x=1.5 y=7.0 Raleway Regular 22pt steel
-Role/org:        x=1.5 y=7.6 Raleway Light 20pt steel
-Portrait:        optional — circle d=3.0" x=16.5 y=3.5 rounding=true
-```
-
----
-
-## L12 — TEAM
-
-**Status:** 🔄 DRAFT
-**Use:** Team, advisory board — inspired by Biomass slide 16
-
-```
-bg:              white
-Title:           standard
-Grid 4 per row:  y=2.2 gutter=0.3"
-  Portrait:      circle d=3.0" rounding=true
-  Name:          Poppins SemiBold 22pt navy below centered
-  Role:          Raleway Regular 20pt steel centered
-  col-x spacing: (20 - 2×1.051 - 4×3.0) / 3 = 1.299" gap
-Max:             8 persons (2 rows of 4)
-```
+🔄 DRAFT — à valider.
 
 ---
 
-## L13 — TIMELINE
+## L12 — TEAM (grid de portraits)
 
-**Status:** 🔄 DRAFT
-**Use:** Company history, deployment roadmap 2022–2030
+**Background :** BG_LIGHT
+**Logo :** top-right standard
+**Title :** standard
+**Subtitle :** standard
+**Pipe :** TL teal
+**Grid :** 4-6 portraits par row, max 2 rows.
+- Photo circulaire ou rectangulaire ratio 3:4
+- Nom : Poppins SemiBold 14pt navy sous photo
+- Rôle : Raleway Regular 11pt steel
+- Si photo manquante : initiales fond steel-pale
 
-```
-bg:              white
-Title:           standard
-Axis line:       y=5.5 x=1.5 to x=18.5 h=0 line=0.5pt navy
-Milestones (max 6):
-  Dot past:      d=0.55" bg=80C7C2 on axis
-  Dot future:    d=0.45" bg=435D74 dashed axis
-  Year:          Poppins SemiBold 20pt navy above dot y=4.8
-  Label:         Raleway Regular 20pt #1C1F3B below dot y=6.2 w=2.5" 3 lines
-```
-
----
-
-## L14 — COMPARISON (2 columns)
-
-**Status:** 🔄 DRAFT
-**Use:** Before/after, POF vs NGO model, option A vs B
-
-```
-bg:              white
-Title:           standard
-Divider:         x=10.0 y=2.0 h=8.5 w=0 line=0.5pt navy
-Left col:        x=1.051 y=2.0 w=8.5
-Right col:       x=10.5  y=2.0 w=8.5
-Per column:
-  Optional badge: highlight color block — teal or coral — above title
-  Title:         Poppins SemiBold 26pt navy uppercase
-  Teal accent:   rect x=0 y=title_bottom w=2.5" h=0.18" bg=80C7C2
-  Items:         Raleway 22pt #1C1F3B bullet=true gap=0.2"
-```
+🔄 DRAFT — à valider.
 
 ---
 
-## L15 — CALLOUT / KEY MESSAGE (dark)
+## L13 — TIMELINE (horizontal milestones)
 
-**Status:** 🔄 DRAFT
-**Use:** Closing ask, target statement, investment thesis
+**Background :** BG_LIGHT
+**Logo :** top-right standard
+**Title :** standard
+**Subtitle :** standard
+**Pipe :** TL teal
+**Timeline axis :** ligne horizontale navy 2px, y=150mm
+**Milestones :** dots teal/navy/coral selon importance, label année + descripteur
+**Color sequence :** navy → steel → teal (highlight) → coral (key milestone)
 
-```
-bg:              navy #1C1F3B
-Wave:            wave-white.svg x=0 y=7.0 w=7.0 opacity=0.25
-Logo:            pof-logo-white standard position
-Corners:         standard teal grpSp
-Label:           x=1.051 y=2.5 Poppins SemiBold 22pt teal uppercase
-Main message:    x=1.051 y=3.2 w=15.0 Poppins ExtraBold 40pt white line-height=1.2 max 2 lines
-Sub text:        x=1.051 y=6.5 Raleway SemiBold 26pt teal
-```
+🔄 DRAFT — à valider.
 
 ---
 
-## Layout → Use case quick reference
+## L14 — COMPARISON (2 colonnes side-by-side)
 
-| ID | Layout | Typical slide in a POF deck |
-|----|--------|---------------------------|
-| L01 | Cover | Slide 1 |
-| L02 | Section divider | Between Problem / Solution / Model / Impact |
-| L03 | Content + Image | CDF description, deployment site, case study |
-| L04 | Big Number | 1 000T, 30 jobs, 200 factories KPIs |
-| L05 | Value Prop 3 cards | What we provide (machines+training+market+finance) |
-| L06 | Process Flow | Franchise deployment in 4 steps |
-| L07 | Bar Chart | Revenue projections, factories per year |
-| L08 | Table | CAPEX comparison, franchise terms, country specs |
-| L09 | Map | Where we operate — 3 regional clusters |
-| L10 | SWOT | Strategic positioning |
-| L11 | Quote | Franchisee testimonial, partner quote |
-| L12 | Team | Core team, advisors |
-| L13 | Timeline | 2022–2030 roadmap |
-| L14 | Comparison | NGO model vs POF / centralized vs decentralized |
-| L15 | Callout dark | The ask, closing statement |
+**Background :** BG_LIGHT
+**Logo :** top-right standard
+**Title :** standard
+**Subtitle :** standard
+**Pipe :** TL teal
+**2 colonnes :** y=80mm, w=215mm chacune, gap 30mm.
+- Header colonne : Poppins SemiBold 18pt UPPERCASE
+- Items list : checkboxes ou bullets, Raleway Regular 14pt body
+- Color cue : colonne gauche neutral (steel), colonne droite highlight (teal ou navy bold)
+
+🔄 DRAFT — à valider.
+
+---
+
+## L15 — CALLOUT / KEY MESSAGE (dark, full-bleed)
+
+**Background :** BG_DARK navy plein OU BG_WAVE_BAND
+**Logo :** top-right teal-white version
+**Title :** none (le message EST le titre)
+**Eyebrow :** top, Poppins SemiBold 11pt teal letter-spacing 2px UPPERCASE
+**Message :** centré, y=130mm, Poppins ExtraBold 44pt white. Max 12 mots, 3 lignes.
+**Highlight :** 1-2 mots max en coral `#E8546C` ou teal `#80C7C2`
+**Pipe :** TL teal vertical
+
+**Forbidden :** plus de 12 mots dans le message.
+
+---
+
+## Memory — capitalisation Rex (v3.4.0)
+
+<!-- ds-iterate écrit ici. Format : ### YYYY-MM-DD — <titre> -->
+
+(vide pour l'instant)
