@@ -770,9 +770,9 @@
     <text x="1338.0" y="286.6" font-family="Raleway, sans-serif" font-size="7" font-weight="400" fill="#435D74" text-anchor="middle" dominant-baseline="central" opacity="0.7" data-iso2="XK">XK</text>
     <text x="794.3" y="533.6" font-family="Raleway, sans-serif" font-size="7" font-weight="400" fill="#435D74" text-anchor="middle" dominant-baseline="central" opacity="0.7" data-iso2="TT">TT</text>
     <text x="1413.6" y="557.8" font-family="Raleway, sans-serif" font-size="7" font-weight="400" fill="#435D74" text-anchor="middle" dominant-baseline="central" opacity="0.7" data-iso2="SS">SS</text>
-    <!-- Island: Comores --><circle cx="1505.3" cy="703.6" r="3" fill="#80C7C2" stroke="#FFFFFF" stroke-width="0.8"/><text x="1511.3" y="703.6" font-family="Raleway, sans-serif" font-size="6.5" font-weight="400" fill="#435D74" dominant-baseline="central">KM</text>
-    <!-- Island: Seychelles --><circle cx="1585.6" cy="649.9" r="3" fill="#80C7C2" stroke="#FFFFFF" stroke-width="0.8"/><text x="1591.6" y="649.9" font-family="Raleway, sans-serif" font-size="6.5" font-weight="400" fill="#435D74" dominant-baseline="central">SC</text>
-    <!-- Island: Île Maurice --><circle cx="1592.9" cy="770.4" r="3" fill="#80C7C2" stroke="#FFFFFF" stroke-width="0.8"/><text x="1598.9" y="770.4" font-family="Raleway, sans-serif" font-size="6.5" font-weight="400" fill="#435D74" dominant-baseline="central">MU</text>
-    <!-- Island: La Réunion --><circle cx="1579.2" cy="776.3" r="3" fill="#80C7C2" stroke="#FFFFFF" stroke-width="0.8"/><text x="1585.2" y="776.3" font-family="Raleway, sans-serif" font-size="6.5" font-weight="400" fill="#435D74" dominant-baseline="central">RE</text>
+    <!-- Island: Comores --><circle cx="1505.3" cy="703.6" r="3" fill="#EAEBED" stroke="#FFFFFF" stroke-width="0.8"/><text x="1511.3" y="703.6" font-family="Raleway, sans-serif" font-size="6.5" font-weight="400" fill="#435D74" dominant-baseline="central">KM</text>
+    <!-- Island: Seychelles --><circle cx="1585.6" cy="649.9" r="3" fill="#EAEBED" stroke="#FFFFFF" stroke-width="0.8"/><text x="1591.6" y="649.9" font-family="Raleway, sans-serif" font-size="6.5" font-weight="400" fill="#435D74" dominant-baseline="central">SC</text>
+    <!-- Island: Île Maurice --><circle cx="1592.9" cy="770.4" r="3" fill="#EAEBED" stroke="#FFFFFF" stroke-width="0.8"/><text x="1598.9" y="770.4" font-family="Raleway, sans-serif" font-size="6.5" font-weight="400" fill="#435D74" dominant-baseline="central">MU</text>
+    <!-- Island: La Réunion --><circle cx="1579.2" cy="776.3" r="3" fill="#EAEBED" stroke="#FFFFFF" stroke-width="0.8"/><text x="1585.2" y="776.3" font-family="Raleway, sans-serif" font-size="6.5" font-weight="400" fill="#435D74" dominant-baseline="central">RE</text>
   </g>
 </svg>

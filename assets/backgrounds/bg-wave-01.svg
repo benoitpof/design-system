@@ -2,7 +2,7 @@
 <svg id="b" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" width="1920" height="540" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 540">
   <defs>
     <linearGradient id="d" data-name="Dégradé sans nom 53" x1="0" y1="270" x2="1920" y2="270" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#05387b"/>
+      <stop offset="0" stop-color="#1d1e3a"/>
       <stop offset="1" stop-color="#1C1F3B"/>
     </linearGradient>
     <linearGradient id="e" data-name="Dégradé sans nom 98" x1="1159.07" y1="816.95" x2="789.59" y2="-198.2" gradientUnits="userSpaceOnUse">

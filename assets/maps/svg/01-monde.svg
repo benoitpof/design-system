@@ -514,7 +514,7 @@
   </svg>
 
   <!-- ❸ Country color overlay — INSERT HIGHLIGHTS HERE
-        Add <path data-iso2="SN" fill="#E8546C" d="..."/> elements.
+        Add <path data-iso2="SN" fill="#EAEBED" d="..."/> elements.
         Coordinates must match the Robinson projection space (viewBox above).
         opacity on group controls overall intensity. -->
   <g id="pof-country-overlay" opacity="0.75">
