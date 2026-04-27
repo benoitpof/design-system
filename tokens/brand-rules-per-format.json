@@ -361,6 +361,56 @@
       "max_height_mm": 244.6,
       "_inches": "x=1.04 y=0.81 max_w=17.93 max_h=9.63",
       "_verified_from": "Charte Trame deck V2.pptx slide 'zone utile' (uploaded 2026-04-26)"
+    },
+    "layout_defaults": {
+      "L00_TITLE": {
+        "icons_required": 0,
+        "reason": "Cover slide, no icon needed"
+      },
+      "L01_SECTION_HEADER": {
+        "icons_required": 0,
+        "reason": "Section divider, photo only"
+      },
+      "L02_TITLE_AND_BODY": {
+        "icons_required": 1,
+        "reason": "Body slide should have at least 1 picto for visual anchor"
+      },
+      "L03_TITLE_AND_TWO_COLUMNS": {
+        "icons_required": 2,
+        "reason": "Each column gets its own picto (max 2)"
+      },
+      "L04_TITLE_ONLY": {
+        "icons_required": 1,
+        "reason": "Free zone : 1 picto recommended for visual anchor"
+      },
+      "L05_ONE_COLUMN_TEXT": {
+        "icons_required": 1,
+        "reason": "1 picto en haut de la colonne"
+      },
+      "L06_MAIN_POINT": {
+        "icons_required": 1,
+        "reason": "1 picto pour ancrer le point cle"
+      },
+      "L07_SECTION_TITLE_AND_DESCRIPTION": {
+        "icons_required": 1,
+        "reason": "1 picto cote section title"
+      },
+      "L08_CAPTION_ONLY": {
+        "icons_required": 0,
+        "reason": "Image only, no icon"
+      },
+      "L09_BIG_NUMBER": {
+        "icons_required": 1,
+        "reason": "1 picto en haut du big number pour donner contexte"
+      },
+      "L10_BLANK": {
+        "icons_required": 0,
+        "reason": "Custom layout, free"
+      },
+      "L11_GENERATED": {
+        "icons_required": 0,
+        "reason": "Custom layout, free"
+      }
     }
   },
   "documents": {
@@ -859,7 +909,39 @@
       "title",
       "axis labels (when applicable)",
       "source caption (when data sourced)"
-    ]
+    ],
+    "multi_series_palette": {
+      "description": "Palette par defaut pour series multiples : navy gradient navy->gris. Teal et coral reserves au highlight (1-2 series max), jamais dans la sequence par defaut.",
+      "default_sequence": [
+        "#1C1F3B",
+        "#253560",
+        "#435D74",
+        "#5F7D95",
+        "#8AAFC4",
+        "#CFD9E0"
+      ],
+      "highlight_only": [
+        "#80C7C2",
+        "#2BA595",
+        "#E8546C"
+      ],
+      "rule": "Si > 6 series : grouper \"Other\" ou splitter en plusieurs charts. Jamais utiliser highlight_only dans la sequence par defaut.",
+      "order_logic": "Assignation par logique semantique (geographique, temporelle, taille). Eviter ordre arbitraire. Ex: regions developpees = navy fonce, regions emergentes = steel-light clair."
+    },
+    "forbidden_in_charts": {
+      "description": "Elements de slides interdits a l'interieur d'un SVG chart",
+      "corner_mark": true,
+      "eyebrow_accent_line": true,
+      "pipe_accent": true,
+      "logo_overlay": true,
+      "reason": "Ces elements appartiennent au layout slide, pas au chart. Le chart doit etre autonome et reutilisable cross-medium."
+    },
+    "data_accuracy": {
+      "description": "Validation strict des donnees source avant generation chart",
+      "rule": "Si donnees source identifiees (OECD, World Bank, etc.), respecter strictement les valeurs. Tolerance max : 1% sur sommes et multiplicateurs.",
+      "interpolation": "Pour series temporelles : prefere points reels (interpolation monotone Akima/PCHIP). Pas d exponentielle pure entre 3 points.",
+      "meta_required": "meta.json doit indiquer source + date + methode interpolation"
+    }
   },
   "maps_lock": {
     "_enforcement": "STRICT",

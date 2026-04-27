@@ -124,3 +124,52 @@ The catalog is the source. Single chats producing one-off charts must NOT be the
 <!-- ds-iterate écrit ici. Format : ### YYYY-MM-DD — <titre> -->
 
 (vide pour l'instant)
+
+
+## Patch v3.4.0 — règles ajoutées suite feedbacks
+
+### Multi-series palette (CRITICAL)
+
+**Règle :** séries multiples utilisent un spectre navy → gris. Teal et coral réservés au highlight (1-2 séries max), jamais dans la séquence par défaut.
+
+**Sequence par défaut (jusqu'à 6 séries) :**
+```
+series_1 : #1C1F3B  navy
+series_2 : #253560  navy_medium
+series_3 : #435D74  steel
+series_4 : #5F7D95  steel_light
+series_5 : #8AAFC4  steel_pale
+series_6 : #CFD9E0  steel_palest
+```
+
+**Highlight only (jamais dans la séquence par défaut) :**
+- Teal `#80C7C2` ou `#2BA595` : pour 1 série à mettre en avant
+- Coral `#E8546C` : pour 1 KPI critique unique
+
+**Logique d'ordre :** assignation par logique sémantique (géographique, temporelle, taille). Pas d'ordre arbitraire.
+
+### Éléments interdits à l'intérieur d'un chart (CRITICAL)
+
+Les éléments suivants appartiennent au layout slide, pas au chart. **Jamais à l'intérieur d'un SVG chart :**
+- `corner_mark` (L-bracket teal)
+- `eyebrow_accent_line` (trait teal horizontal sous l'eyebrow)
+- `pipe_accent` (barre verticale teal à gauche du titre)
+- Logo overlay
+
+Le chart doit rester autonome et réutilisable cross-medium (deck, web, print).
+
+### Validation données source (CRITICAL)
+
+Pour les charts avec données source identifiées (OECD, World Bank, IFC, etc.) :
+
+1. **Respecter strictement les valeurs.** Tolérance max : 1% sur sommes et multiplicateurs.
+2. **Phase de validation obligatoire avant génération** : refuser si écart > 1% vs source.
+3. **Interpolation temporelle** : préférer points réels disponibles. Si interpolation nécessaire, utiliser monotone (Akima/PCHIP) pas exponentielle pure.
+4. **`meta.json` du livrable** doit indiquer : source URL, date publication, méthode interpolation, points utilisés.
+
+### Charts denses (>8 séries)
+
+1. Palette navy → gris stricte (pas de couleur ajoutée)
+2. Réduire épaisseur des connecteurs
+3. Espacement dynamique anti-overlap pour les labels
+4. Si > 12 séries : grouper en "Other" ou splitter en plusieurs charts
