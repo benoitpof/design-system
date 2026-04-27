@@ -367,6 +367,8 @@ def build_icons_gallery():
     <a href="maps.html">Maps</a>
     <a href="icons.html" class="active">Icons</a>
     <a href="images.html">Images</a>
+    <a href="workflows.html">Workflows</a>
+    <a href="databases.html">DBs</a>
     <a href="https://github.com/benoitpof/design-system">GitHub</a>
   </nav>
 </div>
@@ -482,6 +484,8 @@ def build_images_gallery():
 <a href="maps.html">Maps</a>
 <a href="icons.html">Icons</a>
 <a href="images.html" class="active">Images</a>
+<a href="workflows.html">Workflows</a>
+<a href="databases.html">DBs</a>
 <a href="https://github.com/benoitpof/design-system">GitHub</a>
 </nav>
 </div>
@@ -660,6 +664,8 @@ def build_architecture():
     <a href="maps.html">Maps</a>
     <a href="icons.html">Icons</a>
     <a href="images.html">Images</a>
+    <a href="workflows.html">Workflows</a>
+    <a href="databases.html">DBs</a>
     <a href="https://github.com/benoitpof/design-system">GitHub</a>
   </nav>
 </div>
@@ -800,6 +806,8 @@ def build_workflows():
     <a href="maps.html">Maps</a>
     <a href="icons.html">Icons</a>
     <a href="images.html">Images</a>
+    <a href="workflows.html">Workflows</a>
+    <a href="databases.html">DBs</a>
     <a href="https://github.com/benoitpof/design-system">GitHub</a>
   </nav>
 </div>
@@ -934,6 +942,7 @@ def build_databases():
 <a href="charts.html">Charts</a>
 <a href="maps.html">Maps</a>
 <a href="icons.html">Icons</a>
+<a href="images.html">Images</a>
 <a href="workflows.html">Workflows</a>
 <a href="databases.html" class="active">DBs</a>
 <a href="https://github.com/benoitpof/design-system">GitHub</a>
@@ -951,6 +960,7 @@ def build_databases():
 </div>
 </body></html>'''
     # Standalone databases.html removed (merged into workflows.html)
+    (BUILD / 'databases.html').write_text(page)
     (BUILD / 'databases').mkdir(exist_ok=True)
     for db in DB_DEFS:
         sub = f'''<!DOCTYPE html>

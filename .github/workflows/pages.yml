@@ -1,8 +1,32 @@
 name: Deploy GitHub Pages
 
+# Only run when visual content / docs / generation logic changes.
+# Code-only iterations on internal stuff (CHANGELOG entries only, etc.)
+# don't trigger a redeploy. Manual trigger always available via workflow_dispatch.
+
 on:
   push:
     branches: [main]
+    paths:
+      - 'site/**'                          # site templates (index, charts, maps, etc.)
+      - 'assets/**'                        # logos, icons, brand-elements, backgrounds, maps
+      - 'examples/**'                      # chart bank examples (when restored)
+      - 'docs/**'                          # rules and layouts md files
+      - 'memory/**'                        # Rex pages (when populated)
+      - 'golden/**'                        # golden references
+      - 'templates/**'                     # master templates
+      - 'tokens/**'                        # brand-tokens.json + css
+      - 'scripts/build-gallery.py'         # build script itself
+      - '.github/workflows/pages.yml'      # workflow itself
+      - 'README.md'
+      - 'ITERATE.md'
+      - 'VISUALIZE.md'
+      # NOT triggered by:
+      # - CHANGELOG.md updates (history only, no visual change)
+      # - .archive/ (historical changelogs)
+      # - .gitignore, internal config
+
+  # Manual trigger always available from Actions tab
   workflow_dispatch:
 
 permissions:
