@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POF · Skills Bank · v3.4.0</title>
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Raleway:ital,wght@0,300;0,400;0,600;0,700&display=swap" rel="stylesheet">
+<style>
+.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--neutral-mid);padding:14px 32px;display:flex;align-items:center;gap:16px}
+.topbar .brand img{height:26px}.topbar .crumbs{font-family:Poppins;font-size:11px;font-weight:600;color:var(--gray-600);letter-spacing:1px;text-transform:uppercase}
+.topbar .version{font-family:Poppins;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal-dark);background:rgba(128,199,194,.12);padding:3px 8px;border-radius:3px}
+.topbar-nav{margin-left:auto;display:flex;gap:8px}
+.topbar-nav a{font-family:Poppins;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase}
+.topbar-nav a:hover,.topbar-nav a.active{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.hero{padding:64px 32px 32px;max-width:1280px;margin:0 auto}.hero .pipe-row{display:flex;gap:14px;align-items:flex-start}.hero .pipe{width:5px;background:var(--steel-light);min-height:80px;margin-top:6px;border-radius:1px}
+.hero .eyebrow{font-family:Poppins;font-weight:700;font-size:11px;letter-spacing:2px;color:var(--steel-light);text-transform:uppercase}
+.hero h1{font-family:Poppins;font-weight:700;font-size:48px;color:var(--navy);margin:8px 0 12px;letter-spacing:-1px}
+.hero p{font-family:Raleway;font-size:16px;color:var(--body);max-width:760px;line-height:1.5;margin:0}
+.intro-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:48px auto 0;max-width:1280px;padding:0 32px;border-top:1px solid var(--neutral-mid);border-bottom:1px solid var(--neutral-mid)}
+.intro-stat{padding:24px 0}.intro-stat:not(:last-child){border-right:1px solid var(--neutral-mid);padding-right:24px}.intro-stat:not(:first-child){padding-left:24px}
+.intro-stat .num{font-family:Poppins;font-weight:700;font-size:36px;color:var(--navy);line-height:1}
+.intro-stat .lab{font-family:Raleway;font-size:11px;color:var(--gray-600);margin-top:8px;letter-spacing:0.5px;text-transform:uppercase}
+.gallery{max-width:1280px;margin:64px auto 0;padding:0 32px 96px}
+.gallery h2{font-family:Poppins;font-weight:600;font-size:18px;letter-spacing:1px;color:var(--steel);text-transform:uppercase;margin:0 0 24px;padding-left:14px;border-left:3px solid var(--steel-light)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:48px}
+.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--neutral-mid);border-radius:8px;overflow:hidden;transition:box-shadow 200ms ease,border-color 200ms ease}
+.card:hover{border-color:var(--steel-light);box-shadow:0 12px 32px rgba(29,31,59,0.08)}
+.card .thumb{aspect-ratio:16/7;background:var(--gris-pof);border-bottom:1px solid var(--neutral-mid);display:flex;align-items:center;justify-content:center;padding:18px;position:relative}
+.card .thumb svg{width:100%;height:100%}
+.card .meta{padding:20px 22px}
+.card .num{font-family:Poppins;font-weight:700;font-size:11px;letter-spacing:2px;color:var(--steel-light)}
+.card .name{font-family:Poppins;font-weight:600;font-size:20px;color:var(--navy);margin:4px 0 8px}
+.card .desc{font-family:Raleway;font-size:13px;color:var(--gray-600);line-height:1.5;margin-bottom:10px}
+.card .triggers{font-family:Poppins;font-size:9px;font-weight:600;letter-spacing:1px;color:var(--teal-dark);text-transform:uppercase;border-top:1px solid var(--neutral-mid);padding-top:10px;margin-top:8px}
+.card .triggers code{background:rgba(128,199,194,.12);padding:2px 6px;border-radius:3px;font-family:Poppins;font-size:9px;color:var(--teal-dark);margin-right:6px;display:inline-block;margin-bottom:3px}
+.card .badge-status{display:inline-block;font-family:Poppins;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 8px;border-radius:3px;text-transform:uppercase;background:rgba(232,84,108,.12);color:var(--coral);margin-left:8px}
+.card .badge-status.ready{background:rgba(128,199,194,.15);color:var(--teal-dark)}
+@media(max-width:960px){.grid{grid-template-columns:1fr}.intro-stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.intro-stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="brand" href="index.html"><img src="https://raw.githubusercontent.com/benoitpof/design-system/main/assets/logos/pof-logo-color.svg" alt="POF"></a>
+  <span class="crumbs">Design System · Skills Bank</span>
+  <span class="version">v3.4.0</span>
+  <nav class="topbar-nav">
+    <a href="index.html">Overview</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="charts.html">Charts</a>
+    <a href="maps.html">Maps</a>
+    <a href="skills.html" class="active">Skills</a>
+    <a href="https://github.com/benoitpof/design-system">GitHub</a>
+  </nav>
+</div>
+
+<header class="hero">
+  <div class="pipe-row"><div class="pipe"></div><div>
+    <div class="eyebrow">POF · Skills Bank · v3.4.0</div>
+    <h1>Skills Cowork</h1>
+    <p>Quatre skills modulaires pour générer, assembler, capitaliser et logger les contenus POF brand-aligned. Chaque skill est self-contained et lit ses règles directement depuis le repo `benoitpof/design-system`. Pas de duplication de règle brand, pas de hardcoded design.</p>
+  </div></div>
+</header>
+
+<section class="intro-stats">
+  <div class="intro-stat"><div class="num">4</div><div class="lab">skills</div></div>
+  <div class="intro-stat"><div class="num">2</div><div class="lab">atomiques</div></div>
+  <div class="intro-stat"><div class="num">1</div><div class="lab">orchestrateur</div></div>
+  <div class="intro-stat"><div class="num">1</div><div class="lab">scheduled task</div></div>
+</section>
+
+<div class="gallery">
+
+<h2>Atomiques · génération &amp; log</h2>
+<div class="grid">
+  <a class="card" href="https://www.notion.so/34fc2ce245e881589325de3fc89e7154">
+    <div class="thumb">
+      <svg viewBox="0 0 480 210" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="55" width="80" height="100" rx="6" fill="#1C1F3B"/>
+        <text x="60" y="98" font-family="Poppins" font-weight="700" font-size="11" fill="#80C7C2" text-anchor="middle">DATA</text>
+        <text x="60" y="118" font-family="Raleway" font-size="9" fill="#FFF" text-anchor="middle" opacity="0.7">json</text>
+        <text x="60" y="138" font-family="Raleway" font-size="9" fill="#FFF" text-anchor="middle" opacity="0.7">notion</text>
+        <path d="M110 105 L 145 105" stroke="#435D74" stroke-width="2"/>
+        <polygon points="145,100 155,105 145,110" fill="#435D74"/>
+        <rect x="160" y="40" width="160" height="130" rx="6" fill="#FFF" stroke="#1C1F3B" stroke-width="2"/>
+        <line x1="180" y1="155" x2="300" y2="155" stroke="#1C1F3B" stroke-width="0.5"/>
+        <rect x="190" y="125" width="14" height="30" fill="#1C1F3B"/>
+        <rect x="210" y="105" width="14" height="50" fill="#1C1F3B"/>
+        <rect x="230" y="85" width="14" height="70" fill="#1C1F3B"/>
+        <rect x="250" y="100" width="14" height="55" fill="#435D74"/>
+        <rect x="270" y="120" width="14" height="35" fill="#435D74"/>
+        <rect x="290" y="95" width="14" height="60" fill="#80C7C2"/>
+        <text x="240" y="58" font-family="Poppins" font-weight="600" font-size="9" fill="#1C1F3B" text-anchor="middle">CHART · MAP · TABLE</text>
+        <path d="M330 105 L 365 105" stroke="#435D74" stroke-width="2"/>
+        <polygon points="365,100 375,105 365,110" fill="#435D74"/>
+        <rect x="380" y="55" width="80" height="100" rx="6" fill="#80C7C2"/>
+        <text x="420" y="98" font-family="Poppins" font-weight="700" font-size="11" fill="#1C1F3B" text-anchor="middle">.PNG</text>
+        <text x="420" y="118" font-family="Raleway" font-size="9" fill="#1C1F3B" text-anchor="middle">.svg</text>
+        <text x="420" y="138" font-family="Raleway" font-size="9" fill="#1C1F3B" text-anchor="middle">.json</text>
+        <text x="240" y="195" font-family="Poppins" font-weight="600" font-size="9" fill="#435D74" text-anchor="middle">2 modes : quick · iterate</text>
+      </svg>
+    </div>
+    <div class="meta">
+      <div class="num">S1 · ATOMIQUE <span class="badge-status">À builder</span></div>
+      <div class="name">DS-Dataviz-generator</div>
+      <div class="desc">Génère un asset visuel atomique : chart (16 templates), map (5 patterns), table. Mode quick (single-shot, QA auto) ou iterate (push Notion + boucle review Benoît). Cherche d'abord similar dans Notion Media Assets DB avant génération.</div>
+      <div class="triggers"><code>render chart</code> <code>render map</code> <code>build table</code> <code>dataviz</code></div>
+    </div>
+  </a>
+
+  <a class="card" href="https://www.notion.so/34fc2ce245e88166bc23fa403fb75031">
+    <div class="thumb">
+      <svg viewBox="0 0 480 210" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="40" width="100" height="55" rx="6" fill="#FFF" stroke="#1C1F3B" stroke-width="1.5"/>
+        <text x="70" y="62" font-family="Poppins" font-weight="700" font-size="9" fill="#1C1F3B" text-anchor="middle">SKILLS</text>
+        <text x="70" y="80" font-family="Raleway" font-size="8" fill="#435D74" text-anchor="middle">DS-Dataviz</text>
+        <rect x="20" y="115" width="100" height="55" rx="6" fill="#FFF" stroke="#1C1F3B" stroke-width="1.5"/>
+        <text x="70" y="137" font-family="Poppins" font-weight="700" font-size="9" fill="#1C1F3B" text-anchor="middle">SKILLS</text>
+        <text x="70" y="155" font-family="Raleway" font-size="8" fill="#435D74" text-anchor="middle">ds-file-assembler</text>
+        <path d="M125 70 L 165 95" stroke="#435D74" stroke-width="2" stroke-dasharray="4,3"/>
+        <path d="M125 145 L 165 115" stroke="#435D74" stroke-width="2" stroke-dasharray="4,3"/>
+        <rect x="170" y="60" width="140" height="90" rx="6" fill="#1C1F3B"/>
+        <text x="240" y="92" font-family="Poppins" font-weight="700" font-size="14" fill="#80C7C2" text-anchor="middle">ds-feedback</text>
+        <text x="240" y="113" font-family="Raleway" font-size="9" fill="#FFF" text-anchor="middle" opacity="0.85">log atomique</text>
+        <text x="240" y="130" font-family="Raleway" font-size="9" fill="#FFF" text-anchor="middle" opacity="0.6">cluster mode</text>
+        <path d="M315 105 L 355 105" stroke="#435D74" stroke-width="2"/>
+        <polygon points="355,100 365,105 355,110" fill="#435D74"/>
+        <rect x="370" y="60" width="90" height="90" rx="6" fill="#FFF" stroke="#80C7C2" stroke-width="2"/>
+        <text x="415" y="90" font-family="Poppins" font-weight="700" font-size="9" fill="#1C1F3B" text-anchor="middle">DS</text>
+        <text x="415" y="105" font-family="Poppins" font-weight="700" font-size="9" fill="#1C1F3B" text-anchor="middle">FEEDBACK</text>
+        <text x="415" y="125" font-family="Raleway" font-size="8" fill="#435D74" text-anchor="middle">DB Notion</text>
+        <text x="240" y="195" font-family="Poppins" font-weight="600" font-size="9" fill="#435D74" text-anchor="middle">log + cluster (pre-step ds-iterate)</text>
+      </svg>
+    </div>
+    <div class="meta">
+      <div class="num">S4 · ATOMIQUE <span class="badge-status">À builder</span></div>
+      <div class="name">ds-feedback</div>
+      <div class="desc">Log brut des Rex et feedbacks dans la DB Notion DS Feedback. Appelée par DS-Dataviz-generator et ds-file-assembler en phase 7, ou directement par Benoît. Mode cluster pour pré-traitement avant ds-iterate hebdo.</div>
+      <div class="triggers"><code>log feedback</code> <code>note ce Rex</code> <code>capture learning</code> <code>ds-feedback</code></div>
+    </div>
+  </a>
+</div>
+
+<h2>Orchestrateur · assemblage de livrables</h2>
+<div class="grid" style="grid-template-columns:1fr">
+  <a class="card" href="https://www.notion.so/34fc2ce245e8811d9310cfe956ea089d">
+    <div class="thumb" style="aspect-ratio:32/9">
+      <svg viewBox="0 0 960 270" xmlns="http://www.w3.org/2000/svg">
+        <rect x="40" y="50" width="120" height="170" rx="6" fill="#FFF" stroke="#1C1F3B" stroke-width="1.5"/>
+        <text x="100" y="80" font-family="Poppins" font-weight="700" font-size="11" fill="#1C1F3B" text-anchor="middle">CONTENU</text>
+        <text x="100" y="100" font-family="Raleway" font-size="9" fill="#435D74" text-anchor="middle">Notion source</text>
+        <text x="100" y="118" font-family="Raleway" font-size="9" fill="#435D74" text-anchor="middle">narrative</text>
+        <text x="100" y="155" font-family="Poppins" font-weight="600" font-size="9" fill="#80C7C2" text-anchor="middle">📐 Layout</text>
+        <text x="100" y="172" font-family="Poppins" font-weight="600" font-size="9" fill="#80C7C2" text-anchor="middle">🖼️ Illustration</text>
+        <text x="100" y="189" font-family="Poppins" font-weight="600" font-size="9" fill="#80C7C2" text-anchor="middle">💡 Exemple</text>
+        <path d="M165 135 L 215 135" stroke="#435D74" stroke-width="2"/>
+        <polygon points="215,130 225,135 215,140" fill="#435D74"/>
+        <rect x="230" y="50" width="290" height="170" rx="6" fill="#1C1F3B"/>
+        <text x="375" y="85" font-family="Poppins" font-weight="700" font-size="13" fill="#80C7C2" text-anchor="middle">ds-file-assembler</text>
+        <text x="375" y="105" font-family="Raleway" font-size="9" fill="#FFF" text-anchor="middle" opacity="0.85">git pull · read rules · map playbook</text>
+        <line x1="260" y1="125" x2="490" y2="125" stroke="#435D74" stroke-width="0.5"/>
+        <text x="375" y="143" font-family="Raleway" font-size="9" fill="#FFF" text-anchor="middle" opacity="0.7">duplicate master template layout</text>
+        <text x="375" y="159" font-family="Raleway" font-size="9" fill="#FFF" text-anchor="middle" opacity="0.7">fetch media · path A or B</text>
+        <text x="375" y="175" font-family="Raleway" font-size="9" fill="#FFF" text-anchor="middle" opacity="0.7">composition QA gate (6 rules)</text>
+        <text x="375" y="200" font-family="Poppins" font-weight="600" font-size="9" fill="#80C7C2" text-anchor="middle">1 question : validate outline?</text>
+        <path d="M525 135 L 575 135" stroke="#435D74" stroke-width="2"/>
+        <polygon points="575,130 585,135 575,140" fill="#435D74"/>
+        <rect x="590" y="50" width="130" height="170" rx="6" fill="#FFF" stroke="#80C7C2" stroke-width="2"/>
+        <text x="655" y="85" font-family="Poppins" font-weight="700" font-size="11" fill="#1C1F3B" text-anchor="middle">DS-Dataviz</text>
+        <text x="655" y="100" font-family="Poppins" font-weight="700" font-size="11" fill="#1C1F3B" text-anchor="middle">generator</text>
+        <text x="655" y="125" font-family="Raleway" font-size="9" fill="#435D74" text-anchor="middle">charts · maps · tables</text>
+        <text x="655" y="170" font-family="Raleway" font-size="9" fill="#435D74" text-anchor="middle">path B</text>
+        <text x="655" y="190" font-family="Raleway" font-size="9" fill="#80C7C2" text-anchor="middle">+ ds-feedback</text>
+        <path d="M725 135 L 775 135" stroke="#435D74" stroke-width="2"/>
+        <polygon points="775,130 785,135 775,140" fill="#435D74"/>
+        <rect x="790" y="50" width="130" height="170" rx="6" fill="#80C7C2"/>
+        <text x="855" y="85" font-family="Poppins" font-weight="700" font-size="11" fill="#1C1F3B" text-anchor="middle">LIVRABLE</text>
+        <text x="855" y="115" font-family="Raleway" font-size="9" fill="#1C1F3B" text-anchor="middle">.pptx · deck</text>
+        <text x="855" y="135" font-family="Raleway" font-size="9" fill="#1C1F3B" text-anchor="middle">.docx · report</text>
+        <text x="855" y="155" font-family="Raleway" font-size="9" fill="#1C1F3B" text-anchor="middle">.html · web</text>
+        <text x="855" y="175" font-family="Raleway" font-size="9" fill="#1C1F3B" text-anchor="middle">.png · social</text>
+        <text x="480" y="252" font-family="Poppins" font-weight="600" font-size="10" fill="#435D74" text-anchor="middle">medium = deck | report | web | social · une seule question : validate outline?</text>
+      </svg>
+    </div>
+    <div class="meta">
+      <div class="num">S2 · ORCHESTRATEUR <span class="badge-status">À builder</span></div>
+      <div class="name">ds-file-assembler</div>
+      <div class="desc">Skill orchestrateur. Assemble decks, reports A4, web pages, social posts depuis du contenu source (Notion ou prompt direct). Lit les règles depuis le repo, choisit les layouts, orchestre la création des assets via DS-Dataviz-generator (path A pour assets stratégiques, path B pour tactiques). Remplace l'ancien `ds-deploy`.</div>
+      <div class="triggers"><code>genere un deck</code> <code>build report</code> <code>position paper</code> <code>page web</code> <code>post LinkedIn</code> <code>ds-file-assembler</code></div>
+    </div>
+  </a>
+</div>
+
+<h2>Capitalisation · learning loop</h2>
+<div class="grid" style="grid-template-columns:1fr">
+  <a class="card" href="https://www.notion.so/34fc2ce245e881709bfeec167d598115">
+    <div class="thumb" style="aspect-ratio:32/9">
+      <svg viewBox="0 0 960 270" xmlns="http://www.w3.org/2000/svg">
+        <rect x="40" y="60" width="160" height="150" rx="6" fill="#FFF" stroke="#1C1F3B" stroke-width="1.5"/>
+        <text x="120" y="90" font-family="Poppins" font-weight="700" font-size="11" fill="#1C1F3B" text-anchor="middle">DS FEEDBACK</text>
+        <text x="120" y="105" font-family="Raleway" font-size="9" fill="#435D74" text-anchor="middle">DB Notion</text>
+        <line x1="65" y1="120" x2="195" y2="120" stroke="#EAEBED" stroke-width="0.5"/>
+        <rect x="65" y="130" width="130" height="14" rx="2" fill="#F9FCFF" stroke="#EAEBED"/>
+        <rect x="65" y="148" width="130" height="14" rx="2" fill="#F9FCFF" stroke="#EAEBED"/>
+        <rect x="65" y="166" width="130" height="14" rx="2" fill="#F9FCFF" stroke="#EAEBED"/>
+        <rect x="65" y="184" width="130" height="14" rx="2" fill="#F9FCFF" stroke="#EAEBED"/>
+        <path d="M205 135 L 250 135" stroke="#435D74" stroke-width="2"/>
+        <polygon points="250,130 260,135 250,140" fill="#435D74"/>
+        <rect x="265" y="60" width="160" height="150" rx="6" fill="#1C1F3B"/>
+        <text x="345" y="90" font-family="Poppins" font-weight="700" font-size="13" fill="#80C7C2" text-anchor="middle">ds-iterate</text>
+        <text x="345" y="108" font-family="Raleway" font-size="9" fill="#FFF" text-anchor="middle" opacity="0.85">cluster · diagnostic</text>
+        <line x1="290" y1="120" x2="420" y2="120" stroke="#435D74" stroke-width="0.5"/>
+        <rect x="285" y="135" width="55" height="20" rx="3" fill="#80C7C2"/>
+        <text x="312" y="148" font-family="Poppins" font-weight="700" font-size="9" fill="#1C1F3B" text-anchor="middle">A · auto</text>
+        <rect x="345" y="135" width="55" height="20" rx="3" fill="#80C7C2" opacity="0.7"/>
+        <text x="372" y="148" font-family="Poppins" font-weight="700" font-size="9" fill="#1C1F3B" text-anchor="middle">B · PR</text>
+        <rect x="285" y="160" width="55" height="20" rx="3" fill="#E8546C" opacity="0.6"/>
+        <text x="312" y="174" font-family="Poppins" font-weight="700" font-size="9" fill="#FFF" text-anchor="middle">C · Benoit</text>
+        <rect x="345" y="160" width="55" height="20" rx="3" fill="#E8546C" opacity="0.6"/>
+        <text x="372" y="174" font-family="Poppins" font-weight="700" font-size="9" fill="#FFF" text-anchor="middle">D · Benoit</text>
+        <text x="345" y="200" font-family="Raleway" font-size="9" fill="#FFF" text-anchor="middle" opacity="0.6">scheduled : A+B uniquement</text>
+        <path d="M430 135 L 475 135" stroke="#435D74" stroke-width="2"/>
+        <polygon points="475,130 485,135 475,140" fill="#435D74"/>
+        <rect x="490" y="60" width="160" height="150" rx="6" fill="#FFF" stroke="#80C7C2" stroke-width="2"/>
+        <text x="570" y="90" font-family="Poppins" font-weight="700" font-size="11" fill="#1C1F3B" text-anchor="middle">PR GitHub</text>
+        <text x="570" y="105" font-family="Raleway" font-size="9" fill="#435D74" text-anchor="middle">benoitpof/design-system</text>
+        <line x1="515" y1="120" x2="645" y2="120" stroke="#EAEBED" stroke-width="0.5"/>
+        <text x="570" y="140" font-family="Raleway" font-size="9" fill="#1C1F3B" text-anchor="middle">memory/&lt;type&gt;.md</text>
+        <text x="570" y="158" font-family="Raleway" font-size="9" fill="#1C1F3B" text-anchor="middle">docs/rules/&lt;file&gt;.md</text>
+        <text x="570" y="176" font-family="Raleway" font-size="9" fill="#1C1F3B" text-anchor="middle">docs/layouts/&lt;file&gt;.md</text>
+        <text x="570" y="195" font-family="Poppins" font-weight="600" font-size="9" fill="#80C7C2" text-anchor="middle">[BENOIT-VALIDATION-REQUIRED]</text>
+        <path d="M655 135 L 700 135" stroke="#435D74" stroke-width="2"/>
+        <polygon points="700,130 710,135 700,140" fill="#435D74"/>
+        <rect x="715" y="60" width="200" height="150" rx="6" fill="#80C7C2"/>
+        <text x="815" y="90" font-family="Poppins" font-weight="700" font-size="11" fill="#1C1F3B" text-anchor="middle">DS v+1</text>
+        <text x="815" y="115" font-family="Raleway" font-size="9" fill="#1C1F3B" text-anchor="middle">v3.4.0 → v3.4.1</text>
+        <text x="815" y="135" font-family="Raleway" font-size="9" fill="#1C1F3B" text-anchor="middle">memory enrichi</text>
+        <text x="815" y="153" font-family="Raleway" font-size="9" fill="#1C1F3B" text-anchor="middle">rules patch</text>
+        <text x="815" y="178" font-family="Poppins" font-weight="600" font-size="9" fill="#1C1F3B" text-anchor="middle">Slack #ai-design-system</text>
+        <text x="480" y="252" font-family="Poppins" font-weight="600" font-size="10" fill="#435D74" text-anchor="middle">scheduled Monday 9h Paris · niveaux risque A · B · C · D</text>
+      </svg>
+    </div>
+    <div class="meta">
+      <div class="num">S3 · CAPITALISATION <span class="badge-status">À builder</span></div>
+      <div class="name">ds-iterate</div>
+      <div class="desc">Skill de capitalisation. Lit DS Feedback DB, cluster + diagnostic, propose des modifs sur memory/, rules/ ou layouts/ via PR GitHub. Mode manual ou scheduled (Monday 9h Paris). Niveaux de risque A/B/C/D : scheduled task se limite à A et B, C (tokens) et D (Skills/masters/DB) demandent validation formelle Benoît.</div>
+      <div class="triggers"><code>capitalise les Rex</code> <code>lance ds-iterate</code> <code>retro DS</code> <code>learning loop</code> <code>scheduled Monday 9h</code></div>
+    </div>
+  </a>
+</div>
+
+</div>
+
+</body>
+</html>
