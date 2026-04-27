@@ -197,3 +197,11 @@ When exporting a map to PPTX : rasterize the SVG to PNG at 2× resolution if any
 | `assets/maps/USAGE.md` | Use case guide for the 7 regional crops |
 | `assets/maps/POF-WORLD-MAP-GUIDE.md` | Country IDs and groups |
 | `assets/maps/_map-data.js` | JS helpers |
+
+---
+
+## Memory — capitalisation Rex (v3.4.0)
+
+<!-- ds-iterate écrit ici. Format : ### YYYY-MM-DD — <titre> -->
+
+(vide pour l'instant)
