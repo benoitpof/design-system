@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "3.3.0",
+    "version": "3.3.1",
     "generated": "2026-04-26",
     "description": "Format-specific design rules. Every value exact. Pair with brand-tokens.json. Convention: mm partout (SSOT). Inches noted in comments only when pptxgenjs requires it.",
     "changes_from_3.1.0": [
@@ -41,6 +41,13 @@
       "ADD examples/excel/pof-dashboard-template.xlsx — 3 sheets (Dashboard KPI, Data, Chart).",
       "VECTORIZE assets/maps/svg/02-07.svg — 6 regional crops now proper vector (was PNG-embedded). 4-layer structure (bg, base, overlay, fade).",
       "Notion DB 'Design System Feedback' created (collection a3f73a10-caf3-4726-b37f-421244a9cc6f) for weekly feedback consolidation."
+    ],
+    "changes_from_3.3.0": [
+      "Sync brand-tokens.css gradient overlay to canonical lock value (was 0%/58%, now 85%/45%).",
+      "Add colors.gradients.navy_depth_subtle for subtle vertical gradient on large navy bg surfaces (cover, section divider, big-number bg).",
+      "ALIGN with V2 template (Charte/Trame/Zone-utile deck V2 from 2026-04-26): add 28pt to typography_lock.allowed_sizes_pt. Loosen ExtraBold (800) restriction — now allowed on slide_title_default (any layout), in addition to cover/section/stat number.",
+      "ADD slides.max_envelope (zone utile V2 definition) — wider envelope including header zone, distinct from content_zone (after header).",
+      "Update slides.font_size_mapping with V2 hierarchy: cover_title=36pt ExtraBold, slide_title=26pt ExtraBold, slide_subtitle=26pt SemiBold, slogan=28pt SemiBold, body=22pt Regular, caption=18pt Light."
     ]
   },
   "slides": {
@@ -155,7 +162,8 @@
       "max_width_mm": 454.6,
       "max_height_mm": 223.5,
       "_inches": "x=1.051 y=2.0 max_w=17.898 max_h=8.8",
-      "_verified_against": "docs/LAYOUTS.md global anchors"
+      "_verified_against": "docs/LAYOUTS.md global anchors",
+      "_relation_to_max_envelope": "content_zone is a subset of max_envelope, positioned below the header (title + subtitle zones). Use content_zone for body content (text, images, charts). Use max_envelope only when content needs to span up into the header area (rare)."
     },
     "footer_zone": {
       "y_mm": 274.3,
@@ -188,22 +196,32 @@
       "_note": "12 cols across 454.6mm content zone with 6.4mm gutter"
     },
     "font_size_mapping": {
-      "slide_title_cover": {
+      "cover_title": {
         "font": "Poppins ExtraBold",
         "size_pt": 36,
         "color_on_dark": "#FFFFFF",
-        "_extrabold_allowed": "L01 cover only"
+        "_layout": "L01 only"
       },
-      "slide_title_default": {
-        "font": "Poppins SemiBold",
+      "slide_title": {
+        "font": "Poppins ExtraBold",
         "size_pt": 26,
         "color_on_light": "#80C7C2",
-        "color_on_dark": "#FFFFFF"
+        "color_on_dark": "#FFFFFF",
+        "_v2_label": "TRÈS GRAS",
+        "_layouts": "L02-L15 standard slides"
       },
       "slide_subtitle": {
         "font": "Raleway SemiBold",
-        "size_pt": 22,
-        "color": "#1C1F3B"
+        "size_pt": 26,
+        "color": "#1C1F3B",
+        "_v2_label": "moyen"
+      },
+      "slogan": {
+        "font": "Raleway SemiBold or Poppins SemiBold",
+        "size_pt": 28,
+        "color": "#80C7C2 or #1C1F3B",
+        "_v2_label": "slogan",
+        "_layouts": "Cover / section divider / closing"
       },
       "H2": {
         "font": "Poppins SemiBold",
@@ -219,13 +237,14 @@
       },
       "body_screen": {
         "font": "Raleway Regular",
-        "size_pt": 18,
+        "size_pt": 22,
         "color": "#1C1F3B",
-        "line_height": 1.5
+        "line_height": 1.5,
+        "_v2_label": "normal"
       },
       "body_small": {
         "font": "Raleway Regular",
-        "size_pt": 14,
+        "size_pt": 18,
         "color": "#1C1F3B",
         "line_height": 1.5
       },
@@ -233,8 +252,7 @@
         "font": "Raleway ExtraBold",
         "size_pt": 120,
         "color_on_dark": "#80C7C2",
-        "color_on_light": "#1C1F3B",
-        "_extrabold_allowed": "stat number only"
+        "color_on_light": "#1C1F3B"
       },
       "stat_unit": {
         "font": "Raleway SemiBold",
@@ -277,6 +295,15 @@
       "timeline": "Horizontal timeline with navy line + teal dots + dated milestones",
       "callout_quote": "Large centered quote, Poppins SemiBold, teal left border",
       "closing": "Same as cover treatment with contact info overlay"
+    },
+    "max_envelope": {
+      "_description": "Maximum content envelope per V2 template (Charte deck V2). Includes the header zone (logo, title, subtitle). Use this as the absolute max bounding box. For body content placement, use content_zone (after header).",
+      "x_mm": 26.3,
+      "y_mm": 20.6,
+      "max_width_mm": 455.3,
+      "max_height_mm": 244.6,
+      "_inches": "x=1.04 y=0.81 max_w=17.93 max_h=9.63",
+      "_verified_from": "Charte Trame deck V2.pptx slide 'zone utile' (uploaded 2026-04-26)"
     }
   },
   "documents": {
@@ -718,6 +745,7 @@
       18,
       22,
       26,
+      28,
       36
     ],
     "stat_only_sizes_pt": [
@@ -731,9 +759,11 @@
       700
     ],
     "extrabold_800_restricted_to": [
+      "slide_title_default (V2 template — any layout)",
       "slide_title_on_cover_layout_L01",
       "section_title_on_section_divider_L02",
-      "stat_number_on_L04"
+      "stat_number_on_L04",
+      "slogan_on_cover_or_section"
     ],
     "black_900_forbidden": true,
     "_rationale": "Visual cohesion across deck/web/print requires bounded type system. Inflation of sizes/weights = perceived brand fragmentation.",

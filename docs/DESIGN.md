@@ -1,6 +1,6 @@
 # DESIGN.md — Plastic Odyssey Factories Design System
 
-**Version:** 3.3.0 | **Updated:** 2026-04-26
+**Version:** 3.3.1 | **Updated:** 2026-04-26
 **Source of truth:** `tokens/brand-tokens.json` + `tokens/brand-rules-per-format.json`
 **Template reference:** `Template_POF_Claude.pptx` (LAYOUT_WIDE 20"×11.25" / 508×285.75 mm)
 **Coordinate convention:** mm partout (SSOT). Inches en commentaire pour pptxgenjs.
@@ -9,8 +9,10 @@
 
 These rules are non-negotiable. Any violation in generated content (deck, web, report) must be flagged red in QA before delivery.
 
-### Type-scale lock
-Only 7 allowed sizes (pt): **9, 11, 14, 18, 22, 26, 36**. Plus stat-only: 72, 120. No other sizes anywhere.
+### Type-scale lock (aligned V2 template 2026-04-26)
+Only 8 allowed sizes (pt): **9, 11, 14, 18, 22, 26, 28, 36**. Plus stat-only: 72, 120. No other sizes anywhere.
+
+V2 hierarchy : cover_title 36pt ExtraBold · slide_title 26pt ExtraBold · slide_subtitle 26pt SemiBold · slogan 28pt SemiBold · body 22pt Regular · caption 18pt Light.
 
 ### Weight lock
 Regular weights allowed: **300, 400, 600, 700**. ExtraBold (800) restricted to: cover slide title (L01), section divider title (L02), stat number (L04). Black (900) **forbidden**.
