@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "version": "3.3.3",
+    "version": "3.3.4",
     "generated": "2026-04-27",
     "schema": "design-tokens-v3",
     "source_of_truth": "GitHub repo benoitpof/design-system tokens/brand-tokens.json",
     "mirror": "Notion database 'Brand Tokens' (read-only, synced via GAS)",
     "previous_version": "3.1.0",
-    "changes": "See CHANGELOG-v3.3.3.md. Remove Academy + Sunu PO entities (POF Factories only). Remove info #0D6EFD + near_black. Add 26pt slide_title to typography scale.",
+    "changes": "See CHANGELOG-v3.3.4.md. Add body_slide (22pt) and body_print (11pt) to typography.scale — explicit per-medium body sizes (was implicit in slides.font_size_mapping / print_lock).",
     "wcag_compliance": {
       "standard": "WCAG 2.1 AA",
       "normal_text_min": "4.5:1",
@@ -338,6 +338,13 @@
         "pt": 9,
         "usage": "Captions, chart axis labels, slide footer."
       },
+      "body_print": {
+        "px": 15,
+        "pt": 11,
+        "usage": "Body text for PRINT (DOCX, PDF, A4 reports). Compact for paper reading at 25cm.",
+        "_added_in": "v3.3.4",
+        "_canonical_in": "print_lock.body_size_pt"
+      },
       "md": {
         "px": 16,
         "pt": 12,
@@ -347,6 +354,13 @@
         "px": 18,
         "pt": 13.5,
         "usage": "Large body on slides, H4 in docs."
+      },
+      "body_slide": {
+        "px": 30,
+        "pt": 22,
+        "usage": "Body text for SLIDES (PPTX 16:9, HTML preview). Large for screen reading at 3m.",
+        "_added_in": "v3.3.4",
+        "_canonical_in": "slides.font_size_mapping.body_screen"
       },
       "xl": {
         "px": 24,
@@ -376,16 +390,23 @@
       }
     },
     "body_variants": {
-      "body_screen": {
-        "size_pt": 12,
-        "size_px": 16,
+      "body_slide": {
+        "size_pt": 22,
+        "size_px": 30,
         "line_height": 1.5,
-        "usage": "Web + slides."
+        "usage": "Slides 16:9 — body content. Lecture à 3m."
       },
       "body_print": {
         "size_pt": 11,
+        "size_px": 15,
         "line_height": 1.5,
-        "usage": "DOCX + PDF. Print minimum respected."
+        "usage": "DOCX/PDF A4 — body content. Lecture à 25cm. Print minimum respected."
+      },
+      "body_web": {
+        "size_pt": 12,
+        "size_px": 16,
+        "line_height": 1.5,
+        "usage": "Web (HTML/CSS) — body content. Default browser readable."
       }
     },
     "line_heights": {

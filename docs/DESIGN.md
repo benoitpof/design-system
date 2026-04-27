@@ -1,6 +1,6 @@
 # DESIGN.md — Plastic Odyssey Factories Design System
 
-**Version:** 3.3.3 | **Updated:** 2026-04-26
+**Version:** 3.3.4 | **Updated:** 2026-04-26
 **Source of truth:** `tokens/brand-tokens.json` + `tokens/brand-rules-per-format.json`
 **Template reference:** `Template_POF_Claude.pptx` (LAYOUT_WIDE 20"×11.25" / 508×285.75 mm)
 **Coordinate convention:** mm partout (SSOT). Inches en commentaire pour pptxgenjs.
@@ -80,7 +80,7 @@ Le design system applique des tailles DIFFÉRENTES selon le medium. Cross-medium
 
 | Element | Slides 16:9 | Print A4 | Web |
 |---|---|---|---|
-| Body | 22 pt Regular | **11 pt Regular** | 16 px Regular |
+| Body | **22 pt** Regular (`body_slide`, 30px) | **11 pt** Regular (`body_print`, 15px) | **16 px** Regular (`body_web`) |
 | H1 / Title | 26 pt ExtraBold | **22 pt ExtraBold** | 36 px Bold |
 | H2 / Subtitle | 26 pt SemiBold | **14 pt SemiBold** | 22 px SemiBold |
 | H3 | 22 pt SemiBold | **12 pt SemiBold** | 18 px SemiBold |

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "3.3.3",
+    "version": "3.3.4",
     "generated": "2026-04-27",
     "description": "Format-specific design rules. Every value exact. Pair with brand-tokens.json. Convention: mm partout (SSOT). Inches noted in comments only when pptxgenjs requires it.",
     "changes_from_3.1.0": [
@@ -64,6 +64,11 @@
       "PALETTE: Remove semantic.info #0D6EFD (unused).",
       "PALETTE: Remove neutral.near_black #090911 (redundant with navy).",
       "TYPOGRAPHY: Add 26pt 'slide_title' to typography.scale (was missing from harmonic scale; most-used slide heading per V2)."
+    ],
+    "changes_from_3.3.3": [
+      "Add body_slide (22pt / 30px) and body_print (11pt / 15px) to typography.scale.",
+      "Refine typography.body_variants with 3 explicit entries (slide / print / web) — visible in Claude Design preview.",
+      "No change to slides.font_size_mapping or print_lock — values were already correct, just explicit in scale now."
     ]
   },
   "slides": {

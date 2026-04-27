@@ -82,6 +82,7 @@
   --pof-fs-sm:                 12px;   /* 9pt — captions, chart labels */
   --pof-fs-md:                 16px;   /* 12pt — body_screen default */
   --pof-fs-lg:                 18px;   /* 13.5pt — slide body, H4 docs */
+  --pof-fs-body-slide:         30px;   /* 22pt — slide body (canonical for slides) v3.3.4 */
   --pof-fs-xl:                 24px;   /* 18pt — H3, slide header title */
   --pof-fs-slide-title:        35px;   /* 26pt — slide title most-used (V2 template) v3.3.3 */
   --pof-fs-2xl:                28px;   /* 21pt — H2, slide content H1 */
