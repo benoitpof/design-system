@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "3.3.1",
+    "version": "3.3.2",
     "generated": "2026-04-26",
     "description": "Format-specific design rules. Every value exact. Pair with brand-tokens.json. Convention: mm partout (SSOT). Inches noted in comments only when pptxgenjs requires it.",
     "changes_from_3.1.0": [
@@ -48,6 +48,16 @@
       "ALIGN with V2 template (Charte/Trame/Zone-utile deck V2 from 2026-04-26): add 28pt to typography_lock.allowed_sizes_pt. Loosen ExtraBold (800) restriction — now allowed on slide_title_default (any layout), in addition to cover/section/stat number.",
       "ADD slides.max_envelope (zone utile V2 definition) — wider envelope including header zone, distinct from content_zone (after header).",
       "Update slides.font_size_mapping with V2 hierarchy: cover_title=36pt ExtraBold, slide_title=26pt ExtraBold, slide_subtitle=26pt SemiBold, slogan=28pt SemiBold, body=22pt Regular, caption=18pt Light."
+    ],
+    "changes_from_3.3.1": [
+      "FIX corner_marks.default_pair: 'top_left' only (was TL + BR). Bottom-right corner mark forbidden by default. Optional only when explicitly requested.",
+      "ADD color_hierarchy_lock: titles default = navy on light / white on dark. Teal is SECONDARY accent only, max 1-2 uses per page/slide.",
+      "ADD covers_lock: cover title 36pt MAX, subtitle 22-26pt MAX. NEVER 28pt+ for subtitle. Background = flat navy (no gradient at top — top must be darkest).",
+      "ADD back_cover_lock: default text = white on navy. Teal allowed for ONE accent element only (typically the tagline).",
+      "ADD wave_decorative_lock: wave watermark MUST be fully visible. Never clipped at slide/page edge. Position so the entire SVG is within the canvas, not bleeding out.",
+      "FIX navy_depth_subtle direction: top navy → bottom teal (was navy → lighter navy). User feedback: 'Teal vers Navy, pas Navy vers clair'.",
+      "ADD print_lock block — compact print sizes distinct from slide sizes. Body 11pt (not 22pt), H1 22pt, H2 14pt, caption 9pt italic. Aligned with Rapport v1 (validated).",
+      "CLARIFY cross-medium philosophy: identical colors/fonts/assets, but distinct sizes per medium (slide vs print vs web)."
     ]
   },
   "slides": {
@@ -116,24 +126,26 @@
         "y_mm": 16.3,
         "asset": "assets/brand-elements/corner-bracket-tr.svg",
         "_inches": "x=18.78 y=0.642 w=0.472 h=0.472",
-        "_optional": "Add only when symmetric framing required"
+        "_optional": "Add only when symmetric framing required",
+        "_status": "FORBIDDEN_BY_DEFAULT"
       },
       "bottom_left": {
         "x_mm": 19.0,
         "y_mm": 257.5,
         "asset": "assets/brand-elements/corner-bracket-bl.svg",
         "_inches": "x=0.748 y=10.139 w=0.472 h=0.472",
-        "_optional": "Add only when symmetric framing required"
+        "_optional": "Add only when symmetric framing required",
+        "_status": "FORBIDDEN_BY_DEFAULT"
       },
       "bottom_right": {
         "x_mm": 477.0,
         "y_mm": 257.5,
         "asset": "assets/brand-elements/corner-bracket-br.svg",
-        "_inches": "x=18.78 y=10.139 w=0.472 h=0.472"
+        "_inches": "x=18.78 y=10.139 w=0.472 h=0.472",
+        "_status": "FORBIDDEN_BY_DEFAULT — only on explicit request"
       },
       "default_pair": [
-        "top_left",
-        "bottom_right"
+        "top_left"
       ],
       "_violation_examples": [
         "solid filled rectangles (deprecated v3.2.2)",
@@ -143,7 +155,9 @@
         "any blur",
         "any opacity reduction",
         "PowerPoint shape effect 'Shadow' applied",
-        "CSS filter:drop-shadow on parent container"
+        "CSS filter:drop-shadow on parent container",
+        "placing corner mark at bottom-right (deprecated v3.3.2)",
+        "placing 4 corners (only TL allowed by default)"
       ],
       "shadow_forbidden": true,
       "effects_forbidden": [
@@ -942,5 +956,103 @@
       "two legends on one map",
       "shadow / drop-shadow / blur on any element"
     ]
+  },
+  "color_hierarchy_lock": {
+    "_enforcement": "STRICT",
+    "_description": "Titles default colors. Teal is SECONDARY accent only, never primary title color.",
+    "title_default": {
+      "on_light_bg": "#1C1F3B",
+      "on_dark_bg": "#FFFFFF",
+      "_rationale": "Teal as title color = visual fragmentation. Navy on light / white on dark = institutional readability."
+    },
+    "teal_usage": {
+      "max_per_page_or_slide": 2,
+      "allowed_for": [
+        "1-2 accent words within a slogan",
+        "callout block left border (4mm wide)",
+        "decorative pipe accent left of title",
+        "wave watermark / brand element",
+        "stat number on dark bg only",
+        "data series in chart palette (series 4+ extended)"
+      ],
+      "forbidden_for": [
+        "primary slide title (use navy/white instead)",
+        "primary section title",
+        "primary heading on body pages",
+        "all text in back cover (use white default)"
+      ]
+    },
+    "_violation_examples": [
+      "every body page title in teal (should be navy)",
+      "back cover with all text in teal (should be white default)",
+      "subtitle in teal when no other emphasis exists (use navy/white)"
+    ]
+  },
+  "covers_lock": {
+    "_enforcement": "STRICT",
+    "_description": "Cover slides (deck L01) and report covers (DOCX/PDF) — strict size and bg rules.",
+    "cover_title": {
+      "size_pt_max": 36,
+      "font": "Poppins ExtraBold",
+      "color_on_dark": "#FFFFFF",
+      "color_on_light": "#1C1F3B",
+      "_note": "Teal forbidden for cover title — too dominant."
+    },
+    "cover_subtitle": {
+      "size_pt_max": 26,
+      "size_pt_recommended": 22,
+      "font": "Raleway SemiBold",
+      "color_on_dark": "#FFFFFF",
+      "_forbidden_size": "28pt+ for subtitle on cover (V2 charte slogan 28pt is for slogan, not subtitle — different role)"
+    },
+    "cover_bg": {
+      "default": "flat navy #1C1F3B",
+      "navy_depth_gradient_allowed": false,
+      "_rationale": "Navy depth gradient (180deg #1C1F3B → #25284A) makes top of cover too pale. User feedback 2026-04-26: 'Bleu navy trop clair en haut'. Flat navy keeps the institutional weight.",
+      "_alternative": "If gradient required, must INVERT direction so top is the darkest stop. But default = flat navy."
+    },
+    "cover_wave_decorative": {
+      "must_be_fully_visible": true,
+      "_violation": "wave watermark clipped at edge (user feedback 2026-04-26: 'Filigrane vague coupé')"
+    }
+  },
+  "back_cover_lock": {
+    "_enforcement": "STRICT",
+    "_description": "Back cover (4ème de couverture) on navy bg.",
+    "default_text_color": "#FFFFFF",
+    "_rationale": "User feedback 2026-04-26: éviter tout le texte en teal. Default white on navy.",
+    "teal_allowed": {
+      "max_elements": 1,
+      "typical_use": "tagline accent OR website URL OR one strategic word",
+      "_example": "Logo white centered + Address white + Tagline 'Recycling factories. Local impact.' SemiBold 18pt teal italic."
+    },
+    "_forbidden": "all text (logo subtitle + address + email + tagline) in teal"
+  },
+  "wave_decorative_lock": {
+    "_enforcement": "STRICT",
+    "_description": "Wave watermark from assets/brand-elements/wave-{teal,white}.svg must be fully visible on canvas.",
+    "must_be_fully_visible": true,
+    "_violation": "wave clipped at slide/page edge",
+    "_recommendation": "Place wave so its full bounding box fits inside the page (with at least 5mm margin from any edge)."
+  },
+  "print_lock": {
+    "_enforcement": "STRICT",
+    "_description": "Print A4 size hierarchy. Distinct from slides (which use bigger sizes for screen readability at 3m). Print is for paper, read at 25cm — compact.",
+    "_validated_against": "Rapport v1 (Couverture rapport.html + Rapport-print.html, 2026-04-26)",
+    "body_size_pt": 11,
+    "h1_size_pt": 22,
+    "h2_size_pt": 14,
+    "h3_size_pt": 12,
+    "caption_size_pt": 9,
+    "footnote_size_pt": 8,
+    "lead_paragraph_size_pt": 14,
+    "table_cell_size_pt": 11,
+    "table_header_size_pt": 11,
+    "_forbidden_for_print": [
+      "body 22pt (slide-only)",
+      "H1 26pt+ (slide-only, except cover)",
+      "any size > 36pt except cover title"
+    ],
+    "_cover_exception": "Cover title up to 36pt allowed even on print"
   }
 }

@@ -1,6 +1,6 @@
 # DESIGN.md — Plastic Odyssey Factories Design System
 
-**Version:** 3.3.1 | **Updated:** 2026-04-26
+**Version:** 3.3.2 | **Updated:** 2026-04-26
 **Source of truth:** `tokens/brand-tokens.json` + `tokens/brand-rules-per-format.json`
 **Template reference:** `Template_POF_Claude.pptx` (LAYOUT_WIDE 20"×11.25" / 508×285.75 mm)
 **Coordinate convention:** mm partout (SSOT). Inches en commentaire pour pptxgenjs.
@@ -25,9 +25,73 @@ L-brackets in 4 orientations: `assets/brand-elements/corner-bracket-{tl,tr,bl,br
 
 **No shadow, ever.** Corner marks are flat geometric strokes. Forbidden : drop-shadow (CSS or SVG `filter`), PowerPoint shape effect 'Shadow', `opacity < 1`, blur. The L-brackets must render exactly as authored — pure teal strokes on transparent background, zero depth effect. This rule applies whether the rendering target is a slide, a web page, a report, an artifact preview, or any other medium.
 
+
+
+### Color hierarchy lock (v3.3.2 — feedback Benoit 2026-04-26)
+
+Titles use NAVY on light bg and WHITE on dark bg. **Teal is a SECONDARY accent color, never the primary title color.**
+
+Allowed teal uses (max 2 per page/slide) :
+- 1-2 accent words within a slogan
+- Callout block left border (4 mm wide)
+- Decorative pipe accent left of title
+- Wave watermark / brand element
+- Stat number on dark bg only
+- Data series in chart palette (series 4+ extended)
+
+Forbidden teal uses :
+- Primary slide title (use navy or white)
+- Primary section title
+- Primary heading on body pages
+- All text in back cover (white default)
+
+### Corner marks lock — TL only by default (v3.3.2)
+
+Default pair = `top_left` ONLY. Bottom-right corner mark **forbidden by default** (was TL+BR until v3.3.1, deprecated by user feedback).
+
+Top-right, bottom-left, bottom-right : optional only on explicit request.
+
+### Covers lock (v3.3.2)
+
+Cover slides (L01) and report covers :
+- Cover title : Poppins ExtraBold **36pt MAX**. Color = white on dark bg, navy on light bg. Teal forbidden as cover title color.
+- Cover subtitle : Raleway SemiBold, **26pt MAX, 22pt recommended**. NEVER 28pt+ for subtitle.
+- Cover background : **flat navy `#1C1F3B`**. Navy depth gradient NOT allowed at top of cover (user feedback : « bleu navy trop clair en haut »).
+- Cover wave decorative : MUST be fully visible (not clipped at edge).
+
+### Back cover lock (v3.3.2)
+
+4ème de couverture on navy bg :
+- Default text color = **white**.
+- Teal allowed on **ONE element only** (typically the tagline).
+- Forbidden : all text (logo subtitle + address + email + tagline) in teal.
+
+### Wave decorative visibility (v3.3.2)
+
+Wave watermark from `assets/brand-elements/wave-{teal,white}.svg` MUST be fully visible. Never clipped at slide/page edge. Place at least 5 mm margin from any edge.
+
 ### Verbatim content mode
 When user brief contains `<final_content>...</final_content>` tags or the phrase "this is final content / verbatim / do not edit": preserve wording exactly, only redistribute across layout slots. Never substitute with examples from CONTENT-RULES.md.
 
+
+### Per-medium typography (v3.3.2 — distinction critique)
+
+Le design system applique des tailles DIFFÉRENTES selon le medium. Cross-medium = couleurs, fonts, assets identiques. Distinct = tailles, grilles.
+
+| Element | Slides 16:9 | Print A4 | Web |
+|---|---|---|---|
+| Body | 22 pt Regular | **11 pt Regular** | 16 px Regular |
+| H1 / Title | 26 pt ExtraBold | **22 pt ExtraBold** | 36 px Bold |
+| H2 / Subtitle | 26 pt SemiBold | **14 pt SemiBold** | 22 px SemiBold |
+| H3 | 22 pt SemiBold | **12 pt SemiBold** | 18 px SemiBold |
+| Caption | 18 pt Light | **9 pt Light italic** | 12 px Light |
+| Footnote | 11 pt | 8 pt | 11 px |
+
+Slides = lecture à 3 m, gros texte. Print = lecture à 25 cm, texte compact.
+
+**Cover title** = 36pt MAX dans tous les media (slide + print).
+
+Validation print : Rapport v1 (`Couverture rapport.html` + `Rapport-print.html`, 2026-04-26) sert de référence.
 ---
 
 ## 1. Brand DNA
