@@ -586,87 +586,21 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
      SECTION 2 — OVERLAY SYSTEM v4.0.0
      ════════════════════════════════════════════════════ -->
 <div class="section-label" style="margin-top:8px;">
-  <h2>Section 2 — Système overlay v4.0.0</h2>
-  <p>3 types canoniques · white_fade (cartes uniquement) · navy_hard (photos, texte fort) · navy_light (photos, ambiance) · Source : <code style="font-family:Poppins,monospace;font-size:12px;color:var(--teal-dark)">tokens/brand-rules-per-format.json → overlay_system</code></p>
+  <h2>Section 2 — Système overlay v4.0.0 · Photos</h2>
+  <p>2 types canoniques pour les photos · <strong>navy_hard</strong> (texte fort, 90% → transparent + teal flair) · <strong>navy_light</strong> (ambiance, 40% → transparent) · 3 tailles : quarter 25% · half 50% · full 75% · Overlay blanc → transparent : cartes uniquement, voir map-charter.html</p>
 </div>
 
-<!-- 2A — Type 1: White fade -->
+<!-- 2A — Type 2: Navy hard + Teal flair -->
 <section class="variation">
   <div class="variation-head">
-    <div class="lbl"><span class="num">5</span>Type 1 — white_fade · Estompé blanc (cartes uniquement)</div>
-    <div class="meta">rgba(255,255,255,1.0) → transparent · cumulation autorisée · interdit sur photos</div>
+    <div class="lbl"><span class="num">5</span>Type 1 — navy_hard · Zone de texte forte</div>
+    <div class="meta">opacity_start = 0.90 · + teal flair radial bottom-left · 1 direction max · jamais cumulé</div>
   </div>
   <div class="variation-body">
     <div class="subsec-head">
       <span class="subsec-tag">2A</span>
-      <span class="subsec-title">White fade — 4 directions · stop-opacity = 1.0</span>
-      <span class="subsec-rule">Défauts carte monde : top + left toujours actifs · jamais sur photos</span>
-    </div>
-    <div class="overlay-grid-4">
-
-      <div class="overlay-card">
-        <div class="overlay-photo" style="background:#EAEBED;">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="white fade left" loading="lazy" style="opacity:0.35;">
-          <div class="ov-layer ov-white-left"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">left <span style="color:var(--teal-dark);font-size:10px">✓ défaut monde</span></div>
-          <div class="ov-use">Arrête à la côte Afrique de l'Ouest</div>
-          <div class="ov-css">linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)</div>
-        </div>
-      </div>
-
-      <div class="overlay-card">
-        <div class="overlay-photo" style="background:#EAEBED;">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="white fade top" loading="lazy" style="opacity:0.35;">
-          <div class="ov-layer ov-white-top"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">top <span style="color:var(--teal-dark);font-size:10px">✓ défaut monde</span></div>
-          <div class="ov-use">Arrête à la latitude Afrique du Nord (~37°N)</div>
-          <div class="ov-css">linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)</div>
-        </div>
-      </div>
-
-      <div class="overlay-card">
-        <div class="overlay-photo" style="background:#EAEBED;">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="white fade right" loading="lazy" style="opacity:0.35;">
-          <div class="ov-layer ov-white-right"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">right <span style="color:var(--steel);font-size:10px">optionnel</span></div>
-          <div class="ov-use">Bord Asie-Pacifique brut visible</div>
-          <div class="ov-css">linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)</div>
-        </div>
-      </div>
-
-      <div class="overlay-card">
-        <div class="overlay-photo" style="background:#EAEBED;">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="white fade bottom" loading="lazy" style="opacity:0.35;">
-          <div class="ov-layer ov-white-bottom"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">bottom <span style="color:var(--steel);font-size:10px">optionnel</span></div>
-          <div class="ov-use">Bord Amérique du Sud / Antarctique brut</div>
-          <div class="ov-css">linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- 2B — Type 2: Navy hard + Teal flair -->
-<section class="variation">
-  <div class="variation-head">
-    <div class="lbl"><span class="num">6</span>Type 2 — navy_hard · Photos, zone de texte forte</div>
-    <div class="meta">opacity_start = 0.90 · + teal flair radial bottom-left · 1 direction max · 3 sizes</div>
-  </div>
-  <div class="variation-body">
-    <div class="subsec-head">
-      <span class="subsec-tag">2B</span>
-      <span class="subsec-title">Navy hard — 4 directions + Teal flair</span>
-      <span class="subsec-rule">Une seule direction à la fois · jamais cumulé · teal flair = ancre bottom-left obligatoire</span>
+      <span class="subsec-title">Navy hard + Teal flair — 4 directions</span>
+      <span class="subsec-rule">Une seule direction · teal flair ancré bottom-left obligatoire · size : quarter / half / full</span>
     </div>
     <div class="overlay-grid-4">
 
@@ -677,9 +611,9 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
           <div class="ov-layer ov-hard-teal"></div>
         </div>
         <div class="overlay-info">
-          <div class="ov-title">left + teal flair</div>
+          <div class="ov-title">left</div>
           <div class="ov-use">Cover slide · texte zone gauche</div>
-          <div class="ov-css">layer1: rgba(28,31,59,0.90)→transparent<br>layer2: radial teal bottom-left 40%</div>
+          <div class="ov-css">rgba(28,31,59,0.90) → transparent<br>+ radial teal bottom-left 40%</div>
         </div>
       </div>
 
@@ -690,9 +624,9 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
           <div class="ov-layer ov-hard-teal"></div>
         </div>
         <div class="overlay-info">
-          <div class="ov-title">right + teal flair</div>
+          <div class="ov-title">right</div>
           <div class="ov-use">Layout miroir · texte zone droite</div>
-          <div class="ov-css">layer1: rgba(28,31,59,0.90)→transparent<br>layer2: radial teal bottom-left 40%</div>
+          <div class="ov-css">rgba(28,31,59,0.90) → transparent<br>+ radial teal bottom-left 40%</div>
         </div>
       </div>
 
@@ -703,9 +637,9 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
           <div class="ov-layer ov-hard-teal"></div>
         </div>
         <div class="overlay-info">
-          <div class="ov-title">top + teal flair</div>
+          <div class="ov-title">top</div>
           <div class="ov-use">Header band · titre en haut</div>
-          <div class="ov-css">layer1: rgba(28,31,59,0.90)→transparent<br>layer2: radial teal bottom-left 40%</div>
+          <div class="ov-css">rgba(28,31,59,0.90) → transparent<br>+ radial teal bottom-left 40%</div>
         </div>
       </div>
 
@@ -716,9 +650,9 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
           <div class="ov-layer ov-hard-teal"></div>
         </div>
         <div class="overlay-info">
-          <div class="ov-title">bottom + teal flair</div>
+          <div class="ov-title">bottom</div>
           <div class="ov-use">Section divider · légende bas</div>
-          <div class="ov-css">layer1: rgba(28,31,59,0.90)→transparent<br>layer2: radial teal bottom-left 40%</div>
+          <div class="ov-css">rgba(28,31,59,0.90) → transparent<br>+ radial teal bottom-left 40%</div>
         </div>
       </div>
 
@@ -726,17 +660,17 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
   </div>
 </section>
 
-<!-- 2C — Type 3: Navy light -->
+<!-- 2B — Type 3: Navy light -->
 <section class="variation">
   <div class="variation-head">
-    <div class="lbl"><span class="num">7</span>Type 3 — navy_light · Photos, ambiance</div>
+    <div class="lbl"><span class="num">6</span>Type 2 — navy_light · Ambiance photo</div>
     <div class="meta">opacity_start = 0.40 · photo dominante · WCAG AA requis avant texte · 1 direction max</div>
   </div>
   <div class="variation-body">
     <div class="subsec-head">
-      <span class="subsec-tag">2C</span>
+      <span class="subsec-tag">2B</span>
       <span class="subsec-title">Navy light — 4 directions</span>
-      <span class="subsec-rule">Une seule direction · photo encore lisible · vérifier contraste WCAG AA avant texte</span>
+      <span class="subsec-rule">Photo encore lisible · vérifier contraste WCAG AA avant tout texte superposé</span>
     </div>
     <div class="overlay-grid-4">
 
@@ -747,8 +681,8 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         </div>
         <div class="overlay-info">
           <div class="ov-title">left — 40%</div>
-          <div class="ov-use">Ambiance · photo dominant</div>
-          <div class="ov-css">linear-gradient(to right, rgba(28,31,59,0.40) 0%, transparent 100%)</div>
+          <div class="ov-use">Ambiance · texte zone gauche si contraste ok</div>
+          <div class="ov-css">rgba(28,31,59,0.40) → transparent</div>
         </div>
       </div>
 
@@ -760,7 +694,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         <div class="overlay-info">
           <div class="ov-title">right — 40%</div>
           <div class="ov-use">Ambiance · layout miroir</div>
-          <div class="ov-css">linear-gradient(to left, rgba(28,31,59,0.40) 0%, transparent 100%)</div>
+          <div class="ov-css">rgba(28,31,59,0.40) → transparent</div>
         </div>
       </div>
 
@@ -772,7 +706,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         <div class="overlay-info">
           <div class="ov-title">top — 40%</div>
           <div class="ov-use">Atmosphère haute</div>
-          <div class="ov-css">linear-gradient(to bottom, rgba(28,31,59,0.40) 0%, transparent 100%)</div>
+          <div class="ov-css">rgba(28,31,59,0.40) → transparent</div>
         </div>
       </div>
 
@@ -783,8 +717,8 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         </div>
         <div class="overlay-info">
           <div class="ov-title">bottom — 40%</div>
-          <div class="ov-use">Légende légère · caption strip</div>
-          <div class="ov-css">linear-gradient(to top, rgba(28,31,59,0.40) 0%, transparent 100%)</div>
+          <div class="ov-use">Caption strip · légende légère</div>
+          <div class="ov-css">rgba(28,31,59,0.40) → transparent</div>
         </div>
       </div>
 
@@ -792,15 +726,15 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
   </div>
 </section>
 
-<!-- 2D — Sizes comparison -->
+<!-- 2C — Sizes -->
 <section class="variation">
   <div class="variation-head">
-    <div class="lbl"><span class="num">8</span>2D — Sizes · quarter / half / full</div>
-    <div class="meta">Type 2 navy_hard · direction = left · 3 extents autorisés</div>
+    <div class="lbl"><span class="num">7</span>2C — Sizes · quarter / half / full</div>
+    <div class="meta">Type 1 navy_hard · direction = left · 3 extents autorisés · tiret teal = limite zone tenue</div>
   </div>
   <div class="variation-body">
     <div class="subsec-head">
-      <span class="subsec-tag">2D</span>
+      <span class="subsec-tag">2C</span>
       <span class="subsec-title">Hold extent — quarter 25% · half 50% · full 75%</span>
       <span class="subsec-rule">Valeurs hold hors [25, 50, 75] interdites · toujours transparent à 100%</span>
     </div>
@@ -815,7 +749,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         <div class="overlay-info">
           <div class="ov-title">quarter — 25%</div>
           <div class="ov-use">Accent strip · photo dominant</div>
-          <div class="ov-css">rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 25%,<br>transparent 100%</div>
+          <div class="ov-css">rgba(28,31,59,0.90) 0% → 25%,<br>transparent 100%</div>
         </div>
       </div>
 
@@ -828,7 +762,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         <div class="overlay-info">
           <div class="ov-title">half — 50%</div>
           <div class="ov-use">Zone de texte forte · photo mi-visible</div>
-          <div class="ov-css">rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 50%,<br>transparent 100%</div>
+          <div class="ov-css">rgba(28,31,59,0.90) 0% → 50%,<br>transparent 100%</div>
         </div>
       </div>
 
@@ -841,7 +775,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         <div class="overlay-info">
           <div class="ov-title">full — 75%</div>
           <div class="ov-use">Navy dominant · photo recule</div>
-          <div class="ov-css">rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 75%,<br>transparent 100%</div>
+          <div class="ov-css">rgba(28,31,59,0.90) 0% → 75%,<br>transparent 100%</div>
         </div>
       </div>
 
@@ -849,17 +783,17 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
   </div>
 </section>
 
-<!-- 2E — Selection rules -->
+<!-- 2D — Selection rules -->
 <section class="variation">
   <div class="variation-head">
-    <div class="lbl"><span class="num">9</span>2E — Règles de sélection · quel type pour quel contexte</div>
+    <div class="lbl"><span class="num">8</span>2D — Règles de sélection · quel type pour quel contexte</div>
     <div class="meta">overlay_system v4.0.0 · brand-rules-per-format.json</div>
   </div>
   <div class="variation-body">
     <div class="subsec-head">
-      <span class="subsec-tag">2E</span>
-      <span class="subsec-title">Selection rules — type × contexte</span>
-      <span class="subsec-rule">Source : overlay_system.type_1/2/3 · brand-rules-per-format.json</span>
+      <span class="subsec-tag">2D</span>
+      <span class="subsec-title">Quand utiliser navy_hard vs navy_light</span>
+      <span class="subsec-rule">Source : overlay_system · brand-rules-per-format.json</span>
     </div>
     <table class="sel-table">
       <thead>
@@ -871,38 +805,38 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
       </thead>
       <tbody>
         <tr>
-          <td>Carte monde / régionale</td>
-          <td>white_fade</td>
-          <td>top + left (défauts) · right + bottom si bord brut visible</td>
-        </tr>
-        <tr>
           <td>Cover slide · texte fort</td>
           <td>navy_hard</td>
-          <td>from_left · half · + teal flair</td>
+          <td>left · half · + teal flair</td>
         </tr>
         <tr>
           <td>Section divider</td>
           <td>navy_hard</td>
-          <td>from_bottom · half · + teal flair</td>
+          <td>bottom · half · + teal flair</td>
         </tr>
         <tr>
           <td>Caption strip</td>
           <td>navy_hard</td>
-          <td>from_bottom · quarter · + teal flair</td>
+          <td>bottom · quarter · + teal flair</td>
         </tr>
         <tr>
           <td>Hero photo · ambiance</td>
           <td>navy_light</td>
-          <td>from_left ou from_bottom · half</td>
+          <td>left ou bottom · half</td>
         </tr>
         <tr>
-          <td>Photo + texte léger</td>
+          <td>Photo + légende légère</td>
           <td>navy_light</td>
-          <td>from_bottom · quarter · vérifier WCAG AA</td>
+          <td>bottom · quarter · vérifier WCAG AA</td>
+        </tr>
+        <tr>
+          <td>Cartes (monde, région)</td>
+          <td>white_fade</td>
+          <td>voir map-charter.html — hors scope photos</td>
         </tr>
       </tbody>
     </table>
-    <div class="doc-note" style="margin-top:12px">⚠ Solid uniform (light/medium/heavy) · non-axial directions · cumulation sur photos → <strong>interdits v4.0.0</strong></div>
+    <div class="doc-note" style="margin-top:12px">Interdits v4.0.0 : solid uniform · directions diagonales · cumulation · hold hors [25, 50, 75]</div>
   </div>
 </section>
 
