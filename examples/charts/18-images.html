@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<title>18 · Photos &amp; images · POF Chart Bank · v3.3.8</title>
+<title>18 · Photos &amp; images · POF Chart Bank · v4.0.0</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Raleway:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
 <style>
@@ -21,7 +21,7 @@
   --gray-600:    #6C757D;
   --white:       #FFFFFF;
 }
-/* removed: --overlay-canonical (superseded by overlay_system v3.3.7) */
+/* overlay_system v4.0.0 — 3 types: white_fade / navy_hard / navy_light */
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: var(--navy); -webkit-font-smoothing: antialiased; }
@@ -204,26 +204,37 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
 .sel-table tbody td:last-child { font-family: 'Poppins', monospace; font-size: 9.5px; color: var(--teal-dark); }
 .sel-table tbody tr:nth-child(odd) td { background: var(--gris-pof); }
 .sel-table tbody tr:nth-child(even) td { background: var(--white); }
-/* ── OVERLAY SYSTEM v3.3.7 ─────────────────────────────────── */
-/* Solid uniform */
-.ov-solid-light  { background: rgba(28,31,59,0.30); }
-.ov-solid-medium { background: rgba(28,31,59,0.60); }
-.ov-solid-heavy  { background: rgba(28,31,59,0.90); }
-/* Gradient – directions, coverage=third (33%), navy_pure */
-.ov-from-left-third   { background: linear-gradient(to right,  #1C1F3B 0%, #1C1F3B 33%, transparent 100%); }
-.ov-from-right-third  { background: linear-gradient(to left,   #1C1F3B 0%, #1C1F3B 33%, transparent 100%); }
-.ov-from-top-third    { background: linear-gradient(to bottom, #1C1F3B 0%, #1C1F3B 33%, transparent 100%); }
-.ov-from-bottom-third { background: linear-gradient(to top,    #1C1F3B 0%, #1C1F3B 33%, transparent 100%); }
-/* Gradient – coverage extents, direction=from_left, navy_pure */
-.ov-from-left-quarter { background: linear-gradient(to right, #1C1F3B 0%, #1C1F3B 25%, transparent 100%); }
-/* .ov-from-left-third already defined above */
-/* Soft intensity — rgba(28,31,59,0.50) hold → transparent */
-.ov-from-left-third-soft { background: linear-gradient(to right, rgba(28,31,59,0.50) 0%, rgba(28,31,59,0.50) 33%, transparent 100%); }
-.ov-from-left-half    { background: linear-gradient(to right, #1C1F3B 0%, #1C1F3B 50%, transparent 100%); }
-.ov-from-left-full    { background: linear-gradient(to right, #1C1F3B 0%, #1C1F3B 75%, transparent 100%); }
-/* Gradient – teal reflet (two-layer via pseudo or stacked divs) */
-.ov-teal-reflet-layer1 { background: linear-gradient(to right, #1C1F3B 0%, #1C1F3B 33%, transparent 100%); }
-.ov-teal-reflet-layer2 { background: radial-gradient(circle at bottom left, rgba(128,199,194,0.40) 0%, transparent 50%); }
+/* ── OVERLAY SYSTEM v4.0.0 ─────────────────────────────────── */
+/* ── Type 1 — White fade (maps only) ─────────────────────────────── */
+.ov-white-left   { background: linear-gradient(to right,  rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
+.ov-white-right  { background: linear-gradient(to left,   rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
+.ov-white-top    { background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
+.ov-white-bottom { background: linear-gradient(to top,    rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
+/* ── Type 2 — Navy hard + Teal flair (photos, strong text zone) ─── */
+.ov-hard-left    { background: linear-gradient(to right,  rgba(28,31,59,0.90) 0%, transparent 100%); }
+.ov-hard-right   { background: linear-gradient(to left,   rgba(28,31,59,0.90) 0%, transparent 100%); }
+.ov-hard-top     { background: linear-gradient(to bottom, rgba(28,31,59,0.90) 0%, transparent 100%); }
+.ov-hard-bottom  { background: linear-gradient(to top,    rgba(28,31,59,0.90) 0%, transparent 100%); }
+.ov-hard-teal    { background: radial-gradient(circle at bottom left, rgba(128,199,194,0.40) 0%, transparent 50%); }
+/* ── Type 3 — Navy light (photos, ambiance) ──────────────────────── */
+.ov-light-left   { background: linear-gradient(to right,  rgba(28,31,59,0.40) 0%, transparent 100%); }
+.ov-light-right  { background: linear-gradient(to left,   rgba(28,31,59,0.40) 0%, transparent 100%); }
+.ov-light-top    { background: linear-gradient(to bottom, rgba(28,31,59,0.40) 0%, transparent 100%); }
+.ov-light-bottom { background: linear-gradient(to top,    rgba(28,31,59,0.40) 0%, transparent 100%); }
+/* ── Sizes — for types 2 & 3 (hold extent for quarter/half/full) ── */
+.ov-quarter { --ov-stop: 25%; }
+.ov-half    { --ov-stop: 50%; }
+.ov-full    { --ov-stop: 75%; }
+/* Override stop when size classes combined with type classes */
+.ov-quarter.ov-hard-left   { background: linear-gradient(to right,  rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 25%, transparent 100%); }
+.ov-quarter.ov-hard-bottom { background: linear-gradient(to top,    rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 25%, transparent 100%); }
+.ov-half.ov-hard-left      { background: linear-gradient(to right,  rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 50%, transparent 100%); }
+.ov-half.ov-hard-bottom    { background: linear-gradient(to top,    rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 50%, transparent 100%); }
+.ov-full.ov-hard-left      { background: linear-gradient(to right,  rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 75%, transparent 100%); }
+.ov-full.ov-hard-bottom    { background: linear-gradient(to top,    rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 75%, transparent 100%); }
+.ov-quarter.ov-light-left  { background: linear-gradient(to right,  rgba(28,31,59,0.40) 0%, rgba(28,31,59,0.40) 25%, transparent 100%); }
+.ov-half.ov-light-left     { background: linear-gradient(to right,  rgba(28,31,59,0.40) 0%, rgba(28,31,59,0.40) 50%, transparent 100%); }
+.ov-full.ov-light-left     { background: linear-gradient(to right,  rgba(28,31,59,0.40) 0%, rgba(28,31,59,0.40) 75%, transparent 100%); }
 .overlay-info { padding: 10px 12px 12px; background: var(--white); }
 .ov-title {
   font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 700;
@@ -572,196 +583,265 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
 
 
 <!-- ════════════════════════════════════════════════════
-     SECTION 2 — OVERLAY SYSTEM v3.3.7
+     SECTION 2 — OVERLAY SYSTEM v4.0.0
      ════════════════════════════════════════════════════ -->
 <div class="section-label" style="margin-top:8px;">
-  <h2>Section 2 — Système overlay v3.3.7</h2>
-  <p>Photo unique · Extrudeuse Manille · Photo terrain · Philippines · Paysage · 16 exemples structurés en 6 sous-sections · 64 combinaisons valides (4 dir × 4 coverages × 2 couleurs × 2 intensités)</p>
+  <h2>Section 2 — Système overlay v4.0.0</h2>
+  <p>3 types canoniques · white_fade (cartes uniquement) · navy_hard (photos, texte fort) · navy_light (photos, ambiance) · Source : <code style="font-family:Poppins,monospace;font-size:12px;color:var(--teal-dark)">tokens/brand-rules-per-format.json → overlay_system</code></p>
 </div>
 
-<!-- 2A — Solid uniform -->
+<!-- 2A — Type 1: White fade -->
 <section class="variation">
   <div class="variation-head">
-    <div class="lbl"><span class="num">5</span>2A — Solid uniform · 3 niveaux d'opacité</div>
-    <div class="meta">Même photo × 3 variants · solid_uniform.light / medium / heavy</div>
+    <div class="lbl"><span class="num">5</span>Type 1 — white_fade · Estompé blanc (cartes uniquement)</div>
+    <div class="meta">rgba(255,255,255,1.0) → transparent · cumulation autorisée · interdit sur photos</div>
   </div>
   <div class="variation-body">
     <div class="subsec-head">
       <span class="subsec-tag">2A</span>
-      <span class="subsec-title">Solid uniform — wash pleine photo</span>
-      <span class="subsec-rule">color = #1C1F3B · 3 opacités autorisées uniquement</span>
+      <span class="subsec-title">White fade — 4 directions · stop-opacity = 1.0</span>
+      <span class="subsec-rule">Défauts carte monde : top + left toujours actifs · jamais sur photos</span>
+    </div>
+    <div class="overlay-grid-4">
+
+      <div class="overlay-card">
+        <div class="overlay-photo" style="background:#EAEBED;">
+          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="white fade left" loading="lazy" style="opacity:0.35;">
+          <div class="ov-layer ov-white-left"></div>
+        </div>
+        <div class="overlay-info">
+          <div class="ov-title">left <span style="color:var(--teal-dark);font-size:10px">✓ défaut monde</span></div>
+          <div class="ov-use">Arrête à la côte Afrique de l'Ouest</div>
+          <div class="ov-css">linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)</div>
+        </div>
+      </div>
+
+      <div class="overlay-card">
+        <div class="overlay-photo" style="background:#EAEBED;">
+          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="white fade top" loading="lazy" style="opacity:0.35;">
+          <div class="ov-layer ov-white-top"></div>
+        </div>
+        <div class="overlay-info">
+          <div class="ov-title">top <span style="color:var(--teal-dark);font-size:10px">✓ défaut monde</span></div>
+          <div class="ov-use">Arrête à la latitude Afrique du Nord (~37°N)</div>
+          <div class="ov-css">linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)</div>
+        </div>
+      </div>
+
+      <div class="overlay-card">
+        <div class="overlay-photo" style="background:#EAEBED;">
+          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="white fade right" loading="lazy" style="opacity:0.35;">
+          <div class="ov-layer ov-white-right"></div>
+        </div>
+        <div class="overlay-info">
+          <div class="ov-title">right <span style="color:var(--steel);font-size:10px">optionnel</span></div>
+          <div class="ov-use">Bord Asie-Pacifique brut visible</div>
+          <div class="ov-css">linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)</div>
+        </div>
+      </div>
+
+      <div class="overlay-card">
+        <div class="overlay-photo" style="background:#EAEBED;">
+          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="white fade bottom" loading="lazy" style="opacity:0.35;">
+          <div class="ov-layer ov-white-bottom"></div>
+        </div>
+        <div class="overlay-info">
+          <div class="ov-title">bottom <span style="color:var(--steel);font-size:10px">optionnel</span></div>
+          <div class="ov-use">Bord Amérique du Sud / Antarctique brut</div>
+          <div class="ov-css">linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 2B — Type 2: Navy hard + Teal flair -->
+<section class="variation">
+  <div class="variation-head">
+    <div class="lbl"><span class="num">6</span>Type 2 — navy_hard · Photos, zone de texte forte</div>
+    <div class="meta">opacity_start = 0.90 · + teal flair radial bottom-left · 1 direction max · 3 sizes</div>
+  </div>
+  <div class="variation-body">
+    <div class="subsec-head">
+      <span class="subsec-tag">2B</span>
+      <span class="subsec-title">Navy hard — 4 directions + Teal flair</span>
+      <span class="subsec-rule">Une seule direction à la fois · jamais cumulé · teal flair = ancre bottom-left obligatoire</span>
+    </div>
+    <div class="overlay-grid-4">
+
+      <div class="overlay-card">
+        <div class="overlay-photo">
+          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="navy hard left" loading="lazy">
+          <div class="ov-layer ov-hard-left"></div>
+          <div class="ov-layer ov-hard-teal"></div>
+        </div>
+        <div class="overlay-info">
+          <div class="ov-title">left + teal flair</div>
+          <div class="ov-use">Cover slide · texte zone gauche</div>
+          <div class="ov-css">layer1: rgba(28,31,59,0.90)→transparent<br>layer2: radial teal bottom-left 40%</div>
+        </div>
+      </div>
+
+      <div class="overlay-card">
+        <div class="overlay-photo">
+          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="navy hard right" loading="lazy">
+          <div class="ov-layer ov-hard-right"></div>
+          <div class="ov-layer ov-hard-teal"></div>
+        </div>
+        <div class="overlay-info">
+          <div class="ov-title">right + teal flair</div>
+          <div class="ov-use">Layout miroir · texte zone droite</div>
+          <div class="ov-css">layer1: rgba(28,31,59,0.90)→transparent<br>layer2: radial teal bottom-left 40%</div>
+        </div>
+      </div>
+
+      <div class="overlay-card">
+        <div class="overlay-photo">
+          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="navy hard top" loading="lazy">
+          <div class="ov-layer ov-hard-top"></div>
+          <div class="ov-layer ov-hard-teal"></div>
+        </div>
+        <div class="overlay-info">
+          <div class="ov-title">top + teal flair</div>
+          <div class="ov-use">Header band · titre en haut</div>
+          <div class="ov-css">layer1: rgba(28,31,59,0.90)→transparent<br>layer2: radial teal bottom-left 40%</div>
+        </div>
+      </div>
+
+      <div class="overlay-card">
+        <div class="overlay-photo">
+          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="navy hard bottom" loading="lazy">
+          <div class="ov-layer ov-hard-bottom"></div>
+          <div class="ov-layer ov-hard-teal"></div>
+        </div>
+        <div class="overlay-info">
+          <div class="ov-title">bottom + teal flair</div>
+          <div class="ov-use">Section divider · légende bas</div>
+          <div class="ov-css">layer1: rgba(28,31,59,0.90)→transparent<br>layer2: radial teal bottom-left 40%</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 2C — Type 3: Navy light -->
+<section class="variation">
+  <div class="variation-head">
+    <div class="lbl"><span class="num">7</span>Type 3 — navy_light · Photos, ambiance</div>
+    <div class="meta">opacity_start = 0.40 · photo dominante · WCAG AA requis avant texte · 1 direction max</div>
+  </div>
+  <div class="variation-body">
+    <div class="subsec-head">
+      <span class="subsec-tag">2C</span>
+      <span class="subsec-title">Navy light — 4 directions</span>
+      <span class="subsec-rule">Une seule direction · photo encore lisible · vérifier contraste WCAG AA avant texte</span>
+    </div>
+    <div class="overlay-grid-4">
+
+      <div class="overlay-card">
+        <div class="overlay-photo">
+          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="navy light left" loading="lazy">
+          <div class="ov-layer ov-light-left"></div>
+        </div>
+        <div class="overlay-info">
+          <div class="ov-title">left — 40%</div>
+          <div class="ov-use">Ambiance · photo dominant</div>
+          <div class="ov-css">linear-gradient(to right, rgba(28,31,59,0.40) 0%, transparent 100%)</div>
+        </div>
+      </div>
+
+      <div class="overlay-card">
+        <div class="overlay-photo">
+          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="navy light right" loading="lazy">
+          <div class="ov-layer ov-light-right"></div>
+        </div>
+        <div class="overlay-info">
+          <div class="ov-title">right — 40%</div>
+          <div class="ov-use">Ambiance · layout miroir</div>
+          <div class="ov-css">linear-gradient(to left, rgba(28,31,59,0.40) 0%, transparent 100%)</div>
+        </div>
+      </div>
+
+      <div class="overlay-card">
+        <div class="overlay-photo">
+          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="navy light top" loading="lazy">
+          <div class="ov-layer ov-light-top"></div>
+        </div>
+        <div class="overlay-info">
+          <div class="ov-title">top — 40%</div>
+          <div class="ov-use">Atmosphère haute</div>
+          <div class="ov-css">linear-gradient(to bottom, rgba(28,31,59,0.40) 0%, transparent 100%)</div>
+        </div>
+      </div>
+
+      <div class="overlay-card">
+        <div class="overlay-photo">
+          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="navy light bottom" loading="lazy">
+          <div class="ov-layer ov-light-bottom"></div>
+        </div>
+        <div class="overlay-info">
+          <div class="ov-title">bottom — 40%</div>
+          <div class="ov-use">Légende légère · caption strip</div>
+          <div class="ov-css">linear-gradient(to top, rgba(28,31,59,0.40) 0%, transparent 100%)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 2D — Sizes comparison -->
+<section class="variation">
+  <div class="variation-head">
+    <div class="lbl"><span class="num">8</span>2D — Sizes · quarter / half / full</div>
+    <div class="meta">Type 2 navy_hard · direction = left · 3 extents autorisés</div>
+  </div>
+  <div class="variation-body">
+    <div class="subsec-head">
+      <span class="subsec-tag">2D</span>
+      <span class="subsec-title">Hold extent — quarter 25% · half 50% · full 75%</span>
+      <span class="subsec-rule">Valeurs hold hors [25, 50, 75] interdites · toujours transparent à 100%</span>
     </div>
     <div class="overlay-grid-3">
 
       <div class="overlay-card">
         <div class="overlay-photo">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="Solid light" loading="lazy">
-          <div class="ov-layer ov-solid-light"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">light — 30%</div>
-          <div class="ov-use">Subtle dim, photo readable</div>
-          <div class="ov-css">rgba(28,31,59,0.30)</div>
-        </div>
-      </div>
-
-      <div class="overlay-card">
-        <div class="overlay-photo">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="Solid medium" loading="lazy">
-          <div class="ov-layer ov-solid-medium"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">medium — 60%</div>
-          <div class="ov-use">Photo as ambiance</div>
-          <div class="ov-css">rgba(28,31,59,0.60)</div>
-        </div>
-      </div>
-
-      <div class="overlay-card">
-        <div class="overlay-photo">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="Solid heavy" loading="lazy">
-          <div class="ov-layer ov-solid-heavy"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">heavy — 90%</div>
-          <div class="ov-use">Photo as texture only</div>
-          <div class="ov-css">rgba(28,31,59,0.90)</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- 2B — Gradient directions -->
-<section class="variation">
-  <div class="variation-head">
-    <div class="lbl"><span class="num">6</span>2B — Directions de dégradé · 4 directions cardinales</div>
-    <div class="meta">coverage = third (33%) · color = navy_pure · Même photo × 4</div>
-  </div>
-  <div class="variation-body">
-    <div class="subsec-head">
-      <span class="subsec-tag">2B</span>
-      <span class="subsec-title">Gradient directions — 4 directions cardinales</span>
-      <span class="subsec-rule">Aucune direction diagonale · coverage = third · navy_pure</span>
-    </div>
-    <div class="overlay-grid-4">
-
-      <div class="overlay-card">
-        <div class="overlay-photo">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="from_left" loading="lazy">
-          <div class="ov-layer ov-from-left-third"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">from_left</div>
-          <div class="ov-use">Cover slide · texte zone gauche</div>
-          <div class="ov-css">linear-gradient(to right,<br>#1C1F3B 0%, #1C1F3B 33%,<br>transparent 100%)</div>
-        </div>
-      </div>
-
-      <div class="overlay-card">
-        <div class="overlay-photo">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="from_right" loading="lazy">
-          <div class="ov-layer ov-from-right-third"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">from_right</div>
-          <div class="ov-use">Texte zone droite · layout miroir</div>
-          <div class="ov-css">linear-gradient(to left,<br>#1C1F3B 0%, #1C1F3B 33%,<br>transparent 100%)</div>
-        </div>
-      </div>
-
-      <div class="overlay-card">
-        <div class="overlay-photo">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="from_top" loading="lazy">
-          <div class="ov-layer ov-from-top-third"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">from_top</div>
-          <div class="ov-use">Header strip · titre en haut</div>
-          <div class="ov-css">linear-gradient(to bottom,<br>#1C1F3B 0%, #1C1F3B 33%,<br>transparent 100%)</div>
-        </div>
-      </div>
-
-      <div class="overlay-card">
-        <div class="overlay-photo">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="from_bottom" loading="lazy">
-          <div class="ov-layer ov-from-bottom-third"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">from_bottom</div>
-          <div class="ov-use">Section divider · légende bas</div>
-          <div class="ov-css">linear-gradient(to top,<br>#1C1F3B 0%, #1C1F3B 33%,<br>transparent 100%)</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- 2C — Coverage extents -->
-<section class="variation">
-  <div class="variation-head">
-    <div class="lbl"><span class="num">7</span>2C — Étendues de couverture · 4 valeurs</div>
-    <div class="meta">direction = from_left · color = navy_pure · marqueur zone tenue / zone fade</div>
-  </div>
-  <div class="variation-body">
-    <div class="subsec-head">
-      <span class="subsec-tag">2C</span>
-      <span class="subsec-title">Coverage extents — hold zone vs fade zone</span>
-      <span class="subsec-rule">Toujours transparent à 100% · tiret teal = limite zone tenue</span>
-    </div>
-    <div class="overlay-grid-4">
-
-      <div class="overlay-card">
-        <div class="overlay-photo">
           <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="quarter" loading="lazy">
-          <div class="ov-layer ov-from-left-quarter"></div>
+          <div class="ov-layer ov-quarter ov-hard-left"></div>
           <div class="hold-marker" style="width:25%;"><span class="hold-marker-label">25%</span></div>
         </div>
         <div class="overlay-info">
           <div class="ov-title">quarter — 25%</div>
-          <div class="ov-use">Subtle accent strip · photo dominant</div>
-          <div class="ov-css">… #1C1F3B 25%,<br>transparent 100%</div>
-        </div>
-      </div>
-
-      <div class="overlay-card">
-        <div class="overlay-photo">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="third" loading="lazy">
-          <div class="ov-layer ov-from-left-third"></div>
-          <div class="hold-marker" style="width:33%;"><span class="hold-marker-label">33%</span></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">third — 33%</div>
-          <div class="ov-use">Standard cover slide overlay zone</div>
-          <div class="ov-css">… #1C1F3B 33%,<br>transparent 100%</div>
+          <div class="ov-use">Accent strip · photo dominant</div>
+          <div class="ov-css">rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 25%,<br>transparent 100%</div>
         </div>
       </div>
 
       <div class="overlay-card">
         <div class="overlay-photo">
           <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="half" loading="lazy">
-          <div class="ov-layer ov-from-left-half"></div>
+          <div class="ov-layer ov-half ov-hard-left"></div>
           <div class="hold-marker" style="width:50%;"><span class="hold-marker-label">50%</span></div>
         </div>
         <div class="overlay-info">
           <div class="ov-title">half — 50%</div>
-          <div class="ov-use">Strong text zone · photo half visible</div>
-          <div class="ov-css">… #1C1F3B 50%,<br>transparent 100%</div>
+          <div class="ov-use">Zone de texte forte · photo mi-visible</div>
+          <div class="ov-css">rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 50%,<br>transparent 100%</div>
         </div>
       </div>
 
       <div class="overlay-card">
         <div class="overlay-photo">
           <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="full" loading="lazy">
-          <div class="ov-layer ov-from-left-full"></div>
+          <div class="ov-layer ov-full ov-hard-left"></div>
           <div class="hold-marker" style="width:75%;"><span class="hold-marker-label">75%</span></div>
         </div>
         <div class="overlay-info">
           <div class="ov-title">full — 75%</div>
-          <div class="ov-use">Navy dominant · edge fade</div>
-          <div class="ov-css">… #1C1F3B 75%,<br>transparent 100%</div>
+          <div class="ov-use">Navy dominant · photo recule</div>
+          <div class="ov-css">rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 75%,<br>transparent 100%</div>
         </div>
       </div>
 
@@ -769,149 +849,60 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
   </div>
 </section>
 
-<!-- 2D — Color variants -->
+<!-- 2E — Selection rules -->
 <section class="variation">
   <div class="variation-head">
-    <div class="lbl"><span class="num">8</span>2D — Variantes de couleur · navy_pure vs navy_with_teal_reflet</div>
-    <div class="meta">direction = from_left · coverage = third · Même photo × 2</div>
-  </div>
-  <div class="variation-body">
-    <div class="subsec-head">
-      <span class="subsec-tag">2D</span>
-      <span class="subsec-title">Color variants — navy_pure · navy_with_teal_reflet</span>
-      <span class="subsec-rule">Teal reflet réservé aux cover slides + section dividers</span>
-    </div>
-    <div class="overlay-grid-2">
-
-      <div class="overlay-card">
-        <div class="overlay-photo">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="navy_pure" loading="lazy">
-          <div class="ov-layer ov-from-left-third"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">navy_pure</div>
-          <div class="ov-use">Usage standard · tous layouts</div>
-          <div class="ov-css">linear-gradient(to right,<br>#1C1F3B 0%, #1C1F3B 33%, transparent 100%)</div>
-        </div>
-      </div>
-
-      <div class="overlay-card">
-        <div class="overlay-photo">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="navy_with_teal_reflet" loading="lazy">
-          <div class="ov-layer ov-teal-reflet-layer1"></div>
-          <div class="ov-layer ov-teal-reflet-layer2"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">navy_with_teal_reflet</div>
-          <div class="ov-use">Teal reflet réservé aux cover slides + section dividers</div>
-          <div class="ov-css">layer 1 · linear-gradient(to right, #1C1F3B 0%, #1C1F3B 33%, transparent 100%)<br>layer 2 · radial-gradient(circle at bottom left, rgba(128,199,194,0.40) 0%, transparent 50%)</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- 2F — Intensity -->
-<section class="variation">
-  <div class="variation-head">
-    <div class="lbl"><span class="num">10</span>2F — Intensité du dégradé · full vs soft</div>
-    <div class="meta">direction = from_left · coverage = third · color = navy_pure · ×2</div>
-  </div>
-  <div class="variation-body">
-    <div class="subsec-head">
-      <span class="subsec-tag">2F</span>
-      <span class="subsec-title">Intensity — full (opaque hold) vs soft (semi-transparent hold)</span>
-      <span class="subsec-rule">Les deux finissent transparent à 100%</span>
-    </div>
-    <div class="overlay-grid-2">
-
-      <div class="overlay-card">
-        <div class="overlay-photo">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="full intensity" loading="lazy">
-          <div class="ov-layer ov-from-left-third"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">full intensity <span style="font-weight:400;color:var(--gray-600)">(défaut)</span></div>
-          <div class="ov-use">Opaque hold, photo dimmed in zone — strong text contrast</div>
-          <div class="ov-css">linear-gradient(to right,<br>#1C1F3B 0%, #1C1F3B 33%,<br>transparent 100%)</div>
-        </div>
-      </div>
-
-      <div class="overlay-card">
-        <div class="overlay-photo">
-          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="soft intensity" loading="lazy">
-          <div class="ov-layer ov-from-left-third-soft"></div>
-        </div>
-        <div class="overlay-info">
-          <div class="ov-title">soft intensity</div>
-          <div class="ov-use">Semi-transparent hold, photo visible through tint — warm photos where context matters</div>
-          <div class="ov-css">linear-gradient(to right,<br>rgba(28,31,59,0.50) 0%, rgba(28,31,59,0.50) 33%,<br>transparent 100%)</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- 2E — Selection rules table -->
-<section class="variation">
-  <div class="variation-head">
-    <div class="lbl"><span class="num">9</span>2E — Règles de sélection · 6 cas d'usage</div>
-    <div class="meta">overlay_system.selection_rules · brand-rules-per-format.json v3.3.7</div>
+    <div class="lbl"><span class="num">9</span>2E — Règles de sélection · quel type pour quel contexte</div>
+    <div class="meta">overlay_system v4.0.0 · brand-rules-per-format.json</div>
   </div>
   <div class="variation-body">
     <div class="subsec-head">
       <span class="subsec-tag">2E</span>
-      <span class="subsec-title">Selection rules — quel overlay pour quel contexte</span>
-      <span class="subsec-rule">Source : overlay_system.selection_rules</span>
+      <span class="subsec-title">Selection rules — type × contexte</span>
+      <span class="subsec-rule">Source : overlay_system.type_1/2/3 · brand-rules-per-format.json</span>
     </div>
     <table class="sel-table">
       <thead>
         <tr>
-          <th>Cas d'usage</th>
-          <th>Famille</th>
+          <th>Contexte</th>
+          <th>Type</th>
           <th>Combinaison canonique</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>cover_slide_with_text</td>
-          <td>gradient</td>
-          <td>gradient.from_left.third.navy_pure</td>
+          <td>Carte monde / régionale</td>
+          <td>white_fade</td>
+          <td>top + left (défauts) · right + bottom si bord brut visible</td>
         </tr>
         <tr>
-          <td>big_number_bg</td>
-          <td>solid_uniform</td>
-          <td>solid_uniform.medium — rgba(28,31,59,0.60)</td>
+          <td>Cover slide · texte fort</td>
+          <td>navy_hard</td>
+          <td>from_left · half · + teal flair</td>
         </tr>
         <tr>
-          <td>section_divider</td>
-          <td>gradient</td>
-          <td>gradient.from_bottom.half.navy_pure</td>
+          <td>Section divider</td>
+          <td>navy_hard</td>
+          <td>from_bottom · half · + teal flair</td>
         </tr>
         <tr>
-          <td>caption_strip</td>
-          <td>gradient</td>
-          <td>gradient.from_bottom.quarter.navy_pure</td>
+          <td>Caption strip</td>
+          <td>navy_hard</td>
+          <td>from_bottom · quarter · + teal flair</td>
         </tr>
         <tr>
-          <td>hero_photo_wash</td>
-          <td>solid_uniform</td>
-          <td>solid_uniform.light — rgba(28,31,59,0.30)</td>
+          <td>Hero photo · ambiance</td>
+          <td>navy_light</td>
+          <td>from_left ou from_bottom · half</td>
         </tr>
         <tr>
-          <td>dark_dramatic_quote</td>
-          <td>solid_uniform</td>
-          <td>solid_uniform.heavy — rgba(28,31,59,0.90)</td>
-        </tr>
-        <tr>
-          <td>warm_photo_with_caption</td>
-          <td>gradient · soft</td>
-          <td>gradient.from_bottom.half.navy_pure.soft</td>
+          <td>Photo + texte léger</td>
+          <td>navy_light</td>
+          <td>from_bottom · quarter · vérifier WCAG AA</td>
         </tr>
       </tbody>
     </table>
+    <div class="doc-note" style="margin-top:12px">⚠ Solid uniform (light/medium/heavy) · non-axial directions · cumulation sur photos → <strong>interdits v4.0.0</strong></div>
   </div>
 </section>
 
