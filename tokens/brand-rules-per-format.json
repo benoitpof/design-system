@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "3.3.6",
+    "version": "3.3.7",
     "generated": "2026-04-27",
     "description": "Format-specific design rules. Every value exact. Pair with brand-tokens.json. Convention: mm partout (SSOT). Inches noted in comments only when pptxgenjs requires it.",
     "changes_from_3.1.0": [
@@ -82,6 +82,13 @@
       "Archive assets/icons/ecology/ (stroke-width 28 too thick vs Tabler outline standard).",
       "Switch ICONS.md to Tabler CDN as primary source. POF curated icons no longer active.",
       "Add Drive folder reference in ASSETS.md (https://drive.google.com/drive/folders/1oqm8Wkh_lfH4Vw4j7vBJNtoO8aji9GIn) as raw source for Notion URL fichier values."
+    ],
+    "changes_from_3.3.6": [
+      "OVERLAY system formalized: 3 solid navy levels (30/60/90%) + gradient with 4 directions × 4 coverages × 2 color variants. Always ends 100% transparent.",
+      "Gradient pattern: solid hold from 0% to coverage_pct, then fade to transparent at 100%.",
+      "Removed earlier ad-hoc photo overlay gradient — replaced by overlay_system block.",
+      "Aligned with V2 charte spec (Overlays.pptx 2026-04-27).",
+      "REMOVED gradient_overlay_lock (single canonical) — superseded by overlay_system with 32 valid combinations."
     ]
   },
   "slides": {
@@ -808,17 +815,6 @@
     "_qa_check_command": "grep -oE 'font-size:[0-9]+(\\.[0-9]+)?pt' file.html | sort -u  -- result must be subset of allowed list"
   },
   "components": {},
-  "gradient_overlay_lock": {
-    "_enforcement": "STRICT",
-    "canonical_value": "linear-gradient(135deg, rgba(28,31,59,0.85) 0%, rgba(28,31,59,0.45) 100%)",
-    "css_var_name": "--pof-photo-overlay",
-    "_usage": "Apply on every photo zone before text overlay. No alternative gradients allowed.",
-    "_violation_examples": [
-      "linear-gradient(105deg, ...)",
-      "linear-gradient(135deg, rgba(28,31,59,0.92) ...)",
-      "Any gradient with stops different from 0.85 -> 0.45"
-    ]
-  },
   "charts_lock": {
     "_enforcement": "STRICT",
     "_description": "Format rules for charts in examples/charts/ and any newly-generated chart asset.",
@@ -1126,5 +1122,100 @@
       "any size > 36pt except cover title"
     ],
     "_cover_exception": "Cover title up to 36pt allowed even on print"
+  },
+  "overlay_system": {
+    "_enforcement": "STRICT",
+    "_description": "POF photo overlay system. Applied as CSS layer over images. Two families : solid uniform, or gradient.",
+    "_validated_against": "Overlays.pptx (V2 charte 2026-04-27) + screenshots Section 2 of charts/18-images.html",
+    "solid_uniform": {
+      "_description": "100% navy fill, 3 opacity levels. Use for full-photo wash (e.g. big number bg, dark hero).",
+      "color": "#1C1F3B",
+      "levels": {
+        "light": {
+          "opacity": 0.3,
+          "css": "rgba(28,31,59,0.30)",
+          "use": "Subtle dim, photo readable"
+        },
+        "medium": {
+          "opacity": 0.6,
+          "css": "rgba(28,31,59,0.60)",
+          "use": "Photo as ambiance, text readable on top"
+        },
+        "heavy": {
+          "opacity": 0.9,
+          "css": "rgba(28,31,59,0.90)",
+          "use": "Photo as texture only, navy dominant"
+        }
+      },
+      "_forbidden": "Other opacities (45%, 75%, etc.). Use only the 3 levels."
+    },
+    "gradient": {
+      "_description": "Navy gradient from one edge, fading to transparent. Direction + coverage + color = 32 valid combinations.",
+      "direction": {
+        "_options": [
+          "from_left",
+          "from_right",
+          "from_top",
+          "from_bottom"
+        ],
+        "_exclusive": "Only ONE direction at a time. No diagonal, no cumulation.",
+        "css_angle": {
+          "from_left": "to right (90deg)",
+          "from_right": "to left (270deg)",
+          "from_top": "to bottom (180deg)",
+          "from_bottom": "to top (0deg)"
+        }
+      },
+      "coverage_extent": {
+        "_description": "How far the solid color holds before fading. Always ends 100% transparent at 100%.",
+        "quarter": {
+          "hold_pct": 25,
+          "use": "Subtle accent strip, photo dominant"
+        },
+        "third": {
+          "hold_pct": 33,
+          "use": "Standard cover slide overlay zone"
+        },
+        "half": {
+          "hold_pct": 50,
+          "use": "Strong text zone, photo half visible"
+        },
+        "full": {
+          "hold_pct": 75,
+          "use": "Photo barely visible, navy dominant with edge fade"
+        },
+        "_pattern_css": "linear-gradient(<angle>, #1C1F3B 0%, #1C1F3B <hold_pct>%, transparent 100%)"
+      },
+      "color_variants": {
+        "navy_pure": {
+          "_description": "Pure navy fade.",
+          "stops": "#1C1F3B 0% → #1C1F3B <hold_pct>% → transparent 100%"
+        },
+        "navy_with_teal_reflet": {
+          "_description": "Navy primary + teal radial reflet anchored at bottom-left.",
+          "stops_layer1": "linear-gradient(<angle>, #1C1F3B 0%, #1C1F3B <hold_pct>%, transparent 100%)",
+          "stops_layer2": "radial-gradient(circle at bottom left, rgba(128,199,194,0.40) 0%, transparent 50%)",
+          "css_combined": "Both layers stacked, layer2 on top of layer1",
+          "_use": "Reserved for cover slides + section dividers when extra warmth needed"
+        }
+      },
+      "_always_ends_transparent": true,
+      "_forbidden": [
+        "Non-axial directions (e.g. 45deg) — only 4 cardinal directions allowed",
+        "Cumulating directions (e.g. left + bottom in same overlay)",
+        "Coverage hold_pct outside [25, 33, 50, 75]",
+        "Final stop not transparent (every overlay must fade to transparent at 100%)",
+        "Teal reflet without navy primary layer",
+        "Teal reflet position other than bottom-left"
+      ]
+    },
+    "selection_rules": {
+      "cover_slide_with_text": "gradient.from_left.third.navy_pure (V2 default) OR navy_with_teal_reflet for warmth",
+      "big_number_bg": "solid_uniform.medium (60%)",
+      "section_divider": "gradient.from_bottom.half.navy_pure",
+      "caption_strip": "gradient.from_bottom.quarter.navy_pure",
+      "hero_photo_wash": "solid_uniform.light (30%) — photo dominant",
+      "dark_dramatic_quote": "solid_uniform.heavy (90%) — text dominant"
+    }
   }
 }

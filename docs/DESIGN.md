@@ -1,6 +1,6 @@
 # DESIGN.md — Plastic Odyssey Factories Design System
 
-**Version:** 3.3.6 | **Updated:** 2026-04-26
+**Version:** 3.3.7 | **Updated:** 2026-04-26
 **Source of truth:** `tokens/brand-tokens.json` + `tokens/brand-rules-per-format.json`
 **Template reference:** `Template_POF_Claude.pptx` (LAYOUT_WIDE 20"×11.25" / 508×285.75 mm)
 **Coordinate convention:** mm partout (SSOT). Inches en commentaire pour pptxgenjs.
@@ -17,8 +17,24 @@ V2 hierarchy : cover_title 36pt ExtraBold · slide_title 26pt ExtraBold · slide
 ### Weight lock
 Regular weights allowed: **300, 400, 600, 700**. ExtraBold (800) restricted to: cover slide title (L01), section divider title (L02), stat number (L04). Black (900) **forbidden**.
 
-### Gradient overlay lock
-Single canonical value: `linear-gradient(135deg, rgba(28,31,59,0.85) 0%, rgba(28,31,59,0.45) 100%)`. CSS variable `--pof-photo-overlay`. No alternatives. No `105deg`. No different opacity stops.
+### Overlay system (v3.3.7 — replaces gradient_overlay_lock)
+
+POF photo overlay system has TWO families :
+
+**A. Solid uniform (3 levels)** — full-photo navy wash :
+- `light` 30% : `rgba(28,31,59,0.30)` — subtle dim, photo readable
+- `medium` 60% : `rgba(28,31,59,0.60)` — photo as ambiance, text readable on top
+- `heavy` 90% : `rgba(28,31,59,0.90)` — photo as texture only
+
+**B. Gradient (4 directions × 4 coverages × 2 colors = 32 valid combinations)** :
+- Direction (exclusive, no cumulation) : `from_left` / `from_right` / `from_top` / `from_bottom`
+- Coverage extent (hold percentage) : `quarter` 25% · `third` 33% · `half` 50% · `full` 75%
+- Color : `navy_pure` OR `navy_with_teal_reflet` (radial teal anchored bottom-left)
+- Pattern CSS : `linear-gradient(<angle>, #1C1F3B 0%, #1C1F3B <hold_pct>%, transparent 100%)`
+
+**Always ends 100% transparent.** Forbidden : non-axial directions (45deg etc.), cumulated directions, hold outside [25, 33, 50, 75], final stop not transparent, teal reflet position other than bottom-left.
+
+Selection rules per use case in `tokens/brand-rules-per-format.json` `overlay_system.selection_rules`.
 
 ### Corner marks lock
 L-brackets in 4 orientations: `assets/brand-elements/corner-bracket-{tl,tr,bl,br}.svg`. Size 12 mm. Color #80C7C2. Stroke 5px square cap. Default pair on every slide = TL + BR. Solid filled squares (deprecated v3.2.2) **forbidden**.
