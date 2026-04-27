@@ -1176,10 +1176,10 @@
     "type_2_navy_hard": {
       "_name": "Navy hard with Teal flair",
       "_usage": "Photos — strong text zone, navy dominant",
-      "opacity_start": 0.9,
+      "opacity_start": 1.0,
       "opacity_end": 0.0,
-      "css_layer1": "linear-gradient(<angle>, rgba(28,31,59,0.90) 0%, transparent 100%)",
-      "css_layer2_teal_flair": "radial-gradient(circle at bottom left, rgba(128,199,194,0.40) 0%, transparent 50%)",
+      "css_layer1": "linear-gradient(<angle>, #1C1F3B 0%, transparent 100%)",
+      "css_layer2_teal_flair": "radial-gradient(circle at bottom left, rgba(128,199,194,0.50) 0%, transparent 55%)",
       "css_combined": "layer2 stacked on top of layer1",
       "positions": [
         "top",
@@ -1199,21 +1199,26 @@
         "full": {
           "hold_pct": 75,
           "use": "Navy dominant, photo recedes"
+        },
+        "full_bleed": {
+          "hold_pct": 100,
+          "use": "Solid navy wash — photo as texture, text zone unconstrained"
         }
       },
       "cumulation": false,
       "rules": {
         "exclusive": "Only ONE position at a time — no cumulation",
         "contained": "Never exceeds image bounds",
-        "teal_anchor": "Teal flair always anchored at bottom-left, no other position"
+        "teal_anchor": "Teal flair always anchored at bottom-left, no other position",
+        "teal_layer": "Teal flair is ALWAYS layer 2 on top of navy layer — never used standalone"
       }
     },
     "type_3_navy_light": {
       "_name": "Navy light",
       "_usage": "Photos — ambiance, photo dominant",
-      "opacity_start": 0.4,
+      "opacity_start": 0.65,
       "opacity_end": 0.0,
-      "css_pattern": "linear-gradient(<angle>, rgba(28,31,59,0.40) 0%, transparent 100%)",
+      "css_pattern": "linear-gradient(<angle>, rgba(28,31,59,0.65) 0%, transparent 100%)",
       "positions": [
         "top",
         "bottom",
@@ -1227,11 +1232,15 @@
         },
         "half": {
           "hold_pct": 50,
-          "use": "Text zone, photo still clearly readable"
+          "use": "Text zone, photo still readable"
         },
         "full": {
           "hold_pct": 75,
-          "use": "Wider tint, photo dominant"
+          "use": "Wider tint, photo visible"
+        },
+        "full_bleed": {
+          "hold_pct": 100,
+          "use": "Uniform tint — photo as texture"
         }
       },
       "cumulation": false,

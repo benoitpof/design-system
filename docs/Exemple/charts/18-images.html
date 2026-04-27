@@ -210,31 +210,46 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
 .ov-white-right  { background: linear-gradient(to left,   rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
 .ov-white-top    { background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
 .ov-white-bottom { background: linear-gradient(to top,    rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
-/* ── Type 2 — Navy hard + Teal flair (photos, strong text zone) ─── */
-.ov-hard-left    { background: linear-gradient(to right,  rgba(28,31,59,0.90) 0%, transparent 100%); }
-.ov-hard-right   { background: linear-gradient(to left,   rgba(28,31,59,0.90) 0%, transparent 100%); }
-.ov-hard-top     { background: linear-gradient(to bottom, rgba(28,31,59,0.90) 0%, transparent 100%); }
-.ov-hard-bottom  { background: linear-gradient(to top,    rgba(28,31,59,0.90) 0%, transparent 100%); }
-.ov-hard-teal    { background: radial-gradient(circle at bottom left, rgba(128,199,194,0.40) 0%, transparent 50%); }
-/* ── Type 3 — Navy light (photos, ambiance) ──────────────────────── */
-.ov-light-left   { background: linear-gradient(to right,  rgba(28,31,59,0.40) 0%, transparent 100%); }
-.ov-light-right  { background: linear-gradient(to left,   rgba(28,31,59,0.40) 0%, transparent 100%); }
-.ov-light-top    { background: linear-gradient(to bottom, rgba(28,31,59,0.40) 0%, transparent 100%); }
-.ov-light-bottom { background: linear-gradient(to top,    rgba(28,31,59,0.40) 0%, transparent 100%); }
-/* ── Sizes — for types 2 & 3 (hold extent for quarter/half/full) ── */
-.ov-quarter { --ov-stop: 25%; }
-.ov-half    { --ov-stop: 50%; }
-.ov-full    { --ov-stop: 75%; }
-/* Override stop when size classes combined with type classes */
-.ov-quarter.ov-hard-left   { background: linear-gradient(to right,  rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 25%, transparent 100%); }
-.ov-quarter.ov-hard-bottom { background: linear-gradient(to top,    rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 25%, transparent 100%); }
-.ov-half.ov-hard-left      { background: linear-gradient(to right,  rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 50%, transparent 100%); }
-.ov-half.ov-hard-bottom    { background: linear-gradient(to top,    rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 50%, transparent 100%); }
-.ov-full.ov-hard-left      { background: linear-gradient(to right,  rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 75%, transparent 100%); }
-.ov-full.ov-hard-bottom    { background: linear-gradient(to top,    rgba(28,31,59,0.90) 0%, rgba(28,31,59,0.90) 75%, transparent 100%); }
-.ov-quarter.ov-light-left  { background: linear-gradient(to right,  rgba(28,31,59,0.40) 0%, rgba(28,31,59,0.40) 25%, transparent 100%); }
-.ov-half.ov-light-left     { background: linear-gradient(to right,  rgba(28,31,59,0.40) 0%, rgba(28,31,59,0.40) 50%, transparent 100%); }
-.ov-full.ov-light-left     { background: linear-gradient(to right,  rgba(28,31,59,0.40) 0%, rgba(28,31,59,0.40) 75%, transparent 100%); }
+/* ── Type 1 — Navy hard + Teal flair (photos, strong text zone) ─── */
+/* opacity_start = 1.0 — fully opaque navy at edge                   */
+/* Teal flair ALWAYS stacked on top of navy layer — never standalone  */
+.ov-hard-left    { background: linear-gradient(to right,  #1C1F3B 0%, transparent 100%); }
+.ov-hard-right   { background: linear-gradient(to left,   #1C1F3B 0%, transparent 100%); }
+.ov-hard-top     { background: linear-gradient(to bottom, #1C1F3B 0%, transparent 100%); }
+.ov-hard-bottom  { background: linear-gradient(to top,    #1C1F3B 0%, transparent 100%); }
+.ov-hard-teal    { background: radial-gradient(circle at bottom left, rgba(128,199,194,0.50) 0%, transparent 55%); }
+/* ── Type 2 — Navy light (photos, ambiance) ──────────────────────── */
+/* opacity_start = 0.65 — visible tint, photo still readable          */
+.ov-light-left   { background: linear-gradient(to right,  rgba(28,31,59,0.65) 0%, transparent 100%); }
+.ov-light-right  { background: linear-gradient(to left,   rgba(28,31,59,0.65) 0%, transparent 100%); }
+.ov-light-top    { background: linear-gradient(to bottom, rgba(28,31,59,0.65) 0%, transparent 100%); }
+.ov-light-bottom { background: linear-gradient(to top,    rgba(28,31,59,0.65) 0%, transparent 100%); }
+/* ── Sizes (hold extent) ──────────────────────────────────────────── */
+/* quarter 25% · half 50% · full 75% · full_bleed 100% (solid wash)  */
+.ov-quarter.ov-hard-left   { background: linear-gradient(to right,  #1C1F3B 0%, #1C1F3B 25%, transparent 100%); }
+.ov-quarter.ov-hard-right  { background: linear-gradient(to left,   #1C1F3B 0%, #1C1F3B 25%, transparent 100%); }
+.ov-quarter.ov-hard-top    { background: linear-gradient(to bottom, #1C1F3B 0%, #1C1F3B 25%, transparent 100%); }
+.ov-quarter.ov-hard-bottom { background: linear-gradient(to top,    #1C1F3B 0%, #1C1F3B 25%, transparent 100%); }
+.ov-half.ov-hard-left      { background: linear-gradient(to right,  #1C1F3B 0%, #1C1F3B 50%, transparent 100%); }
+.ov-half.ov-hard-right     { background: linear-gradient(to left,   #1C1F3B 0%, #1C1F3B 50%, transparent 100%); }
+.ov-half.ov-hard-top       { background: linear-gradient(to bottom, #1C1F3B 0%, #1C1F3B 50%, transparent 100%); }
+.ov-half.ov-hard-bottom    { background: linear-gradient(to top,    #1C1F3B 0%, #1C1F3B 50%, transparent 100%); }
+.ov-full.ov-hard-left      { background: linear-gradient(to right,  #1C1F3B 0%, #1C1F3B 75%, transparent 100%); }
+.ov-full.ov-hard-right     { background: linear-gradient(to left,   #1C1F3B 0%, #1C1F3B 75%, transparent 100%); }
+.ov-full.ov-hard-top       { background: linear-gradient(to bottom, #1C1F3B 0%, #1C1F3B 75%, transparent 100%); }
+.ov-full.ov-hard-bottom    { background: linear-gradient(to top,    #1C1F3B 0%, #1C1F3B 75%, transparent 100%); }
+.ov-bleed.ov-hard-left, .ov-bleed.ov-hard-right,
+.ov-bleed.ov-hard-top,  .ov-bleed.ov-hard-bottom { background: #1C1F3B; }
+.ov-quarter.ov-light-left  { background: linear-gradient(to right,  rgba(28,31,59,0.65) 0%, rgba(28,31,59,0.65) 25%, transparent 100%); }
+.ov-quarter.ov-light-right { background: linear-gradient(to left,   rgba(28,31,59,0.65) 0%, rgba(28,31,59,0.65) 25%, transparent 100%); }
+.ov-quarter.ov-light-top   { background: linear-gradient(to bottom, rgba(28,31,59,0.65) 0%, rgba(28,31,59,0.65) 25%, transparent 100%); }
+.ov-quarter.ov-light-bottom{ background: linear-gradient(to top,    rgba(28,31,59,0.65) 0%, rgba(28,31,59,0.65) 25%, transparent 100%); }
+.ov-half.ov-light-left     { background: linear-gradient(to right,  rgba(28,31,59,0.65) 0%, rgba(28,31,59,0.65) 50%, transparent 100%); }
+.ov-half.ov-light-bottom   { background: linear-gradient(to top,    rgba(28,31,59,0.65) 0%, rgba(28,31,59,0.65) 50%, transparent 100%); }
+.ov-full.ov-light-left     { background: linear-gradient(to right,  rgba(28,31,59,0.65) 0%, rgba(28,31,59,0.65) 75%, transparent 100%); }
+.ov-full.ov-light-bottom   { background: linear-gradient(to top,    rgba(28,31,59,0.65) 0%, rgba(28,31,59,0.65) 75%, transparent 100%); }
+.ov-bleed.ov-light-left, .ov-bleed.ov-light-right,
+.ov-bleed.ov-light-top,  .ov-bleed.ov-light-bottom { background: rgba(28,31,59,0.65); }
 .overlay-info { padding: 10px 12px 12px; background: var(--white); }
 .ov-title {
   font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 700;
@@ -594,13 +609,13 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
 <section class="variation">
   <div class="variation-head">
     <div class="lbl"><span class="num">5</span>Type 1 — navy_hard · Zone de texte forte</div>
-    <div class="meta">opacity_start = 0.90 · + teal flair radial bottom-left · 1 direction max · jamais cumulé</div>
+    <div class="meta">opacity_start = 1.0 (navy plein) · teal flair toujours sur la couche navy, jamais seul · 1 direction max</div>
   </div>
   <div class="variation-body">
     <div class="subsec-head">
       <span class="subsec-tag">2A</span>
       <span class="subsec-title">Navy hard + Teal flair — 4 directions</span>
-      <span class="subsec-rule">Une seule direction · teal flair ancré bottom-left obligatoire · size : quarter / half / full</span>
+      <span class="subsec-rule">Une seule direction · teal flair = couche 2 obligatoire sur navy, jamais indépendant · sizes : quarter / half / full / full_bleed</span>
     </div>
     <div class="overlay-grid-4">
 
@@ -664,7 +679,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
 <section class="variation">
   <div class="variation-head">
     <div class="lbl"><span class="num">6</span>Type 2 — navy_light · Ambiance photo</div>
-    <div class="meta">opacity_start = 0.40 · photo dominante · WCAG AA requis avant texte · 1 direction max</div>
+    <div class="meta">opacity_start = 0.65 · photo encore lisible · WCAG AA requis avant texte · 1 direction max</div>
   </div>
   <div class="variation-body">
     <div class="subsec-head">
@@ -682,7 +697,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         <div class="overlay-info">
           <div class="ov-title">left — 40%</div>
           <div class="ov-use">Ambiance · texte zone gauche si contraste ok</div>
-          <div class="ov-css">rgba(28,31,59,0.40) → transparent</div>
+          <div class="ov-css">rgba(28,31,59,0.65) → transparent</div>
         </div>
       </div>
 
@@ -694,7 +709,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         <div class="overlay-info">
           <div class="ov-title">right — 40%</div>
           <div class="ov-use">Ambiance · layout miroir</div>
-          <div class="ov-css">rgba(28,31,59,0.40) → transparent</div>
+          <div class="ov-css">rgba(28,31,59,0.65) → transparent</div>
         </div>
       </div>
 
@@ -706,7 +721,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         <div class="overlay-info">
           <div class="ov-title">top — 40%</div>
           <div class="ov-use">Atmosphère haute</div>
-          <div class="ov-css">rgba(28,31,59,0.40) → transparent</div>
+          <div class="ov-css">rgba(28,31,59,0.65) → transparent</div>
         </div>
       </div>
 
@@ -718,7 +733,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         <div class="overlay-info">
           <div class="ov-title">bottom — 40%</div>
           <div class="ov-use">Caption strip · légende légère</div>
-          <div class="ov-css">rgba(28,31,59,0.40) → transparent</div>
+          <div class="ov-css">rgba(28,31,59,0.65) → transparent</div>
         </div>
       </div>
 
@@ -735,10 +750,10 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
   <div class="variation-body">
     <div class="subsec-head">
       <span class="subsec-tag">2C</span>
-      <span class="subsec-title">Hold extent — quarter 25% · half 50% · full 75%</span>
-      <span class="subsec-rule">Valeurs hold hors [25, 50, 75] interdites · toujours transparent à 100%</span>
+      <span class="subsec-title">Hold extent — quarter 25% · half 50% · full 75% · full_bleed 100%</span>
+      <span class="subsec-rule">Valeurs hold hors [25, 50, 75, 100] interdites · full_bleed = wash uniforme, pas de zone transparente</span>
     </div>
-    <div class="overlay-grid-3">
+    <div class="overlay-grid-4">
 
       <div class="overlay-card">
         <div class="overlay-photo">
@@ -749,7 +764,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         <div class="overlay-info">
           <div class="ov-title">quarter — 25%</div>
           <div class="ov-use">Accent strip · photo dominant</div>
-          <div class="ov-css">rgba(28,31,59,0.90) 0% → 25%,<br>transparent 100%</div>
+          <div class="ov-css">#1C1F3B 0% → #1C1F3B 25%,<br>transparent 100%</div>
         </div>
       </div>
 
@@ -762,7 +777,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         <div class="overlay-info">
           <div class="ov-title">half — 50%</div>
           <div class="ov-use">Zone de texte forte · photo mi-visible</div>
-          <div class="ov-css">rgba(28,31,59,0.90) 0% → 50%,<br>transparent 100%</div>
+          <div class="ov-css">#1C1F3B 0% → #1C1F3B 50%,<br>transparent 100%</div>
         </div>
       </div>
 
@@ -775,7 +790,19 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         <div class="overlay-info">
           <div class="ov-title">full — 75%</div>
           <div class="ov-use">Navy dominant · photo recule</div>
-          <div class="ov-css">rgba(28,31,59,0.90) 0% → 75%,<br>transparent 100%</div>
+          <div class="ov-css">#1C1F3B 0% → #1C1F3B 75%,<br>transparent 100%</div>
+        </div>
+      </div>
+
+      <div class="overlay-card">
+        <div class="overlay-photo">
+          <img src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" alt="full bleed" loading="lazy">
+          <div class="ov-layer ov-bleed ov-hard-left"></div>
+        </div>
+        <div class="overlay-info">
+          <div class="ov-title">full_bleed — 100%</div>
+          <div class="ov-use">Wash uniforme · photo en texture · texte pleine liberté</div>
+          <div class="ov-css">#1C1F3B (solid — pas de zone transparente)</div>
         </div>
       </div>
 
@@ -825,6 +852,11 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
           <td>left ou bottom · half</td>
         </tr>
         <tr>
+          <td>Fond textuel · chiffre clé</td>
+          <td>navy_hard</td>
+          <td>full_bleed 100% · + teal flair</td>
+        </tr>
+        <tr>
           <td>Photo + légende légère</td>
           <td>navy_light</td>
           <td>bottom · quarter · vérifier WCAG AA</td>
@@ -836,7 +868,7 @@ body { font-family: 'Raleway', sans-serif; background: var(--gris-pof); color: v
         </tr>
       </tbody>
     </table>
-    <div class="doc-note" style="margin-top:12px">Interdits v4.0.0 : solid uniform · directions diagonales · cumulation · hold hors [25, 50, 75]</div>
+    <div class="doc-note" style="margin-top:12px">Interdits v4.0.0 : directions diagonales · cumulation sur photos · hold hors [25, 50, 75, 100] · teal flair sans couche navy</div>
   </div>
 </section>
 
