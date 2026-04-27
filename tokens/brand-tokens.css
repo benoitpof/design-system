@@ -31,16 +31,12 @@
   --pof-neutral-mid:           #EAEBED;  /* Data-heavy slide bg, dividers, form borders */
   --pof-gray-400:              #CED4DA;  /* Disabled borders */
   --pof-gray-600:              #6C757D;  /* Secondary text, captions */
-  --pof-near-black:            #090911;  /* Link on teal bg */
-
   /* --------------------------------------------------------
      COLORS: Semantic
      -------------------------------------------------------- */
   --pof-success:               #28A745;
   --pof-warning:               #E5A100;
   --pof-error:                 #DC3545;
-  --pof-info:                  #0D6EFD;
-
   /* --------------------------------------------------------
      COLORS: Chart Palette (strict 3-shade. Extend only if mandatory.)
      -------------------------------------------------------- */
@@ -57,15 +53,6 @@
   --pof-factories-header:      #1C1F3B;
   --pof-factories-accent:      #80C7C2;
   --pof-factories-emphasis:    #E8546C;
-
-  --pof-academy-header:        #8ED1E8;  /* Replaces navy for header bars */
-  --pof-academy-accent:        #8ED1E8;  /* Replaces teal */
-  --pof-academy-emphasis:      #E8546C;  /* Shared */
-  --pof-academy-bg-tint:       #D4EEF7;
-
-  --pof-sunu-local-green:      #009639;
-  --pof-sunu-local-red:        #EF3340;
-
   /* --------------------------------------------------------
      GRADIENTS
      -------------------------------------------------------- */
@@ -96,6 +83,7 @@
   --pof-fs-md:                 16px;   /* 12pt — body_screen default */
   --pof-fs-lg:                 18px;   /* 13.5pt — slide body, H4 docs */
   --pof-fs-xl:                 24px;   /* 18pt — H3, slide header title */
+  --pof-fs-slide-title:        35px;   /* 26pt — slide title most-used (V2 template) v3.3.3 */
   --pof-fs-2xl:                28px;   /* 21pt — H2, slide content H1 */
   --pof-fs-3xl:                36px;   /* 27pt — H1 docs, cover slide title */
   --pof-fs-4xl:                48px;   /* 36pt — hero titles, stat numbers */
@@ -247,8 +235,7 @@
   --scheme-btn-primary-text:   var(--pof-white);
   --scheme-btn-secondary-bg:   var(--pof-neutral-mid);
   --scheme-btn-secondary-text: var(--pof-navy);
-  --scheme-link:               var(--pof-near-black);
-  --scheme-link-hover:         var(--pof-navy);
+  --scheme-link:               var(  --scheme-link-hover:         var(--pof-navy);
   --scheme-border:             var(--pof-teal-dark);
 }
 
@@ -277,16 +264,7 @@
    ACADEMY ENTITY OVERRIDE
    ============================================================ */
 
-.pof-academy {
-  --pof-teal:                  var(--pof-academy-accent);
-  --pof-neutral-light:         var(--pof-academy-bg-tint);
-}
 
-.pof-academy .pof-scheme-dark {
-  --scheme-bg:                 var(--pof-academy-header);
-  --scheme-text:               var(--pof-navy);   /* WCAG 9.57:1 */
-  --scheme-heading:            var(--pof-navy);
-}
 
 
 /* ============================================================
@@ -341,10 +319,6 @@
   max-width: 30mm;
 }
 
-.pof-academy .pof-highlight-badge {
-  background-color: var(--pof-academy-accent);
-  color: var(--pof-navy);
-}
 
 .pof-table th {
   background-color: var(--pof-navy);

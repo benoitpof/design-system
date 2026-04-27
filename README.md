@@ -1,6 +1,6 @@
 # POF Design System — `benoitpof/design-system`
 
-**Version:** 3.3.2 | **Updated:** 2026-04-26
+**Version:** 3.3.3 | **Updated:** 2026-04-26
 **Slide format:** LAYOUT_WIDE 20 × 11.25" (508 × 285.75 mm), 16:9
 **Coordinates:** mm primary (SSOT). Inches in comments for pptxgenjs.
 
@@ -75,11 +75,9 @@ Detailed cross-medium constraints in each lock block of `tokens/brand-rules-per-
 
 ---
 
-## Entity defaults
+## Entity scope
 
-Three entities. Default = `Factories`. Override per request: `Academy`, `Sunu PO`, or `Transversal`.
-
-Per-entity overrides documented in `tokens/brand-tokens.json` `entity_overrides`.
+POF Factories only (v3.3.3). Academy and Sunu PO removed from the design system per scope decision.
 
 ---
 

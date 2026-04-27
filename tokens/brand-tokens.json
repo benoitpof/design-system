@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "version": "3.3.2",
-    "generated": "2026-04-26",
+    "version": "3.3.3",
+    "generated": "2026-04-27",
     "schema": "design-tokens-v3",
     "source_of_truth": "GitHub repo benoitpof/design-system tokens/brand-tokens.json",
     "mirror": "Notion database 'Brand Tokens' (read-only, synced via GAS)",
     "previous_version": "3.1.0",
-    "changes": "See CHANGELOG-v3.3.2.md. Color hierarchy lock + corner TL-only + covers lock + back cover lock + wave visibility lock.",
+    "changes": "See CHANGELOG-v3.3.3.md. Remove Academy + Sunu PO entities (POF Factories only). Remove info #0D6EFD + near_black. Add 26pt slide_title to typography scale.",
     "wcag_compliance": {
       "standard": "WCAG 2.1 AA",
       "normal_text_min": "4.5:1",
@@ -65,9 +65,7 @@
     ],
     "visual_dna": "Engineering documentation meets impact report. Wave waveform as signature element. Navy + teal as institutional duo. Coral as surgical emphasis.",
     "entities": [
-      "factories",
-      "academy",
-      "sunu_po"
+      "factories"
     ]
   },
   "colors": {
@@ -221,10 +219,6 @@
       "gray_600": {
         "hex": "#6C757D",
         "usage": "Secondary/muted text, captions, footnotes."
-      },
-      "near_black": {
-        "hex": "#090911",
-        "usage": "Link color on teal backgrounds (high contrast)."
       }
     },
     "semantic": {
@@ -251,10 +245,6 @@
           0
         ],
         "usage": "Error states, destructive actions."
-      },
-      "info": {
-        "hex": "#0D6EFD",
-        "usage": "Informational badges, neutral-emphasis callouts."
       }
     },
     "gradients": {
@@ -362,6 +352,12 @@
         "px": 24,
         "pt": 18,
         "usage": "H3 headings, slide header title."
+      },
+      "slide_title": {
+        "px": 35,
+        "pt": 26,
+        "usage": "Slide title (Poppins ExtraBold) AND slide subtitle (Raleway SemiBold) per V2 template. Most-used heading on POF slides.",
+        "_added_in": "v3.3.3"
       },
       "2xl": {
         "px": 28,
@@ -683,45 +679,7 @@
       "emphasis": "#E8546C",
       "tone": "Corporate, institutional, B2B."
     },
-    "academy": {
-      "name": "Plastic Odyssey Academy",
-      "header_bg": "#8ED1E8",
-      "header_text": "#1C1F3B",
-      "accent": "#8ED1E8",
-      "logo_waves": "#8ED1E8",
-      "emphasis": "#E8546C",
-      "background_tint": "#D4EEF7",
-      "tone": "Lighter, warmer, humanitarian.",
-      "_wcag": "Text on Academy blue must be navy. Never white.",
-      "_verification": "Hex estimated from PDF."
-    },
-    "sunu_po": {
-      "name": "Sunu PO (Senegal)",
-      "header_bg": "#1C1F3B",
-      "accent": "#80C7C2",
-      "logo_waves": "Senegal flag icon",
-      "logo_text": "SUNU. (replaces FACTORIES.)",
-      "local_green": {
-        "hex": "#009639",
-        "cmyk": [
-          90,
-          0,
-          80,
-          20
-        ]
-      },
-      "local_red": {
-        "hex": "#EF3340",
-        "cmyk": [
-          0,
-          85,
-          65,
-          0
-        ]
-      },
-      "local_usage": "Local accent only. Section markers, partnership badges. NOT headings/body.",
-      "tone": "Factories structure + Senegalese identity."
-    }
+    "_scope": "Factories only — Academy and Sunu PO removed in v3.3.3 per scope decision."
   },
   "photography": {
     "_ref_db": "Notion 'Media Assets' database (collection://8ca51a75-2413-4f72-8f2a-c44d445fa1d0) is the single source for all POF photos. All image selections MUST query this DB and filter by Entity, Type, Usage.",

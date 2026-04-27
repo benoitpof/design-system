@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "version": "3.3.2",
-    "generated": "2026-04-26",
+    "version": "3.3.3",
+    "generated": "2026-04-27",
     "description": "Format-specific design rules. Every value exact. Pair with brand-tokens.json. Convention: mm partout (SSOT). Inches noted in comments only when pptxgenjs requires it.",
     "changes_from_3.1.0": [
       "slides: bloc rewritten for LAYOUT_WIDE 16:9 (508x285.75mm). Old 4:3 254x190.5mm block was obsolete and contradicted LAYOUTS.md and Template POF XML.",
@@ -58,6 +58,12 @@
       "FIX navy_depth_subtle direction: top navy → bottom teal (was navy → lighter navy). User feedback: 'Teal vers Navy, pas Navy vers clair'.",
       "ADD print_lock block — compact print sizes distinct from slide sizes. Body 11pt (not 22pt), H1 22pt, H2 14pt, caption 9pt italic. Aligned with Rapport v1 (validated).",
       "CLARIFY cross-medium philosophy: identical colors/fonts/assets, but distinct sizes per medium (slide vs print vs web)."
+    ],
+    "changes_from_3.3.2": [
+      "SCOPE: Remove Academy and Sunu PO — POF Factories only.",
+      "PALETTE: Remove semantic.info #0D6EFD (unused).",
+      "PALETTE: Remove neutral.near_black #090911 (redundant with navy).",
+      "TYPOGRAPHY: Add 26pt 'slide_title' to typography.scale (was missing from harmonic scale; most-used slide heading per V2)."
     ]
   },
   "slides": {
