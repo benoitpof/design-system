@@ -17,26 +17,20 @@ V2 hierarchy : cover_title 36pt ExtraBold · slide_title 26pt ExtraBold · slide
 ### Weight lock
 Regular weights allowed: **300, 400, 600, 700**. ExtraBold (800) restricted to: cover slide title (L01), section divider title (L02), stat number (L04). Black (900) **forbidden**.
 
-### Overlay system (v3.3.7 — replaces gradient_overlay_lock)
+### Overlay system (v4.0.0)
 
-POF photo overlay system has TWO families :
+Three canonical types — defined in full in `tokens/brand-rules-per-format.json` `overlay_system`.
 
-**A. Solid uniform (3 levels)** — full-photo navy wash :
-- `light` 30% : `rgba(28,31,59,0.30)` — subtle dim, photo readable
-- `medium` 60% : `rgba(28,31,59,0.60)` — photo as ambiance, text readable on top
-- `heavy` 90% : `rgba(28,31,59,0.90)` — photo as texture only
+**Type 1 — White fade** (`white_fade`) : map edges only.
+Fades from 100 % opaque white at the viewBox edge → 0 % transparent. Cumulation allowed (multiple sides simultaneously). Never overlaps colored country highlights or legends. World map defaults: top (stops at North Africa latitude) + left (stops at West Africa coast) always active.
 
-**B. Gradient (4 directions × 4 coverages × 2 colors × 3 intensities = 96 valid combinations)** :
-- Direction (exclusive, no cumulation) : `from_left` / `from_right` / `from_top` / `from_bottom`
-- Coverage extent (hold percentage) : `quarter` 25% · `third` 33% · `half` 50% · `full` 75%
-- Color : `navy_pure` OR `navy_with_teal_reflet` (radial teal anchored bottom-left)
-- Intensity : `full` (opaque hold → transparent) · **`medium` (75% hold → transparent)** · `soft` (50% hold → transparent)
-- Pattern `full` : `linear-gradient(<angle>, #1C1F3B 0%, #1C1F3B <hold_pct>%, transparent 100%)`
-- Pattern `soft` : `linear-gradient(<angle>, rgba(28,31,59,0.50) 0%, rgba(28,31,59,0.50) <hold_pct>%, transparent 100%)`
+**Type 2 — Navy hard with Teal flair** (`navy_hard`) : photos with strong text zone.
+`linear-gradient(<angle>, rgba(28,31,59,0.90) 0%, transparent 100%)` + `radial-gradient(circle at bottom left, rgba(128,199,194,0.40) 0%, transparent 50%)` overlaid. Sizes: `quarter` 25% · `half` 50% · `full` 75%. **One direction at a time, never cumulated.**
 
-**Always ends 100% transparent.** Forbidden : non-axial directions (45deg etc.), cumulated directions, hold outside [25, 33, 50, 75], final stop not transparent, teal reflet position other than bottom-left.
+**Type 3 — Navy light** (`navy_light`) : photos — ambiance, photo dominant.
+`linear-gradient(<angle>, rgba(28,31,59,0.40) 0%, transparent 100%)`. Same sizes as Type 2. **One direction at a time, never cumulated.** Verify WCAG AA contrast before applying text on top.
 
-Selection rules per use case in `tokens/brand-rules-per-format.json` `overlay_system.selection_rules`.
+Forbidden : solid uniform fills, non-axial directions, cumulation on photo overlays, hold values outside [25, 50, 75], final stop not transparent, teal flair outside bottom-left anchor.
 
 ### Corner marks lock
 L-brackets in 4 orientations: `assets/brand-elements/corner-bracket-{tl,tr,bl,br}.svg`. Size 12 mm. Color #80C7C2. Stroke 5px square cap. Default pair on every slide = TL + BR. Solid filled squares (deprecated v3.2.2) **forbidden**.

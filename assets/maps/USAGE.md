@@ -96,21 +96,25 @@ The overlay group sits between the base PNG and the gradient fades, so highlight
 
 ---
 
-## V2 gradient overlay system
+## White fade overlay system (type_1_white_fade, v4.0.0)
 
-The original PPTX used `image1.png` (348 × 719 white→transparent strip) with 4 rotations:
+Map edge fades use fully opaque white → transparent. Four cardinal directions available, cumulation allowed.
 
-| Rotation | SVG gradient | Direction |
-|----------|-------------|-----------|
-| 0° | `g_LR` | Left edge → transparent |
-| 180° | `g_RL` | Right edge → transparent |
-| 90° CW | `g_TB` | Top edge → transparent |
-| −90° CW | `g_BT` | Bottom edge → transparent |
+| SVG gradient ID | Direction |
+|----------------|-----------|
+| `g_LR` | Left edge → transparent |
+| `g_RL` | Right edge → transparent |
+| `g_TB` | Top edge → transparent |
+| `g_BT` | Bottom edge → transparent |
 
-Gradient spec: `rgba(255,255,255,0.95)` → `rgba(255,255,255,0)`.
+Gradient spec: `rgba(255,255,255,1.0)` → `rgba(255,255,255,0)`. `stop-opacity="1"` at the edge stop — **never 0.95**.
 
-To adjust intensity: change `stop-opacity="0.95"` in `<defs>`.  
-To adjust coverage: change `width` or `height` of the `<rect>`.
+**World map defaults (always active):**
+- `g_TB` (top): stops at North Africa latitude (~37°N) — prevents Europe from appearing cut
+- `g_LR` (left): stops at West Africa coast — prevents Americas edge artifact
+
+To adjust coverage: change `width` or `height` of the `<rect>`.  
+Full spec: `tokens/brand-rules-per-format.json` → `overlay_system.type_1_white_fade`.
 
 ---
 

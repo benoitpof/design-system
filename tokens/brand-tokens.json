@@ -248,9 +248,18 @@
       }
     },
     "gradients": {
-      "navy_overlay": {
-        "value": "linear-gradient(135deg, #1C1F3B 0%, rgba(29,30,58,0.58) 100%)",
-        "usage": "Photo overlay on cover/divider/hero slides. POF visual signature."
+      "white_fade": {
+        "value": "linear-gradient(<angle>, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0) 100%)",
+        "usage": "Map edge fading only (type_1_white_fade). Cumulation allowed. See overlay_system in brand-rules-per-format.json."
+      },
+      "navy_hard": {
+        "value_layer1": "linear-gradient(<angle>, rgba(28,31,59,0.90) 0%, transparent 100%)",
+        "value_layer2_teal": "radial-gradient(circle at bottom left, rgba(128,199,194,0.40) 0%, transparent 50%)",
+        "usage": "Photo overlay — strong text zone (type_2_navy_hard). One direction only, no cumulation."
+      },
+      "navy_light": {
+        "value": "linear-gradient(<angle>, rgba(28,31,59,0.40) 0%, transparent 100%)",
+        "usage": "Photo overlay — ambiance, photo dominant (type_3_navy_light). One direction only, no cumulation."
       },
       "teal_accent": {
         "value": "linear-gradient(345deg, #2BA595 0%, #80C7C2 100%)",
@@ -258,12 +267,12 @@
       },
       "navy_depth_subtle": {
         "value": "linear-gradient(45deg, rgba(128,199,194,0.38) 0%, rgba(128,199,194,0) 60%), #1C1F3B",
-        "usage": "Subtle teal glow from bottom-left corner on solid navy base. Layered: navy solid + teal gradient transitioning to fully transparent at 60%. Final teal opacity 38%. Per user iterations 2026-04-27.",
+        "usage": "Subtle teal glow from bottom-left corner on solid navy base. Layered: navy solid + teal gradient transitioning to fully transparent at 60%. Final teal opacity 38%.",
         "_min_surface_mm": 30,
         "_added_in": "v3.3.1",
         "_corrected_in": "v3.3.5 — direction bottom-left, transparent end (not solid teal), teal 38%"
       },
-      "_overlay_system_ref": "See tokens/brand-rules-per-format.json overlay_system block for the full set of allowed photo overlays (32 valid gradient combinations + 3 solid levels)."
+      "_overlay_system_ref": "See tokens/brand-rules-per-format.json overlay_system block for the full 3-type overlay specification (v4.0.0)."
     },
     "chart_palette": {
       "rules": "Strict 3-shade default. No gridlines. No chart borders. No ad-hoc colors. If >3 series, collapse tail into 'Other' or use extended palette.",
@@ -738,7 +747,7 @@
     },
     "integration": {
       "format": "Full-bleed or half-slide. object-fit: cover (no distortion).",
-      "overlay_when_text": "Navy gradient overlay at 0.5-0.7 opacity.",
+      "overlay_when_text": "Navy gradient overlay — use type_2_navy_hard (0.90 opacity) for strong text zones, type_3_navy_light (0.40 opacity) for ambiance. See overlay_system in brand-rules-per-format.json.",
       "cropping": "Wide-angle for scale, tight for detail."
     },
     "avoid": [

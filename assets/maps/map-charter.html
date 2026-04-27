@@ -497,15 +497,16 @@ body {
 </div>
 
 <div class="doc-section">
-  <div class="doc-title">Estompés directionnels (fadeEdges)</div>
-  <div class="doc-desc" style="margin-bottom:8px">Gradient CSS blanc→transparent depuis le bord de la slide. La carte doit être adossée au bord correspondant (pas flottante au centre).</div>
-  <div class="doc-table" style="grid-template-columns:auto 1fr">
-    <div class="doc-th">Edge</div><div class="doc-th">Quand l'utiliser</div>
-    <div><code>"left"</code></div><div>Carte adossée à gauche — zone de titre à droite</div>
-    <div><code>"right"</code></div><div>Carte adossée à droite — débordement droit</div>
-    <div><code>"top"</code></div><div>Toujours actif si header overlay présent</div>
-    <div><code>"bottom"</code></div><div>Toujours actif si footer overlay présent</div>
+  <div class="doc-title">Estompés directionnels — type_1_white_fade (v4.0.0)</div>
+  <div class="doc-desc" style="margin-bottom:8px">Gradient CSS blanc 100%→transparent depuis le bord de la slide. Cumulation autorisée (plusieurs bords simultanés). La carte doit être adossée au bord correspondant — jamais flottante au centre.</div>
+  <div class="doc-table" style="grid-template-columns:auto auto 1fr">
+    <div class="doc-th">Edge</div><div class="doc-th">Carte monde</div><div class="doc-th">Quand l'utiliser</div>
+    <div><code>"left"</code></div><div>Défaut ✓</div><div>Arrête à la côte Afrique de l'Ouest</div>
+    <div><code>"top"</code></div><div>Défaut ✓</div><div>Arrête à la latitude Afrique du Nord (~37°N)</div>
+    <div><code>"right"</code></div><div>Optionnel</div><div>Bord Asie-Pacifique brut visible</div>
+    <div><code>"bottom"</code></div><div>Optionnel</div><div>Bord Amérique du Sud / Antarctique brut visible</div>
   </div>
+  <div class="doc-note" style="margin-top:8px">Stop-opacity = 1.0 au bord (jamais 0.95). Spec complète : <code>overlay_system.type_1_white_fade</code> dans brand-rules-per-format.json.</div>
 </div>
 
 <div class="doc-section">

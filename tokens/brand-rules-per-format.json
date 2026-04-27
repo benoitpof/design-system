@@ -974,7 +974,7 @@
     "cross_medium_constraints": {
       "country_fills_solid_only": true,
       "heatmap_stops_pre_computed_no_interpolation": true,
-      "only_allowed_gradient": "Pattern 5 anchored white-to-transparent fade",
+      "only_allowed_gradient": "type_1_white_fade (white 100%→0% edge fade)",
       "no_filter_no_dropshadow_no_blur_anywhere": true,
       "raster_export_for_pptx_when_alpha_used": true
     },
@@ -1032,9 +1032,18 @@
     },
     "fade_rules": {
       "no_overlap_with_colored": true,
-      "_description": "Fade gradient overlay must not cover colored country highlights or data dots. Use clipPath excluding colored geometry, OR position fade only on side(s) without colored elements.",
+      "_description": "White fade (type_1_white_fade) must not cover colored country highlights or data dots. Use clipPath excluding colored geometry, OR position fade only on side(s) without colored elements.",
       "legend_z_order": "top — always rendered LAST in SVG, never inside fade region",
-      "fade_start_at_viewbox_edge": "Pattern 5 fade gradient START coordinate must coincide with viewBox edge, not start inside the visible area"
+      "fade_start_at_viewbox_edge": "Fade gradient START coordinate must coincide with viewBox edge, not start inside the visible area",
+      "stop_opacity": 1.0,
+      "_note_stop_opacity": "Use stop-opacity=1.0 (fully opaque at edge). Never 0.95 or other partial values.",
+      "world_map_defaults": {
+        "top": "Always active — stops at North Africa latitude (~37°N). Prevents Europe from appearing cut.",
+        "left": "Always active — stops at West Africa coast. Prevents Americas edge artifact.",
+        "bottom": "Optional — activate only when South America or Antarctica edge is raw",
+        "right": "Optional — activate only when East Asia/Pacific edge is raw"
+      },
+      "cumulation": "Multiple sides allowed simultaneously on maps (type_1_white_fade only)"
     }
   },
   "color_hierarchy_lock": {
@@ -1136,57 +1145,52 @@
     "_cover_exception": "Cover title up to 36pt allowed even on print"
   },
   "overlay_system": {
+    "_version": "v4.0.0",
     "_enforcement": "STRICT",
-    "_description": "POF photo overlay system. Applied as CSS layer over images. Two families : solid uniform, or gradient.",
-    "_validated_against": "Overlays.pptx (V2 charte 2026-04-27) + screenshots Section 2 of charts/18-images.html",
-    "solid_uniform": {
-      "_description": "100% navy fill, 3 opacity levels. Use for full-photo wash (e.g. big number bg, dark hero).",
-      "color": "#1C1F3B",
-      "levels": {
-        "light": {
-          "opacity": 0.3,
-          "css": "rgba(28,31,59,0.30)",
-          "use": "Subtle dim, photo readable"
-        },
-        "medium": {
-          "opacity": 0.6,
-          "css": "rgba(28,31,59,0.60)",
-          "use": "Photo as ambiance, text readable on top"
-        },
-        "heavy": {
-          "opacity": 0.9,
-          "css": "rgba(28,31,59,0.90)",
-          "use": "Photo as texture only, navy dominant"
+    "_description": "POF overlay system. Three canonical types only. All previous solid_uniform and 96-combination gradient system is superseded.",
+    "type_1_white_fade": {
+      "_name": "White fade",
+      "_usage": "Map edges only — never on photos",
+      "opacity_start": 1.0,
+      "opacity_end": 0.0,
+      "color": "rgba(255,255,255,1.0)",
+      "css_pattern": "linear-gradient(<angle>, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0) 100%)",
+      "positions": [
+        "top",
+        "bottom",
+        "left",
+        "right"
+      ],
+      "cumulation": true,
+      "rules": {
+        "edge_flush": "100% opacity must coincide with viewBox/slide edge",
+        "no_legend_overlap": "Never fade over legends — legends rendered last in z-order, above all fades",
+        "minimize_colored_zone_fade": "Position fade on sides without colored country highlights",
+        "no_raw_edge": "Never cut a map edge without at least minimal fading",
+        "world_map_defaults": {
+          "top": "Always active — stops at North Africa latitude (~37°N)",
+          "left": "Always active — stops at West Africa coast"
         }
-      },
-      "_forbidden": "Other opacities (45%, 75%, etc.). Use only the 3 levels."
+      }
     },
-    "gradient": {
-      "_description": "Navy gradient from one edge, fading to transparent. Direction × coverage × color × intensity = 96 valid combinations.",
-      "direction": {
-        "_options": [
-          "from_left",
-          "from_right",
-          "from_top",
-          "from_bottom"
-        ],
-        "_exclusive": "Only ONE direction at a time. No diagonal, no cumulation.",
-        "css_angle": {
-          "from_left": "to right (90deg)",
-          "from_right": "to left (270deg)",
-          "from_top": "to bottom (180deg)",
-          "from_bottom": "to top (0deg)"
-        }
-      },
-      "coverage_extent": {
-        "_description": "How far the solid color holds before fading. Always ends 100% transparent at 100%.",
+    "type_2_navy_hard": {
+      "_name": "Navy hard with Teal flair",
+      "_usage": "Photos — strong text zone, navy dominant",
+      "opacity_start": 0.9,
+      "opacity_end": 0.0,
+      "css_layer1": "linear-gradient(<angle>, rgba(28,31,59,0.90) 0%, transparent 100%)",
+      "css_layer2_teal_flair": "radial-gradient(circle at bottom left, rgba(128,199,194,0.40) 0%, transparent 50%)",
+      "css_combined": "layer2 stacked on top of layer1",
+      "positions": [
+        "top",
+        "bottom",
+        "left",
+        "right"
+      ],
+      "sizes": {
         "quarter": {
           "hold_pct": 25,
-          "use": "Subtle accent strip, photo dominant"
-        },
-        "third": {
-          "hold_pct": 33,
-          "use": "Standard cover slide overlay zone"
+          "use": "Accent strip, photo dominant"
         },
         "half": {
           "hold_pct": 50,
@@ -1194,62 +1198,57 @@
         },
         "full": {
           "hold_pct": 75,
-          "use": "Photo barely visible, navy dominant with edge fade"
-        },
-        "_pattern_css_full": "linear-gradient(<angle>, #1C1F3B 0%, #1C1F3B <hold_pct>%, transparent 100%)",
-        "_pattern_css_soft": "linear-gradient(<angle>, rgba(28,31,59,0.50) 0%, rgba(28,31,59,0.50) <hold_pct>%, transparent 100%)"
-      },
-      "color_variants": {
-        "navy_pure": {
-          "_description": "Pure navy fade.",
-          "stops": "#1C1F3B 0% → #1C1F3B <hold_pct>% → transparent 100%"
-        },
-        "navy_with_teal_reflet": {
-          "_description": "Navy primary + teal radial reflet anchored at bottom-left.",
-          "stops_layer1": "linear-gradient(<angle>, #1C1F3B 0%, #1C1F3B <hold_pct>%, transparent 100%)",
-          "stops_layer2": "radial-gradient(circle at bottom left, rgba(128,199,194,0.40) 0%, transparent 50%)",
-          "css_combined": "Both layers stacked, layer2 on top of layer1",
-          "_use": "Reserved for cover slides + section dividers when extra warmth needed"
+          "use": "Navy dominant, photo recedes"
         }
       },
-      "_always_ends_transparent": true,
-      "_forbidden": [
-        "Non-axial directions (e.g. 45deg) — only 4 cardinal directions allowed",
-        "Cumulating directions (e.g. left + bottom in same overlay)",
-        "Coverage hold_pct outside [25, 33, 50, 75]",
-        "Final stop not transparent (every overlay must fade to transparent at 100%)",
-        "Teal reflet without navy primary layer",
-        "Teal reflet position other than bottom-left"
-      ],
-      "intensity": {
-        "_description": "Hold opacity at start of gradient. Both end 100% transparent.",
-        "full": {
-          "start_opacity": 1.0,
-          "css_pattern": "linear-gradient(<angle>, #1C1F3B 0%, #1C1F3B <hold_pct>%, transparent 100%)",
-          "use": "Strong overlay, photo dimmed entirely in hold zone. Default."
-        },
-        "soft": {
-          "start_opacity": 0.5,
-          "css_pattern": "linear-gradient(<angle>, rgba(28,31,59,0.50) 0%, rgba(28,31,59,0.50) <hold_pct>%, transparent 100%)",
-          "use": "Subtle overlay, photo always visible through tint, then fades. Use for warm photos where dimming would lose context.",
-          "_added_in": "v3.3.8"
-        },
-        "medium": {
-          "start_opacity": 0.75,
-          "css_pattern": "linear-gradient(<angle>, rgba(28,31,59,0.75) 0%, rgba(28,31,59,0.75) <hold_pct>%, transparent 100%)",
-          "use": "Balanced overlay between full opacity and soft. Photo dimmed but still visible through tint.",
-          "_added_in": "v3.3.9"
-        }
+      "cumulation": false,
+      "rules": {
+        "exclusive": "Only ONE position at a time — no cumulation",
+        "contained": "Never exceeds image bounds",
+        "teal_anchor": "Teal flair always anchored at bottom-left, no other position"
       }
     },
-    "selection_rules": {
-      "cover_slide_with_text": "gradient.from_left.third.navy_pure (V2 default) OR navy_with_teal_reflet for warmth",
-      "big_number_bg": "solid_uniform.medium (60%)",
-      "section_divider": "gradient.from_bottom.half.navy_pure",
-      "caption_strip": "gradient.from_bottom.quarter.navy_pure",
-      "hero_photo_wash": "solid_uniform.light (30%) — photo dominant",
-      "dark_dramatic_quote": "solid_uniform.heavy (90%) — text dominant",
-      "warm_photo_with_caption": "gradient.from_bottom.half.navy_pure.soft — for photos where you want to keep visible context (people faces, products) while fading text-readable area"
-    }
+    "type_3_navy_light": {
+      "_name": "Navy light",
+      "_usage": "Photos — ambiance, photo dominant",
+      "opacity_start": 0.4,
+      "opacity_end": 0.0,
+      "css_pattern": "linear-gradient(<angle>, rgba(28,31,59,0.40) 0%, transparent 100%)",
+      "positions": [
+        "top",
+        "bottom",
+        "left",
+        "right"
+      ],
+      "sizes": {
+        "quarter": {
+          "hold_pct": 25,
+          "use": "Subtle atmospheric tint"
+        },
+        "half": {
+          "hold_pct": 50,
+          "use": "Text zone, photo still clearly readable"
+        },
+        "full": {
+          "hold_pct": 75,
+          "use": "Wider tint, photo dominant"
+        }
+      },
+      "cumulation": false,
+      "rules": {
+        "exclusive": "Only ONE position at a time — no cumulation",
+        "contained": "Never exceeds image bounds",
+        "contrast_check": "Verify WCAG AA minimum contrast before placing text on top"
+      }
+    },
+    "_forbidden": [
+      "solid_uniform fills (superseded)",
+      "Non-axial directions (45deg etc.) — only 4 cardinal directions",
+      "Cumulation on photo overlays (types 2 and 3)",
+      "hold_pct outside [25, 50, 75]",
+      "Final stop not transparent",
+      "Teal flair outside bottom-left anchor",
+      "Any intensity level not matching the 3 types above"
+    ]
   }
 }
