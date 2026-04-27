@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>08 · Funnel · POF Chart Bank</title><link rel="stylesheet" href="../styles.css?v=1777202930565"></head>
+<body>
+<div class="topbar"><a class="brand" href="../index.html"><img src="../assets/pof-logo-color.svg" alt="POF"><span class="crumbs"><a href="../index.html">Chart bank</a> <span style="color:var(--gray-400)">/</span> 08 · Funnel</span></a><nav class="types" id="types-nav"></nav></div>
+<div class="page">
+<header class="page-header"><div class="pipe-title"><div class="pipe"></div><div>
+<div class="eyebrow">Chart 08 · Conversion &amp; hierarchy</div><h1>Funnel &amp; pyramid</h1>
+<p>Two complementary shapes for stage-flow content. <b>Funnel</b> = top-to-bottom conversion (volume narrows as we filter through stages). <b>Pyramid</b> = bottom-to-top hierarchy (Maslow-style: foundation at the base, ambition at the apex).</p>
+</div></div></header>
+<div class="variations">
+
+<!-- ================ A · FUNNEL TOP→BOTTOM ================ -->
+<section class="variation"><div class="variation-head"><div class="lbl"><span class="num">A</span>Funnel · top-to-bottom · 4 stages</div><div class="meta">760×460</div></div>
+<div class="variation-body gris">
+<svg viewBox="0 0 760 460" class="chart-svg" xmlns="http://www.w3.org/2000/svg">
+<text x="40" y="36" class="chart-eyebrow">FRANCHISE PIPELINE · 2025</text>
+<line x1="40" y1="48" x2="80" y2="48" stroke="#5F7D95" stroke-width="2"/>
+<text x="40" y="74" class="chart-title">Lead → CDF operational</text>
+
+<!-- Funnel geometry: cx=240, top w=360, bottom w=80, top y=110, bottom y=410, h=300, 4 stages h=70 each, gap=4
+     stage k (0..3) top y = 110 + k*74, bottom y = 110 + k*74 + 70
+     w(y) linear from 360@y=110 to 80@y=410 → w = 360 - (y-110)*(280/300) = 360 - (y-110)*0.9333
+-->
+<!-- Stage 1 · Lead   y 110-180.  w_top=360, w_bot=294.67 -->
+<polygon points="60,110 420,110 387.33,180 92.67,180" fill="#1C1F3B"/>
+<text x="240" y="138" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="13" fill="#FFFFFF">LEAD</text>
+<text x="240" y="166" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="22" fill="#FFFFFF">120</text>
+<!-- right-side annotation aligned to vertical center 145 -->
+<text x="450" y="142" font-family="Poppins" font-weight="600" font-size="13" fill="#1C1F3B">Initial leads</text>
+<text x="450" y="160" class="axis-label">Inbound + outbound contacts</text>
+
+<!-- Stage 2 · Qualified  y 184-254. w_top=291.73, w_bot=226.4 -->
+<polygon points="94.13,184 385.87,184 353.2,254 126.8,254" fill="#1C1F3B" opacity="0.85"/>
+<text x="240" y="212" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="13" fill="#FFFFFF">QUALIFIED</text>
+<text x="240" y="240" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="22" fill="#FFFFFF">68</text>
+<text x="450" y="216" font-family="Poppins" font-weight="600" font-size="13" fill="#1C1F3B">Site survey done</text>
+<text x="450" y="234" class="axis-label">Survey + funding identified · ▼ 43% drop-off</text>
+
+<!-- Stage 3 · Funded   y 258-328. w_top=222.13, w_bot=156.8 -->
+<polygon points="128.93,258 351.07,258 318.4,328 161.6,328" fill="#435D74"/>
+<text x="240" y="286" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="13" fill="#FFFFFF">FUNDED</text>
+<text x="240" y="314" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="22" fill="#FFFFFF">22</text>
+<text x="450" y="290" font-family="Poppins" font-weight="600" font-size="13" fill="#1C1F3B">Capital secured</text>
+<text x="450" y="308" class="axis-label">Grants + DFI committed · ▼ 68% drop-off</text>
+
+<!-- Stage 4 · Operational  y 332-402. w_top=152.53, w_bot=87.2  → coral highlight ring -->
+<polygon points="163.73,332 316.27,332 283.6,402 196.4,402" fill="#1C1F3B"/>
+<polygon points="163.73,332 316.27,332 283.6,402 196.4,402" fill="none" stroke="#E8546C" stroke-width="2"/>
+<text x="240" y="360" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="13" fill="#FFFFFF">OPERATIONAL</text>
+<text x="240" y="388" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="22" fill="#E8546C">4</text>
+<text x="450" y="364" font-family="Poppins" font-weight="700" font-size="13" fill="#E8546C">CDFs running · 3.3% end-to-end</text>
+<text x="450" y="382" class="axis-label">12-month average · ▼ 82% drop-off</text>
+
+<text x="40" y="438" class="source-line">Source: POF Business Development pipeline · 12-month rolling (placeholder)</text>
+</svg></div></section>
+
+<!-- ================ B · PYRAMID (Maslow-style) ================ -->
+<section class="variation"><div class="variation-head"><div class="lbl"><span class="num">B</span>Pyramid · Maslow-style · foundation → apex</div><div class="meta">760×460</div></div>
+<div class="variation-body gris">
+<svg viewBox="0 0 760 460" class="chart-svg" xmlns="http://www.w3.org/2000/svg">
+<text x="40" y="36" class="chart-eyebrow">POF VALUE PYRAMID</text>
+<line x1="40" y1="48" x2="80" y2="48" stroke="#5F7D95" stroke-width="2"/>
+<text x="40" y="74" class="chart-title">From local foundation to global ambition</text>
+
+<!-- Pyramid geometry: cx=240, base w=400, apex w=0, base y=410, apex y=110, h=300
+     5 levels h=58 each, gap=2. Level 0 (top) is small triangle, levels 1-4 are trapezoids.
+     w(y) = 400 * (y-110) / 300
+     Levels (top→bottom):
+       L0  y 110-168  → w_top=0, w_bot=77.33     (apex triangle)
+       L1  y 170-228  → w_top=80, w_bot=157.33
+       L2  y 230-288  → w_top=160, w_bot=237.33
+       L3  y 290-348  → w_top=240, w_bot=317.33
+       L4  y 350-410  → w_top=320, w_bot=400      (base, slightly fatter)
+-->
+
+<!-- L0 apex — the highest goal · coral highlight -->
+<polygon points="240,110 278.67,168 201.33,168" fill="#E8546C"/>
+<text x="240" y="146" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="11" fill="#FFFFFF">VISION</text>
+<text x="450" y="120" font-family="Poppins" font-weight="700" font-size="13" fill="#E8546C">Stop ocean plastic</text>
+<text x="450" y="138" class="axis-label">North-star · the why behind every CDF</text>
+<line x1="285" y1="139" x2="445" y2="139" stroke="#E8546C" stroke-width="0.5" stroke-dasharray="2,2"/>
+
+<!-- L1 -->
+<polygon points="200,170 280,170 318.67,228 161.33,228" fill="#1C1F3B"/>
+<text x="240" y="206" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="11" fill="#FFFFFF">STRATEGY</text>
+<text x="450" y="190" font-family="Poppins" font-weight="600" font-size="13" fill="#1C1F3B">200 CDFs by 2030</text>
+<text x="450" y="208" class="axis-label">35 countries · 200kT processed annually</text>
+
+<!-- L2 -->
+<polygon points="160,230 320,230 358.67,288 121.33,288" fill="#435D74"/>
+<text x="240" y="266" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="11" fill="#FFFFFF">FRANCHISE MODEL</text>
+<text x="450" y="250" font-family="Poppins" font-weight="600" font-size="13" fill="#1C1F3B">POA-led operations</text>
+<text x="450" y="268" class="axis-label">Local entrepreneurs run each site · POF licenses</text>
+
+<!-- L3 -->
+<polygon points="120,290 360,290 398.67,348 81.33,348" fill="#5F7D95"/>
+<text x="240" y="326" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="11" fill="#FFFFFF">CDF UNIT</text>
+<text x="450" y="310" font-family="Poppins" font-weight="600" font-size="13" fill="#1C1F3B">Containerized factory</text>
+<text x="450" y="328" class="axis-label">1kT/yr nominal · sort · wash · shred · extrude</text>
+
+<!-- L4 base — the ground we stand on -->
+<polygon points="80,350 400,350 440,410 40,410" fill="#CFD9E0"/>
+<text x="240" y="386" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="11" fill="#1C1F3B">FOUNDATION</text>
+<text x="450" y="370" font-family="Poppins" font-weight="600" font-size="13" fill="#1C1F3B">Plastic waste streams</text>
+<text x="450" y="388" class="axis-label">Beach pickup · urban collection · industrial scrap</text>
+
+<text x="40" y="438" class="source-line">Source: POF strategic framework · use for vision &amp; strategy decks (placeholder)</text>
+</svg></div></section>
+
+
+    <!-- TRIO — light/dark/highlight system check -->
+    <section class="variation trio">
+      <div class="variation-head"><div class="lbl"><span class="num">◐</span>System check · light · dark · highlight</div><div class="meta">3 backgrounds × same data</div></div>
+      <div class="variation-body">
+        <div class="trio-grid" data-trio="08"></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+<script src="_nav.js?v=2"></script>
+<script src="_trio.js?v=1777203305647"></script>
+</body></html>

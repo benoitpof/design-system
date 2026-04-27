@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CONTENT-RULES.md · POF Design System</title>
+<link rel="stylesheet" href="../styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Raleway:ital,wght@0,300;0,400;0,600;0,700&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1C1F3B; --steel:#435D74; --steel-light:#5F7D95; --steel-pale:#CFD9E0;
+  --teal:#80C7C2; --teal-dark:#2BA595; --coral:#E8546C;
+  --gris-pof:#F9FCFF; --neutral-light:#F0F0F0; --neutral-mid:#EAEBED;
+  --gray-400:#CED4DA; --gray-600:#6C757D; --body:#3C3C3C; --white:#FFFFFF;
+}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font-family:'Raleway',sans-serif;color:var(--body);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6}
+.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--neutral-mid);padding:14px 32px;display:flex;align-items:center;gap:16px}
+.topbar .brand img{height:26px}.topbar .crumbs{font-family:Poppins;font-size:11px;font-weight:600;color:var(--gray-600);letter-spacing:1px;text-transform:uppercase}
+.topbar .version{font-family:Poppins;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal-dark);background:rgba(128,199,194,.12);padding:3px 8px;border-radius:3px}
+.topbar-nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.topbar-nav a{font-family:Poppins;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase}
+.topbar-nav a:hover,.topbar-nav a.active{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.page-header{padding:48px 32px 24px;max-width:1080px;margin:0 auto;border-bottom:1px solid var(--neutral-mid)}
+.page-header .eyebrow{font-family:Poppins;font-weight:700;font-size:11px;letter-spacing:2px;color:var(--steel-light);text-transform:uppercase}
+.page-header h1{font-family:Poppins;font-weight:700;font-size:36px;color:var(--navy);margin:8px 0 12px;letter-spacing:-.5px}
+.page-header .meta{font-family:Raleway;font-size:13px;color:var(--gray-600)}
+.page-header .actions{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
+.page-header .btn{font-family:Poppins;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase;background:#fff;transition:border-color .15s}
+.page-header .btn:hover{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.page-header .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.page-header .btn.primary:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
+article.md-content{max-width:880px;margin:0 auto;padding:48px 32px 96px;font-family:Raleway,sans-serif;font-size:16px;color:var(--body);line-height:1.7}
+article.md-content h1{font-family:Poppins;font-weight:700;font-size:32px;color:var(--navy);margin:48px 0 16px;letter-spacing:-.5px;line-height:1.2}
+article.md-content h1:first-child{margin-top:0}
+article.md-content h2{font-family:Poppins;font-weight:700;font-size:22px;color:var(--navy);margin:40px 0 14px;padding-top:8px}
+article.md-content h3{font-family:Poppins;font-weight:600;font-size:17px;color:var(--steel);margin:28px 0 10px;text-transform:uppercase;letter-spacing:.5px}
+article.md-content h4{font-family:Poppins;font-weight:600;font-size:14px;color:var(--steel-light);margin:20px 0 8px}
+article.md-content p{margin:0 0 16px}
+article.md-content a{color:var(--teal-dark);text-decoration:underline;text-decoration-color:rgba(43,165,149,.3)}
+article.md-content a:hover{text-decoration-color:var(--teal-dark)}
+article.md-content code{font-family:'Roboto Mono',monospace;font-size:13px;background:var(--gris-pof);padding:2px 6px;border-radius:3px;color:var(--navy);border:1px solid var(--neutral-mid)}
+article.md-content pre{background:var(--navy);color:#80C7C2;padding:18px 22px;border-radius:6px;overflow-x:auto;margin:20px 0;font-family:'Roboto Mono',monospace;font-size:13px;line-height:1.5}
+article.md-content pre code{background:transparent;border:none;color:inherit;padding:0;font-size:inherit}
+article.md-content blockquote{margin:20px 0;padding:14px 22px;border-left:3px solid var(--teal);background:rgba(128,199,194,.08);font-style:italic;color:var(--steel)}
+article.md-content table{border-collapse:collapse;width:100%;margin:20px 0;font-family:Raleway;font-size:14px}
+article.md-content table th{background:var(--navy);color:#fff;font-family:Poppins;font-weight:600;padding:12px 14px;text-align:left}
+article.md-content table td{padding:10px 14px;border-bottom:1px solid var(--neutral-mid);vertical-align:top}
+article.md-content table tr:nth-child(even) td{background:var(--gris-pof)}
+article.md-content ul,article.md-content ol{margin:0 0 16px 22px;padding:0}
+article.md-content li{margin:6px 0}
+article.md-content hr{border:none;border-top:1px solid var(--neutral-mid);margin:32px 0}
+article.md-content img{max-width:100%;height:auto;border-radius:4px}
+.codehilite{background:var(--navy);border-radius:6px;margin:20px 0;overflow-x:auto}
+.codehilite pre{margin:0}
+footer{padding:40px 32px;text-align:center;color:var(--gray-600);font-family:Raleway;font-size:12px;border-top:1px solid var(--neutral-mid)}
+footer a{color:var(--teal-dark);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="../index.html"><img src="../assets/logos/pof-logo-color.svg" alt="POF"></a>
+  <span class="crumbs">Rules / CONTENT-RULES</span>
+  <span class="version">v3.4.0</span>
+  <nav class="topbar-nav">
+    <a href="../index.html">Overview</a>
+    <a href="../architecture.html">Architecture</a>
+    <a href="../charts.html">Charts</a>
+    <a href="../maps.html">Maps</a>
+    <a href="../icons.html">Icons</a>
+    <a href="../workflows.html">Workflows</a>
+    <a href="../databases.html">DBs</a>
+    <a href="https://github.com/benoitpof/design-system">GitHub</a>
+  </nav>
+</div>
+<header class="page-header">
+  <div class="eyebrow">Rules / CONTENT-RULES</div>
+  <h1>CONTENT-RULES.md</h1>
+  <div class="meta">Source : <code>docs/rules/CONTENT-RULES.md</code> · POF DS v3.4.0</div>
+  <div class="actions">
+    <a class="btn primary" href="https://github.com/benoitpof/design-system/blob/main/docs/rules/CONTENT-RULES.md">View on GitHub</a>
+    <a class="btn" href="../index.html">Back to overview</a>
+  </div>
+</header>
+<article class="md-content">
+<h1 id="content-rulesmd-pof-narrative-content-rules-per-layout">CONTENT-RULES.md — POF Narrative Content Rules per Layout</h1>
+<p><strong>Version:</strong> 1.0 | <strong>Updated:</strong> 2026-04
+<strong>Purpose:</strong> Tells Claude WHAT goes WHERE in each layout — not just the visual format.
+Without this file, Claude improvises content. With it, every generated slide is production-ready.</p>
+<hr />
+<h2 id="global-content-rules-all-layouts">Global content rules (all layouts)</h2>
+<ul>
+<li><strong>Language:</strong> Match the deck's declared language (FR or EN). Never mix within a slide.</li>
+<li><strong>Titles:</strong> Max 6 words. Always action-oriented or descriptive — never vague ("Overview", "Introduction").</li>
+<li><strong>Numbers:</strong> Always sourced. If estimated, append "est." or "(proj.)". Never invent KPIs.</li>
+<li><strong>Coral emphasis:</strong> Max 1–2 uses per deck. Reserve for the single most important claim.</li>
+<li><strong>No filler:</strong> Every text block must earn its place. If you can't find content for a slot, remove the slot.</li>
+<li><strong>Tone:</strong> Direct, evidence-based, institutional. No greenwashing language. No exclamation marks.</li>
+<li><strong>Sources:</strong> Financial or impact data always gets a caption: "Source: POF Business Plan / Odoo / IFC report — [year]"</li>
+</ul>
+<hr />
+<h2 id="l01-cover">L01 — COVER</h2>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Content rule</th>
+<th>Example</th>
+<th>Forbidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eyebrow tag</td>
+<td>Document type + year. Max 4 words, all caps.</td>
+<td><code>PITCH DECK · 2025</code></td>
+<td>Generic ("Document", "Report")</td>
+</tr>
+<tr>
+<td>Main title</td>
+<td>The core value proposition or report subject. Max 4 words, 3 lines max. Impact claim preferred.</td>
+<td><code>Transforming Waste into Local Wealth.</code></td>
+<td>Questions. Taglines with no subject.</td>
+</tr>
+<tr>
+<td>Subtitle</td>
+<td>One sentence: who + what + scope.</td>
+<td><code>Plastic Odyssey Factories — 200-factory franchise network</code></td>
+<td>Marketing speak. More than one sentence.</td>
+</tr>
+<tr>
+<td>Date/context</td>
+<td>City + month + year</td>
+<td><code>Dakar, Senegal · April 2025</code></td>
+<td>Quarters ("Q2 2025")</td>
+</tr>
+<tr>
+<td>Photo</td>
+<td>Must be a real field photo: CDF exterior, team at work, aerial site. <strong>Never</strong> a stock photo, never a render. Query: <code>Usage=Cover</code> in Notion Media Assets.</td>
+<td>—</td>
+<td>Hands holding earth. Generic "industrial" photography.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="l02-section-divider">L02 — SECTION DIVIDER</h2>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Content rule</th>
+<th>Example</th>
+<th>Forbidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Section number</td>
+<td>Sequential integer, large ghost format</td>
+<td><code>01</code></td>
+<td>Letters. Roman numerals.</td>
+</tr>
+<tr>
+<td>Section label</td>
+<td><code>SECTION XX</code> in caps above title</td>
+<td><code>SECTION 01</code></td>
+<td>Omitting the number</td>
+</tr>
+<tr>
+<td>Section title</td>
+<td>Name of the section. Max 4 words.</td>
+<td><code>The Problem</code></td>
+<td>Generic ("Next", "More")</td>
+</tr>
+<tr>
+<td>Subtitle</td>
+<td>One crisp sentence that frames the section's argument</td>
+<td><code>80% of ocean plastic starts on land</code></td>
+<td>Summaries of what's to come. Lists.</td>
+</tr>
+<tr>
+<td>Photo</td>
+<td>Contextually matched to section topic. Impact or problem photos for Problem section. Solution/field for Solution section.</td>
+<td>—</td>
+<td>Same photo as cover.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="l03-content-image-5050">L03 — CONTENT + IMAGE (50/50)</h2>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Content rule</th>
+<th>Example</th>
+<th>Forbidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H2 title</td>
+<td>Specific descriptive title for the content. Not the slide title repeated.</td>
+<td><code>What's inside a CDF?</code></td>
+<td>Same as header title</td>
+</tr>
+<tr>
+<td>Bullet list</td>
+<td>4–6 bullets. Each bullet = one concrete fact, spec, or capability. Start with the strongest. Raleway body.</td>
+<td><code>Industrial extruder — 300T/year capacity</code></td>
+<td>Vague claims. More than 6 bullets. Questions.</td>
+</tr>
+<tr>
+<td>Photo</td>
+<td>Right half, full-bleed. Must show the subject of the text. If text = CDF specs → CDF photo. If text = entrepreneur → portrait. Query: <code>Type=Photo terrain</code> + topic tag.</td>
+<td>—</td>
+<td>Decorative/unrelated photos. AI-generated.</td>
+</tr>
+<tr>
+<td>No callout box</td>
+<td>This layout does not use stat callouts. Move KPIs to L04.</td>
+<td>—</td>
+<td>Adding floating stat boxes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="l04-big-number-kpi-stats">L04 — BIG NUMBER / KPI STATS</h2>
+<p><strong>Layout logic:</strong> Lead with the most impressive number. Order: Environmental impact → Social impact → Scale/ambition.</p>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Content rule</th>
+<th>Example</th>
+<th>Forbidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stat 1 (top)</td>
+<td>Environmental/impact metric</td>
+<td><code>1,000T · PLASTIC / YEAR · diverted from landfill and ocean</code></td>
+<td>Financial metrics in slot 1</td>
+</tr>
+<tr>
+<td>Stat 2 (middle)</td>
+<td>Social/economic metric</td>
+<td><code>30 · FORMAL JOBS · created per factory at full capacity</code></td>
+<td>Percentage without absolute value</td>
+</tr>
+<tr>
+<td>Stat 3 (bottom)</td>
+<td>Scale/network metric</td>
+<td><code>1 · FACTORY · serves a city of 30,000 people</code></td>
+<td>Future projections without "proj." label</td>
+</tr>
+<tr>
+<td>Number format</td>
+<td>Integer or 1 decimal max. K/M/T/B suffixes. No full numbers (not "1,000,000", use "1M")</td>
+<td><code>1,000T</code>, <code>€2.4M</code>, <code>30</code></td>
+<td>Decimals on social metrics (not "28.4 jobs")</td>
+</tr>
+<tr>
+<td>Label format</td>
+<td>Caps, max 4 words, Poppins SemiBold, teal</td>
+<td><code>PLASTIC / YEAR</code></td>
+<td>Lowercase labels</td>
+</tr>
+<tr>
+<td>Descriptor</td>
+<td>One lowercase sentence, teal, max 8 words</td>
+<td><code>diverted from landfill and ocean</code></td>
+<td>Repeating the number in the descriptor</td>
+</tr>
+<tr>
+<td>Photo</td>
+<td>Left half, full-bleed, CDF or operations visual. Query: <code>Usage=Content+Image</code> or <code>Usage=KPI slide</code>.</td>
+<td>—</td>
+<td>Abstract/decorative. Charts.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="l05-value-proposition-3-cards">L05 — VALUE PROPOSITION (3 cards)</h2>
+<p><strong>Card order:</strong> Always: (1) Product/Technology → (2) Services/Support → (3) Market/Impact. Never reorder.</p>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Content rule</th>
+<th>Example</th>
+<th>Forbidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Card title</td>
+<td>2–4 words, the pillar name</td>
+<td><code>Machines &amp; Technology</code></td>
+<td>Generic ("We provide", "Our offer")</td>
+</tr>
+<tr>
+<td>Card body</td>
+<td>2–3 sentences max. One concrete differentiator per sentence.</td>
+<td><code>Field-tested extruder optimized for HDPE, PP and mixed plastics. Locally repairable with standard tools.</code></td>
+<td>Bullet lists inside cards. More than 3 sentences.</td>
+</tr>
+<tr>
+<td>Icon</td>
+<td>From ICONS.md Tabler list. Color: navy circle bg. Must match the card topic.</td>
+<td><code>building-factory-2</code> for Card 1</td>
+<td>Emojis as permanent icons. Off-list icons.</td>
+</tr>
+<tr>
+<td>No stats</td>
+<td>This layout is qualitative. Numbers belong in L04.</td>
+<td>—</td>
+<td>KPIs, percentages inside cards</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="l06-process-flow-35-steps">L06 — PROCESS FLOW (3–5 steps)</h2>
+<p><strong>Rule:</strong> Always describe the franchisee's journey, not POF's internal process.</p>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Content rule</th>
+<th>Example</th>
+<th>Forbidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Step number</td>
+<td><code>01</code>–<code>05</code>. Sequential. Teal on navy circle.</td>
+<td><code>03</code></td>
+<td>Letters. Skipping numbers.</td>
+</tr>
+<tr>
+<td>Step title</td>
+<td>Verb + noun. Max 3 words.</td>
+<td><code>Financing Setup</code></td>
+<td>Passive voice. Noun-only titles.</td>
+</tr>
+<tr>
+<td>Step body</td>
+<td>Max 2 lines. Who does what, concretely.</td>
+<td><code>Leasing structure, DFI grants, local bank coordination</code></td>
+<td>Timeline ("takes 3 weeks"). Internal POF jargon.</td>
+</tr>
+<tr>
+<td>Step count</td>
+<td>4 steps = preferred. 5 = max. 3 = only for summary slides.</td>
+<td>—</td>
+<td>6+ steps (split into two slides)</td>
+</tr>
+<tr>
+<td>Subtitle</td>
+<td>The total duration or outcome</td>
+<td><code>From signed contract to operational factory in under 6 months</code></td>
+<td>Vague ("A simple process")</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="l07-bar-chart">L07 — BAR CHART</h2>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Content rule</th>
+<th>Example</th>
+<th>Forbidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chart title</td>
+<td>Metric + time range</td>
+<td><code>Revenue Projections 2025–2030</code></td>
+<td>"Our growth" without metric</td>
+</tr>
+<tr>
+<td>Subtitle</td>
+<td>Geographic scope or qualifier</td>
+<td><code>Consolidated network — 3 regional clusters</code></td>
+<td>Repeating the title</td>
+</tr>
+<tr>
+<td>Y-axis unit</td>
+<td>Always labeled in unit header, not on axis ticks</td>
+<td><code>€M</code> in chart title</td>
+<td>Raw numbers without unit</td>
+</tr>
+<tr>
+<td>Series order</td>
+<td>Series 1 = primary metric (navy), Series 2 = secondary (steel), Series 3 = emerging (teal)</td>
+<td>Equipment Sales / Services / Impact Credits</td>
+<td>More than 4 series</td>
+</tr>
+<tr>
+<td>Max series</td>
+<td>3 recommended. 4 if absolutely necessary. Merge tail into "Other" beyond 4.</td>
+<td>—</td>
+<td>5+ series</td>
+</tr>
+<tr>
+<td>Stat callout box</td>
+<td>Optional. 1 big takeaway number, top-right. Navy bg, teal number.</td>
+<td><code>€58M · target revenue by 2030</code></td>
+<td>Multiple callout boxes. Callout repeating Y-axis info.</td>
+</tr>
+<tr>
+<td>Source caption</td>
+<td>Bottom-left, italic, 12pt, gray</td>
+<td><code>* Based on 200 factories target — illustrative</code></td>
+<td>Omitting sources on financial projections</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="l08-table">L08 — TABLE</h2>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Content rule</th>
+<th>Example</th>
+<th>Forbidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Column headers</td>
+<td>Short, max 2 words. Navy bg, white Poppins Bold.</td>
+<td><code>Capacity</code>, <code>CAPEX</code>, <code>Payback</code></td>
+<td>Verbose headers ("Average payback period")</td>
+</tr>
+<tr>
+<td>Row labels</td>
+<td>First column = row identifier. Poppins SemiBold navy.</td>
+<td><code>CDF Standard</code>, <code>CDF Pro</code></td>
+<td>Numbers as row labels</td>
+</tr>
+<tr>
+<td>Cell content</td>
+<td>Concise values. Prefer ranges over single numbers for estimates.</td>
+<td><code>€120–160K</code>, <code>18–24 months</code></td>
+<td>Explanatory sentences in cells</td>
+</tr>
+<tr>
+<td>Max rows</td>
+<td>8 rows max per slide. Split if more.</td>
+<td>—</td>
+<td>12+ rows on one slide</td>
+</tr>
+<tr>
+<td>Max columns</td>
+<td>5 columns max. First col = label (wider).</td>
+<td>—</td>
+<td>6+ columns</td>
+</tr>
+<tr>
+<td>Source</td>
+<td>Bottom of slide, caption style, always for financial data.</td>
+<td><code>Source: POF Business Plan v2026</code></td>
+<td>Tables without source on financial data</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="l09-swot">L09 — SWOT</h2>
+<p><strong>Quadrant order:</strong> S top-left (navy), W top-right (light), O bottom-left (teal), T bottom-right (mid).</p>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Content rule</th>
+<th>Example</th>
+<th>Forbidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Items per quadrant</td>
+<td>3–4 max. One concrete claim per bullet.</td>
+<td><code>Proven in 10+ countries</code></td>
+<td>Vague claims ("Good team"). More than 4 bullets.</td>
+</tr>
+<tr>
+<td>S — Strengths</td>
+<td>Internal assets: proprietary tech, partnerships, track record</td>
+<td><code>In-house manufacturing hub in Dakar</code></td>
+<td>Aspirational claims (what you want to be)</td>
+</tr>
+<tr>
+<td>W — Weaknesses</td>
+<td>Honest internal limitations. Not "challenges" dressed as positives.</td>
+<td><code>High upfront CAPEX vs NGO models</code></td>
+<td>Downplaying or hedging weaknesses</td>
+</tr>
+<tr>
+<td>O — Opportunities</td>
+<td>External positive factors: regulation, market shifts, demand. Specific and current.</td>
+<td><code>EPR legislation accelerating in target markets</code></td>
+<td>Generic industry trends</td>
+</tr>
+<tr>
+<td>T — Threats</td>
+<td>External risks. Specific and honest.</td>
+<td><code>Hormuz crisis → freight cost volatility</code></td>
+<td>Internal execution risks (those go in W)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="l10-callout-key-message-dark">L10 — CALLOUT / KEY MESSAGE (dark)</h2>
+<p><strong>Rule:</strong> One message per slide. If you have two messages, use two slides.</p>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Content rule</th>
+<th>Example</th>
+<th>Forbidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Label</td>
+<td>Section context or document type. Teal, caps, charSpacing.</td>
+<td><code>OUR VISION</code></td>
+<td>Date. Generic ("Summary")</td>
+</tr>
+<tr>
+<td>Main message</td>
+<td>1–2 lines max. The single most important thing. Bold, white, 38pt.</td>
+<td><code>Plastic Odyssey Factories bridges impact and profitability — transforming local waste into local wealth.</code></td>
+<td>3+ sentences. Lists. Numbers without context.</td>
+</tr>
+<tr>
+<td>Sub text</td>
+<td>1 line of supporting facts or CTA. Teal, 20pt.</td>
+<td><code>200 factories · 10,000 jobs · 200,000T diverted by 2030</code></td>
+<td>Repeating the main message. Weak qualifiers.</td>
+</tr>
+<tr>
+<td>CTA button</td>
+<td>Optional. Teal bg, navy text. Used only on closing slides or investor decks.</td>
+<td><code>Join the network →</code></td>
+<td>Multiple CTAs. CTAs on internal slides.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="l11-quote-testimonial">L11 — QUOTE / TESTIMONIAL</h2>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Content rule</th>
+<th>Example</th>
+<th>Forbidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quote text</td>
+<td>Real quote from a real person. If no real quote available, do not use this layout.</td>
+<td><code>"In 6 months we had our first profitable batch. The support team never let us down."</code></td>
+<td>Paraphrased quotes. Invented quotes. Internal claims reframed as testimonials.</td>
+</tr>
+<tr>
+<td>Attribution</td>
+<td>First name, last name, title</td>
+<td><code>Mamadou Diallo, Franchise Operator — Dakar</code></td>
+<td>Job title without name. Anonymous quotes.</td>
+</tr>
+<tr>
+<td>Portrait</td>
+<td>Optional. Real photo of the quoted person. Never a stock portrait.</td>
+<td>—</td>
+<td>AI-generated faces. Stock portraits.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="l12-team">L12 — TEAM</h2>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Content rule</th>
+<th>Example</th>
+<th>Forbidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>Full name, Poppins SemiBold</td>
+<td><code>Benoît Blancher</code></td>
+<td>Abbreviated names</td>
+</tr>
+<tr>
+<td>Role</td>
+<td>Job title, max 4 words</td>
+<td><code>CEO &amp; Co-founder</code></td>
+<td>Department names without role</td>
+</tr>
+<tr>
+<td>Portrait</td>
+<td>Real photo, circular crop. Consistent framing (face centered, same background style across team).</td>
+<td>—</td>
+<td>LinkedIn profile photos at low resolution. AI portraits.</td>
+</tr>
+<tr>
+<td>Max per slide</td>
+<td>8 (2 rows of 4). Use second slide for larger teams.</td>
+<td>—</td>
+<td>9+ on one slide</td>
+</tr>
+<tr>
+<td>Advisory board</td>
+<td>Separate slide. Mark "(Advisor)" after role.</td>
+<td><code>Advisor, Impact Finance</code></td>
+<td>Mixing team and advisors on same slide</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="l13-timeline">L13 — TIMELINE</h2>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Content rule</th>
+<th>Example</th>
+<th>Forbidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Milestone label</td>
+<td>Event + short description. Max 3 lines.</td>
+<td><code>2022 · First CDF deployed in Dakar</code></td>
+<td>Lengthy explanations</td>
+</tr>
+<tr>
+<td>Past vs future</td>
+<td>Past dots: teal solid. Future dots: steel, dashed axis.</td>
+<td>—</td>
+<td>Same visual treatment for past and future</td>
+</tr>
+<tr>
+<td>Max milestones</td>
+<td>6. Split into two slides if more.</td>
+<td>—</td>
+<td>7+ on one slide</td>
+</tr>
+<tr>
+<td>Year format</td>
+<td>4-digit year above dot</td>
+<td><code>2030</code></td>
+<td>Quarters. "Q1 2028"</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="l14-comparison-2-columns">L14 — COMPARISON (2 columns)</h2>
+<p><strong>Rule:</strong> Always name both columns explicitly. Never "us vs them" without naming them.</p>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Content rule</th>
+<th>Example</th>
+<th>Forbidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Column titles</td>
+<td>Named, specific</td>
+<td><code>NGO/Informal Model</code> vs <code>POF Franchise</code></td>
+<td>"Before" / "After". "Option A" / "Option B".</td>
+</tr>
+<tr>
+<td>Items</td>
+<td>Use ✓ / ✗ icons or check/x Tabler icons, not bullet points. 4–6 items per column.</td>
+<td><code>✓ Locally repairable</code></td>
+<td>More than 6 items. Vague comparisons.</td>
+</tr>
+<tr>
+<td>Balance</td>
+<td>Both columns should have similar item count. Avoid 6 vs 2.</td>
+<td>—</td>
+<td>Stacking all negatives on one side (looks biased)</td>
+</tr>
+<tr>
+<td>Optional badge</td>
+<td>coral badge for "NOT THIS" column, teal for "THIS" column.</td>
+<td><code>⚠ Status quo</code> vs <code>✓ POF Model</code></td>
+<td>Multiple badges per column</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="l15-section-divider-dark-variant-same-rules-as-l02">L15 — SECTION DIVIDER (dark variant — same rules as L02)</h2>
+<p>Same rules as L02 but with dark background. Use for closing sections, "The Ask", "Investment Thesis".</p>
+<hr />
+<h2 id="anti-patterns-to-refuse">Anti-patterns to refuse</h2>
+<p>These patterns must be rejected regardless of what the user requests:</p>
+<ol>
+<li><strong>Fake quotes</strong> — never generate a quote and attribute it to a real person.</li>
+<li><strong>Invented KPIs</strong> — never fabricate numbers. If source is unknown, do not include.</li>
+<li><strong>Greenwashing slides</strong> — hands holding earth, ocean plastic cleanup heroes, butterfly metaphors.</li>
+<li><strong>"We are the only..."</strong> — claims of uniqueness require a source.</li>
+<li><strong>Confidential data in examples</strong> — never use real financial data from internal documents as placeholder content.</li>
+<li><strong>White text on teal</strong> — prohibited by WCAG. Always refuse this combination.</li>
+<li><strong>More than 2 font families</strong> — Poppins + Raleway only.</li>
+<li><strong>Coral as background</strong> — coral is emphasis only, never a fill color for text blocks.</li>
+</ol>
+<hr />
+<h2 id="verbatim-content-mode-v323">VERBATIM CONTENT MODE (v3.2.3)</h2>
+<p>When the user brief contains content marked as final, Claude must NOT paraphrase, summarize, expand, or substitute with examples from this document.</p>
+<h3 id="activation-triggers-any-of">Activation triggers (any of):</h3>
+<ul>
+<li>Brief includes <code>&lt;final_content&gt;...&lt;/final_content&gt;</code> XML tags</li>
+<li>Brief contains the phrases: "verbatim", "this is final content", "do not edit", "preserve wording", "ne pas modifier", "contenu final"</li>
+<li>Brief is uploaded as a file (.docx, .pdf, .md) and user says "use this content"</li>
+</ul>
+<h3 id="behavior-in-verbatim-mode">Behavior in verbatim mode:</h3>
+<ol>
+<li>Place the provided text into layout slots WITHOUT changing words</li>
+<li>Only allowed transformations: line breaks for fitting, slot redistribution across slides</li>
+<li>NEVER pull examples from this CONTENT-RULES.md as substitute content (they are format references, not scripts)</li>
+<li>If the provided content does not fit the chosen layout, propose a different layout — never trim or paraphrase</li>
+</ol>
+<h3 id="behavior-outside-verbatim-mode-default">Behavior outside verbatim mode (default):</h3>
+<ul>
+<li>Free interpretation of the brief into layout slots</li>
+<li>Examples from this document may be used as inspiration</li>
+<li>Words can be reformulated for slot fit and tone</li>
+</ul>
+<h3 id="failure-mode-to-flag-in-qa">Failure mode to flag in QA:</h3>
+<p>If a deck contains the literal example text "Transforming Waste into Local Wealth" or "200-factory franchise network" (the CONTENT-RULES.md L01 example) when the user provided different content, this is a verbatim mode failure.</p>
+<h3 id="mandatory-confirmation-step-before-generation">MANDATORY confirmation step before generation</h3>
+<p>Before generating any slide, deck, page, or report, Claude MUST explicitly confirm with the user the nature of the provided content using one of these two states:</p>
+<ul>
+<li><strong>RAW MATERIAL</strong> — content is reference / source / draft. Claude is allowed to summarize, restructure, paraphrase, expand, or condense to fit the layout. Examples are pulled from CONTENT-RULES.md as needed.</li>
+<li><strong>FINAL CONTENT</strong> — content is locked verbatim. Claude must preserve wording exactly, only redistribute across slots. No paraphrase, no example substitution.</li>
+</ul>
+<p>Default ambiguous behaviour : ask one explicit clarification question — "Is the content I just received RAW MATERIAL (I can rephrase) or FINAL CONTENT (verbatim only)?" — and wait for the answer before generating.</p>
+<p>If the user does not specify and the brief is short or note-form (&lt; 200 words), default to RAW MATERIAL.
+If the user provides a structured document (.docx, .pdf, full sentences with proper punctuation, &gt; 500 words), default to FINAL CONTENT and confirm with the user.</p>
+<p>This confirmation is non-skippable for any first-time generation in a chat session. Subsequent regenerations in the same chat inherit the previously-confirmed mode unless the user states otherwise.</p>
+<hr />
+<h2 id="memory-capitalisation-rex-v340">Memory — capitalisation Rex (v3.4.0)</h2>
+<!-- ds-iterate écrit ici. Format : ### YYYY-MM-DD — <titre> -->
+
+<p>(vide pour l'instant)</p>
+</article>
+<footer>
+  POF Design System v3.4.0 · Auto-rendered from docs/rules/CONTENT-RULES.md · <a href="https://github.com/benoitpof/design-system">GitHub</a>
+</footer>
+</body>
+</html>

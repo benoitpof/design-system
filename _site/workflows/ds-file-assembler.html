@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ds-file-assembler · POF Workflows</title>
+<link rel="stylesheet" href="../styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+<style>
+.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--neutral-mid);padding:14px 32px;display:flex;align-items:center;gap:16px}
+.topbar .brand img{height:26px}.topbar .crumbs{font-family:Poppins;font-size:11px;font-weight:600;color:var(--gray-600);letter-spacing:1px;text-transform:uppercase}
+.topbar-nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}.topbar-nav a{font-family:Poppins;font-size:10px;font-weight:600;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase}.topbar-nav a:hover{border-color:var(--teal)}
+.page-header{padding:48px 32px 24px;max-width:1080px;margin:0 auto;border-bottom:1px solid var(--neutral-mid)}
+.page-header .eyebrow{font-family:Poppins;font-weight:700;font-size:11px;letter-spacing:2px;color:var(--steel-light);text-transform:uppercase}
+.page-header h1{font-family:Poppins;font-weight:700;font-size:36px;color:var(--navy);margin:8px 0 12px}
+.page-header .desc{font-family:Raleway;font-size:15px;color:var(--steel);max-width:760px;line-height:1.6}
+.actions{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{font-family:Poppins;font-size:10px;font-weight:600;color:var(--navy);text-decoration:none;padding:10px 18px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase;background:#fff}
+.btn:hover{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn.primary:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
+.diagram{max-width:880px;margin:32px auto;padding:24px 32px;background:var(--gris-pof);border-radius:8px;border:1px solid var(--neutral-mid)}
+.diagram svg{width:100%;height:auto}
+section.body{max-width:880px;margin:0 auto;padding:32px;font-family:Raleway;font-size:15px;line-height:1.7;color:var(--body)}
+section.body h2{font-family:Poppins;font-weight:700;font-size:20px;color:var(--navy);margin:32px 0 12px}
+section.body code{font-family:'Roboto Mono',monospace;font-size:13px;background:#fff;padding:2px 6px;border-radius:3px;border:1px solid var(--neutral-mid)}
+section.body ul{margin:0 0 16px 22px}
+.triggers-list code{display:inline-block;background:rgba(128,199,194,.12);color:var(--teal-dark);padding:4px 10px;border-radius:3px;margin:0 6px 6px 0;font-family:Poppins;font-weight:600;font-size:11px;border:none}
+</style>
+</head>
+<body>
+<div class="topbar">
+<a class="brand" href="../index.html"><img src="../assets/logos/pof-logo-color.svg" alt="POF"></a>
+<span class="crumbs">Workflows / ds-file-assembler</span>
+<nav class="topbar-nav">
+<a href="../index.html">Overview</a>
+<a href="../architecture.html">Architecture</a>
+<a href="../workflows.html">← All workflows</a>
+<a href="https://github.com/benoitpof/design-system">GitHub</a>
+</nav>
+</div>
+<header class="page-header">
+<div class="eyebrow">S2 · ORCHESTRATEUR</div>
+<h1>ds-file-assembler</h1>
+<div class="desc">Assemble decks, reports A4, web pages, social posts depuis du contenu source. Lit les règles du repo, choisit les layouts, orchestre la création des assets via DS-Dataviz-generator.</div>
+<div class="actions">
+<a class="btn primary" href="https://www.notion.so/34fc2ce245e8811d9310cfe956ea089d" target="_blank">Spec complète Notion (self-contained)</a>
+<a class="btn" href="../workflows.html">← Tous les workflows</a>
+</div>
+</header>
+<div class="diagram"><svg viewBox="0 0 480 180" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="50" width="90" height="90" rx="6" fill="#FFF" stroke="#1C1F3B" stroke-width="1.5"/><text x="65" y="78" font-family="Poppins" font-weight="700" font-size="10" fill="#1C1F3B" text-anchor="middle">CONTENU</text><text x="65" y="95" font-family="Raleway" font-size="8" fill="#435D74" text-anchor="middle">Notion source</text><text x="65" y="112" font-family="Poppins" font-weight="600" font-size="8" fill="#80C7C2" text-anchor="middle">📐 Layout</text><text x="65" y="125" font-family="Poppins" font-weight="600" font-size="8" fill="#80C7C2" text-anchor="middle">🖼️ Illustration</text><path d="M115 95 L 150 95" stroke="#435D74" stroke-width="2"/><polygon points="150,90 160,95 150,100" fill="#435D74"/><rect x="165" y="40" width="165" height="110" rx="6" fill="#1C1F3B"/><text x="247" y="68" font-family="Poppins" font-weight="700" font-size="11" fill="#80C7C2" text-anchor="middle">ds-file-assembler</text><text x="247" y="88" font-family="Raleway" font-size="8" fill="#FFF" text-anchor="middle" opacity="0.85">git pull · read rules</text><text x="247" y="103" font-family="Raleway" font-size="8" fill="#FFF" text-anchor="middle" opacity="0.7">duplicate template layout</text><text x="247" y="118" font-family="Raleway" font-size="8" fill="#FFF" text-anchor="middle" opacity="0.7">composition QA gate</text><text x="247" y="138" font-family="Poppins" font-weight="600" font-size="8" fill="#80C7C2" text-anchor="middle">1 question : validate?</text><path d="M335 95 L 370 95" stroke="#435D74" stroke-width="2"/><polygon points="370,90 380,95 370,100" fill="#435D74"/><rect x="385" y="50" width="80" height="90" rx="6" fill="#80C7C2"/><text x="425" y="80" font-family="Poppins" font-weight="700" font-size="10" fill="#1C1F3B" text-anchor="middle">LIVRABLE</text><text x="425" y="98" font-family="Raleway" font-size="8" fill="#1C1F3B" text-anchor="middle">.pptx</text><text x="425" y="112" font-family="Raleway" font-size="8" fill="#1C1F3B" text-anchor="middle">.docx</text><text x="425" y="126" font-family="Raleway" font-size="8" fill="#1C1F3B" text-anchor="middle">.html</text></svg></div>
+<section class="body">
+<h2>Trigger phrases</h2>
+<div class="triggers-list"><code>genere un deck</code> <code>build report</code> <code>page web</code> <code>post LinkedIn</code></div>
+<h2>Spec complète</h2>
+<p>La spec détaillée (API, pipeline, inputs/outputs, dépendances, SKILL.md attendu, forbidden, exemples de lancement, effort de build) est dans la <a href="https://www.notion.so/34fc2ce245e8811d9310cfe956ea089d" target="_blank">page Notion dédiée</a>. Cette page est <strong>self-contained</strong> : copy-paste son contenu dans un nouveau chat Cowork pour lancer le build via <code>/build-lead</code> Fast Track.</p>
+<h2>Statut</h2>
+<p>À builder via <code>/build-lead</code> Fast Track (effort 0.5 à 3 jours selon skill).</p>
+</section>
+</body></html>

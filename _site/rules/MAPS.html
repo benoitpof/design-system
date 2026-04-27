@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MAPS.md · POF Design System</title>
+<link rel="stylesheet" href="../styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Raleway:ital,wght@0,300;0,400;0,600;0,700&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1C1F3B; --steel:#435D74; --steel-light:#5F7D95; --steel-pale:#CFD9E0;
+  --teal:#80C7C2; --teal-dark:#2BA595; --coral:#E8546C;
+  --gris-pof:#F9FCFF; --neutral-light:#F0F0F0; --neutral-mid:#EAEBED;
+  --gray-400:#CED4DA; --gray-600:#6C757D; --body:#3C3C3C; --white:#FFFFFF;
+}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font-family:'Raleway',sans-serif;color:var(--body);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6}
+.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--neutral-mid);padding:14px 32px;display:flex;align-items:center;gap:16px}
+.topbar .brand img{height:26px}.topbar .crumbs{font-family:Poppins;font-size:11px;font-weight:600;color:var(--gray-600);letter-spacing:1px;text-transform:uppercase}
+.topbar .version{font-family:Poppins;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal-dark);background:rgba(128,199,194,.12);padding:3px 8px;border-radius:3px}
+.topbar-nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.topbar-nav a{font-family:Poppins;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase}
+.topbar-nav a:hover,.topbar-nav a.active{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.page-header{padding:48px 32px 24px;max-width:1080px;margin:0 auto;border-bottom:1px solid var(--neutral-mid)}
+.page-header .eyebrow{font-family:Poppins;font-weight:700;font-size:11px;letter-spacing:2px;color:var(--steel-light);text-transform:uppercase}
+.page-header h1{font-family:Poppins;font-weight:700;font-size:36px;color:var(--navy);margin:8px 0 12px;letter-spacing:-.5px}
+.page-header .meta{font-family:Raleway;font-size:13px;color:var(--gray-600)}
+.page-header .actions{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
+.page-header .btn{font-family:Poppins;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase;background:#fff;transition:border-color .15s}
+.page-header .btn:hover{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.page-header .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.page-header .btn.primary:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
+article.md-content{max-width:880px;margin:0 auto;padding:48px 32px 96px;font-family:Raleway,sans-serif;font-size:16px;color:var(--body);line-height:1.7}
+article.md-content h1{font-family:Poppins;font-weight:700;font-size:32px;color:var(--navy);margin:48px 0 16px;letter-spacing:-.5px;line-height:1.2}
+article.md-content h1:first-child{margin-top:0}
+article.md-content h2{font-family:Poppins;font-weight:700;font-size:22px;color:var(--navy);margin:40px 0 14px;padding-top:8px}
+article.md-content h3{font-family:Poppins;font-weight:600;font-size:17px;color:var(--steel);margin:28px 0 10px;text-transform:uppercase;letter-spacing:.5px}
+article.md-content h4{font-family:Poppins;font-weight:600;font-size:14px;color:var(--steel-light);margin:20px 0 8px}
+article.md-content p{margin:0 0 16px}
+article.md-content a{color:var(--teal-dark);text-decoration:underline;text-decoration-color:rgba(43,165,149,.3)}
+article.md-content a:hover{text-decoration-color:var(--teal-dark)}
+article.md-content code{font-family:'Roboto Mono',monospace;font-size:13px;background:var(--gris-pof);padding:2px 6px;border-radius:3px;color:var(--navy);border:1px solid var(--neutral-mid)}
+article.md-content pre{background:var(--navy);color:#80C7C2;padding:18px 22px;border-radius:6px;overflow-x:auto;margin:20px 0;font-family:'Roboto Mono',monospace;font-size:13px;line-height:1.5}
+article.md-content pre code{background:transparent;border:none;color:inherit;padding:0;font-size:inherit}
+article.md-content blockquote{margin:20px 0;padding:14px 22px;border-left:3px solid var(--teal);background:rgba(128,199,194,.08);font-style:italic;color:var(--steel)}
+article.md-content table{border-collapse:collapse;width:100%;margin:20px 0;font-family:Raleway;font-size:14px}
+article.md-content table th{background:var(--navy);color:#fff;font-family:Poppins;font-weight:600;padding:12px 14px;text-align:left}
+article.md-content table td{padding:10px 14px;border-bottom:1px solid var(--neutral-mid);vertical-align:top}
+article.md-content table tr:nth-child(even) td{background:var(--gris-pof)}
+article.md-content ul,article.md-content ol{margin:0 0 16px 22px;padding:0}
+article.md-content li{margin:6px 0}
+article.md-content hr{border:none;border-top:1px solid var(--neutral-mid);margin:32px 0}
+article.md-content img{max-width:100%;height:auto;border-radius:4px}
+.codehilite{background:var(--navy);border-radius:6px;margin:20px 0;overflow-x:auto}
+.codehilite pre{margin:0}
+footer{padding:40px 32px;text-align:center;color:var(--gray-600);font-family:Raleway;font-size:12px;border-top:1px solid var(--neutral-mid)}
+footer a{color:var(--teal-dark);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="../index.html"><img src="../assets/logos/pof-logo-color.svg" alt="POF"></a>
+  <span class="crumbs">Rules / MAPS</span>
+  <span class="version">v3.4.0</span>
+  <nav class="topbar-nav">
+    <a href="../index.html">Overview</a>
+    <a href="../architecture.html">Architecture</a>
+    <a href="../charts.html">Charts</a>
+    <a href="../maps.html">Maps</a>
+    <a href="../icons.html">Icons</a>
+    <a href="../workflows.html">Workflows</a>
+    <a href="../databases.html">DBs</a>
+    <a href="https://github.com/benoitpof/design-system">GitHub</a>
+  </nav>
+</div>
+<header class="page-header">
+  <div class="eyebrow">Rules / MAPS</div>
+  <h1>MAPS.md</h1>
+  <div class="meta">Source : <code>docs/rules/MAPS.md</code> · POF DS v3.4.0</div>
+  <div class="actions">
+    <a class="btn primary" href="https://github.com/benoitpof/design-system/blob/main/docs/rules/MAPS.md">View on GitHub</a>
+    <a class="btn" href="../index.html">Back to overview</a>
+  </div>
+</header>
+<article class="md-content">
+<h1 id="mapsmd-pof-map-system">MAPS.md — POF Map System</h1>
+<p><strong>Version:</strong> 1.0 | <strong>Updated:</strong> 2026-04-26 | <strong>Design system:</strong> v3.3.0
+<strong>Source of truth:</strong> <code>assets/maps/pof-world-map-blank.svg</code> (175 country paths, ISO-2/3 IDs, group metadata)
+<strong>Interactive reference:</strong> <code>assets/maps/map-charter.html</code> (visual examples of all 5 patterns)</p>
+<p>POF cartographic system — 5 canonical patterns and rules for geographic visualization across slide / web / print.</p>
+<hr />
+<h2 id="5-canonical-patterns">5 canonical patterns</h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Use</th>
+<th>Data type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Heatmap</td>
+<td>Concentration / density per country (gradient)</td>
+<td>Continuous value per country</td>
+</tr>
+<tr>
+<td>2. Colored countries (categorical)</td>
+<td>Status by country (active / pipeline / etc.)</td>
+<td>Discrete category</td>
+</tr>
+<tr>
+<td>3. Neutral dots</td>
+<td>Locations without data</td>
+<td>Presence (yes / no)</td>
+</tr>
+<tr>
+<td>4. Data dots (proportional)</td>
+<td>Magnitude per location</td>
+<td>Quantitative value</td>
+</tr>
+<tr>
+<td>5. Faded-edge anchored</td>
+<td>Decorative map anchored to slide edge</td>
+<td>None (illustration)</td>
+</tr>
+</tbody>
+</table>
+<p>Patterns can combine : categorical + data dots + region overlays.</p>
+<hr />
+<h2 id="pattern-1-heatmap-continuous-gradient">Pattern 1 — Heatmap (continuous gradient)</h2>
+<p><strong>3 navy variants are documented</strong> in <code>map-charter.html</code> (N1, N2, N3) — pick the one closest to data distribution :</p>
+<table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>5 stops</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>N1 navy</td>
+<td><code>#F9FCFF → #CFD9E0 → #80C7C2 → #435D74 → #1C1F3B</code></td>
+<td>Standard heatmap (linear distribution)</td>
+</tr>
+<tr>
+<td>N2 (TBD)</td>
+<td>spec in <code>map-charter.html</code></td>
+<td>Skewed-low data</td>
+</tr>
+<tr>
+<td>N3 (TBD)</td>
+<td>spec in <code>map-charter.html</code></td>
+<td>Skewed-high data</td>
+</tr>
+</tbody>
+</table>
+<p>Stroke between countries : <code>#FFFFFF</code> 0.8 pt. No-data fill : <code>#EAEBED</code>.</p>
+<p>Legend horizontal bar : 5 stops, 120 × 8 mm, value labels at extremes.</p>
+<hr />
+<h2 id="pattern-2-colored-countries-categorical">Pattern 2 — Colored countries (categorical)</h2>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Fill</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active deployment</td>
+<td><code>#1C1F3B</code></td>
+<td>Operational POF deployment</td>
+</tr>
+<tr>
+<td>Pipeline</td>
+<td><code>#435D74</code></td>
+<td>Engaged project, not yet operational</td>
+</tr>
+<tr>
+<td>Featured / interest</td>
+<td><code>#80C7C2</code></td>
+<td>Strategic priority</td>
+</tr>
+<tr>
+<td>Context</td>
+<td><code>#EAEBED</code></td>
+<td>Regional context</td>
+</tr>
+<tr>
+<td>No data</td>
+<td><code>#F9FCFF</code></td>
+<td>Out of scope</td>
+</tr>
+</tbody>
+</table>
+<p>Stroke : <code>#FFFFFF</code> 0.8 pt. Default rendering : flat solid fills, no gradient (data clarity &gt; decoration).</p>
+<hr />
+<h2 id="pattern-3-neutral-dots-presence">Pattern 3 — Neutral dots (presence)</h2>
+<div class="codehilite"><pre><span></span><code>&lt;circle cx cy r=&quot;6&quot; fill=&quot;#1C1F3B&quot; stroke=&quot;#FFFFFF&quot; stroke-width=&quot;1.5&quot;/&gt;
+</code></pre></div>
+
+<p>Fixed diameter 12 px at viewBox 2418×1248. Optional label to the right : Raleway Regular 11 pt navy.</p>
+<hr />
+<h2 id="pattern-4-data-dots-proportional-sizing">Pattern 4 — Data dots (proportional sizing)</h2>
+<div class="codehilite"><pre><span></span><code>r = sqrt(value / max_value) × R_max
+R_max ∈ [12, 36] px at viewBox 2418×1248
+</code></pre></div>
+
+<p>Circle : fill <code>#1C1F3B</code>, stroke <code>#FFFFFF</code> 1.5 pt. Inside label : Raleway Bold white, font-size = <code>clamp(9pt, r/3, 18pt)</code>. Outside label (country name) : Raleway Regular 11 pt navy, right or below.</p>
+<p>POF reference scales :
+- Tonnes / year : 0–100 → 8–20 px
+- Jobs created : 0–200 → 8–24 px
+- Factories deployed : 0–10 → 12–32 px</p>
+<hr />
+<h2 id="pattern-5-faded-edge-anchored">Pattern 5 — Faded-edge anchored</h2>
+<p>Maps must NEVER float centered. Always anchor to a slide edge with gradient fade toward the opposite side.</p>
+<table>
+<thead>
+<tr>
+<th>Anchor</th>
+<th>Map placement</th>
+<th>Gradient direction (white → transparent)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>right</td>
+<td>x covers right half</td>
+<td><code>90deg, white 0% → transparent 60%</code></td>
+</tr>
+<tr>
+<td>left</td>
+<td>x covers left half</td>
+<td><code>270deg, white 0% → transparent 60%</code></td>
+</tr>
+<tr>
+<td>top</td>
+<td>y covers top half</td>
+<td><code>0deg, white 0% → transparent 60%</code></td>
+</tr>
+<tr>
+<td>bottom</td>
+<td>y covers bottom half</td>
+<td><code>180deg, white 0% → transparent 60%</code></td>
+</tr>
+<tr>
+<td>full-bleed</td>
+<td>full content zone</td>
+<td>overlay only — no fade</td>
+</tr>
+</tbody>
+</table>
+<p>Map opacity in faded mode : 50 % (<code>alpha=0.5</code> or <code>&lt;a:alphaModFix amt="50000"/&gt;</code> in PPTX).</p>
+<p>Forbidden : map floating centered with empty whitespace on all sides. The fade-anchor pattern is what gives the POF map signature feel.</p>
+<hr />
+<h2 id="region-overlays-optional-on-any-pattern">Region overlays (optional, on any pattern)</h2>
+<p>Dashed ellipses around country clusters to highlight a region.</p>
+<div class="codehilite"><pre><span></span><code>&lt;ellipse cx cy rx ry fill=&quot;none&quot;
+         stroke=&quot;#1C1F3B&quot; stroke-width=&quot;1.5&quot;
+         stroke-dasharray=&quot;6 4&quot; stroke-linecap=&quot;round&quot;/&gt;
+</code></pre></div>
+
+<p>Region label : Raleway SemiBold 14 pt coral <code>#E8546C</code>, UPPERCASE, letter-spacing 1 px, positioned above the ellipse.</p>
+<p><strong>Canonical regions for POF v3.2.6 :</strong></p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Label</th>
+<th>Members (ISO-2)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WEST_AFRICA_REGION</code></td>
+<td>West Africa</td>
+<td>SN, ML, BF, NE, NG, CI, GH, TG, BJ, GN, SL, LR, MR, GW, GM, CV</td>
+</tr>
+<tr>
+<td><code>EAST_AFRICA_INDIAN_OCEAN</code></td>
+<td>East Africa &amp; Indian Ocean</td>
+<td>KE, TZ, UG, RW, BI, ET, SO, ER, DJ, SS, SD, MG, KM, MU, SC, MZ, MW, ZM, ZW</td>
+</tr>
+<tr>
+<td><code>SOUTH_EAST_ASIA</code></td>
+<td>South-East Asia</td>
+<td>MM, TH, LA, VN, KH, MY, SG, BN, ID, PH, TL</td>
+</tr>
+</tbody>
+</table>
+<p>Group definitions are also embedded as JSON <code>&lt;metadata id="pof-map-groupings"&gt;</code> in <code>pof-world-map-blank.svg</code>. Use <code>data-groups</code> attribute on country <code>&lt;path&gt;</code> to filter programmatically.</p>
+<hr />
+<h2 id="legends-on-map-and-off-map">Legends — on-map AND off-map</h2>
+<p>To stay consistent with charts in <code>examples/charts/</code>, maps reuse the same legend pattern.</p>
+<h3 id="on-map-legend-compact">On-map legend (compact)</h3>
+<ul>
+<li>Position : bottom-left by default (or wherever the fade anchor leaves space)</li>
+<li>Background : <code>rgba(255,255,255,0.85)</code> (semi-transparent white)</li>
+<li>Padding : 6 mm</li>
+<li>Border-radius : 4 px</li>
+<li>Max items : 4 (more = move legend off-map)</li>
+</ul>
+<h3 id="off-map-legend-vertical-beside-the-map">Off-map legend (vertical, beside the map)</h3>
+<ul>
+<li>Position : right of the map, vertically centered</li>
+<li>Width : 60 mm</li>
+<li>Items : dot indicator 8 px + Raleway Regular 11 pt navy label + optional Raleway Light 9 pt italic sub-label</li>
+<li>Gap between items : 8 mm</li>
+</ul>
+<p>Legend strict limit (per POF brand guideline) : <strong>maximum one legend type per slide</strong>. If both color category and dot size are encoded, use ONE legend that explains both, never two separate legends.</p>
+<hr />
+<h2 id="anchoring-rules-slide-layouts">Anchoring rules — slide layouts</h2>
+<p>A map MUST anchor to at least one edge of the content zone. Five canonical configurations :</p>
+<table>
+<thead>
+<tr>
+<th>Config</th>
+<th>Map zone</th>
+<th>Side panel</th>
+<th>Use case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Right anchor</td>
+<td>x = 10..18.95 in</td>
+<td>x = 1.05..9 in (left)</td>
+<td>L09 with KPIs left</td>
+</tr>
+<tr>
+<td>Left anchor</td>
+<td>x = 1.05..10 in</td>
+<td>x = 10..18.95 in</td>
+<td>L09 with text right</td>
+</tr>
+<tr>
+<td>Top anchor</td>
+<td>y = 2..6.5 in</td>
+<td>y = 6.5..10.8 in</td>
+<td>KPIs below</td>
+</tr>
+<tr>
+<td>Bottom anchor</td>
+<td>y = 6.5..10.8 in</td>
+<td>y = 2..6.5 in</td>
+<td>Title + context above</td>
+</tr>
+<tr>
+<td>Full-bleed</td>
+<td>full content zone</td>
+<td>overlay only</td>
+<td>L02 section divider</td>
+</tr>
+</tbody>
+</table>
+<p>A map never floats centered with empty space on all sides.</p>
+<hr />
+<h2 id="cross-medium-compatibility-web-powerpoint-print">Cross-medium compatibility (web / PowerPoint / print)</h2>
+<p>POF brand requires identical visual rendering across web, slide, and print outputs. To ensure this :</p>
+<table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All map fills are flat solid (no CSS gradients on country paths)</td>
+<td>PowerPoint and PDF export do not always preserve CSS gradients</td>
+</tr>
+<tr>
+<td>Heatmap stops are pre-computed solid fills (5 discrete steps), not continuous interpolation</td>
+<td>Stable across renderers</td>
+</tr>
+<tr>
+<td>Photo overlay gradient (Pattern 5 fade) is the ONLY gradient in maps</td>
+<td>Pre-rasterize when exporting to PPTX if rendering issue</td>
+</tr>
+<tr>
+<td>Stroke widths in <code>pt</code> and <code>px</code> (no <code>mm</code>)</td>
+<td>Consistent stroke perception</td>
+</tr>
+<tr>
+<td>Fonts referenced as Poppins / Raleway with web fallback <code>sans-serif</code></td>
+<td>Print-safe font cascade</td>
+</tr>
+<tr>
+<td>No drop-shadow, no filter, no blur on any map element</td>
+<td>Cross-renderer guaranteed</td>
+</tr>
+<tr>
+<td>Region ellipses use <code>stroke-dasharray</code> (renderer-agnostic)</td>
+<td>Avoid CSS-only dash patterns</td>
+</tr>
+</tbody>
+</table>
+<p>When exporting a map to PPTX : rasterize the SVG to PNG at 2× resolution if any gradient or alpha is used. Embed PNG at slide size.</p>
+<hr />
+<h2 id="hard-locks-reminder-v325">Hard locks reminder (v3.2.5)</h2>
+<ul>
+<li>Colors : canonical palette only. No <code>#FF5A60</code> for region labels (use <code>#E8546C</code>).</li>
+<li>Sizes (pt) : <code>[9, 11, 14, 18, 22, 26, 36]</code> + stat-only <code>[72, 120]</code>. No 10 pt, 12 pt, 13 pt.</li>
+<li>Weights : <code>[300, 400, 600, 700]</code>. No 500.</li>
+<li>No filter, no drop-shadow, no opacity reduction on corner brackets.</li>
+<li>Map opacity 50 % allowed ONLY in Pattern 5 anchored mode.</li>
+</ul>
+<hr />
+<h2 id="file-reference">File reference</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>assets/maps/pof-world-map-blank.svg</code></td>
+<td>Source of truth — vector base</td>
+</tr>
+<tr>
+<td><code>assets/maps/pof-world-map-annotated.svg</code></td>
+<td>Same base + priority labels</td>
+</tr>
+<tr>
+<td><code>assets/maps/svg/01-monde.svg</code></td>
+<td>7 pre-cropped regional views (01 = vector, 02-07 = PNG-embedded pending vectorization)</td>
+</tr>
+<tr>
+<td><code>assets/maps/png-source/*.png</code></td>
+<td>High-res raster source for regional views</td>
+</tr>
+<tr>
+<td><code>assets/maps/map-charter.html</code></td>
+<td>Interactive visual charter</td>
+</tr>
+<tr>
+<td><code>assets/maps/USAGE.md</code></td>
+<td>Use case guide for the 7 regional crops</td>
+</tr>
+<tr>
+<td><code>assets/maps/POF-WORLD-MAP-GUIDE.md</code></td>
+<td>Country IDs and groups</td>
+</tr>
+<tr>
+<td><code>assets/maps/_map-data.js</code></td>
+<td>JS helpers</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="memory-capitalisation-rex-v340">Memory — capitalisation Rex (v3.4.0)</h2>
+<!-- ds-iterate écrit ici. Format : ### YYYY-MM-DD — <titre> -->
+
+<p>(vide pour l'instant)</p>
+</article>
+<footer>
+  POF Design System v3.4.0 · Auto-rendered from docs/rules/MAPS.md · <a href="https://github.com/benoitpof/design-system">GitHub</a>
+</footer>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DESIGN.md · POF Design System</title>
+<link rel="stylesheet" href="../styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Raleway:ital,wght@0,300;0,400;0,600;0,700&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1C1F3B; --steel:#435D74; --steel-light:#5F7D95; --steel-pale:#CFD9E0;
+  --teal:#80C7C2; --teal-dark:#2BA595; --coral:#E8546C;
+  --gris-pof:#F9FCFF; --neutral-light:#F0F0F0; --neutral-mid:#EAEBED;
+  --gray-400:#CED4DA; --gray-600:#6C757D; --body:#3C3C3C; --white:#FFFFFF;
+}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font-family:'Raleway',sans-serif;color:var(--body);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6}
+.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--neutral-mid);padding:14px 32px;display:flex;align-items:center;gap:16px}
+.topbar .brand img{height:26px}.topbar .crumbs{font-family:Poppins;font-size:11px;font-weight:600;color:var(--gray-600);letter-spacing:1px;text-transform:uppercase}
+.topbar .version{font-family:Poppins;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal-dark);background:rgba(128,199,194,.12);padding:3px 8px;border-radius:3px}
+.topbar-nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.topbar-nav a{font-family:Poppins;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase}
+.topbar-nav a:hover,.topbar-nav a.active{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.page-header{padding:48px 32px 24px;max-width:1080px;margin:0 auto;border-bottom:1px solid var(--neutral-mid)}
+.page-header .eyebrow{font-family:Poppins;font-weight:700;font-size:11px;letter-spacing:2px;color:var(--steel-light);text-transform:uppercase}
+.page-header h1{font-family:Poppins;font-weight:700;font-size:36px;color:var(--navy);margin:8px 0 12px;letter-spacing:-.5px}
+.page-header .meta{font-family:Raleway;font-size:13px;color:var(--gray-600)}
+.page-header .actions{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
+.page-header .btn{font-family:Poppins;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase;background:#fff;transition:border-color .15s}
+.page-header .btn:hover{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.page-header .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.page-header .btn.primary:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
+article.md-content{max-width:880px;margin:0 auto;padding:48px 32px 96px;font-family:Raleway,sans-serif;font-size:16px;color:var(--body);line-height:1.7}
+article.md-content h1{font-family:Poppins;font-weight:700;font-size:32px;color:var(--navy);margin:48px 0 16px;letter-spacing:-.5px;line-height:1.2}
+article.md-content h1:first-child{margin-top:0}
+article.md-content h2{font-family:Poppins;font-weight:700;font-size:22px;color:var(--navy);margin:40px 0 14px;padding-top:8px}
+article.md-content h3{font-family:Poppins;font-weight:600;font-size:17px;color:var(--steel);margin:28px 0 10px;text-transform:uppercase;letter-spacing:.5px}
+article.md-content h4{font-family:Poppins;font-weight:600;font-size:14px;color:var(--steel-light);margin:20px 0 8px}
+article.md-content p{margin:0 0 16px}
+article.md-content a{color:var(--teal-dark);text-decoration:underline;text-decoration-color:rgba(43,165,149,.3)}
+article.md-content a:hover{text-decoration-color:var(--teal-dark)}
+article.md-content code{font-family:'Roboto Mono',monospace;font-size:13px;background:var(--gris-pof);padding:2px 6px;border-radius:3px;color:var(--navy);border:1px solid var(--neutral-mid)}
+article.md-content pre{background:var(--navy);color:#80C7C2;padding:18px 22px;border-radius:6px;overflow-x:auto;margin:20px 0;font-family:'Roboto Mono',monospace;font-size:13px;line-height:1.5}
+article.md-content pre code{background:transparent;border:none;color:inherit;padding:0;font-size:inherit}
+article.md-content blockquote{margin:20px 0;padding:14px 22px;border-left:3px solid var(--teal);background:rgba(128,199,194,.08);font-style:italic;color:var(--steel)}
+article.md-content table{border-collapse:collapse;width:100%;margin:20px 0;font-family:Raleway;font-size:14px}
+article.md-content table th{background:var(--navy);color:#fff;font-family:Poppins;font-weight:600;padding:12px 14px;text-align:left}
+article.md-content table td{padding:10px 14px;border-bottom:1px solid var(--neutral-mid);vertical-align:top}
+article.md-content table tr:nth-child(even) td{background:var(--gris-pof)}
+article.md-content ul,article.md-content ol{margin:0 0 16px 22px;padding:0}
+article.md-content li{margin:6px 0}
+article.md-content hr{border:none;border-top:1px solid var(--neutral-mid);margin:32px 0}
+article.md-content img{max-width:100%;height:auto;border-radius:4px}
+.codehilite{background:var(--navy);border-radius:6px;margin:20px 0;overflow-x:auto}
+.codehilite pre{margin:0}
+footer{padding:40px 32px;text-align:center;color:var(--gray-600);font-family:Raleway;font-size:12px;border-top:1px solid var(--neutral-mid)}
+footer a{color:var(--teal-dark);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="../index.html"><img src="../assets/logos/pof-logo-color.svg" alt="POF"></a>
+  <span class="crumbs">Rules / DESIGN</span>
+  <span class="version">v3.4.0</span>
+  <nav class="topbar-nav">
+    <a href="../index.html">Overview</a>
+    <a href="../architecture.html">Architecture</a>
+    <a href="../charts.html">Charts</a>
+    <a href="../maps.html">Maps</a>
+    <a href="../icons.html">Icons</a>
+    <a href="../workflows.html">Workflows</a>
+    <a href="../databases.html">DBs</a>
+    <a href="https://github.com/benoitpof/design-system">GitHub</a>
+  </nav>
+</div>
+<header class="page-header">
+  <div class="eyebrow">Rules / DESIGN</div>
+  <h1>DESIGN.md</h1>
+  <div class="meta">Source : <code>docs/rules/DESIGN.md</code> · POF DS v3.4.0</div>
+  <div class="actions">
+    <a class="btn primary" href="https://github.com/benoitpof/design-system/blob/main/docs/rules/DESIGN.md">View on GitHub</a>
+    <a class="btn" href="../index.html">Back to overview</a>
+  </div>
+</header>
+<article class="md-content">
+<h1 id="designmd-plastic-odyssey-factories-design-system">DESIGN.md — Plastic Odyssey Factories Design System</h1>
+<p><strong>Version:</strong> 3.3.10 | <strong>Updated:</strong> 2026-04-26
+<strong>Source of truth:</strong> <code>tokens/brand-tokens.json</code> + <code>tokens/brand-rules-per-format.json</code>
+<strong>Template reference:</strong> <code>Template_POF_Claude.pptx</code> (LAYOUT_WIDE 20"×11.25" / 508×285.75 mm)
+<strong>Coordinate convention:</strong> mm partout (SSOT). Inches en commentaire pour pptxgenjs.</p>
+<h2 id="hard-locks-v323-strict-enforcement">Hard locks (v3.2.3) — STRICT ENFORCEMENT</h2>
+<p>These rules are non-negotiable. Any violation in generated content (deck, web, report) must be flagged red in QA before delivery.</p>
+<h3 id="type-scale-lock-aligned-v2-template-2026-04-26">Type-scale lock (aligned V2 template 2026-04-26)</h3>
+<p>Only 8 allowed sizes (pt): <strong>9, 11, 14, 18, 22, 26, 28, 36</strong>. Plus stat-only: 72, 120. No other sizes anywhere.</p>
+<p>V2 hierarchy : cover_title 36pt ExtraBold · slide_title 26pt ExtraBold · slide_subtitle 26pt SemiBold · slogan 28pt SemiBold · body 22pt Regular · caption 18pt Light.</p>
+<h3 id="weight-lock">Weight lock</h3>
+<p>Regular weights allowed: <strong>300, 400, 600, 700</strong>. ExtraBold (800) restricted to: cover slide title (L01), section divider title (L02), stat number (L04). Black (900) <strong>forbidden</strong>.</p>
+<h3 id="overlay-system-v400">Overlay system (v4.0.0)</h3>
+<p>Three canonical types — defined in full in <code>tokens/brand-rules-per-format.json</code> <code>overlay_system</code>.</p>
+<p><strong>Type 1 — White fade</strong> (<code>white_fade</code>) : map edges only.
+Fades from 100 % opaque white at the viewBox edge → 0 % transparent. Cumulation allowed (multiple sides simultaneously). Never overlaps colored country highlights or legends. World map defaults: top (stops at North Africa latitude) + left (stops at West Africa coast) always active.</p>
+<p><strong>Type 2 — Navy hard with Teal flair</strong> (<code>navy_hard</code>) : photos with strong text zone.
+<code>linear-gradient(&lt;angle&gt;, rgba(28,31,59,0.90) 0%, transparent 100%)</code> + <code>radial-gradient(circle at bottom left, rgba(128,199,194,0.40) 0%, transparent 50%)</code> overlaid. Sizes: <code>quarter</code> 25% · <code>half</code> 50% · <code>full</code> 75%. <strong>One direction at a time, never cumulated.</strong></p>
+<p><strong>Type 3 — Navy light</strong> (<code>navy_light</code>) : photos — ambiance, photo dominant.
+<code>linear-gradient(&lt;angle&gt;, rgba(28,31,59,0.40) 0%, transparent 100%)</code>. Same sizes as Type 2. <strong>One direction at a time, never cumulated.</strong> Verify WCAG AA contrast before applying text on top.</p>
+<p>Forbidden : solid uniform fills, non-axial directions, cumulation on photo overlays, hold values outside [25, 50, 75], final stop not transparent, teal flair outside bottom-left anchor.</p>
+<h3 id="corner-marks-lock">Corner marks lock</h3>
+<p>L-brackets in 4 orientations: <code>assets/brand-elements/corner-bracket-{tl,tr,bl,br}.svg</code>. Size 12 mm. Color #80C7C2. Stroke 5px square cap. Default pair on every slide = TL + BR. Solid filled squares (deprecated v3.2.2) <strong>forbidden</strong>.</p>
+<p><strong>No shadow, ever.</strong> Corner marks are flat geometric strokes. Forbidden : drop-shadow (CSS or SVG <code>filter</code>), PowerPoint shape effect 'Shadow', <code>opacity &lt; 1</code>, blur. The L-brackets must render exactly as authored — pure teal strokes on transparent background, zero depth effect. This rule applies whether the rendering target is a slide, a web page, a report, an artifact preview, or any other medium.</p>
+<h3 id="color-hierarchy-lock-v332-feedback-benoit-2026-04-26">Color hierarchy lock (v3.3.2 — feedback Benoit 2026-04-26)</h3>
+<p>Titles use NAVY on light bg and WHITE on dark bg. <strong>Teal is a SECONDARY accent color, never the primary title color.</strong></p>
+<p>Allowed teal uses (max 2 per page/slide) :
+- 1-2 accent words within a slogan
+- Callout block left border (4 mm wide)
+- Decorative pipe accent left of title
+- Wave watermark / brand element
+- Stat number on dark bg only
+- Data series in chart palette (series 4+ extended)</p>
+<p>Forbidden teal uses :
+- Primary slide title (use navy or white)
+- Primary section title
+- Primary heading on body pages
+- All text in back cover (white default)</p>
+<h3 id="corner-marks-lock-tl-only-by-default-v332">Corner marks lock — TL only by default (v3.3.2)</h3>
+<p>Default pair = <code>top_left</code> ONLY. Bottom-right corner mark <strong>forbidden by default</strong> (was TL+BR until v3.3.1, deprecated by user feedback).</p>
+<p>Top-right, bottom-left, bottom-right : optional only on explicit request.</p>
+<h3 id="covers-lock-v332">Covers lock (v3.3.2)</h3>
+<p>Cover slides (L01) and report covers :
+- Cover title : Poppins ExtraBold <strong>36pt MAX</strong>. Color = white on dark bg, navy on light bg. Teal forbidden as cover title color.
+- Cover subtitle : Raleway SemiBold, <strong>26pt MAX, 22pt recommended</strong>. NEVER 28pt+ for subtitle.
+- Cover background : <strong>flat navy <code>#1C1F3B</code></strong>. Navy depth gradient NOT allowed at top of cover (user feedback : « bleu navy trop clair en haut »).
+- Cover wave decorative : MUST be fully visible (not clipped at edge).</p>
+<h3 id="back-cover-lock-v332">Back cover lock (v3.3.2)</h3>
+<p>4ème de couverture on navy bg :
+- Default text color = <strong>white</strong>.
+- Teal allowed on <strong>ONE element only</strong> (typically the tagline).
+- Forbidden : all text (logo subtitle + address + email + tagline) in teal.</p>
+<h3 id="wave-decorative-visibility-v332">Wave decorative visibility (v3.3.2)</h3>
+<p>Wave watermark from <code>assets/brand-elements/wave-{teal,white}.svg</code> MUST be fully visible. Never clipped at slide/page edge. Place at least 5 mm margin from any edge.</p>
+<h3 id="verbatim-content-mode">Verbatim content mode</h3>
+<p>When user brief contains <code>&lt;final_content&gt;...&lt;/final_content&gt;</code> tags or the phrase "this is final content / verbatim / do not edit": preserve wording exactly, only redistribute across layout slots. Never substitute with examples from CONTENT-RULES.md.</p>
+<h3 id="per-medium-typography-v332-distinction-critique">Per-medium typography (v3.3.2 — distinction critique)</h3>
+<p>Le design system applique des tailles DIFFÉRENTES selon le medium. Cross-medium = couleurs, fonts, assets identiques. Distinct = tailles, grilles.</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Slides 16:9</th>
+<th>Print A4</th>
+<th>Web</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Body</td>
+<td><strong>22 pt</strong> Regular (<code>body_slide</code>, 30px)</td>
+<td><strong>11 pt</strong> Regular (<code>body_print</code>, 15px)</td>
+<td><strong>16 px</strong> Regular (<code>body_web</code>)</td>
+</tr>
+<tr>
+<td>H1 / Title</td>
+<td>26 pt ExtraBold</td>
+<td><strong>22 pt ExtraBold</strong></td>
+<td>36 px Bold</td>
+</tr>
+<tr>
+<td>H2 / Subtitle</td>
+<td>26 pt SemiBold</td>
+<td><strong>14 pt SemiBold</strong></td>
+<td>22 px SemiBold</td>
+</tr>
+<tr>
+<td>H3</td>
+<td>22 pt SemiBold</td>
+<td><strong>12 pt SemiBold</strong></td>
+<td>18 px SemiBold</td>
+</tr>
+<tr>
+<td>Caption</td>
+<td>18 pt Light</td>
+<td><strong>9 pt Light italic</strong></td>
+<td>12 px Light</td>
+</tr>
+<tr>
+<td>Footnote</td>
+<td>11 pt</td>
+<td>8 pt</td>
+<td>11 px</td>
+</tr>
+</tbody>
+</table>
+<p>Slides = lecture à 3 m, gros texte. Print = lecture à 25 cm, texte compact.</p>
+<p><strong>Cover title</strong> = 36pt MAX dans tous les media (slide + print).</p>
+<h2 id="validation-print-rapport-v1-couverture-rapporthtml-rapport-printhtml-2026-04-26-sert-de-reference">Validation print : Rapport v1 (<code>Couverture rapport.html</code> + <code>Rapport-print.html</code>, 2026-04-26) sert de référence.</h2>
+<h2 id="1-brand-dna">1. Brand DNA</h2>
+<p><strong>Plastic Odyssey Factories</strong> deploys containerized plastic recycling units in developing countries via a franchise model.</p>
+<ul>
+<li><strong>Audience:</strong> institutional partners, industrial investors, government procurement. Secondary: NGO teams, recycling entrepreneurs, press.</li>
+<li><strong>Tone:</strong> direct, evidence-based, operational, warm but serious.</li>
+<li><strong>Visual DNA:</strong> engineering documentation meets impact report. Wave waveform as signature element. Navy + teal as institutional duo. Coral as surgical emphasis only.</li>
+<li><strong>Avoid:</strong> NGO softness, greenwashing clichés, corporate jargon, AI-generated feel.</li>
+</ul>
+<hr />
+<h2 id="2-colors-canonical-verified-from-pof-template-xml">2. Colors (canonical — verified from POF template XML)</h2>
+<h3 id="primary">Primary</h3>
+<ul>
+<li><code>#1C1F3B</code> <strong>navy</strong> — headings, header bars, backgrounds, primary data</li>
+<li><code>#80C7C2</code> <strong>teal</strong> — accent bars, logo waves, highlights, secondary data. <strong>NEVER white text on teal.</strong></li>
+</ul>
+<h3 id="supporting">Supporting</h3>
+<ul>
+<li><code>#F9FCFF</code> <strong>light gray</strong> — section backgrounds, card surfaces (POF "Gris POF")</li>
+<li><code>#E8546C</code> <strong>coral</strong> — emphasis keywords ONLY. Max 1–2 per deck. Forbidden as bg fill of text blocks.</li>
+<li><code>#435D74</code> <strong>steel</strong> — chart series 2, subtitles</li>
+<li><code>#1C2D2B</code> <strong>teal-deep</strong> — gradient end, dark emphasis</li>
+<li><code>#4BADA5</code> <strong>teal-dark</strong> — gradient start, hover states</li>
+</ul>
+<h3 id="background-gradients-from-svg-assets">Background gradients (from SVG assets)</h3>
+<ul>
+<li><strong>Navy gradient:</strong> <code>#05387B → #1C1F3B</code> (slides 20–22 in template)</li>
+<li><strong>Teal gradient:</strong> <code>#4BADA5 → #80C7C2</code></li>
+</ul>
+<h3 id="semantic">Semantic</h3>
+<ul>
+<li><code>#28A745</code> success · <code>#E5A100</code> warning · <code>#DC3545</code> error</li>
+</ul>
+<h3 id="forbidden-combinations-wcag-fail">Forbidden combinations (WCAG fail)</h3>
+<ul>
+<li>White on teal <code>#80C7C2</code> (1.64:1)</li>
+<li>White on light gray <code>#F9FCFF</code> → use navy</li>
+<li>Coral <code>#E8546C</code> as body text on white (3.55:1) — large text only</li>
+</ul>
+<hr />
+<h2 id="3-typography">3. Typography</h2>
+<ul>
+<li><strong>Heading:</strong> Poppins (ExtraBold, Bold, SemiBold)</li>
+<li><strong>Body:</strong> Raleway (ExtraBold, SemiBold, Regular, Light)</li>
+<li><strong>No serif fonts anywhere. Max 2 families. Max 3 heading levels.</strong></li>
+</ul>
+<h3 id="size-scale-layout_wide-201125">Size scale (LAYOUT_WIDE 20"×11.25")</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Font</th>
+<th>Size</th>
+<th>Color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Slide title</td>
+<td>Poppins ExtraBold</td>
+<td>26pt</td>
+<td>teal or white</td>
+</tr>
+<tr>
+<td>Slide subtitle</td>
+<td>Raleway SemiBold</td>
+<td>26pt</td>
+<td>navy</td>
+</tr>
+<tr>
+<td>H2 content</td>
+<td>Poppins SemiBold</td>
+<td>22pt</td>
+<td>navy</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>Raleway Regular</td>
+<td>22pt</td>
+<td>navy <code>#1C1F3B</code></td>
+</tr>
+<tr>
+<td>Big stat number</td>
+<td>Raleway ExtraBold</td>
+<td>120pt</td>
+<td>white or navy</td>
+</tr>
+<tr>
+<td>Stat unit</td>
+<td>Raleway Black</td>
+<td>41pt</td>
+<td>white</td>
+</tr>
+<tr>
+<td>Caption / source</td>
+<td>Raleway Regular</td>
+<td>22pt</td>
+<td>navy light</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-slide-format">4. Slide format</h2>
+<p><strong>LAYOUT_WIDE: 20" × 11.25" (508 × 285.75 mm), aspect 16:9</strong> — <code>pres.layout = 'LAYOUT_WIDE'</code></p>
+<p>Key anchors (verified from <code>Template POF - Claude.pptx</code> XML — <code>cx=18288000 cy=10287000</code> EMU):</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>mm (SSOT)</th>
+<th>inches (pptxgenjs)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Logo (top-right)</td>
+<td>x=421.3 y=20.6 w=64.5 h=16.4</td>
+<td>x=16.587 y=0.810 w=2.541 h=0.645</td>
+</tr>
+<tr>
+<td>Corner mark TL</td>
+<td>x=19.0 y=16.3 w=7.7 h=7.7</td>
+<td>x=0.748 y=0.642 w=0.303 h=0.303</td>
+</tr>
+<tr>
+<td>Corner mark BR</td>
+<td>x=483.2 y=265.5 w=7.7 h=7.7</td>
+<td>x=19.025 y=10.454 w=0.303 h=0.303</td>
+</tr>
+<tr>
+<td>Pipe accent (left of title)</td>
+<td>x=19.0 y=19.05 w=1.4 h=12.2</td>
+<td>x=0.748 y=0.75 w=0.055 h=0.48</td>
+</tr>
+<tr>
+<td>Title zone</td>
+<td>x=26.7 y=20.6 w=231.3 h=10.3</td>
+<td>x=1.051 y=0.810 w=9.106 h=0.404</td>
+</tr>
+<tr>
+<td>Subtitle zone</td>
+<td>x=26.7 y=31.4 w=243.1 h=12.0</td>
+<td>x=1.051 y=1.237 w=9.570 h=0.471</td>
+</tr>
+<tr>
+<td><strong>Content zone (zone utile)</strong></td>
+<td><strong>x=26.7 y=50.8 max_w=454.6 max_h=223.5</strong></td>
+<td><strong>x=1.051 y=2.0 max_w=17.898 max_h=8.8</strong></td>
+</tr>
+<tr>
+<td>Slide number</td>
+<td>x=470.7 y=259.1 w=30.5 h=21.9</td>
+<td>x=18.531 y=10.200 w=1.200 h=0.861</td>
+</tr>
+</tbody>
+</table>
+<p>Marges symétriques L/R = 26.7 mm (1.051"). Top header = 50.8 mm (2.0"). Bottom footer = 11.4 mm (0.45").</p>
+<hr />
+<h2 id="5-brand-elements">5. Brand elements</h2>
+<p>See <code>docs/ASSETS.md</code> for full index.</p>
+<ul>
+<li><strong>Wave motif</strong> (<code>assets/brand-elements/wave-teal.svg</code>, <code>wave-white.svg</code>) — signature element, bottom-left or decorative</li>
+<li><strong>Corner bracket</strong> (<code>assets/brand-elements/corner-bracket.svg</code>) — matches the <code>grpSp</code> corner marks in template</li>
+<li><strong>Logo</strong> (<code>assets/logos/</code>) — white version on dark, color version on light</li>
+<li><strong>Picto</strong> (<code>assets/pictos/</code>) — brand mark only, not a UI icon</li>
+</ul>
+<hr />
+<h2 id="6-icons">6. Icons</h2>
+<p>See <code>docs/ICONS.md</code> — Tabler Icons curated list.
+CDN: <code>https://unpkg.com/@tabler/icons/icons/[name].svg</code></p>
+<hr />
+<h2 id="7-media-assets">7. Media assets</h2>
+<p>Notion collection: <code>collection://8ca51a75-2413-4f72-8f2a-c44d445fa1d0</code>
+Query via MCP. Filter by <code>Entité (BU)</code>, <code>Type</code>, <code>Usage recommandé</code>, <code>Orientation</code>. Use <code>URL fichier</code> field only.</p>
+<hr />
+<h2 id="8-color-schemes">8. Color schemes</h2>
+<ul>
+<li><strong>dark</strong> — navy bg, white heading, teal subtitle (covers, section dividers, callouts)</li>
+<li><strong>light</strong> — white/F9FCFF bg, navy heading (content slides default)</li>
+<li><strong>teal accent</strong> — teal bg, navy text only (CTA zones, badges)</li>
+</ul>
+<hr />
+<h2 id="9-forbidden">9. Forbidden</h2>
+<ul>
+<li>Serif fonts</li>
+<li>White text on teal</li>
+<li>Coral as bg fill of text blocks</li>
+<li>Greenwashing imagery</li>
+<li>Hex codes outside the token set</li>
+<li>Header bar accent lines under titles (per PPTX skill guidance)</li>
+<li>Any color not listed in section 2</li>
+</ul>
+<hr />
+<h2 id="memory-capitalisation-rex-v340">Memory — capitalisation Rex (v3.4.0)</h2>
+<!-- ds-iterate écrit ici. Format : ### YYYY-MM-DD — <titre> -->
+
+<p>(vide pour l'instant)</p>
+</article>
+<footer>
+  POF Design System v3.4.0 · Auto-rendered from docs/rules/DESIGN.md · <a href="https://github.com/benoitpof/design-system">GitHub</a>
+</footer>
+</body>
+</html>

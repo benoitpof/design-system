@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ICONS.md · POF Design System</title>
+<link rel="stylesheet" href="../styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Raleway:ital,wght@0,300;0,400;0,600;0,700&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1C1F3B; --steel:#435D74; --steel-light:#5F7D95; --steel-pale:#CFD9E0;
+  --teal:#80C7C2; --teal-dark:#2BA595; --coral:#E8546C;
+  --gris-pof:#F9FCFF; --neutral-light:#F0F0F0; --neutral-mid:#EAEBED;
+  --gray-400:#CED4DA; --gray-600:#6C757D; --body:#3C3C3C; --white:#FFFFFF;
+}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font-family:'Raleway',sans-serif;color:var(--body);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6}
+.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--neutral-mid);padding:14px 32px;display:flex;align-items:center;gap:16px}
+.topbar .brand img{height:26px}.topbar .crumbs{font-family:Poppins;font-size:11px;font-weight:600;color:var(--gray-600);letter-spacing:1px;text-transform:uppercase}
+.topbar .version{font-family:Poppins;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal-dark);background:rgba(128,199,194,.12);padding:3px 8px;border-radius:3px}
+.topbar-nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.topbar-nav a{font-family:Poppins;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase}
+.topbar-nav a:hover,.topbar-nav a.active{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.page-header{padding:48px 32px 24px;max-width:1080px;margin:0 auto;border-bottom:1px solid var(--neutral-mid)}
+.page-header .eyebrow{font-family:Poppins;font-weight:700;font-size:11px;letter-spacing:2px;color:var(--steel-light);text-transform:uppercase}
+.page-header h1{font-family:Poppins;font-weight:700;font-size:36px;color:var(--navy);margin:8px 0 12px;letter-spacing:-.5px}
+.page-header .meta{font-family:Raleway;font-size:13px;color:var(--gray-600)}
+.page-header .actions{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
+.page-header .btn{font-family:Poppins;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase;background:#fff;transition:border-color .15s}
+.page-header .btn:hover{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.page-header .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.page-header .btn.primary:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
+article.md-content{max-width:880px;margin:0 auto;padding:48px 32px 96px;font-family:Raleway,sans-serif;font-size:16px;color:var(--body);line-height:1.7}
+article.md-content h1{font-family:Poppins;font-weight:700;font-size:32px;color:var(--navy);margin:48px 0 16px;letter-spacing:-.5px;line-height:1.2}
+article.md-content h1:first-child{margin-top:0}
+article.md-content h2{font-family:Poppins;font-weight:700;font-size:22px;color:var(--navy);margin:40px 0 14px;padding-top:8px}
+article.md-content h3{font-family:Poppins;font-weight:600;font-size:17px;color:var(--steel);margin:28px 0 10px;text-transform:uppercase;letter-spacing:.5px}
+article.md-content h4{font-family:Poppins;font-weight:600;font-size:14px;color:var(--steel-light);margin:20px 0 8px}
+article.md-content p{margin:0 0 16px}
+article.md-content a{color:var(--teal-dark);text-decoration:underline;text-decoration-color:rgba(43,165,149,.3)}
+article.md-content a:hover{text-decoration-color:var(--teal-dark)}
+article.md-content code{font-family:'Roboto Mono',monospace;font-size:13px;background:var(--gris-pof);padding:2px 6px;border-radius:3px;color:var(--navy);border:1px solid var(--neutral-mid)}
+article.md-content pre{background:var(--navy);color:#80C7C2;padding:18px 22px;border-radius:6px;overflow-x:auto;margin:20px 0;font-family:'Roboto Mono',monospace;font-size:13px;line-height:1.5}
+article.md-content pre code{background:transparent;border:none;color:inherit;padding:0;font-size:inherit}
+article.md-content blockquote{margin:20px 0;padding:14px 22px;border-left:3px solid var(--teal);background:rgba(128,199,194,.08);font-style:italic;color:var(--steel)}
+article.md-content table{border-collapse:collapse;width:100%;margin:20px 0;font-family:Raleway;font-size:14px}
+article.md-content table th{background:var(--navy);color:#fff;font-family:Poppins;font-weight:600;padding:12px 14px;text-align:left}
+article.md-content table td{padding:10px 14px;border-bottom:1px solid var(--neutral-mid);vertical-align:top}
+article.md-content table tr:nth-child(even) td{background:var(--gris-pof)}
+article.md-content ul,article.md-content ol{margin:0 0 16px 22px;padding:0}
+article.md-content li{margin:6px 0}
+article.md-content hr{border:none;border-top:1px solid var(--neutral-mid);margin:32px 0}
+article.md-content img{max-width:100%;height:auto;border-radius:4px}
+.codehilite{background:var(--navy);border-radius:6px;margin:20px 0;overflow-x:auto}
+.codehilite pre{margin:0}
+footer{padding:40px 32px;text-align:center;color:var(--gray-600);font-family:Raleway;font-size:12px;border-top:1px solid var(--neutral-mid)}
+footer a{color:var(--teal-dark);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="../index.html"><img src="../assets/logos/pof-logo-color.svg" alt="POF"></a>
+  <span class="crumbs">Rules / ICONS</span>
+  <span class="version">v3.4.0</span>
+  <nav class="topbar-nav">
+    <a href="../index.html">Overview</a>
+    <a href="../architecture.html">Architecture</a>
+    <a href="../charts.html">Charts</a>
+    <a href="../maps.html">Maps</a>
+    <a href="../icons.html">Icons</a>
+    <a href="../workflows.html">Workflows</a>
+    <a href="../databases.html">DBs</a>
+    <a href="https://github.com/benoitpof/design-system">GitHub</a>
+  </nav>
+</div>
+<header class="page-header">
+  <div class="eyebrow">Rules / ICONS</div>
+  <h1>ICONS.md</h1>
+  <div class="meta">Source : <code>docs/rules/ICONS.md</code> · POF DS v3.4.0</div>
+  <div class="actions">
+    <a class="btn primary" href="https://github.com/benoitpof/design-system/blob/main/docs/rules/ICONS.md">View on GitHub</a>
+    <a class="btn" href="../index.html">Back to overview</a>
+  </div>
+</header>
+<article class="md-content">
+<h1 id="iconsmd-pof-icon-system">ICONS.md — POF Icon System</h1>
+<p><strong>Version:</strong> 3.0 | <strong>Updated:</strong> 2026-04-27 | <strong>Design system:</strong> v3.3.6</p>
+<p>POF icon system uses <strong>Tabler Icons CDN</strong> as the primary source. Custom curated POF SVG icons (ecology, environment) have been archived because their custom stroke-width (28) was incompatible with the visual lightness of Tabler outline style.</p>
+<hr />
+<h2 id="1-tabler-icons-via-cdn-primary-source">1. Tabler Icons via CDN — primary source</h2>
+<div class="codehilite"><pre><span></span><code><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">unpkg</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="nv">@tabler</span><span class="o">/</span><span class="n">icons</span><span class="o">/</span><span class="n">icons</span><span class="o">/</span><span class="n">outline</span><span class="o">/[</span><span class="n">name</span><span class="o">]</span><span class="p">.</span><span class="n">svg</span><span class="w"></span>
+</code></pre></div>
+
+<p>Examples : <code>building-factory-2</code>, <code>container</code>, <code>package</code>, <code>truck</code>, <code>arrows-exchange</code>, <code>chart-bar</code>, <code>users</code>, <code>settings</code>, <code>mail</code>, <code>recycle</code>, <code>leaf</code>, <code>droplet</code>, <code>flame</code>, <code>bolt</code>, <code>fish</code>, <code>planet</code>, <code>solar-panel</code>.</p>
+<h3 id="selection-workflow">Selection workflow</h3>
+<ol>
+<li>Browse https://tabler.io/icons or https://tabler-icons.io to find the icon</li>
+<li>Use the outline variant: <code>unpkg.com/@tabler/icons/icons/outline/&lt;name&gt;.svg</code></li>
+<li>The SVG already has <code>stroke="currentColor"</code> and <code>stroke-width="2"</code> (light, modern)</li>
+<li>Recolor via CSS : <code>&lt;svg style="color: var(--pof-navy)"&gt;</code> or <code>color: var(--pof-teal)</code> etc.</li>
+</ol>
+<h3 id="embed-strategies">Embed strategies</h3>
+<table>
+<thead>
+<tr>
+<th>Context</th>
+<th>Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTML / Web</td>
+<td><code>&lt;img src="https://unpkg.com/@tabler/icons/icons/outline/[name].svg"&gt;</code> + CSS <code>color</code> (currentColor cascade)</td>
+</tr>
+<tr>
+<td>Inline HTML</td>
+<td>Fetch SVG, paste inline, add <code>style="color: ..."</code></td>
+</tr>
+<tr>
+<td>PPTX</td>
+<td>Fetch SVG, rasterize to PNG at target color (e.g. via <code>sharp</code> Node.js or any vector tool), embed PNG</td>
+</tr>
+<tr>
+<td>DOCX / PDF</td>
+<td>Fetch SVG, convert to PNG, embed image</td>
+</tr>
+</tbody>
+</table>
+<h3 id="default-colors-per-medium">Default colors per medium</h3>
+<ul>
+<li><strong>Light bg</strong> : <code>#1C1F3B</code> (navy)</li>
+<li><strong>Dark bg</strong> : <code>#FFFFFF</code> (white)</li>
+<li><strong>Accent / highlight</strong> : <code>#80C7C2</code> (teal)</li>
+<li><strong>Forbidden</strong> : coral <code>#E8546C</code> for icons (emphasis only, not iconography)</li>
+</ul>
+<h3 id="recommended-icon-shortlist-for-pof">Recommended icon shortlist for POF</h3>
+<p>Industrial / production : <code>building-factory-2</code>, <code>container</code>, <code>package</code>, <code>tools</code>, <code>hammer</code>, <code>filter</code>, <code>truck</code>, <code>arrows-exchange</code>
+Ecology / environment : <code>recycle</code>, <code>leaf</code>, <code>droplet</code>, <code>flame</code>, <code>bolt</code>, <code>fish</code>, <code>planet</code>, <code>solar-panel</code>, <code>tree</code>, <code>seedling</code>
+Process / data : <code>chart-bar</code>, <code>chart-line</code>, <code>arrows-shuffle</code>, <code>refresh</code>, <code>settings</code>
+Impact / people : <code>users</code>, <code>heart</code>, <code>trophy</code>, <code>award</code>, <code>school</code>
+Logistics : <code>ship</code>, <code>plane</code>, <code>route</code></p>
+<hr />
+<h2 id="2-pof-brand-pictos-assetspictos">2. POF brand pictos — <code>/assets/pictos/</code></h2>
+<p>Two files only :</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Color</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pof-picto-color.svg</code></td>
+<td>Teal <code>#80C7C2</code></td>
+<td>Mark on light backgrounds</td>
+</tr>
+<tr>
+<td><code>pof-picto-white.svg</code></td>
+<td>White</td>
+<td>Mark on dark backgrounds</td>
+</tr>
+</tbody>
+</table>
+<p>POF brand symbol (waves stacked). Use cases : favicon, loading state, decorative corner mark, internal asset.</p>
+<p><strong>NOT a UI icon.</strong> Do not place inline in body text.</p>
+<hr />
+<h2 id="3-archived-out-of-scope">3. Archived (out of scope)</h2>
+<ul>
+<li><code>assets/icons/_archived/ecology/</code> — 32 SVG with stroke-width 28 (too thick vs Tabler style). Kept for reference, not used.</li>
+<li><code>assets/icons/_archived/environment/</code> — 138 SVG, archived in v3.3.5.</li>
+</ul>
+<p>These can be un-archived if a future need justifies it.</p>
+<hr />
+<h2 id="size-guide">Size guide</h2>
+<table>
+<thead>
+<tr>
+<th>Use case</th>
+<th>Render size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feature card icon</td>
+<td>0.6 × 0.6" (rasterize at 256px for PPTX)</td>
+</tr>
+<tr>
+<td>Inline header icon</td>
+<td>0.4 × 0.4"</td>
+</tr>
+<tr>
+<td>Full-width hero icon</td>
+<td>1.0 × 1.0"</td>
+</tr>
+<tr>
+<td>Process step icon</td>
+<td>0.5 × 0.5"</td>
+</tr>
+<tr>
+<td>Web (HTML/CSS)</td>
+<td>24 × 24 px to 64 × 64 px</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="forbidden">Forbidden</h2>
+<ul>
+<li>Drawing custom SVG icons inline (use Tabler CDN)</li>
+<li>Coral <code>#E8546C</code> for icons (emphasis only)</li>
+<li>Adding shadow / drop-shadow / blur / filter on icons</li>
+<li>Using brand picto as a UI icon</li>
+<li>Stretching, rotating, distorting icons</li>
+<li>Mixing different icon families in the same row / context (visual inconsistency)</li>
+</ul>
+<hr />
+<h1 id="annexe-details-tabler-ex-icons-tablermd-fusionne-v340">Annexe — Détails Tabler (ex ICONS-TABLER.md, fusionné v3.4.0)</h1>
+<p>name: icons-tabler
+description: Curated Tabler icon library for POF — 106 icons × 3 colors + recolorable</p>
+<hr />
+<h1 id="pof-design-system-icones-tabler">POF Design System — Icônes Tabler</h1>
+<blockquote>
+<p><strong>106 icônes</strong> · Tabler Icons v3.41.1 (MIT) · 4 variants par icône · 424 fichiers SVG
+Disponibles en ligne : https://tabler.io/icons — fichiers locaux pour usage offline et pptxgenjs</p>
+</blockquote>
+<hr />
+<h2 id="variantes-couleur">Variantes couleur</h2>
+<table>
+<thead>
+<tr>
+<th>Fichier</th>
+<th>Couleur</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{slug}.svg</code></td>
+<td><code>stroke=currentColor</code></td>
+<td>CSS / HTML dynamique</td>
+</tr>
+<tr>
+<td><code>{slug}_navy.svg</code></td>
+<td><code>#1A2B4A</code></td>
+<td>Fond blanc ou clair — défaut</td>
+</tr>
+<tr>
+<td><code>{slug}_teal.svg</code></td>
+<td><code>#80C8C3</code></td>
+<td>Accent sur fond marine</td>
+</tr>
+<tr>
+<td><code>{slug}_white.svg</code></td>
+<td><code>#FFFFFF</code></td>
+<td>Fond sombre / marine</td>
+</tr>
+</tbody>
+</table>
+<h2 id="integration-pptxgenjs">Intégration pptxgenjs</h2>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;fs&quot;</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">svgData</span> <span class="o">=</span> <span class="nx">p</span> <span class="p">=&gt;</span> <span class="s2">&quot;image/svg+xml;base64,&quot;</span> <span class="o">+</span> <span class="nx">Buffer</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="s2">&quot;utf8&quot;</span><span class="p">)).</span><span class="nx">toString</span><span class="p">(</span><span class="s2">&quot;base64&quot;</span><span class="p">);</span>
+<span class="nx">slide</span><span class="p">.</span><span class="nx">addImage</span><span class="p">({</span> <span class="nx">data</span><span class="o">:</span> <span class="nx">svgData</span><span class="p">(</span><span class="s2">&quot;assets/icons/tool_navy.svg&quot;</span><span class="p">),</span> <span class="nx">x</span><span class="o">:</span><span class="mf">1</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span><span class="mf">1</span><span class="p">,</span> <span class="nx">w</span><span class="o">:</span><span class="mf">0.5</span><span class="p">,</span> <span class="nx">h</span><span class="o">:</span><span class="mf">0.5</span> <span class="p">});</span>
+</code></pre></div>
+
+<hr />
+<h2 id="alertes-statuts">Alertes &amp; statuts</h2>
+<table>
+<thead>
+<tr>
+<th>Slug</th>
+<th>Nom</th>
+<th>Usage POF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>alert-triangle</code></td>
+<td>Alerte</td>
+<td>Avertissement, risque, situation critique</td>
+</tr>
+<tr>
+<td><code>circle-x</code></td>
+<td>Erreur</td>
+<td>Annulation, refus, erreur de validation</td>
+</tr>
+<tr>
+<td><code>check</code></td>
+<td>Valider</td>
+<td>Confirmation, tâche complétée, OK</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td>Fermer</td>
+<td>Suppression, annulation, fermeture</td>
+</tr>
+<tr>
+<td><code>hand-stop</code></td>
+<td>Stop</td>
+<td>Arrêt, refus, limite opérationnelle</td>
+</tr>
+<tr>
+<td><code>shield-check</code></td>
+<td>Sécurité</td>
+<td>Conformité, sécurité, validation qualité</td>
+</tr>
+<tr>
+<td><code>lock</code></td>
+<td>Verrouillé</td>
+<td>Sécurité, accès restreint, confidentiel</td>
+</tr>
+<tr>
+<td><code>bell</code></td>
+<td>Notification</td>
+<td>Alerte, rappel, notification terrain</td>
+</tr>
+</tbody>
+</table>
+<h2 id="personnes-equipe">Personnes &amp; équipe</h2>
+<table>
+<thead>
+<tr>
+<th>Slug</th>
+<th>Nom</th>
+<th>Usage POF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>user</code></td>
+<td>Utilisateur</td>
+<td>Profil individuel, membre de l'équipe</td>
+</tr>
+<tr>
+<td><code>users</code></td>
+<td>Équipe</td>
+<td>Équipe, communauté, partenaires locaux</td>
+</tr>
+<tr>
+<td><code>user-check</code></td>
+<td>Accrédité</td>
+<td>Validation, certification, opérateur formé</td>
+</tr>
+<tr>
+<td><code>user-plus</code></td>
+<td>Ajouter membre</td>
+<td>Recrutement, onboarding, ajout accès</td>
+</tr>
+<tr>
+<td><code>id-badge</code></td>
+<td>Badge ID</td>
+<td>Identification, accréditation, carte terrain</td>
+</tr>
+<tr>
+<td><code>address-book</code></td>
+<td>Contacts</td>
+<td>Répertoire, contacts partenaires</td>
+</tr>
+<tr>
+<td><code>heart</code></td>
+<td>Impact</td>
+<td>Impact social, valeurs, communauté</td>
+</tr>
+<tr>
+<td><code>award</code></td>
+<td>Récompense</td>
+<td>Succès, meilleure pratique, top franchisé</td>
+</tr>
+<tr>
+<td><code>trophy</code></td>
+<td>Trophée</td>
+<td>Excellence, performance, objectif atteint</td>
+</tr>
+<tr>
+<td><code>certificate</code></td>
+<td>Certification</td>
+<td>Label qualité, norme, accréditation POF</td>
+</tr>
+</tbody>
+</table>
+<h2 id="finance-business">Finance &amp; business</h2>
+<table>
+<thead>
+<tr>
+<th>Slug</th>
+<th>Nom</th>
+<th>Usage POF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>coin</code></td>
+<td>Budget</td>
+<td>Coût unitaire, investissement, capex</td>
+</tr>
+<tr>
+<td><code>coins</code></td>
+<td>Revenus</td>
+<td>Flux financiers, cumul revenus</td>
+</tr>
+<tr>
+<td><code>currency-dollar</code></td>
+<td>Devise</td>
+<td>Pricing, tarification, devise locale</td>
+</tr>
+<tr>
+<td><code>wallet</code></td>
+<td>Portefeuille</td>
+<td>Trésorerie, fonds de roulement</td>
+</tr>
+<tr>
+<td><code>receipt</code></td>
+<td>Facture</td>
+<td>Justificatif, facture, pièce comptable</td>
+</tr>
+<tr>
+<td><code>cash</code></td>
+<td>Cash</td>
+<td>Paiement comptant, liquidités</td>
+</tr>
+<tr>
+<td><code>shopping-cart</code></td>
+<td>Achat</td>
+<td>Commande, marketplace, approvisionnement</td>
+</tr>
+<tr>
+<td><code>briefcase</code></td>
+<td>Business</td>
+<td>Activité commerciale, partenariat B2B</td>
+</tr>
+</tbody>
+</table>
+<h2 id="donnees-analytics">Données &amp; analytics</h2>
+<table>
+<thead>
+<tr>
+<th>Slug</th>
+<th>Nom</th>
+<th>Usage POF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>chart-bar</code></td>
+<td>Graphique barres</td>
+<td>KPIs, métriques, comparaison franchisés</td>
+</tr>
+<tr>
+<td><code>chart-pie</code></td>
+<td>Camembert</td>
+<td>Répartition, parts, segmentation</td>
+</tr>
+<tr>
+<td><code>chart-line</code></td>
+<td>Courbe</td>
+<td>Tendance, évolution, progression</td>
+</tr>
+<tr>
+<td><code>trending-up</code></td>
+<td>Croissance</td>
+<td>Croissance, scale, montée en puissance</td>
+</tr>
+<tr>
+<td><code>target</code></td>
+<td>Objectif</td>
+<td>Cible, KPI, objectif opérationnel</td>
+</tr>
+<tr>
+<td><code>gauge</code></td>
+<td>Performance</td>
+<td>Indicateur, mesure de performance</td>
+</tr>
+<tr>
+<td><code>presentation</code></td>
+<td>Présentation</td>
+<td>Pitch, slide deck, formation</td>
+</tr>
+<tr>
+<td><code>report</code></td>
+<td>Rapport</td>
+<td>Rapport terrain, bilan périodique</td>
+</tr>
+</tbody>
+</table>
+<h2 id="documents-fichiers">Documents &amp; fichiers</h2>
+<table>
+<thead>
+<tr>
+<th>Slug</th>
+<th>Nom</th>
+<th>Usage POF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>file-text</code></td>
+<td>Document</td>
+<td>Rapport, contrat, fiche technique</td>
+</tr>
+<tr>
+<td><code>file</code></td>
+<td>Fichier</td>
+<td>Fichier générique, export</td>
+</tr>
+<tr>
+<td><code>folder</code></td>
+<td>Dossier</td>
+<td>Classement, projet, dossier franchisé</td>
+</tr>
+<tr>
+<td><code>clipboard-list</code></td>
+<td>Checklist</td>
+<td>Protocole, SOP, liste de contrôle terrain</td>
+</tr>
+<tr>
+<td><code>notes</code></td>
+<td>Notes</td>
+<td>Mémos, annotations, suivi terrain</td>
+</tr>
+<tr>
+<td><code>paperclip</code></td>
+<td>Pièce jointe</td>
+<td>Document lié, attachement mail</td>
+</tr>
+<tr>
+<td><code>writing</code></td>
+<td>Rédaction</td>
+<td>Contrat signé, accord, rédaction</td>
+</tr>
+<tr>
+<td><code>pencil</code></td>
+<td>Édition</td>
+<td>Modification, annotation, mise à jour</td>
+</tr>
+<tr>
+<td><code>copyright</code></td>
+<td>Copyright</td>
+<td>Propriété intellectuelle, droits POF</td>
+</tr>
+</tbody>
+</table>
+<h2 id="communication">Communication</h2>
+<table>
+<thead>
+<tr>
+<th>Slug</th>
+<th>Nom</th>
+<th>Usage POF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mail</code></td>
+<td>Email</td>
+<td>Correspondance, communication officielle</td>
+</tr>
+<tr>
+<td><code>phone</code></td>
+<td>Téléphone</td>
+<td>Contact direct, appel terrain</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Message</td>
+<td>Chat, discussion, feedback franchisé</td>
+</tr>
+<tr>
+<td><code>send</code></td>
+<td>Envoyer</td>
+<td>Envoi, transmission, notification push</td>
+</tr>
+<tr>
+<td><code>microphone</code></td>
+<td>Micro</td>
+<td>Podcast, prise de parole, audio</td>
+</tr>
+<tr>
+<td><code>video</code></td>
+<td>Vidéo</td>
+<td>Formation vidéo, tutoriel, contenu</td>
+</tr>
+</tbody>
+</table>
+<h2 id="navigation-localisation">Navigation &amp; localisation</h2>
+<table>
+<thead>
+<tr>
+<th>Slug</th>
+<th>Nom</th>
+<th>Usage POF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>map-pin</code></td>
+<td>Localisation</td>
+<td>Site franchisé, localisation GPS, implantation</td>
+</tr>
+<tr>
+<td><code>pin</code></td>
+<td>Épingle</td>
+<td>Marqueur, point d'intérêt</td>
+</tr>
+<tr>
+<td><code>map</code></td>
+<td>Carte</td>
+<td>Carte territoire, couverture géographique</td>
+</tr>
+<tr>
+<td><code>compass</code></td>
+<td>Direction</td>
+<td>Orientation, boussole, navigation</td>
+</tr>
+<tr>
+<td><code>world</code></td>
+<td>Monde</td>
+<td>International, global, déploiement pays</td>
+</tr>
+<tr>
+<td><code>flag</code></td>
+<td>Pays</td>
+<td>Pays cible, drapeau, implantation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="logistique-operations">Logistique &amp; opérations</h2>
+<table>
+<thead>
+<tr>
+<th>Slug</th>
+<th>Nom</th>
+<th>Usage POF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>truck</code></td>
+<td>Transport</td>
+<td>Logistique, livraison, collecte terrain</td>
+</tr>
+<tr>
+<td><code>ship</code></td>
+<td>Navire</td>
+<td>Export maritime, fret, supply chain</td>
+</tr>
+<tr>
+<td><code>plane</code></td>
+<td>Avion</td>
+<td>Déplacement, mission internationale</td>
+</tr>
+<tr>
+<td><code>plane-arrival</code></td>
+<td>Arrivée</td>
+<td>Import, réception matériel</td>
+</tr>
+<tr>
+<td><code>plane-departure</code></td>
+<td>Départ</td>
+<td>Export, départ mission</td>
+</tr>
+<tr>
+<td><code>package</code></td>
+<td>Colis</td>
+<td>Kit machine, livraison, emballage</td>
+</tr>
+<tr>
+<td><code>building-warehouse</code></td>
+<td>Entrepôt</td>
+<td>Stockage matière, hub logistique</td>
+</tr>
+<tr>
+<td><code>barrel</code></td>
+<td>Baril</td>
+<td>Stockage vrac, pétrochimie, matière</td>
+</tr>
+<tr>
+<td><code>arrows-shuffle</code></td>
+<td>Réallocation</td>
+<td>Redistribution matière, flux</td>
+</tr>
+<tr>
+<td><code>refresh</code></td>
+<td>Actualiser</td>
+<td>Synchronisation, mise à jour process</td>
+</tr>
+</tbody>
+</table>
+<h2 id="infrastructure-technique">Infrastructure &amp; technique</h2>
+<table>
+<thead>
+<tr>
+<th>Slug</th>
+<th>Nom</th>
+<th>Usage POF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tool</code></td>
+<td>Outil</td>
+<td>Maintenance, réparation, technique terrain</td>
+</tr>
+<tr>
+<td><code>tools-kitchen</code></td>
+<td>Atelier</td>
+<td>Outillage, poste de travail, fabrication</td>
+</tr>
+<tr>
+<td><code>settings</code></td>
+<td>Paramètres</td>
+<td>Configuration système, réglage</td>
+</tr>
+<tr>
+<td><code>plug</code></td>
+<td>Branchement</td>
+<td>Connexion électrique, alimentation</td>
+</tr>
+<tr>
+<td><code>database</code></td>
+<td>Base de données</td>
+<td>Données opérationnelles, ERP, Notion</td>
+</tr>
+<tr>
+<td><code>server</code></td>
+<td>Serveur</td>
+<td>Infrastructure, cloud, IT</td>
+</tr>
+<tr>
+<td><code>cloud</code></td>
+<td>Cloud</td>
+<td>Sauvegarde, synchronisation, SaaS</td>
+</tr>
+<tr>
+<td><code>wifi</code></td>
+<td>Wi-Fi</td>
+<td>Connectivité terrain, IoT machine</td>
+</tr>
+<tr>
+<td><code>link</code></td>
+<td>Lien</td>
+<td>Intégration, connexion inter-systèmes</td>
+</tr>
+<tr>
+<td><code>qrcode</code></td>
+<td>QR Code</td>
+<td>Traçabilité, identification lot, scan</td>
+</tr>
+<tr>
+<td><code>barcode</code></td>
+<td>Code barre</td>
+<td>Identification produit, inventaire</td>
+</tr>
+<tr>
+<td><code>antenna</code></td>
+<td>Antenne</td>
+<td>Signal, télémesure, connectivité</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gestion-planning">Gestion &amp; planning</h2>
+<table>
+<thead>
+<tr>
+<th>Slug</th>
+<th>Nom</th>
+<th>Usage POF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>calendar</code></td>
+<td>Calendrier</td>
+<td>Planning, maintenance préventive, agenda</td>
+</tr>
+<tr>
+<td><code>clock</code></td>
+<td>Horloge</td>
+<td>Délai, temps de cycle, durée process</td>
+</tr>
+<tr>
+<td><code>hourglass</code></td>
+<td>Sablier</td>
+<td>Attente, délai, temps restant</td>
+</tr>
+<tr>
+<td><code>inbox</code></td>
+<td>Inbox</td>
+<td>Réception tâches, boîte mail, triage</td>
+</tr>
+<tr>
+<td><code>key</code></td>
+<td>Accès</td>
+<td>Authentification, accréditation, accès site</td>
+</tr>
+<tr>
+<td><code>filter</code></td>
+<td>Filtrer</td>
+<td>Filtrage données, tri, sélection</td>
+</tr>
+<tr>
+<td><code>search</code></td>
+<td>Recherche</td>
+<td>Recherche franchisé, requête données</td>
+</tr>
+<tr>
+<td><code>plus</code></td>
+<td>Ajouter</td>
+<td>Création, ajout, nouveau franchisé</td>
+</tr>
+<tr>
+<td><code>external-link</code></td>
+<td>Lien externe</td>
+<td>Lien vers doc, ressource externe</td>
+</tr>
+</tbody>
+</table>
+<h2 id="medias-creation">Médias &amp; création</h2>
+<table>
+<thead>
+<tr>
+<th>Slug</th>
+<th>Nom</th>
+<th>Usage POF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>camera</code></td>
+<td>Photo</td>
+<td>Documentation terrain, photo machine</td>
+</tr>
+<tr>
+<td><code>photo</code></td>
+<td>Photo</td>
+<td>Visuel, photo produit, asset</td>
+</tr>
+<tr>
+<td><code>star</code></td>
+<td>Favori</td>
+<td>Mise en avant, top performance</td>
+</tr>
+<tr>
+<td><code>sparkles</code></td>
+<td>Innovation</td>
+<td>Nouveau, IA, solution disruptive</td>
+</tr>
+<tr>
+<td><code>bulb</code></td>
+<td>Idée</td>
+<td>Innovation, R&amp;D, amélioration process</td>
+</tr>
+<tr>
+<td><code>rocket</code></td>
+<td>Lancement</td>
+<td>Démarrage franchise, scale, go-live</td>
+</tr>
+<tr>
+<td><code>download</code></td>
+<td>Télécharger</td>
+<td>Récupérer doc, export données</td>
+</tr>
+<tr>
+<td><code>upload</code></td>
+<td>Uploader</td>
+<td>Envoi doc, rapport terrain</td>
+</tr>
+<tr>
+<td><code>share</code></td>
+<td>Partager</td>
+<td>Diffusion, partage ressource</td>
+</tr>
+</tbody>
+</table>
+<h2 id="nature-durabilite">Nature &amp; durabilité</h2>
+<table>
+<thead>
+<tr>
+<th>Slug</th>
+<th>Nom</th>
+<th>Usage POF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tree</code></td>
+<td>Arbre</td>
+<td>Reforestation, nature, CO2</td>
+</tr>
+<tr>
+<td><code>leaf-2</code></td>
+<td>Feuille</td>
+<td>Durabilité, éco-conception</td>
+</tr>
+<tr>
+<td><code>seedling</code></td>
+<td>Semis</td>
+<td>Démarrage, croissance locale</td>
+</tr>
+<tr>
+<td><code>plant-2</code></td>
+<td>Plante</td>
+<td>Végétal, agriculture locale</td>
+</tr>
+</tbody>
+</table>
+<h2 id="divers">Divers</h2>
+<table>
+<thead>
+<tr>
+<th>Slug</th>
+<th>Nom</th>
+<th>Usage POF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>book</code></td>
+<td>Guide</td>
+<td>Documentation, guide opérateur, SOP</td>
+</tr>
+<tr>
+<td><code>books</code></td>
+<td>Bibliothèque</td>
+<td>Catalogue ressources, formation</td>
+</tr>
+<tr>
+<td><code>microscope</code></td>
+<td>Analyse</td>
+<td>R&amp;D, analyse qualité, laboratoire</td>
+</tr>
+<tr>
+<td><code>lifebuoy</code></td>
+<td>Support</td>
+<td>Assistance, hotline, support franchisé</td>
+</tr>
+<tr>
+<td><code>player-play</code></td>
+<td>Démarrer</td>
+<td>Lancer process, activer machine</td>
+</tr>
+<tr>
+<td><code>building</code></td>
+<td>Bâtiment</td>
+<td>Entité, bureau, infrastructure</td>
+</tr>
+<tr>
+<td><code>device-mobile</code></td>
+<td>Mobile</td>
+<td>Application terrain, notification</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>106 icônes · Tabler Icons MIT License · https://tabler.io/icons</em></p>
+</article>
+<footer>
+  POF Design System v3.4.0 · Auto-rendered from docs/rules/ICONS.md · <a href="https://github.com/benoitpof/design-system">GitHub</a>
+</footer>
+</body>
+</html>

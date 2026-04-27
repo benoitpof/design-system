@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ds-feedback · POF Workflows</title>
+<link rel="stylesheet" href="../styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+<style>
+.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--neutral-mid);padding:14px 32px;display:flex;align-items:center;gap:16px}
+.topbar .brand img{height:26px}.topbar .crumbs{font-family:Poppins;font-size:11px;font-weight:600;color:var(--gray-600);letter-spacing:1px;text-transform:uppercase}
+.topbar-nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}.topbar-nav a{font-family:Poppins;font-size:10px;font-weight:600;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase}.topbar-nav a:hover{border-color:var(--teal)}
+.page-header{padding:48px 32px 24px;max-width:1080px;margin:0 auto;border-bottom:1px solid var(--neutral-mid)}
+.page-header .eyebrow{font-family:Poppins;font-weight:700;font-size:11px;letter-spacing:2px;color:var(--steel-light);text-transform:uppercase}
+.page-header h1{font-family:Poppins;font-weight:700;font-size:36px;color:var(--navy);margin:8px 0 12px}
+.page-header .desc{font-family:Raleway;font-size:15px;color:var(--steel);max-width:760px;line-height:1.6}
+.actions{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{font-family:Poppins;font-size:10px;font-weight:600;color:var(--navy);text-decoration:none;padding:10px 18px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase;background:#fff}
+.btn:hover{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn.primary:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
+.diagram{max-width:880px;margin:32px auto;padding:24px 32px;background:var(--gris-pof);border-radius:8px;border:1px solid var(--neutral-mid)}
+.diagram svg{width:100%;height:auto}
+section.body{max-width:880px;margin:0 auto;padding:32px;font-family:Raleway;font-size:15px;line-height:1.7;color:var(--body)}
+section.body h2{font-family:Poppins;font-weight:700;font-size:20px;color:var(--navy);margin:32px 0 12px}
+section.body code{font-family:'Roboto Mono',monospace;font-size:13px;background:#fff;padding:2px 6px;border-radius:3px;border:1px solid var(--neutral-mid)}
+section.body ul{margin:0 0 16px 22px}
+.triggers-list code{display:inline-block;background:rgba(128,199,194,.12);color:var(--teal-dark);padding:4px 10px;border-radius:3px;margin:0 6px 6px 0;font-family:Poppins;font-weight:600;font-size:11px;border:none}
+</style>
+</head>
+<body>
+<div class="topbar">
+<a class="brand" href="../index.html"><img src="../assets/logos/pof-logo-color.svg" alt="POF"></a>
+<span class="crumbs">Workflows / ds-feedback</span>
+<nav class="topbar-nav">
+<a href="../index.html">Overview</a>
+<a href="../architecture.html">Architecture</a>
+<a href="../workflows.html">← All workflows</a>
+<a href="https://github.com/benoitpof/design-system">GitHub</a>
+</nav>
+</div>
+<header class="page-header">
+<div class="eyebrow">S4 · ATOMIQUE</div>
+<h1>ds-feedback</h1>
+<div class="desc">Log brut des Rex et feedbacks dans la DB Notion DS Feedback. Appelée par DS-Dataviz-generator et ds-file-assembler en phase 7, ou directement par Benoît.</div>
+<div class="actions">
+<a class="btn primary" href="https://www.notion.so/34fc2ce245e88166bc23fa403fb75031" target="_blank">Spec complète Notion (self-contained)</a>
+<a class="btn" href="../workflows.html">← Tous les workflows</a>
+</div>
+</header>
+<div class="diagram"><svg viewBox="0 0 480 180" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="50" width="120" height="40" rx="6" fill="#FFF" stroke="#1C1F3B" stroke-width="1.5"/><text x="80" y="68" font-family="Poppins" font-weight="700" font-size="9" fill="#1C1F3B" text-anchor="middle">DS-Dataviz</text><text x="80" y="82" font-family="Raleway" font-size="8" fill="#435D74" text-anchor="middle">phase 7</text><rect x="20" y="100" width="120" height="40" rx="6" fill="#FFF" stroke="#1C1F3B" stroke-width="1.5"/><text x="80" y="118" font-family="Poppins" font-weight="700" font-size="9" fill="#1C1F3B" text-anchor="middle">file-assembler</text><text x="80" y="132" font-family="Raleway" font-size="8" fill="#435D74" text-anchor="middle">phase 7</text><path d="M145 70 L 180 90" stroke="#435D74" stroke-width="2" stroke-dasharray="3,3"/><path d="M145 120 L 180 100" stroke="#435D74" stroke-width="2" stroke-dasharray="3,3"/><rect x="185" y="55" width="110" height="80" rx="6" fill="#1C1F3B"/><text x="240" y="85" font-family="Poppins" font-weight="700" font-size="12" fill="#80C7C2" text-anchor="middle">ds-feedback</text><text x="240" y="103" font-family="Raleway" font-size="8" fill="#FFF" text-anchor="middle" opacity="0.85">log atomique</text><text x="240" y="118" font-family="Raleway" font-size="8" fill="#FFF" text-anchor="middle" opacity="0.6">cluster mode</text><path d="M300 95 L 335 95" stroke="#435D74" stroke-width="2"/><polygon points="335,90 345,95 335,100" fill="#435D74"/><rect x="350" y="55" width="110" height="80" rx="6" fill="#FFF" stroke="#80C7C2" stroke-width="2"/><text x="405" y="80" font-family="Poppins" font-weight="700" font-size="10" fill="#1C1F3B" text-anchor="middle">DS FEEDBACK</text><text x="405" y="95" font-family="Poppins" font-weight="700" font-size="10" fill="#1C1F3B" text-anchor="middle">DB</text><text x="405" y="115" font-family="Raleway" font-size="8" fill="#435D74" text-anchor="middle">DB Notion</text></svg></div>
+<section class="body">
+<h2>Trigger phrases</h2>
+<div class="triggers-list"><code>log feedback</code> <code>note ce Rex</code> <code>capture learning</code></div>
+<h2>Spec complète</h2>
+<p>La spec détaillée (API, pipeline, inputs/outputs, dépendances, SKILL.md attendu, forbidden, exemples de lancement, effort de build) est dans la <a href="https://www.notion.so/34fc2ce245e88166bc23fa403fb75031" target="_blank">page Notion dédiée</a>. Cette page est <strong>self-contained</strong> : copy-paste son contenu dans un nouveau chat Cowork pour lancer le build via <code>/build-lead</code> Fast Track.</p>
+<h2>Statut</h2>
+<p>À builder via <code>/build-lead</code> Fast Track (effort 0.5 à 3 jours selon skill).</p>
+</section>
+</body></html>

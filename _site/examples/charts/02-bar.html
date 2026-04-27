@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>02 · Bar · POF Chart Bank</title><link rel="stylesheet" href="../styles.css?v=1777202930565"></head>
+<body>
+<div class="topbar"><a class="brand" href="../index.html"><img src="../assets/pof-logo-color.svg" alt="POF"><span class="crumbs"><a href="../index.html">Chart bank</a> <span style="color:var(--gray-400)">/</span> 02 · Bar</span></a><nav class="types" id="types-nav"></nav></div>
+<div class="page">
+<header class="page-header"><div class="pipe-title"><div class="pipe"></div><div>
+<div class="eyebrow">Chart 02 · Column comparison</div><h1>Bar chart (vertical)</h1>
+<p>Categorical comparison. Single highlighted bar (navy) draws the eye to the lead datapoint. No gridlines on the simple version, baseline only.</p>
+</div></div></header>
+<div class="variations">
+
+<section class="variation"><div class="variation-head"><div class="lbl"><span class="num">A</span>Minimal · 5 categories with one highlight</div><div class="meta">640×340</div></div>
+<div class="variation-body gris">
+<svg viewBox="0 0 640 340" class="chart-svg" xmlns="http://www.w3.org/2000/svg">
+<text x="40" y="36" class="chart-eyebrow">PLASTIC PROCESSED · BY SITE</text>
+<line x1="40" y1="48" x2="80" y2="48" stroke="#5F7D95" stroke-width="2"/>
+<text x="40" y="74" class="chart-title">2025 output (tonnes)</text>
+<!-- bars -->
+<path d="M68,148 A2,2 0 0 1 70,146 L154,146 A2,2 0 0 1 156,148 L156,290 L68,290 Z" fill="#1C1F3B"/><text x="112" y="138" text-anchor="middle" class="value-label">420T</text><text x="112" y="312" text-anchor="middle" class="axis-label">Senegal</text>
+<path d="M172,158.4 A2,2 0 0 1 174,156.4 L258,156.4 A2,2 0 0 1 260,158.4 L260,290 L172,290 Z" fill="#CFD9E0"/><text x="216" y="148" text-anchor="middle" class="value-label" fill="#6C757D">380T</text><text x="216" y="312" text-anchor="middle" class="axis-label">Philippines</text>
+<path d="M276,189.6 A2,2 0 0 1 278,187.6 L362,187.6 A2,2 0 0 1 364,189.6 L364,290 L276,290 Z" fill="#CFD9E0"/><text x="320" y="180" text-anchor="middle" class="value-label" fill="#6C757D">290T</text><text x="320" y="312" text-anchor="middle" class="axis-label">Côte d'Ivoire</text>
+<path d="M380,227.2 A2,2 0 0 1 382,225.2 L466,225.2 A2,2 0 0 1 468,227.2 L468,290 L380,290 Z" fill="#CFD9E0"/><text x="424" y="218" text-anchor="middle" class="value-label" fill="#6C757D">180T</text><text x="424" y="312" text-anchor="middle" class="axis-label">Indonesia</text>
+<path d="M484,270.4 A2,2 0 0 1 486,268.4 L570,268.4 A2,2 0 0 1 572,270.4 L572,290 L484,290 Z" fill="#CFD9E0"/><text x="528" y="260" text-anchor="middle" class="value-label" fill="#6C757D">60T</text><text x="528" y="312" text-anchor="middle" class="axis-label">Pilot site</text>
+<line x1="60" y1="290" x2="580" y2="290" stroke="#1C1F3B" stroke-width="1"/>
+<text x="40" y="332" class="source-line">Source: POF Operations · 2025 figures (placeholder)</text>
+</svg></div></section>
+
+<section class="variation"><div class="variation-head"><div class="lbl"><span class="num">B</span>Medium · 6 bars + average reference line</div><div class="meta">820×400</div></div>
+<div class="variation-body gris">
+<svg viewBox="0 0 820 400" class="chart-svg" xmlns="http://www.w3.org/2000/svg">
+<text x="40" y="36" class="chart-eyebrow">JOBS CREATED · BY CDF SITE</text>
+<line x1="40" y1="48" x2="80" y2="48" stroke="#5F7D95" stroke-width="2"/>
+<text x="40" y="74" class="chart-title">Direct local employment · 2025</text>
+<text x="40" y="92" class="chart-subtitle">Reference line: network average (32 jobs / site)</text>
+<!-- gridlines -->
+<line x1="70" y1="330" x2="790" y2="330" stroke="#EAEBED" stroke-width="0.5"/><text x="58" y="334" text-anchor="end" class="axis-label">0</text>
+<line x1="70" y1="263.3" x2="790" y2="263.3" stroke="#EAEBED" stroke-width="0.5"/><text x="58" y="267" text-anchor="end" class="axis-label">15</text>
+<line x1="70" y1="196.7" x2="790" y2="196.7" stroke="#EAEBED" stroke-width="0.5"/><text x="58" y="200" text-anchor="end" class="axis-label">30</text>
+<line x1="70" y1="130" x2="790" y2="130" stroke="#EAEBED" stroke-width="0.5"/><text x="58" y="134" text-anchor="end" class="axis-label">45</text>
+<!-- bars (max 45, h=200, y0=130) -->
+<path d="M78,161.1 L176,161.1 L176,330 L78,330 Z" fill="#1C1F3B"/><text x="127" y="153" text-anchor="middle" class="value-label">38</text><text x="127" y="352" text-anchor="middle" class="axis-label">Dakar</text>
+<path d="M198,178.9 L296,178.9 L296,330 L198,330 Z" fill="#5F7D95"/><text x="247" y="171" text-anchor="middle" class="value-label">34</text><text x="247" y="352" text-anchor="middle" class="axis-label">Manila</text>
+<path d="M318,189.8 A2,2 0 0 1 320,187.8 L414,187.8 A2,2 0 0 1 416,189.8 L416,330 L318,330 Z" fill="#5F7D95"/><text x="367" y="180" text-anchor="middle" class="value-label">32</text><text x="367" y="352" text-anchor="middle" class="axis-label">Abidjan</text>
+<path d="M438,198.7 A2,2 0 0 1 440,196.7 L534,196.7 A2,2 0 0 1 536,198.7 L536,330 L438,330 Z" fill="#5F7D95"/><text x="487" y="189" text-anchor="middle" class="value-label">30</text><text x="487" y="352" text-anchor="middle" class="axis-label">Jakarta</text>
+<path d="M558,207.6 A2,2 0 0 1 560,205.6 L654,205.6 A2,2 0 0 1 656,207.6 L656,330 L558,330 Z" fill="#5F7D95"/><text x="607" y="198" text-anchor="middle" class="value-label">28</text><text x="607" y="352" text-anchor="middle" class="axis-label">Lagos</text>
+<path d="M678,225.3 A2,2 0 0 1 680,223.3 L774,223.3 A2,2 0 0 1 776,225.3 L776,330 L678,330 Z" fill="#5F7D95"/><text x="727" y="216" text-anchor="middle" class="value-label">24</text><text x="727" y="352" text-anchor="middle" class="axis-label">Pilot</text>
+<!-- avg line at 32 -->
+<line x1="70" y1="187.8" x2="790" y2="187.8" stroke="#E8546C" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="794" y="191" font-family="Poppins" font-weight="600" font-size="10" fill="#E8546C">avg 32</text>
+<line x1="70" y1="330" x2="790" y2="330" stroke="#1C1F3B" stroke-width="1"/>
+<text x="40" y="386" class="source-line">Source: HR Field Reports · POF Network · 2025</text>
+</svg></div></section>
+
+<section class="variation"><div class="variation-head"><div class="lbl"><span class="num">C</span>Dense · 8 polymers · current vs baseline shadow + YoY delta</div><div class="meta">1080×440</div></div>
+<div class="variation-body">
+<svg viewBox="0 0 1080 440" class="chart-svg" xmlns="http://www.w3.org/2000/svg">
+<text x="0" y="28" class="chart-eyebrow">PLASTIC TYPES PROCESSED · 2025 NETWORK MIX</text>
+<line x1="0" y1="40" x2="42" y2="40" stroke="#5F7D95" stroke-width="2"/>
+<text x="0" y="68" class="chart-title-lg">Tonnes by polymer · all sites consolidated</text>
+<text x="0" y="88" class="chart-subtitle">Solid bars = 2025 · pale shadows = 2024 baseline</text>
+<!-- gridlines (max 450, h=240, y0=130) -->
+<line x1="70" y1="370" x2="1030" y2="370" stroke="#EAEBED" stroke-width="0.5"/><text x="58" y="374" text-anchor="end" class="axis-label">0T</text>
+<line x1="70" y1="290" x2="1030" y2="290" stroke="#EAEBED" stroke-width="0.5"/><text x="58" y="294" text-anchor="end" class="axis-label">150T</text>
+<line x1="70" y1="210" x2="1030" y2="210" stroke="#EAEBED" stroke-width="0.5"/><text x="58" y="214" text-anchor="end" class="axis-label">300T</text>
+<line x1="70" y1="130" x2="1030" y2="130" stroke="#EAEBED" stroke-width="0.5"/><text x="58" y="134" text-anchor="end" class="axis-label">450T</text>
+<!-- 8 polymers; bw=102, gap=18, x0=70 -->
+<!-- HDPE 420 (max), 2024:310, delta +35% -->
+<path d="M74,206.7 A2,2 0 0 1 76,204.7 L182,204.7 A2,2 0 0 1 184,206.7 L184,370 L74,370 Z" fill="#CFD9E0" opacity="0.6"/>
+<path d="M78,148 A2,2 0 0 1 80,146 L178,146 A2,2 0 0 1 180,148 L180,370 L78,370 Z" fill="#1C1F3B"/>
+<text x="129" y="120" text-anchor="middle" class="value-label">420T</text><text x="129" y="136" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="10" fill="#2BA595">▲ 35%</text>
+<text x="129" y="392" text-anchor="middle" class="axis-label-bold">HDPE</text>
+<!-- PP 380, 2024:290, +31% -->
+<path d="M194,217.3 A2,2 0 0 1 196,215.3 L302,215.3 A2,2 0 0 1 304,217.3 L304,370 L194,370 Z" fill="#CFD9E0" opacity="0.6"/>
+<path d="M198,169.3 A2,2 0 0 1 200,167.3 L298,167.3 A2,2 0 0 1 300,169.3 L300,370 L198,370 Z" fill="#5F7D95"/>
+<text x="249" y="141" text-anchor="middle" class="value-label">380T</text><text x="249" y="157" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="10" fill="#2BA595">▲ 31%</text>
+<text x="249" y="392" text-anchor="middle" class="axis-label-bold">PP</text>
+<!-- PET 280, 2024:240, +17% -->
+<path d="M314,244 A2,2 0 0 1 316,242 L422,242 A2,2 0 0 1 424,244 L424,370 L314,370 Z" fill="#CFD9E0" opacity="0.6"/>
+<path d="M318,220.7 L420,220.7 L420,370 L318,370 Z" fill="#5F7D95"/>
+<text x="369" y="194" text-anchor="middle" class="value-label">280T</text><text x="369" y="210" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="10" fill="#2BA595">▲ 17%</text>
+<text x="369" y="392" text-anchor="middle" class="axis-label-bold">PET</text>
+<!-- LDPE 220, 2024:180, +22% -->
+<path d="M434,276 A2,2 0 0 1 436,274 L542,274 A2,2 0 0 1 544,276 L544,370 L434,370 Z" fill="#CFD9E0" opacity="0.6"/>
+<path d="M438,252.7 L540,252.7 L540,370 L438,370 Z" fill="#5F7D95"/>
+<text x="489" y="226" text-anchor="middle" class="value-label">220T</text><text x="489" y="242" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="10" fill="#2BA595">▲ 22%</text>
+<text x="489" y="392" text-anchor="middle" class="axis-label-bold">LDPE</text>
+<!-- PS 140, 2024:120, +17% -->
+<path d="M554,308 A2,2 0 0 1 556,306 L662,306 A2,2 0 0 1 664,308 L664,370 L554,370 Z" fill="#CFD9E0" opacity="0.6"/>
+<path d="M558,295.3 L660,295.3 L660,370 L558,370 Z" fill="#5F7D95"/>
+<text x="609" y="269" text-anchor="middle" class="value-label">140T</text><text x="609" y="285" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="10" fill="#2BA595">▲ 17%</text>
+<text x="609" y="392" text-anchor="middle" class="axis-label-bold">PS</text>
+<!-- PVC 90, 2024:95, -5% -->
+<path d="M674,321.3 A2,2 0 0 1 676,319.3 L782,319.3 A2,2 0 0 1 784,321.3 L784,370 L674,370 Z" fill="#CFD9E0" opacity="0.6"/>
+<path d="M678,322 L780,322 L780,370 L678,370 Z" fill="#5F7D95"/>
+<text x="729" y="296" text-anchor="middle" class="value-label">90T</text><text x="729" y="312" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="10" fill="#E8546C">▼ 5%</text>
+<text x="729" y="392" text-anchor="middle" class="axis-label-bold">PVC</text>
+<!-- ABS 60, 2024:55, +9% -->
+<path d="M794,342.7 A2,2 0 0 1 796,340.7 L902,340.7 A2,2 0 0 1 904,342.7 L904,370 L794,370 Z" fill="#CFD9E0" opacity="0.6"/>
+<path d="M798,340 A2,2 0 0 1 800,338 L898,338 A2,2 0 0 1 900,340 L900,370 L798,370 Z" fill="#5F7D95"/>
+<text x="849" y="312" text-anchor="middle" class="value-label">60T</text><text x="849" y="328" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="10" fill="#2BA595">▲ 9%</text>
+<text x="849" y="392" text-anchor="middle" class="axis-label-bold">ABS</text>
+<!-- Mixed 180, 2024:160, +13% -->
+<path d="M914,286.7 A2,2 0 0 1 916,284.7 L1022,284.7 A2,2 0 0 1 1024,286.7 L1024,370 L914,370 Z" fill="#CFD9E0" opacity="0.6"/>
+<path d="M918,276 A2,2 0 0 1 920,274 L1018,274 A2,2 0 0 1 1020,276 L1020,370 L918,370 Z" fill="#5F7D95"/>
+<text x="969" y="248" text-anchor="middle" class="value-label">180T</text><text x="969" y="264" text-anchor="middle" font-family="Poppins" font-weight="600" font-size="10" fill="#2BA595">▲ 13%</text>
+<text x="969" y="392" text-anchor="middle" class="axis-label-bold">Mixed</text>
+
+<line x1="70" y1="370" x2="1030" y2="370" stroke="#1C1F3B" stroke-width="1"/>
+<g transform="translate(0,408)">
+<rect x="0" y="0" width="14" height="14" fill="#1C1F3B" rx="2"/><text x="22" y="11" class="axis-label">2025 (current)</text>
+<rect x="160" y="0" width="14" height="14" fill="#CFD9E0" rx="2"/><text x="182" y="11" class="axis-label">2024 baseline</text>
+<text x="320" y="11" class="axis-label" font-style="italic">▲▼ YoY change</text>
+</g>
+<text x="0" y="436" class="source-line">Source: POF Material Flow Analysis · 8 polymer streams · 2024–2025</text>
+</svg></div></section>
+
+
+    <!-- TRIO — light/dark/highlight system check -->
+    <section class="variation trio">
+      <div class="variation-head"><div class="lbl"><span class="num">◐</span>System check · light · dark · highlight</div><div class="meta">3 backgrounds × same data</div></div>
+      <div class="variation-body">
+        <div class="trio-grid" data-trio="02"></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+<script src="_nav.js?v=2"></script>
+<script src="_trio.js?v=1777203305647"></script>
+</body></html>

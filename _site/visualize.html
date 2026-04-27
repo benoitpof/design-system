@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VISUALIZE.md · POF Design System</title>
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Raleway:ital,wght@0,300;0,400;0,600;0,700&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1C1F3B; --steel:#435D74; --steel-light:#5F7D95; --steel-pale:#CFD9E0;
+  --teal:#80C7C2; --teal-dark:#2BA595; --coral:#E8546C;
+  --gris-pof:#F9FCFF; --neutral-light:#F0F0F0; --neutral-mid:#EAEBED;
+  --gray-400:#CED4DA; --gray-600:#6C757D; --body:#3C3C3C; --white:#FFFFFF;
+}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font-family:'Raleway',sans-serif;color:var(--body);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6}
+.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--neutral-mid);padding:14px 32px;display:flex;align-items:center;gap:16px}
+.topbar .brand img{height:26px}.topbar .crumbs{font-family:Poppins;font-size:11px;font-weight:600;color:var(--gray-600);letter-spacing:1px;text-transform:uppercase}
+.topbar .version{font-family:Poppins;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal-dark);background:rgba(128,199,194,.12);padding:3px 8px;border-radius:3px}
+.topbar-nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.topbar-nav a{font-family:Poppins;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase}
+.topbar-nav a:hover,.topbar-nav a.active{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.page-header{padding:48px 32px 24px;max-width:1080px;margin:0 auto;border-bottom:1px solid var(--neutral-mid)}
+.page-header .eyebrow{font-family:Poppins;font-weight:700;font-size:11px;letter-spacing:2px;color:var(--steel-light);text-transform:uppercase}
+.page-header h1{font-family:Poppins;font-weight:700;font-size:36px;color:var(--navy);margin:8px 0 12px;letter-spacing:-.5px}
+.page-header .meta{font-family:Raleway;font-size:13px;color:var(--gray-600)}
+.page-header .actions{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
+.page-header .btn{font-family:Poppins;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase;background:#fff;transition:border-color .15s}
+.page-header .btn:hover{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.page-header .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.page-header .btn.primary:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
+article.md-content{max-width:880px;margin:0 auto;padding:48px 32px 96px;font-family:Raleway,sans-serif;font-size:16px;color:var(--body);line-height:1.7}
+article.md-content h1{font-family:Poppins;font-weight:700;font-size:32px;color:var(--navy);margin:48px 0 16px;letter-spacing:-.5px;line-height:1.2}
+article.md-content h1:first-child{margin-top:0}
+article.md-content h2{font-family:Poppins;font-weight:700;font-size:22px;color:var(--navy);margin:40px 0 14px;padding-top:8px}
+article.md-content h3{font-family:Poppins;font-weight:600;font-size:17px;color:var(--steel);margin:28px 0 10px;text-transform:uppercase;letter-spacing:.5px}
+article.md-content h4{font-family:Poppins;font-weight:600;font-size:14px;color:var(--steel-light);margin:20px 0 8px}
+article.md-content p{margin:0 0 16px}
+article.md-content a{color:var(--teal-dark);text-decoration:underline;text-decoration-color:rgba(43,165,149,.3)}
+article.md-content a:hover{text-decoration-color:var(--teal-dark)}
+article.md-content code{font-family:'Roboto Mono',monospace;font-size:13px;background:var(--gris-pof);padding:2px 6px;border-radius:3px;color:var(--navy);border:1px solid var(--neutral-mid)}
+article.md-content pre{background:var(--navy);color:#80C7C2;padding:18px 22px;border-radius:6px;overflow-x:auto;margin:20px 0;font-family:'Roboto Mono',monospace;font-size:13px;line-height:1.5}
+article.md-content pre code{background:transparent;border:none;color:inherit;padding:0;font-size:inherit}
+article.md-content blockquote{margin:20px 0;padding:14px 22px;border-left:3px solid var(--teal);background:rgba(128,199,194,.08);font-style:italic;color:var(--steel)}
+article.md-content table{border-collapse:collapse;width:100%;margin:20px 0;font-family:Raleway;font-size:14px}
+article.md-content table th{background:var(--navy);color:#fff;font-family:Poppins;font-weight:600;padding:12px 14px;text-align:left}
+article.md-content table td{padding:10px 14px;border-bottom:1px solid var(--neutral-mid);vertical-align:top}
+article.md-content table tr:nth-child(even) td{background:var(--gris-pof)}
+article.md-content ul,article.md-content ol{margin:0 0 16px 22px;padding:0}
+article.md-content li{margin:6px 0}
+article.md-content hr{border:none;border-top:1px solid var(--neutral-mid);margin:32px 0}
+article.md-content img{max-width:100%;height:auto;border-radius:4px}
+.codehilite{background:var(--navy);border-radius:6px;margin:20px 0;overflow-x:auto}
+.codehilite pre{margin:0}
+footer{padding:40px 32px;text-align:center;color:var(--gray-600);font-family:Raleway;font-size:12px;border-top:1px solid var(--neutral-mid)}
+footer a{color:var(--teal-dark);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="index.html"><img src="assets/logos/pof-logo-color.svg" alt="POF"></a>
+  <span class="crumbs">VISUALIZE</span>
+  <span class="version">v3.4.0</span>
+  <nav class="topbar-nav">
+    <a href="index.html">Overview</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="charts.html">Charts</a>
+    <a href="maps.html">Maps</a>
+    <a href="icons.html">Icons</a>
+    <a href="workflows.html">Workflows</a>
+    <a href="databases.html">DBs</a>
+    <a href="https://github.com/benoitpof/design-system">GitHub</a>
+  </nav>
+</div>
+<header class="page-header">
+  <div class="eyebrow">VISUALIZE</div>
+  <h1>VISUALIZE.md</h1>
+  <div class="meta">Source : <code>VISUALIZE.md</code> · POF DS v3.4.0</div>
+  <div class="actions">
+    <a class="btn primary" href="https://github.com/benoitpof/design-system/blob/main/VISUALIZE.md">View on GitHub</a>
+    <a class="btn" href="index.html">Back to overview</a>
+  </div>
+</header>
+<article class="md-content">
+<h1 id="visualizemd-github-pages-gallery">VISUALIZE.md — GitHub Pages gallery</h1>
+<p><strong>URL :</strong> https://benoitpof.github.io/design-system/ (à activer dans Settings → Pages → Source : main / <code>/site</code> folder)</p>
+<h2 id="structure">Structure</h2>
+<p><code>/site/index.html</code> est le point d'entrée. Il liste tous les contenus du DS par catégorie :
+- Master content layouts (Deck, Report, Web, Social)
+- Asset rules &amp; catalogs (DESIGN, CONTENT-RULES, CHARTS, MAPS, ICONS, PHOTOS, TABLES, ASSETS)
+- Tokens &amp; assets bruts (logos, icons, maps, brand-elements)
+- Examples &amp; goldens (Chart Bank, Map Charter, Email signatures, Excel)
+- Skills &amp; iteration (memory, ITERATE, CHANGELOG)</p>
+<p><code>/site/architecture.html</code> montre l'architecture v3.4.0 avec 3 diagrammes mermaid : couches, flux génération, cycle itération.</p>
+<h2 id="local-preview">Local preview</h2>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span> site/ <span class="o">&amp;&amp;</span> python3 -m http.server <span class="m">8080</span>
+<span class="c1"># Ouvrir http://localhost:8080</span>
+</code></pre></div>
+
+<h2 id="deploy-automatique-v2-sprint-suivant">Deploy automatique (V2 sprint suivant)</h2>
+<p>GitHub Action <code>.github/workflows/pages.yml</code> (à créer) :
+- Trigger : push sur main
+- Steps : checkout → run <code>scripts/build-gallery.py</code> → deploy <code>/site/</code> vers GitHub Pages
+- Le script Python régénère index.html à partir de l'arborescence du repo (assets, examples, golden, memory)</p>
+<h2 id="privacy">Privacy</h2>
+<p>Pour scope POF only : Cloudflare Access devant le custom domain. Voir spec Notion.</p>
+</article>
+<footer>
+  POF Design System v3.4.0 · Auto-rendered from VISUALIZE.md · <a href="https://github.com/benoitpof/design-system">GitHub</a>
+</footer>
+</body>
+</html>

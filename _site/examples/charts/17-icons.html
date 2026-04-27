@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>17 · Icon library · POF Chart Bank · v3.3.6</title>
+<link rel="stylesheet" href="../styles.css?v=1777400000000">
+<style>
+/* ── ICON-SPECIFIC STYLES ────────────────────────────────────── */
+
+/* Color-filter utilities for <img> icons (category grids) */
+/* navy  #1C1F3B */ .f-navy  { filter: brightness(0) saturate(100%) invert(9%)  sepia(28%) saturate(2200%) hue-rotate(200deg) brightness(90%) contrast(105%); }
+/* teal  #80C7C2 */ .f-teal  { filter: brightness(0) saturate(100%) invert(76%) sepia(22%) saturate(520%)  hue-rotate(143deg) brightness(101%) contrast(87%); }
+/* white #FFFFFF */ .f-white { filter: brightness(0) invert(1); }
+/* steel #435D74 */ .f-steel { filter: brightness(0) saturate(100%) invert(37%) sepia(18%) saturate(610%)  hue-rotate(163deg) brightness(95%) contrast(88%); }
+/* Inline SVG icons (demo section) inherit color via currentColor */
+.icon-inline svg { display: block; width: 32px; height: 32px; }
+
+/* ── COLOR TREATMENT DEMO ───────────────────────────────────── */
+.color-demo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--neutral-mid);
+}
+.demo-band {
+  padding: 20px 16px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.demo-band-label {
+  font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px;
+}
+.demo-icons-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.demo-icon-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.demo-icon-wrap img { width: 32px; height: 32px; display: block; }
+.demo-icon-wrap span {
+  font-family: 'Poppins', monospace; font-size: 7.5px;
+  opacity: 0.55; text-align: center; line-height: 1.3;
+}
+.band-light  { background: var(--gris-pof);  color: var(--navy);  border-right: 1px solid var(--neutral-mid); }
+.band-white  { background: var(--white);      color: var(--navy);  border-right: 1px solid var(--neutral-mid); }
+.band-dark   { background: var(--navy);       color: var(--white); }
+
+.color-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.swatch-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+
+/* ── USAGE RULES PANEL (sticky) ─────────────────────────────── */
+.rules-wrap {
+  display: grid;
+  grid-template-columns: 1fr 296px;
+  gap: 24px;
+  align-items: start;
+}
+.rules-panel {
+  background: var(--white);
+  border: 1px solid var(--neutral-mid);
+  border-radius: 8px;
+  overflow: hidden;
+  position: sticky;
+  top: 72px;
+}
+.rules-panel-head {
+  padding: 12px 18px;
+  background: var(--navy);
+}
+.rules-panel-head h2 {
+  font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin: 0;
+}
+.rules-section {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--neutral-mid);
+}
+.rules-section:last-child { border-bottom: none; }
+.rules-section h3 {
+  font-family: 'Poppins', sans-serif; font-size: 9.5px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--steel);
+  margin: 0 0 10px;
+}
+.rule-row {
+  display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;
+}
+.rule-row:last-child { margin-bottom: 0; }
+.rule-swatch {
+  width: 24px; height: 24px; border-radius: 4px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.rule-row p {
+  font-size: 11px; color: var(--steel); line-height: 1.5; margin: 0;
+}
+.rule-row p strong { font-weight: 700; color: var(--navy); }
+.mono { font-family: 'Poppins', monospace; font-size: 9.5px; color: var(--teal-dark);
+  background: rgba(43,165,149,0.08); padding: 1px 4px; border-radius: 2px; }
+
+.forbidden-list { list-style: none; padding: 0; margin: 0; }
+.forbidden-list li {
+  font-family: 'Raleway', sans-serif; font-size: 11px; color: var(--steel);
+  padding: 3px 0 3px 14px; position: relative; line-height: 1.4;
+}
+.forbidden-list li::before {
+  content: '×'; position: absolute; left: 0;
+  color: var(--coral); font-weight: 700; font-size: 12px;
+}
+
+.size-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5px;
+}
+.size-cell {
+  background: var(--gris-pof); border-radius: 4px; padding: 7px 9px;
+}
+.size-cell-label {
+  font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 700;
+  color: var(--steel); margin-bottom: 1px;
+}
+.size-cell-val {
+  font-family: 'Poppins', monospace; font-size: 9px; color: var(--teal-dark);
+}
+
+/* ── CATEGORY ICON GRID ─────────────────────────────────────── */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 10px;
+}
+.icon-card {
+  display: flex; flex-direction: column; align-items: center; gap: 7px;
+  padding: 16px 8px 12px;
+  background: var(--gris-pof); border-radius: 6px; border: 1px solid var(--neutral-mid);
+  cursor: default; transition: background 120ms, border-color 120ms;
+}
+.icon-card:hover {
+  background: var(--white); border-color: var(--steel-pale);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.icon-card img { width: 32px; height: 32px; display: block; flex-shrink: 0; }
+.icon-card .icon-name {
+  font-family: 'Poppins', monospace; font-size: 8px; color: var(--steel);
+  text-align: center; line-height: 1.3; word-break: break-all;
+}
+
+/* ── CDN NOTICE ─────────────────────────────────────────────── */
+.cdn-notice {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(128,199,194,0.08); border: 1px solid rgba(128,199,194,0.3);
+  border-radius: 6px; padding: 10px 16px; margin-bottom: 24px;
+}
+.cdn-notice code {
+  font-family: 'Poppins', monospace; font-size: 10.5px;
+  color: var(--teal-dark); flex: 1; word-break: break-all;
+}
+.cdn-notice .cdn-label {
+  font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--steel);
+  white-space: nowrap;
+}
+
+/* ── SOURCE CAPTION ─────────────────────────────────────────── */
+.source-caption {
+  margin-top: 40px;
+  font-family: 'Raleway', sans-serif; font-size: 11px; font-style: italic;
+  color: var(--gray-600); border-top: 1px solid var(--neutral-mid);
+  padding-top: 16px;
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR (catalog chrome) -->
+<div class="topbar">
+  <a class="brand" href="../index.html">
+    <img src="../assets/pof-logo-color.svg" alt="POF">
+    <span class="crumbs">
+      <a href="../index.html">Chart bank</a>
+      <span style="color:var(--gray-400)"> / </span>
+      17 · Icon library
+    </span>
+  </a>
+  <nav class="types" id="types-nav"></nav>
+</div>
+
+<div class="page">
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="pipe-title">
+    <div class="pipe"></div>
+    <div>
+      <div class="eyebrow">Chart 17 · Bibliothèque d'icônes · v3.3.6</div>
+      <h1>Icon library</h1>
+      <p>Source primaire : <strong>Tabler Icons CDN</strong> — 4 700+ icônes outline uniformes, <span class="mono" style="font-size:12px">stroke="currentColor"</span> + <span class="mono" style="font-size:12px">stroke-width="2"</span>. Les collections POF curées (<code style="font-family:Poppins,monospace;font-size:12px;color:var(--teal-dark)">ecology/</code>, <code style="font-family:Poppins,monospace;font-size:12px;color:var(--teal-dark)">environment/</code>) sont archivées depuis v3.3.6 — stroke-width 28 incompatible avec la légèreté Tabler. 106 icônes organisées en 13 catégories, 3 traitements couleur canoniques.</p>
+    </div>
+  </div>
+</header>
+
+<div class="variations">
+
+<!-- ════════════════════════════════════════
+     VARIATION 1 — TRAITEMENTS COULEUR
+     ════════════════════════════════════════ -->
+<section class="variation">
+  <div class="variation-head">
+    <div class="lbl">
+      <span class="num">1</span>
+      Traitements couleur · 3 contextes canoniques
+    </div>
+    <div class="meta">Tabler CDN · stroke="currentColor" · recolor via CSS</div>
+  </div>
+  <div class="variation-body" style="display:block;padding:28px;">
+    <div class="rules-wrap">
+
+      <!-- COLOR DEMO -->
+      <div>
+        <div class="cdn-notice">
+          <span class="cdn-label">CDN</span>
+          <code>https://unpkg.com/@tabler/icons/icons/outline/<strong>[name]</strong>.svg</code>
+        </div>
+        <div class="color-demo-grid">
+
+          <!-- Band 1 : Navy sur fond clair (par défaut) -->
+          <div class="demo-band band-light">
+            <div>
+              <div class="demo-band-label" style="color:var(--steel);">
+                <span class="color-badge">
+                  <span class="swatch-dot" style="background:#1C1F3B;"></span>
+                  Navy · fond clair
+                </span>
+              </div>
+              <div style="font-family:Poppins,monospace;font-size:9px;color:var(--teal-dark);margin-top:2px;">#1C1F3B — défaut PPTX/DOCX/PDF</div>
+            </div>
+            <div class="demo-icons-row" id="demo-navy"></div>
+          </div>
+
+          <!-- Band 2 : Teal accent sur fond blanc -->
+          <div class="demo-band band-white">
+            <div>
+              <div class="demo-band-label" style="color:var(--steel);">
+                <span class="color-badge">
+                  <span class="swatch-dot" style="background:#80C7C2;"></span>
+                  Teal · accent / callout
+                </span>
+              </div>
+              <div style="font-family:Poppins,monospace;font-size:9px;color:var(--teal-dark);margin-top:2px;">#80C7C2 — 1–2 usages max par slide</div>
+            </div>
+            <div class="demo-icons-row" id="demo-teal"></div>
+          </div>
+
+          <!-- Band 3 : Blanc sur fond navy -->
+          <div class="demo-band band-dark">
+            <div>
+              <div class="demo-band-label" style="color:var(--teal);">
+                <span class="color-badge" style="color:var(--teal);">
+                  <span class="swatch-dot" style="background:#FFFFFF;border:1px solid rgba(255,255,255,0.3);"></span>
+                  White · fond dark/navy
+                </span>
+              </div>
+              <div style="font-family:Poppins,monospace;font-size:9px;color:rgba(128,199,194,0.8);margin-top:2px;">#FFFFFF — slides navy, covers</div>
+            </div>
+            <div class="demo-icons-row" id="demo-white"></div>
+          </div>
+
+        </div><!-- /color-demo-grid -->
+      </div>
+
+      <!-- RULES PANEL -->
+      <div class="rules-panel">
+        <div class="rules-panel-head">
+          <h2>Usage rules</h2>
+        </div>
+
+        <div class="rules-section">
+          <h3>Couleur par contexte</h3>
+          <div class="rule-row">
+            <div class="rule-swatch" style="background:var(--gris-pof);border:1px solid var(--neutral-mid);color:#1C1F3B;" id="swatch-navy"></div>
+            <p><strong>Fond clair</strong> → <span class="mono">#1C1F3B</span>. Défaut PPTX, DOCX, PDF.</p>
+          </div>
+          <div class="rule-row">
+            <div class="rule-swatch" style="background:var(--navy);color:#FFFFFF;" id="swatch-white"></div>
+            <p><strong>Fond dark/navy</strong> → <span class="mono">#FFFFFF</span>.</p>
+          </div>
+          <div class="rule-row">
+            <div class="rule-swatch" style="background:var(--white);border:1px solid var(--neutral-mid);color:#80C7C2;" id="swatch-teal"></div>
+            <p><strong>Accent / callout</strong> → <span class="mono">#80C7C2</span>. Max 1–2 par slide.</p>
+          </div>
+        </div>
+
+        <div class="rules-section">
+          <h3>Tailles recommandées</h3>
+          <div class="size-grid">
+            <div class="size-cell"><div class="size-cell-label">Feature card</div><div class="size-cell-val">0.6 × 0.6"</div></div>
+            <div class="size-cell"><div class="size-cell-label">Header inline</div><div class="size-cell-val">0.4 × 0.4"</div></div>
+            <div class="size-cell"><div class="size-cell-label">Hero icon</div><div class="size-cell-val">1.0 × 1.0"</div></div>
+            <div class="size-cell"><div class="size-cell-label">Web HTML/CSS</div><div class="size-cell-val">24–64 px</div></div>
+          </div>
+        </div>
+
+        <div class="rules-section">
+          <h3>Palette canonique</h3>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:14px;height:14px;border-radius:3px;background:#1C1F3B;flex-shrink:0;"></div>
+              <span style="font-family:Poppins,monospace;font-size:9.5px;color:var(--steel);">#1C1F3B · navy</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:14px;height:14px;border-radius:3px;background:#80C7C2;flex-shrink:0;"></div>
+              <span style="font-family:Poppins,monospace;font-size:9.5px;color:var(--steel);">#80C7C2 · teal</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:14px;height:14px;border-radius:3px;background:#FFFFFF;border:1px solid var(--neutral-mid);flex-shrink:0;"></div>
+              <span style="font-family:Poppins,monospace;font-size:9.5px;color:var(--steel);">#FFFFFF · white</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-section">
+          <h3>Interdits</h3>
+          <ul class="forbidden-list">
+            <li>Coral <span class="mono">#E8546C</span> sur icônes</li>
+            <li>Shadow, drop-shadow, blur, filter</li>
+            <li>Brand picto comme icône UI</li>
+            <li>Étirer, pivoter, déformer</li>
+            <li>Committer SVG Tabler dans le repo</li>
+            <li>Hex pré-v3.2.3 dépréciés (cf. CHANGELOG-v3.2.3)</li>
+          </ul>
+        </div>
+      </div><!-- /rules-panel -->
+
+    </div><!-- /rules-wrap -->
+  </div><!-- /variation-body -->
+</section>
+
+<!-- CATEGORY SECTIONS rendered by JS below -->
+<div id="categories-root"></div>
+
+<!-- SOURCE CAPTION -->
+<p class="source-caption">Source : Tabler Icons v3.x · <code style="font-family:Poppins,monospace;font-size:10px;">unpkg.com/@tabler/icons/icons/outline/</code> · CDN uniquement — ne pas committer dans le repo · Palette canonique POF v3.3.6</p>
+
+</div><!-- /variations -->
+</div><!-- /page -->
+
+<script src="_nav.js"></script>
+<script>
+(function () {
+  const CDN = 'https://unpkg.com/@tabler/icons/icons/outline/';
+
+  const CATEGORIES = [
+    {
+      id: 'A', label: 'Industrie & production',
+      desc: 'Équipements, outils, processus industriels',
+      icons: ['building-factory-2','tools','hammer','filter','settings','adjustments-horizontal','crane','cylinder']
+    },
+    {
+      id: 'B', label: 'Collecte & recyclage',
+      desc: 'Matières, tri, énergie renouvelable',
+      icons: ['recycle','trash','leaf','seedling','trees','solar-panel','wind','sun']
+    },
+    {
+      id: 'C', label: 'Logistique & transport',
+      desc: 'Chaîne d\'approvisionnement, flux, livraison',
+      icons: ['truck','ship','plane','route','package','container','arrows-exchange','forklift']
+    },
+    {
+      id: 'D', label: 'Écologie & nature',
+      desc: 'Ressources naturelles, éléments, environnement',
+      icons: ['droplet','flame','bolt','fish','planet','cloud-rain','thermometer','plant-2']
+    },
+    {
+      id: 'E', label: 'Impact & personnes',
+      desc: 'Bénéficiaires, communautés, performance sociale',
+      icons: ['users','heart','trophy','award','school','user-check','target','wheelchair']
+    },
+    {
+      id: 'F', label: 'Données & analyse',
+      desc: 'Visualisation, KPI, reporting, bases de données',
+      icons: ['chart-bar','chart-line','chart-pie','table','database','report-analytics','trending-up','trending-down','percentage']
+    },
+    {
+      id: 'G', label: 'Finance & économie',
+      desc: 'Monnaie, transactions, comptabilité',
+      icons: ['currency-euro','coins','calculator','credit-card','receipt','wallet','cash','building-bank']
+    },
+    {
+      id: 'H', label: 'Communication',
+      desc: 'Messages, fichiers, notifications',
+      icons: ['mail','message','phone','file-text','send','bell','speakerphone','link']
+    },
+    {
+      id: 'I', label: 'Géographie & lieux',
+      desc: 'Cartes, localisation, infrastructures',
+      icons: ['map','globe','map-pin','compass','map-2','home','building','flag']
+    },
+    {
+      id: 'J', label: 'Temps & planning',
+      desc: 'Calendrier, durée, échéances',
+      icons: ['calendar','clock','history','hourglass','calendar-stats','calendar-check','alarm','refresh']
+    },
+    {
+      id: 'K', label: 'Certification & qualité',
+      desc: 'Validation, normes, conformité',
+      icons: ['certificate','check','star','shield','lock','badge','clipboard-check','list-check','scale']
+    },
+    {
+      id: 'L', label: 'Technologie & digital',
+      desc: 'Matériel, réseau, infrastructure IT',
+      icons: ['device-laptop','wifi','cloud','code','cpu','server','qrcode','scan']
+    },
+    {
+      id: 'M', label: 'Navigation & UI',
+      desc: 'Actions génériques, interface utilisateur',
+      icons: ['search','eye','download','upload','share','bookmark','info-circle','external-link']
+    }
+  ];
+
+  const root = document.getElementById('categories-root');
+  if (!root) return;
+
+  CATEGORIES.forEach(function (cat, idx) {
+    const totalIcons = cat.icons.length;
+
+    const section = document.createElement('section');
+    section.className = 'variation';
+
+    // Head
+    const head = document.createElement('div');
+    head.className = 'variation-head';
+    head.innerHTML =
+      '<div class="lbl"><span class="num">' + cat.id + '</span>' + cat.label + '</div>' +
+      '<div class="meta">' + cat.desc + ' · ' + totalIcons + ' icônes</div>';
+    section.appendChild(head);
+
+    // Body
+    const body = document.createElement('div');
+    body.className = 'variation-body gris';
+    body.style.display = 'block';
+    body.style.padding = '24px';
+
+    const grid = document.createElement('div');
+    grid.className = 'icon-grid';
+
+    cat.icons.forEach(function (name) {
+      const card = document.createElement('div');
+      card.className = 'icon-card';
+      card.title = name;
+
+      const img = document.createElement('img');
+      img.src = CDN + name + '.svg';
+      img.alt = name;
+      img.width = 32;
+      img.height = 32;
+      img.className = 'f-navy';
+
+      const label = document.createElement('span');
+      label.className = 'icon-name';
+      label.textContent = name;
+
+      card.appendChild(img);
+      card.appendChild(label);
+      grid.appendChild(card);
+    });
+
+    body.appendChild(grid);
+    section.appendChild(body);
+    root.appendChild(section);
+  });
+
+  // Total icon count in page header description
+  const totalCount = CATEGORIES.reduce(function (s, c) { return s + c.icons.length; }, 0);
+  const countEl = document.querySelector('.page-header p strong');
+  if (countEl) countEl.textContent = 'Tabler Icons CDN';
+})();
+</script>
+
+<script>
+/* ── INLINE SVG DEMO (exact canonical colors) ─────────────────
+   Fetch each icon once, inject inline so currentColor gives exact hex.
+──────────────────────────────────────────────────────────────── */
+(function () {
+  var CDN = 'https://unpkg.com/@tabler/icons/icons/outline/';
+  var DEMO_ICONS = ['recycle','leaf','users','chart-bar','truck'];
+  var BANDS = [
+    { id: 'demo-navy',  color: '#1C1F3B', nameOpacity: '1' },
+    { id: 'demo-teal',  color: '#80C7C2', nameOpacity: '1' },
+    { id: 'demo-white', color: '#FFFFFF',  nameOpacity: '0.55' }
+  ];
+  var SWATCHES = [
+    { id: 'swatch-navy',  color: '#1C1F3B' },
+    { id: 'swatch-white', color: '#FFFFFF' },
+    { id: 'swatch-teal',  color: '#80C7C2' }
+  ];
+  var cache = {};
+
+  function fetchSVG(name) {
+    if (cache[name]) return Promise.resolve(cache[name]);
+    return fetch(CDN + name + '.svg')
+      .then(function (r) { return r.text(); })
+      .then(function (txt) {
+        var cleaned = txt.replace(/<\?xml[^?]*\?>/g, '').trim();
+        cache[name] = cleaned;
+        return cleaned;
+      });
+  }
+
+  function setSVGSize(container, w, h) {
+    var svg = container.querySelector('svg');
+    if (svg) {
+      svg.setAttribute('width', w);
+      svg.setAttribute('height', h);
+      svg.removeAttribute('class');
+    }
+  }
+
+  fetchSVG('leaf').then(function (svg) {
+    SWATCHES.forEach(function (s) {
+      var el = document.getElementById(s.id);
+      if (!el) return;
+      el.style.color = s.color;
+      el.style.display = 'flex';
+      el.style.alignItems = 'center';
+      el.style.justifyContent = 'center';
+      el.innerHTML = svg;
+      setSVGSize(el, '14', '14');
+    });
+  });
+
+  Promise.all(DEMO_ICONS.map(fetchSVG)).then(function (svgs) {
+    BANDS.forEach(function (band) {
+      var container = document.getElementById(band.id);
+      if (!container) return;
+      DEMO_ICONS.forEach(function (name, i) {
+        var wrap = document.createElement('div');
+        wrap.className = 'demo-icon-wrap';
+        wrap.style.color = band.color;
+        wrap.innerHTML = svgs[i];
+        setSVGSize(wrap, '32', '32');
+        var lbl = document.createElement('span');
+        lbl.textContent = name;
+        lbl.style.opacity = band.nameOpacity;
+        wrap.appendChild(lbl);
+        container.appendChild(wrap);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
