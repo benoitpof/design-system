@@ -35,8 +35,34 @@ for f in SITE.iterdir():
         shutil.copytree(f, dst)
 print(f'[1] Copied site/ -> _site/')
 
+# ---------- 1c. Fix charts.html static template links if examples/ is missing ----------
+def fix_charts_static_links():
+    """If examples/ folder doesn't exist (post-cleanup), patch site/charts.html and maps.html
+    so links to ../examples/* go to GitHub instead of broken local paths."""
+    if (ROOT / 'examples').exists():
+        return
+    for filename in ['charts.html', 'maps.html']:
+        f = BUILD / filename
+        if not f.exists():
+            continue
+        text = f.read_text()
+        # Replace href="../examples/X.html" or "examples/X.html" with GitHub URL
+        import re
+        text = re.sub(r'href="(?:\.\./)?examples/charts/([^"]+)"',
+                      r'href="https://github.com/benoitpof/design-system/blob/main/examples/charts/\1" target="_blank"',
+                      text)
+        text = re.sub(r'href="(?:\.\./)?assets/maps/([^"]+\.html)"',
+                      r'href="https://github.com/benoitpof/design-system/blob/main/assets/maps/\1" target="_blank"',
+                      text)
+        f.write_text(text)
+    print('[1c] Patched charts.html/maps.html links since examples/ is missing')
+
+fix_charts_static_links()
+
+
 # ---------- 2. Copy examples/ and assets/ ----------
-shutil.copytree(ROOT / 'examples', BUILD / 'examples')
+if (ROOT / 'examples').exists():
+    shutil.copytree(ROOT / 'examples', BUILD / 'examples')
 shutil.copytree(ROOT / 'assets', BUILD / 'assets')
 print(f'[2] Copied examples/ + assets/ -> _site/')
 
@@ -61,7 +87,7 @@ def rewrap_chart_pages():
 .ds-topbar .nav a:hover{{border-color:#80C7C2;background:rgba(128,199,194,.07)}}
 </style>
 <div class="ds-topbar">
-  <a href="/design-system/index.html"><img src="/design-system/assets/logos/pof-logo-color.svg" alt="POF"></a>
+  <a href="/design-system/index.html"><img src="/design-system/assets/logos/pof-logo-teal-white.svg" alt="POF"></a>
   <span class="crumbs">{breadcrumb}</span>
   <span class="version">v3.4.0</span>
   <nav class="nav">
@@ -160,7 +186,7 @@ footer a{{color:var(--teal-dark);text-decoration:none}}
 </head>
 <body>
 <div class="topbar">
-  <a class="brand" href="{root_path}index.html"><img src="{assets_path}logos/pof-logo-color.svg" alt="POF"></a>
+  <a class="brand" href="{root_path}index.html"><img src="{assets_path}logos/pof-logo-teal-white.svg" alt="POF"></a>
   <span class="crumbs">{breadcrumb}</span>
   <span class="version">v3.4.0</span>
   <nav class="topbar-nav">
@@ -239,14 +265,18 @@ for f in sorted((ROOT / 'docs/layouts').glob('*.md')):
               assets_path='../assets/')
 print(f'[3b] Rendered docs/layouts/*.md -> _site/layouts/*.html')
 
-# Render memory/*.md
-for f in sorted((ROOT / 'memory').glob('*.md')):
-    render_md(f, BUILD / 'memory' / f"{f.stem}.html",
-              breadcrumb=f"Memory / {f.stem}",
-              css_path='../styles.css',
-              root_path='../',
-              assets_path='../assets/')
-print(f'[3c] Rendered memory/*.md -> _site/memory/*.html')
+# Render memory/*.md (optional)
+mem_dir = ROOT / 'memory'
+if mem_dir.exists():
+    for f in sorted(mem_dir.glob('*.md')):
+        render_md(f, BUILD / 'memory' / f"{f.stem}.html",
+                  breadcrumb=f"Memory / {f.stem}",
+                  css_path='../styles.css',
+                  root_path='../',
+                  assets_path='../assets/')
+    print(f'[3c] Rendered memory/*.md -> _site/memory/*.html')
+else:
+    print('[3c] memory/ folder absent, skip')
 
 # Render root *.md (README, ITERATE, VISUALIZE, CHANGELOG)
 for fname in ['README.md', 'ITERATE.md', 'VISUALIZE.md', 'CHANGELOG.md']:
@@ -327,7 +357,7 @@ def build_icons_gallery():
 </head>
 <body>
 <div class="topbar">
-  <a class="brand" href="index.html"><img src="assets/logos/pof-logo-color.svg" alt="POF"></a>
+  <a class="brand" href="index.html"><img src="assets/logos/pof-logo-teal-white.svg" alt="POF"></a>
   <span class="crumbs">Design System · Icons</span>
   <span class="version">v3.4.0</span>
   <nav class="topbar-nav">
@@ -336,7 +366,7 @@ def build_icons_gallery():
     <a href="charts.html">Charts</a>
     <a href="maps.html">Maps</a>
     <a href="icons.html" class="active">Icons</a>
-    <a href="workflows.html">Workflows &amp; DBs</a>
+    <a href="images.html">Images</a>
     <a href="https://github.com/benoitpof/design-system">GitHub</a>
   </nav>
 </div>
@@ -373,6 +403,154 @@ function filterIcons(){{
 
 icons_total = build_icons_gallery()
 print(f'[4] Built icons.html ({icons_total} SVG)')
+
+
+# ---------- 4b. Images gallery ----------
+def build_images_gallery():
+    sections = []
+    for sub, label, grid_cls in [
+        ('logos', 'Logos · `/assets/logos/`', 'logo-grid'),
+        ('monogramme', 'Monogramme · `/assets/monogramme/`', 'pictos-grid'),
+        ('brand-elements', 'Brand elements · `/assets/brand-elements/`', 'pictos-grid'),
+        ('backgrounds', 'Backgrounds · `/assets/backgrounds/`', 'bg-grid'),
+    ]:
+        d = ROOT / 'assets' / sub
+        if not d.exists():
+            continue
+        files = sorted(d.glob('*.svg'))
+        if not files:
+            continue
+        cards = []
+        for f in files:
+            rel = f.relative_to(ROOT).as_posix()
+            cards.append(f'<a class="img-card" href="{rel}" title="{f.stem}"><div class="img-thumb {grid_cls.replace("-grid", "-thumb")}"><img src="{rel}" alt="{f.stem}"></div><div class="img-name">{f.stem}</div></a>')
+        sections.append((label, cards, grid_cls, len(files)))
+
+    sections_html = ''
+    total = 0
+    for title, cards, grid_cls, n in sections:
+        sections_html += f'<h2>{title} <span style="color:var(--gray-600);font-weight:400;font-size:11px">{n} files</span></h2><div class="img-grid {grid_cls}">{"".join(cards)}</div>'
+        total += n
+
+    page = """<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>POF · Images · v3.4.0</title>
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+<style>
+.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--neutral-mid);padding:14px 32px;display:flex;align-items:center;gap:16px}
+.topbar .brand img{height:26px}.topbar .crumbs{font-family:Poppins;font-size:11px;font-weight:600;color:var(--gray-600);letter-spacing:1px;text-transform:uppercase}
+.topbar .version{font-family:Poppins;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal-dark);background:rgba(128,199,194,.12);padding:3px 8px;border-radius:3px}
+.topbar-nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.topbar-nav a{font-family:Poppins;font-size:10px;font-weight:600;color:var(--navy);text-decoration:none;padding:8px 14px;border:1px solid var(--neutral-mid);border-radius:5px;text-transform:uppercase}
+.topbar-nav a:hover,.topbar-nav a.active{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.hero{padding:48px 32px 24px;max-width:1280px;margin:0 auto}
+.hero h1{font-family:Poppins;font-weight:700;font-size:36px;color:var(--navy);margin:0 0 8px}
+.hero p{font-family:Raleway;font-size:14px;color:var(--gray-600);max-width:760px}
+.key-resources{position:sticky;top:54px;z-index:40;padding:14px 32px;background:var(--gris-pof);border-bottom:1px solid var(--neutral-mid)}
+.key-resources .inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.key-resources .label{font-family:Poppins;font-size:10px;font-weight:600;letter-spacing:1.5px;color:var(--steel);text-transform:uppercase}
+.key-resources .links{display:flex;gap:8px;flex-wrap:wrap}
+.key-resources a{font-family:Poppins;font-size:11px;font-weight:600;color:var(--navy);text-decoration:none;padding:6px 12px;background:#fff;border:1px solid var(--neutral-mid);border-radius:5px}
+.key-resources a:hover{border-color:var(--teal);background:rgba(128,199,194,.07)}
+.gallery{max-width:1280px;margin:32px auto;padding:0 32px 96px}
+.gallery h2{font-family:Poppins;font-weight:600;font-size:14px;letter-spacing:1px;color:var(--steel);text-transform:uppercase;margin:32px 0 16px;padding-left:14px;border-left:3px solid var(--steel-light)}
+.img-grid{display:grid;gap:14px;margin-bottom:32px}
+.logo-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.pictos-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.bg-grid{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.img-card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--neutral-mid);border-radius:6px;padding:14px;transition:border-color 150ms,transform 150ms}
+.img-card:hover{border-color:var(--teal);transform:translateY(-1px);box-shadow:0 4px 12px rgba(28,31,59,.08)}
+.img-thumb{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;padding:12px;background:var(--gris-pof);border-radius:4px;margin-bottom:10px}
+.img-thumb img{max-width:100%;max-height:100%}
+.logo-thumb{aspect-ratio:5/2;background:#1C1F3B}
+.logo-thumb img{max-height:50px}
+.bg-thumb{aspect-ratio:32/9;padding:0;overflow:hidden}
+.bg-thumb img{width:100%;height:100%;object-fit:cover}
+.img-name{font-family:Poppins;font-size:11px;color:var(--steel);font-weight:600;word-break:break-word}
+</style>
+</head>
+<body>
+<div class="topbar">
+<a class="brand" href="index.html"><img src="assets/logos/pof-logo-teal-white.svg" alt="POF"></a>
+<span class="crumbs">Design System · Images</span>
+<span class="version">v3.4.0</span>
+<nav class="topbar-nav">
+<a href="index.html">Overview</a>
+<a href="architecture.html">Architecture</a>
+<a href="charts.html">Charts</a>
+<a href="maps.html">Maps</a>
+<a href="icons.html">Icons</a>
+<a href="images.html" class="active">Images</a>
+<a href="https://github.com/benoitpof/design-system">GitHub</a>
+</nav>
+</div>
+<header class="hero">
+<h1>Images · brand visual assets</h1>
+<p>Logos, monogramme, brand elements (waves, corner brackets), backgrounds. Photographies sourcees dans la <a href="databases/media-assets.html">Notion Media Assets DB</a>.</p>
+</header>
+<section class="key-resources">
+<div class="inner">
+<div class="label">Cadrage et regles</div>
+<div class="links">
+<a href="rules/PHOTOS.html">PHOTOS rules</a>
+<a href="rules/DESIGN.html">DESIGN — overlay</a>
+<a href="rules/ASSETS.html">ASSETS index</a>
+<a href="https://github.com/benoitpof/design-system/tree/main/assets" target="_blank">→ /assets/ on GitHub</a>
+</div>
+</div>
+</section>
+<div class="gallery">
+""" + sections_html + """
+</div>
+</body></html>"""
+    (BUILD / 'images.html').write_text(page)
+    return total
+
+images_total = build_images_gallery()
+print(f'[4b] Built images.html ({images_total} items)')
+
+# ---------- 4d. Key resources sticky bar ----------
+def inject_key_resources():
+    """Add key-resources sticky bar to charts/maps/icons pages."""
+    KEY_RES = {
+        'charts.html': [
+            ('rules/CHARTS.html', '📐 CHARTS rules'),
+            ('rules/TABLES.html', '📐 TABLES rules'),
+            ('https://github.com/benoitpof/design-system/tree/main/examples/charts', '🎯 Examples sur GitHub'),
+        ],
+        'maps.html': [
+            ('rules/MAPS.html', '📐 MAPS rules'),
+            ('assets/maps/map-charter.html', '🎯 Map Charter interactif'),
+            ('assets/maps/pof-world-map-blank.svg', '🌍 World map base SVG'),
+            ('https://github.com/benoitpof/design-system/tree/main/assets/maps', '→ /assets/maps/ on GitHub'),
+        ],
+        'icons.html': [
+            ('rules/ICONS.html', '📐 ICONS rules'),
+            ('https://tabler.io/icons', '🎯 Tabler CDN (source primaire)'),
+            ('https://github.com/benoitpof/design-system/tree/main/assets/icons', '→ /assets/icons/ on GitHub'),
+        ],
+    }
+    KEY_CSS = """<style>.kr-bar{position:sticky;top:54px;z-index:40;padding:12px 32px;background:#F9FCFF;border-bottom:1px solid #EAEBED}.kr-bar .kr-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}.kr-bar .kr-label{font-family:Poppins;font-size:10px;font-weight:600;letter-spacing:1.5px;color:#435D74;text-transform:uppercase}.kr-bar a{font-family:Poppins;font-size:11px;font-weight:600;color:#1C1F3B;text-decoration:none;padding:6px 12px;background:#fff;border:1px solid #EAEBED;border-radius:5px}.kr-bar a:hover{border-color:#80C7C2;background:rgba(128,199,194,.07)}</style>"""
+
+    for filename, links in KEY_RES.items():
+        f = BUILD / filename
+        if not f.exists():
+            continue
+        text = f.read_text()
+        if 'class="kr-bar"' in text:
+            continue
+        target_attr = lambda h: ' target="_blank"' if h.startswith('http') else ''
+        links_html = ''.join(f'<a href="{h}"{target_attr(h)}>{lbl}</a>' for h, lbl in links)
+        bar = KEY_CSS + f'<section class="kr-bar"><div class="kr-inner"><div class="kr-label">Cadrage et examples</div>{links_html}</div></section>'
+        # Insert right after closing of topbar div (before <header class="hero">)
+        if '<header class="hero">' in text:
+            text = text.replace('<header class="hero">', bar + '\n<header class="hero">', 1)
+            f.write_text(text)
+
+inject_key_resources()
+print('[4d] Key resources sticky bar injected on charts/maps/icons')
+
 
 # ---------- 5. Architecture page : full Git tree ----------
 def build_architecture():
@@ -472,7 +650,7 @@ def build_architecture():
 </head>
 <body>
 <div class="topbar">
-  <a class="brand" href="index.html"><img src="assets/logos/pof-logo-color.svg" alt="POF"></a>
+  <a class="brand" href="index.html"><img src="assets/logos/pof-logo-teal-white.svg" alt="POF"></a>
   <span class="crumbs">Design System · Architecture</span>
   <span class="version">v3.4.0</span>
   <nav class="topbar-nav">
@@ -481,7 +659,7 @@ def build_architecture():
     <a href="charts.html">Charts</a>
     <a href="maps.html">Maps</a>
     <a href="icons.html">Icons</a>
-    <a href="workflows.html">Workflows &amp; DBs</a>
+    <a href="images.html">Images</a>
     <a href="https://github.com/benoitpof/design-system">GitHub</a>
   </nav>
 </div>
@@ -612,7 +790,7 @@ def build_workflows():
 </head>
 <body>
 <div class="topbar">
-  <a class="brand" href="index.html"><img src="assets/logos/pof-logo-color.svg" alt="POF"></a>
+  <a class="brand" href="index.html"><img src="assets/logos/pof-logo-teal-white.svg" alt="POF"></a>
   <span class="crumbs">Design System · Workflows</span>
   <span class="version">v3.4.0</span>
   <nav class="topbar-nav">
@@ -621,7 +799,7 @@ def build_workflows():
     <a href="charts.html">Charts</a>
     <a href="maps.html">Maps</a>
     <a href="icons.html">Icons</a>
-    <a href="workflows.html" class="active">Workflows &amp; DBs</a>
+    <a href="images.html">Images</a>
     <a href="https://github.com/benoitpof/design-system">GitHub</a>
   </nav>
 </div>
@@ -675,7 +853,7 @@ section.body ul{{margin:0 0 16px 22px}}
 </head>
 <body>
 <div class="topbar">
-<a class="brand" href="../index.html"><img src="../assets/logos/pof-logo-color.svg" alt="POF"></a>
+<a class="brand" href="../index.html"><img src="../assets/logos/pof-logo-teal-white.svg" alt="POF"></a>
 <span class="crumbs">Workflows / {w['name']}</span>
 <nav class="topbar-nav">
 <a href="../index.html">Overview</a>
@@ -748,7 +926,7 @@ def build_databases():
 </head>
 <body>
 <div class="topbar">
-<a class="brand" href="index.html"><img src="assets/logos/pof-logo-color.svg" alt="POF"></a>
+<a class="brand" href="index.html"><img src="assets/logos/pof-logo-teal-white.svg" alt="POF"></a>
 <span class="crumbs">Design System · Databases</span>
 <nav class="topbar-nav">
 <a href="index.html">Overview</a>
@@ -800,7 +978,7 @@ section.body li{{margin:6px 0}}
 </head>
 <body>
 <div class="topbar">
-<a class="brand" href="../index.html"><img src="../assets/logos/pof-logo-color.svg" alt="POF"></a>
+<a class="brand" href="../index.html"><img src="../assets/logos/pof-logo-teal-white.svg" alt="POF"></a>
 <span class="crumbs">Databases / {db['name']}</span>
 <nav class="topbar-nav">
 <a href="../index.html">Overview</a>
