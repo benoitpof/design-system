@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "version": "3.3.9",
+    "version": "3.3.10",
     "generated": "2026-04-27",
     "schema": "design-tokens-v3",
     "source_of_truth": "GitHub repo benoitpof/design-system tokens/brand-tokens.json",
     "mirror": "Notion database 'Brand Tokens' (read-only, synced via GAS)",
     "previous_version": "3.1.0",
-    "changes": "See CHANGELOG-v3.3.9.md. Overlay intensity medium added (0.75). Catalogue charts integrated (16-map updated, 17-icons, 18-images, Tableaux financiers).",
+    "changes": "See CHANGELOG-v3.3.10.md. Excel dashboard template v2 with 6 sheets.",
     "wcag_compliance": {
       "standard": "WCAG 2.1 AA",
       "normal_text_min": "4.5:1",

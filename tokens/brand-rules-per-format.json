@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "3.3.9",
+    "version": "3.3.10",
     "generated": "2026-04-27",
     "description": "Format-specific design rules. Every value exact. Pair with brand-tokens.json. Convention: mm partout (SSOT). Inches noted in comments only when pptxgenjs requires it.",
     "changes_from_3.1.0": [
@@ -98,6 +98,9 @@
       "ADD overlay_system.gradient.intensity.medium (start_opacity 0.75) — between full (1.0) and soft (0.5). Combinations now 4×4×2×3 = 96 valid.",
       "INTEGRATE charts/16-map.html updated, charts/17-icons.html (Tabler 106 icons), charts/18-images.html (live Notion photos) — output of Graphs & maps project test.",
       "ADD examples/charts/Tableaux-financiers.html — financial tables variant."
+    ],
+    "changes_from_3.3.9": [
+      "Excel template v2: 6 sheets — Dashboard KPI / Data master / Bar / Stacked / P&L 3y with formulas / Funnel. Replaces v1 (3 sheets)."
     ]
   },
   "slides": {
