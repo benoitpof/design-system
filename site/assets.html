@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POF Design System · Assets</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="ds-page" data-breadcrumb="Design System · Assets">
+
+<header class="hero">
+  <div class="pipe-row">
+    <div class="pipe"></div>
+    <div>
+      <div class="eyebrow">POF · Assets</div>
+      <h1>Assets bruts</h1>
+      <p>Logos, brand-elements, backgrounds, monogramme, icons, maps. Liste live de <code>assets/</code>.</p>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <h2>Catégories</h2>
+  <div class="grid-3" id="cat-grid"></div>
+</section>
+
+<section class="section">
+  <h2>Logos</h2>
+  <p class="lead">Catalog logos POF avec aperçu inline.</p>
+  <div class="grid-auto" id="logos-grid"></div>
+</section>
+
+<section class="section">
+  <h2>Brand elements & backgrounds</h2>
+  <div class="grid-auto" id="brand-grid"></div>
+</section>
+
+<section class="section">
+  <h2>Monogramme</h2>
+  <div class="grid-auto" id="mono-grid"></div>
+</section>
+
+<script src="_app.js"></script>
+<script>
+const CAT_HINTS = {
+  logos:           { name: 'Logos',           desc: 'POF logo en variantes (color, navy, white, monochrome).' },
+  'brand-elements':{ name: 'Brand elements',  desc: 'Corner brackets, waves.' },
+  backgrounds:     { name: 'Backgrounds',     desc: 'Backgrounds vectoriels (waves).' },
+  monogramme:      { name: 'Monogramme',      desc: 'Picto P sans texte (color, white).' },
+  icons:           { name: 'Icons',           desc: 'Tabler outline + brand pictos. Voir Icons →' },
+  maps:            { name: 'Maps',            desc: 'World map base + crops régionaux. Voir Maps →' },
+};
+
+function svgCard(entry) {
+  const fn = entry.path.split('/').pop();
+  const raw = POF.RAW(entry.path);
+  return `<a class="card" href="${POF.escapeHtml(POF.BLOB(entry.path))}" target="_blank" rel="noopener" data-name="${POF.escapeHtml(fn.toLowerCase())}">
+    <div class="thumb"><img src="${POF.escapeHtml(raw)}" alt="${POF.escapeHtml(fn)}" loading="lazy" onerror="this.style.opacity=0.2"></div>
+    <div class="meta">
+      <span class="num">SVG</span>
+      <span class="name">${POF.escapeHtml(fn)}</span>
+      <span class="desc">${POF.escapeHtml(entry.path)}</span>
+    </div>
+  </a>`;
+}
+
+(async function () {
+  const cat = document.getElementById('cat-grid');
+  POF.renderLoading(cat);
+  const { tree } = await POF.loadTree();
+  if (!tree.length) { POF.renderError(cat, 'Tree fetch a échoué.'); return; }
+
+  // Categories
+  const cats = POF.listDir(tree, 'assets').filter(e => e.type === 'tree');
+  cat.innerHTML = cats.map(e => {
+    const name = e.path.split('/').pop();
+    const hint = CAT_HINTS[name] || { name, desc: 'Sous-dossier de assets/.' };
+    const blobs = POF.listRecursive(tree, e.path).length;
+    const intern = name === 'icons' ? 'icons.html' : name === 'maps' ? 'maps.html' : null;
+    const href = intern || ('tree.html?path=' + encodeURIComponent(e.path));
+    return `<a class="card" href="${POF.escapeHtml(href)}">
+      <div class="meta">
+        <span class="num">Folder</span>
+        <span class="name">${POF.escapeHtml(hint.name)}</span>
+        <span class="desc">${POF.escapeHtml(hint.desc)} (${blobs} fichiers)</span>
+        <span class="badge dim">${POF.escapeHtml(e.path)}/</span>
+      </div>
+    </a>`;
+  }).join('') || '<div class="empty-state">Aucune catégorie dans assets/.</div>';
+
+  // Specific galleries
+  const fillGallery = (containerId, dirPath) => {
+    const c = document.getElementById(containerId);
+    const items = POF.listRecursive(tree, dirPath).filter(e => e.path.endsWith('.svg'));
+    if (!items.length) { POF.renderEmpty(c, 'Vide.'); return; }
+    c.innerHTML = items.map(svgCard).join('');
+  };
+  fillGallery('logos-grid',  'assets/logos');
+  fillGallery('brand-grid',  'assets/brand-elements');
+  // Append backgrounds into brand grid
+  const bgs = POF.listRecursive(tree, 'assets/backgrounds').filter(e => e.path.endsWith('.svg'));
+  if (bgs.length) document.getElementById('brand-grid').insertAdjacentHTML('beforeend', bgs.map(svgCard).join(''));
+  fillGallery('mono-grid',   'assets/monogramme');
+})();
+</script>
+
+</body>
+</html>

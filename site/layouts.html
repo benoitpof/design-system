@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POF Design System · Layouts</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="ds-page" data-breadcrumb="Design System · Layouts">
+
+<header class="hero">
+  <div class="pipe-row">
+    <div class="pipe"></div>
+    <div>
+      <div class="eyebrow">POF · Layouts</div>
+      <h1>Layouts par medium</h1>
+      <p>Un fichier markdown par type de livrable. Liste live de <code>layouts/</code>.</p>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <h2>Documents</h2>
+  <div class="grid-3" id="grid"></div>
+</section>
+
+<script src="_app.js"></script>
+<script>
+const HINTS = {
+  'DECK.md':   '15 layouts canoniques 16:9 (cover, section, KPI, map, callout…).',
+  'REPORT.md': '10 layouts A4 (cover, TOC, body, KPI, photo, quote, map, chart, back).',
+  'WEB.md':    '8 layouts (hero, feature, grid cards, KPI band, map, quote, logo wall, footer).',
+  'SOCIAL.md': '6 formats (LinkedIn 1:1, 1.91:1, carousel, IG feed, IG story, X post).',
+  'README.md': 'Index des layouts.',
+};
+
+(async function () {
+  const grid = document.getElementById('grid');
+  POF.renderLoading(grid);
+  const { tree } = await POF.loadTree();
+  if (!tree.length) { POF.renderError(grid, 'Tree fetch a échoué.'); return; }
+
+  const items = POF.listDir(tree, 'layouts').filter(e => e.type === 'blob' && e.path.endsWith('.md'));
+  if (!items.length) { POF.renderEmpty(grid, 'Aucun fichier dans layouts/.'); return; }
+
+  grid.innerHTML = items.map(e => {
+    const fn = e.path.split('/').pop();
+    return `<a class="card" href="docs.html?path=${encodeURIComponent(e.path)}">
+      <div class="meta">
+        <span class="num">Layout</span>
+        <span class="name">${POF.escapeHtml(fn.replace(/\.md$/, ''))}</span>
+        <span class="desc">${POF.escapeHtml(HINTS[fn] || ('Layout : ' + fn))}</span>
+        <span class="badge dim">${POF.escapeHtml(e.path)}</span>
+      </div>
+    </a>`;
+  }).join('');
+})();
+</script>
+
+</body>
+</html>

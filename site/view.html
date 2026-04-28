@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POF Design System · HTML Viewer</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.viewer-head{max-width:1280px;margin:24px auto 16px;padding:0 32px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.viewer-head .crumbs{font-family:'Roboto Mono',monospace;font-size:12px;color:var(--gray-600);flex-grow:1}
+.viewer-head .crumbs a{color:var(--teal-dark);text-decoration:none}
+.viewer-host{max-width:1280px;margin:0 auto 32px;padding:0 32px}
+.viewer-host iframe{width:100%;height:calc(100vh - 200px);min-height:600px;border:1px solid var(--neutral-mid);border-radius:8px;background:var(--white);display:block}
+</style>
+</head>
+<body class="ds-page" data-breadcrumb="Design System · HTML Viewer">
+
+<div class="viewer-head">
+  <div class="crumbs" id="crumbs">…</div>
+  <div class="actions" id="actions"></div>
+</div>
+
+<div class="viewer-host">
+  <iframe id="frame" sandbox="allow-scripts" loading="lazy"></iframe>
+</div>
+
+<script src="_app.js"></script>
+<script>
+function getPath() {
+  return new URLSearchParams(location.search).get('path') || 'examples/charts/01-kpi.html';
+}
+
+(async function () {
+  const path = getPath();
+  const segs = path.split('/');
+  const crumbHtml = ['<a href="tree.html">root</a>'];
+  let cur = '';
+  for (let i = 0; i < segs.length - 1; i++) {
+    cur = cur ? cur + '/' + segs[i] : segs[i];
+    crumbHtml.push(' / <a href="tree.html?path=' + encodeURIComponent(cur) + '">' + POF.escapeHtml(segs[i]) + '</a>');
+  }
+  crumbHtml.push(' / <span>' + POF.escapeHtml(segs[segs.length - 1]) + '</span>');
+  document.getElementById('crumbs').innerHTML = crumbHtml.join('');
+
+  document.getElementById('actions').innerHTML = `
+    <a class="btn primary" href="${POF.BLOB(path)}" target="_blank" rel="noopener">View on GitHub ↗</a>
+    <a class="btn" href="https://cdn.jsdelivr.net/gh/${POF.REPO}@${POF.BRANCH}/${path}" target="_blank" rel="noopener">jsdelivr URL</a>
+    <a class="btn" href="tree.html?path=${encodeURIComponent(segs.slice(0, -1).join('/'))}">Up to folder</a>
+  `;
+
+  const { tree } = await POF.loadTree();
+  if (tree.length && !POF.findExact(tree, path)) {
+    document.querySelector('.viewer-host').innerHTML = `<div class="error-state">Le fichier <code>${POF.escapeHtml(path)}</code> n'existe pas dans le repo. Vérifie l'URL ou ouvre la <a href="tree.html">vue arbre</a>.</div>`;
+    return;
+  }
+
+  // Fetch HTML content and inject into iframe via srcdoc.
+  // We rewrite relative resource URLs (CSS, JS, images) to absolute raw/jsdelivr URLs
+  // so the iframe renders correctly even with sandbox.
+  try {
+    let html = await POF.fetchRaw(path);
+    const baseDir = segs.slice(0, -1).join('/');
+
+    function rewrite(url) {
+      if (/^(https?:|data:|#)/.test(url)) return url;
+      // Resolve relative to baseDir
+      const resolved = POF.resolvePath(baseDir, url);
+      // Use jsdelivr for HTML/JS/CSS (browser-friendly content-type), raw for SVG/PNG
+      if (/\.(svg|png|jpe?g|gif|webp|ico)$/i.test(resolved)) {
+        return POF.RAW(resolved);
+      }
+      return `https://cdn.jsdelivr.net/gh/${POF.REPO}@${POF.BRANCH}/${resolved}`;
+    }
+
+    // Rewrite href / src in HTML
+    html = html.replace(/(href|src)="([^"]+)"/g, (m, a, v) => `${a}="${rewrite(v)}"`);
+    // Inject a <base> just in case relative URLs slip through
+    if (!/<base\s/i.test(html)) {
+      html = html.replace(/<head>/i, `<head>\n<base href="https://cdn.jsdelivr.net/gh/${POF.REPO}@${POF.BRANCH}/${baseDir}/">`);
+    }
+
+    document.getElementById('frame').srcdoc = html;
+  } catch (e) {
+    document.querySelector('.viewer-host').innerHTML = `<div class="error-state">⚠ ${POF.escapeHtml(e.message)}</div>`;
+  }
+})();
+</script>
+
+</body>
+</html>

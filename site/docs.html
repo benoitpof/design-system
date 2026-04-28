@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POF Design System · Doc Viewer</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.viewer-head{max-width:880px;margin:32px auto 0;padding:0 32px}
+.viewer-head .crumbs{font-family:'Roboto Mono',monospace;font-size:12px;color:var(--gray-600)}
+.viewer-head .crumbs a{color:var(--teal-dark);text-decoration:none}
+.viewer-head .crumbs a:hover{text-decoration:underline}
+.viewer-head h1{font-family:'Poppins',sans-serif;font-size:28px;color:var(--navy);margin:8px 0 16px;letter-spacing:-.5px}
+.viewer-head .actions{margin:0}
+</style>
+</head>
+<body class="ds-page" data-breadcrumb="Design System · Doc Viewer">
+
+<div class="viewer-head">
+  <div class="crumbs" id="crumbs">…</div>
+  <h1 id="title">Document</h1>
+  <div class="actions" id="actions"></div>
+</div>
+
+<article class="md-content" id="md">Chargement…</article>
+
+<script src="_app.js"></script>
+<script>
+function getPath() {
+  return new URLSearchParams(location.search).get('path') || 'README.md';
+}
+
+(async function () {
+  const path = getPath();
+  if (!/\.(md|markdown)$/i.test(path)) {
+    document.getElementById('md').innerHTML = '<div class="error-state">Ce viewer ne sait afficher que des fichiers .md. Pour HTML, utilise <a href="view.html?path=' + encodeURIComponent(path) + '">view.html</a>.</div>';
+    document.getElementById('title').textContent = path;
+    return;
+  }
+
+  // Crumbs
+  const segs = path.split('/');
+  const crumbHtml = ['<a href="tree.html">root</a>'];
+  let cur = '';
+  for (let i = 0; i < segs.length - 1; i++) {
+    cur = cur ? cur + '/' + segs[i] : segs[i];
+    crumbHtml.push(' / <a href="tree.html?path=' + encodeURIComponent(cur) + '">' + POF.escapeHtml(segs[i]) + '</a>');
+  }
+  crumbHtml.push(' / <span>' + POF.escapeHtml(segs[segs.length - 1]) + '</span>');
+  document.getElementById('crumbs').innerHTML = crumbHtml.join('');
+  document.getElementById('title').textContent = segs[segs.length - 1];
+
+  // Action buttons
+  document.getElementById('actions').innerHTML = `
+    <a class="btn primary" href="${POF.BLOB(path)}" target="_blank" rel="noopener">View on GitHub ↗</a>
+    <a class="btn" href="${POF.RAW(path)}" target="_blank" rel="noopener">Raw</a>
+    <a class="btn" href="tree.html?path=${encodeURIComponent(segs.slice(0, -1).join('/'))}">Up to folder</a>
+  `;
+
+  // Sanity-check the file exists in the tree before fetching
+  const { tree } = await POF.loadTree();
+  if (tree.length && !POF.findExact(tree, path)) {
+    document.getElementById('md').innerHTML = `<div class="error-state">Le fichier <code>${POF.escapeHtml(path)}</code> n'existe pas dans le repo. Vérifie l'URL ou ouvre la <a href="tree.html">vue arbre</a>.</div>`;
+    return;
+  }
+
+  await POF.renderMarkdownInto(path, document.getElementById('md'));
+})();
+</script>
+
+</body>
+</html>

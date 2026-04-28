@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POF Design System · Icon Library</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="ds-page" data-breadcrumb="Design System · Icon Library">
+
+<header class="hero">
+  <div class="pipe-row">
+    <div class="pipe"></div>
+    <div>
+      <div class="eyebrow">POF · Icons</div>
+      <h1>Icon library</h1>
+      <p>Liste live de <code>assets/icons/</code>. Tabler outline est la source primaire ; les pictos POF couvrent les marques et concepts métier. Recherche live, aperçu inline.</p>
+    </div>
+  </div>
+</header>
+
+<section class="intro-stats">
+  <div class="intro-stat"><div class="num" id="stat-total">…</div><div class="lab">SVG total</div></div>
+  <div class="intro-stat"><div class="num" id="stat-base">…</div><div class="lab">base names</div></div>
+  <div class="intro-stat"><div class="num" id="stat-color">…</div><div class="lab">color variants</div></div>
+  <div class="intro-stat"><div class="num">CDN</div><div class="lab">Tabler outline</div></div>
+</section>
+
+<section class="section">
+  <h2>Galerie</h2>
+  <p class="lead">Cliquer ouvre le SVG sur GitHub.</p>
+  <div class="toolbar">
+    <input type="search" id="q" placeholder="Recherche par nom (ex: arrow, user, plant)…">
+    <select id="variant">
+      <option value="">Toutes les variantes</option>
+      <option value="base">Base (sans suffixe)</option>
+      <option value="navy">_navy</option>
+      <option value="teal">_teal</option>
+      <option value="white">_white</option>
+    </select>
+    <a class="btn" href="docs.html?path=rules/ICONS.md">Voir ICONS.md</a>
+    <a class="btn" href="docs.html?path=memory/icon.md">Voir memory/icon.md</a>
+  </div>
+  <div class="icon-grid" id="icon-grid"></div>
+</section>
+
+<script src="_app.js"></script>
+<script>
+function variantOf(name) {
+  const m = name.match(/_(navy|teal|white)\.svg$/);
+  return m ? m[1] : 'base';
+}
+
+(async function () {
+  const grid = document.getElementById('icon-grid');
+  POF.renderLoading(grid);
+  const { tree } = await POF.loadTree();
+  if (!tree.length) { POF.renderError(grid, 'Tree fetch a échoué.'); return; }
+
+  const icons = POF.listRecursive(tree, 'assets/icons').filter(e => e.path.endsWith('.svg'));
+  document.getElementById('stat-total').textContent = icons.length;
+
+  // Group by base name
+  const byBase = new Map();
+  for (const e of icons) {
+    const fn = e.path.split('/').pop();
+    const base = fn.replace(/_(navy|teal|white)\.svg$/, '.svg').replace(/\.svg$/, '');
+    if (!byBase.has(base)) byBase.set(base, []);
+    byBase.get(base).push({ ...e, fn, variant: variantOf(fn) });
+  }
+  document.getElementById('stat-base').textContent = byBase.size;
+  const variantCount = icons.length - byBase.size;
+  document.getElementById('stat-color').textContent = variantCount;
+
+  // Render: one cell per file
+  const cells = icons.map(e => {
+    const fn = e.path.split('/').pop();
+    const base = fn.replace(/_(navy|teal|white)\.svg$/, '.svg').replace(/\.svg$/, '');
+    const v = variantOf(fn);
+    const rawSrc = POF.RAW(e.path);
+    const blob = POF.BLOB(e.path);
+    return `<a class="icon-cell" data-name="${POF.escapeHtml(fn.toLowerCase())}" data-base="${POF.escapeHtml(base.toLowerCase())}" data-variant="${POF.escapeHtml(v)}" href="${POF.escapeHtml(blob)}" target="_blank" rel="noopener" title="${POF.escapeHtml(fn)}">
+      <img src="${POF.escapeHtml(rawSrc)}" alt="${POF.escapeHtml(base)}" loading="lazy" onerror="this.style.opacity=0.2">
+      <div class="nm">${POF.escapeHtml(base)}${v !== 'base' ? '_' + v : ''}</div>
+    </a>`;
+  }).join('');
+
+  grid.innerHTML = cells;
+
+  const q = document.getElementById('q');
+  const variantSel = document.getElementById('variant');
+  function applyFilter() {
+    const term = q.value.trim().toLowerCase();
+    const v = variantSel.value;
+    let visible = 0;
+    grid.querySelectorAll('.icon-cell').forEach(c => {
+      const matchTerm = !term || c.dataset.name.includes(term) || c.dataset.base.includes(term);
+      const matchVar = !v || c.dataset.variant === v;
+      const ok = matchTerm && matchVar;
+      c.style.display = ok ? '' : 'none';
+      if (ok) visible++;
+    });
+  }
+  q.addEventListener('input', applyFilter);
+  variantSel.addEventListener('change', applyFilter);
+})();
+</script>
+
+</body>
+</html>

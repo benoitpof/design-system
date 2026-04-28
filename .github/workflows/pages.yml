@@ -1,32 +1,19 @@
 name: Deploy GitHub Pages
 
-# Only run when visual content / docs / generation logic changes.
-# Code-only iterations on internal stuff (CHANGELOG entries only, etc.)
-# don't trigger a redeploy. Manual trigger always available via workflow_dispatch.
+# Pages live in /site/ and read all repo content dynamically at runtime via the
+# GitHub API + raw.githubusercontent + jsdelivr. No Python build step needed —
+# any change in rules/, layouts/, examples/, etc. is picked up on the next
+# visit to the site, no redeploy required.
+#
+# This workflow only redeploys the site/ shell when /site/* itself changes
+# (or when manually dispatched).
 
 on:
   push:
     branches: [main]
     paths:
-      - 'site/**'                          # site templates (index, charts, maps, etc.)
-      - 'assets/**'                        # logos, icons, brand-elements, backgrounds, maps
-      - 'examples/**'                      # chart bank examples (when restored)
-      - 'docs/**'                          # rules and layouts md files
-      - 'memory/**'                        # Rex pages (when populated)
-      - 'golden/**'                        # golden references
-      - 'templates/**'                     # master templates
-      - 'tokens/**'                        # brand-tokens.json + css
-      - 'scripts/build-gallery.py'         # build script itself
-      - '.github/workflows/pages.yml'      # workflow itself
-      - 'README.md'
-      - 'ITERATE.md'
-      - 'VISUALIZE.md'
-      # NOT triggered by:
-      # - CHANGELOG.md updates (history only, no visual change)
-      # - .archive/ (historical changelogs)
-      # - .gitignore, internal config
-
-  # Manual trigger always available from Actions tab
+      - 'site/**'
+      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -39,38 +26,23 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Python 3.11
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: pip install markdown pygments
-
-      - name: Build site
-        run: python scripts/build-gallery.py
-
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact (built _site folder)
+      - name: Upload site/ as artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./_site
+          path: ./site
 
-  deploy:
-    needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
