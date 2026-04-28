@@ -47,3 +47,28 @@
 ## Exemples golden
 
 Voir `/golden/web/` (max 5 par layout).
+
+---
+
+## Chart usage on web pages
+
+Charts on web follow `rules/CHARTS.md`. The 18 SVG/HTML templates in `examples/charts/` are responsive-ready (viewBox-based). Allowed per layout:
+
+| Layout | Recommended charts |
+|---|---|
+| W01 Hero | `01-kpi.html` floating overlay, max 3 KPIs |
+| W04 KPI band | `01-kpi.html` repeated, navy band background |
+| W02 Section feature | Any chart 02–15 paired with text |
+| W05 Map section | `16-map.html` + SVG from `assets/maps/svg/` (see `rules/MAPS.md`) |
+| W03 Grid cards | Icons from `assets/icons/ecology/` for impact metrics |
+
+**Hard rule:** SVG charts must be inlined for color theming via CSS variables (see `tokens/brand-tokens.css`). Never use raster images for charts.
+
+## Cross-references
+
+- Hard locks: `rules/HARD-LOCKS.md`
+- Chart catalog: `rules/CHARTS.md`
+- Map patterns: `rules/MAPS.md`
+- Photo overlays + hero: `rules/PHOTOS.md`
+- Icons: `rules/ICONS.md` (Tabler CDN + `assets/icons/ecology/` for env/impact)
+- Tokens CSS: `tokens/brand-tokens.css`

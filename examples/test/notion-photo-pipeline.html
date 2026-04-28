@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POF — Notion Media Assets · Pipeline Test · 2026-04-27</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #f5f5f3;
+    color: #1a1a1a;
+    padding: 48px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  header {
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+  header .meta { font-size: 12px; color: #666; text-align: right; line-height: 1.8; }
+
+  .query-block {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 48px;
+    overflow: hidden;
+  }
+
+  .query-header {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 14px 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .query-header .q-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.55;
+    flex-shrink: 0;
+  }
+  .query-header .q-title {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .query-filter {
+    background: #f0f0ee;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 20px;
+    font-size: 11.5px;
+    color: #444;
+    font-family: "SF Mono", "Consolas", monospace;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .query-filter .filter-label { color: #999; margin-right: 4px; }
+  .filter-tag {
+    background: #e0ebe8;
+    color: #1a5c50;
+    border-radius: 3px;
+    padding: 2px 7px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .filter-tag.approx { background: #e8e4f0; color: #4a3a70; }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1px;
+    background: #ddd;
+  }
+
+  .result-card {
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .img-wrapper {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #f0f0ee;
+    position: relative;
+    overflow: hidden;
+  }
+  .img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .img-status {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+  .img-status.ok  { background: #1a5c50; color: #fff; }
+  .img-status.broken { background: #b91c1c; color: #fff; }
+
+  .broken-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fef2f2;
+    color: #b91c1c;
+    gap: 6px;
+    font-size: 11px;
+  }
+  .broken-placeholder svg { opacity: 0.5; }
+
+  .card-body { padding: 14px 16px 16px; }
+  .card-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .tag-type   { background: #e8f0fe; color: #1a3a8f; }
+  .tag-entite { background: #e8f5ec; color: #1a5c30; }
+  .tag-pays   { background: #fff3e0; color: #7c3700; }
+  .tag-orient { background: #f3e8ff; color: #5b2191; }
+  .tag-usage  { background: #e0f7fa; color: #006064; }
+
+  .match-flags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .mf {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  .mf.pass { background: #d1fae5; color: #065f46; }
+  .mf.fail { background: #fee2e2; color: #991b1b; }
+  .mf.warn { background: #fef9c3; color: #92400e; }
+
+  .url-line {
+    font-size: 10.5px;
+    color: #888;
+    font-family: "SF Mono", "Consolas", monospace;
+    word-break: break-all;
+    line-height: 1.4;
+  }
+  .url-line a { color: #888; text-decoration: none; }
+  .url-line a:hover { color: #1a1a1a; }
+
+  /* Report section */
+  .report {
+    margin-top: 16px;
+    border-top: 2px solid #1a1a1a;
+    padding-top: 32px;
+  }
+  .report h2 {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+  }
+  .report-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .report-table th {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 9px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+  .report-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .report-table tr:nth-child(even) td { background: #fafafa; }
+  .pill { display: inline-block; padding: 1px 7px; border-radius: 3px; font-weight: 600; font-size: 10.5px; }
+  .pill.ok { background: #d1fae5; color: #065f46; }
+  .pill.broken { background: #fee2e2; color: #991b1b; }
+  .pill.warn { background: #fef9c3; color: #92400e; }
+  .pill.info { background: #e0e7ff; color: #3730a3; }
+
+  .blocking-list { list-style: none; margin-top: 20px; }
+  .blocking-list li {
+    padding: 10px 14px;
+    background: #fff8e1;
+    border-left: 3px solid #f59e0b;
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .blocking-list li strong { font-weight: 700; }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    font-size: 11px;
+    color: #999;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>POF Notion Media Assets — Pipeline Test</h1>
+    <div style="font-size:13px;color:#666;margin-top:4px;">DB: <code>8ca51a75-2413-4f72-8f2a-c44d445fa1d0</code></div>
+  </div>
+  <div class="meta">
+    <div>Branch: <code>test/photo-pipeline</code></div>
+    <div>Run date: 2026-04-27</div>
+    <div>Source: docs/ASSETS.md v3.3.6</div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════
+     QUERY 1 — Cover slide
+     ══════════════════════════════════════════════ -->
+<div class="query-block">
+  <div class="query-header">
+    <span class="q-label">Query 1</span>
+    <span class="q-title">Cover slide use case — Photo terrain · Factories · Sénégal · Paysage · Deck</span>
+  </div>
+  <div class="query-filter">
+    <span class="filter-label">FILTER</span>
+    <span class="filter-tag">Type = Photo terrain</span>
+    <span class="filter-tag">Entité = Factories</span>
+    <span class="filter-tag">Pays = Sénégal</span>
+    <span class="filter-tag">Orientation = Paysage</span>
+    <span class="filter-tag approx">Usage ~ Deck</span>
+    <span class="filter-label" style="margin-left:8px;">TOP</span> 3
+  </div>
+
+  <div class="results-grid">
+
+    <!-- Q1 result 1 -->
+    <div class="result-card">
+      <div class="img-wrapper">
+        <img id="q1r1-img"
+             src="https://lh3.googleusercontent.com/d/1yZ8-y1O6dQy3JCZ1CXwJidxY7mOb8FAF"
+             alt="Palissade Brasserie Kalao — plastique terrain"
+             onload="setStatus('q1r1','ok')"
+             onerror="setBroken('q1r1')">
+        <span class="img-status" id="q1r1-status">…</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Palissade Brasserie Kalao — plastique terrain</div>
+        <div class="card-tags">
+          <span class="tag tag-type">Photo produit</span>
+          <span class="tag tag-entite">Factories</span>
+          <span class="tag tag-pays">Sénégal</span>
+          <span class="tag tag-orient">Paysage</span>
+          <span class="tag tag-usage">Deck</span>
+        </div>
+        <div class="match-flags">
+          <span class="mf fail">Type ✗ (Photo produit ≠ Photo terrain)</span>
+          <span class="mf pass">Entité ✓</span>
+          <span class="mf pass">Pays ✓</span>
+          <span class="mf pass">Orientation ✓</span>
+          <span class="mf pass">Usage ✓</span>
+          <span class="mf warn">Dimensions — vide</span>
+        </div>
+        <div class="url-line">
+          <a href="https://drive.google.com/uc?export=view&id=1yZ8-y1O6dQy3JCZ1CXwJidxY7mOb8FAF" target="_blank">
+            drive.google.com/uc?export=view&id=1yZ8-y1O6dQy3JCZ1CXwJidxY7mOb8FAF
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1 result 2 -->
+    <div class="result-card">
+      <div class="img-wrapper">
+        <img id="q1r2-img"
+             src="https://lh3.googleusercontent.com/d/1kqNtq6RTmDn8TfmBUstAeb6VEq7_MdEX"
+             alt="Kiosque Yoff plastique vue IA"
+             onload="setStatus('q1r2','ok')"
+             onerror="setBroken('q1r2')">
+        <span class="img-status" id="q1r2-status">…</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Kiosque Yoff plastique vue IA</div>
+        <div class="card-tags">
+          <span class="tag tag-type">Illustration</span>
+          <span class="tag tag-entite">Factories</span>
+          <span class="tag tag-pays">Sénégal</span>
+          <span class="tag tag-orient">Paysage</span>
+        </div>
+        <div class="match-flags">
+          <span class="mf fail">Type ✗ (Illustration ≠ Photo terrain)</span>
+          <span class="mf pass">Entité ✓</span>
+          <span class="mf pass">Pays ✓</span>
+          <span class="mf pass">Orientation ✓</span>
+          <span class="mf fail">Usage ✗ (pas Deck)</span>
+          <span class="mf warn">Dimensions — vide</span>
+        </div>
+        <div class="url-line">
+          <a href="https://drive.google.com/uc?export=view&id=1kqNtq6RTmDn8TfmBUstAeb6VEq7_MdEX" target="_blank">
+            drive.google.com/uc?export=view&id=1kqNtq6RTmDn8TfmBUstAeb6VEq7_MdEX
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1 result 3 -->
+    <div class="result-card">
+      <div class="img-wrapper">
+        <img id="q1r3-img"
+             src="https://lh3.googleusercontent.com/d/1E5lXom9uYPDMAh-50_D31Qm9hGxevg11"
+             alt="Palette plastique bleue — studio"
+             onload="setStatus('q1r3','ok')"
+             onerror="setBroken('q1r3')">
+        <span class="img-status" id="q1r3-status">…</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Palette plastique bleue — studio</div>
+        <div class="card-tags">
+          <span class="tag tag-type">Photo produit</span>
+          <span class="tag tag-entite">Factories</span>
+          <span class="tag tag-orient">Paysage</span>
+        </div>
+        <div class="match-flags">
+          <span class="mf fail">Type ✗ (Photo produit ≠ Photo terrain)</span>
+          <span class="mf pass">Entité ✓</span>
+          <span class="mf fail">Pays ✗ (champ vide)</span>
+          <span class="mf pass">Orientation ✓</span>
+          <span class="mf fail">Usage ✗ (pas Deck)</span>
+          <span class="mf warn">Dimensions — vide</span>
+        </div>
+        <div class="url-line">
+          <a href="https://drive.google.com/uc?export=view&id=1E5lXom9uYPDMAh-50_D31Qm9hGxevg11" target="_blank">
+            drive.google.com/uc?export=view&id=1E5lXom9uYPDMAh-50_D31Qm9hGxevg11
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /results-grid -->
+</div><!-- /query-block -->
+
+
+<!-- ══════════════════════════════════════════════
+     QUERY 2 — Content + Image
+     ══════════════════════════════════════════════ -->
+<div class="query-block">
+  <div class="query-header">
+    <span class="q-label">Query 2</span>
+    <span class="q-title">Content + Image use case — Photo produit · Factories · Paysage</span>
+  </div>
+  <div class="query-filter">
+    <span class="filter-label">FILTER</span>
+    <span class="filter-tag">Type = Photo produit</span>
+    <span class="filter-tag">Entité = Factories</span>
+    <span class="filter-tag">Orientation = Paysage</span>
+    <span class="filter-label" style="margin-left:8px;">TOP</span> 2
+  </div>
+
+  <div class="results-grid">
+
+    <!-- Q2 result 1 -->
+    <div class="result-card">
+      <div class="img-wrapper">
+        <img id="q2r1-img"
+             src="https://lh3.googleusercontent.com/d/1W9BS8qMqLYXihJ9NpnobeDonvhzgrJQr"
+             alt="Extrudeuse — intérieur container"
+             onload="setStatus('q2r1','ok')"
+             onerror="setBroken('q2r1')">
+        <span class="img-status" id="q2r1-status">…</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Extrudeuse — intérieur container</div>
+        <div class="card-tags">
+          <span class="tag tag-type">Photo terrain</span>
+          <span class="tag tag-entite">Factories</span>
+          <span class="tag tag-orient">Paysage</span>
+          <span class="tag tag-usage">Deck</span>
+        </div>
+        <div class="match-flags">
+          <span class="mf fail">Type ✗ (Photo terrain ≠ Photo produit)</span>
+          <span class="mf pass">Entité ✓</span>
+          <span class="mf pass">Orientation ✓</span>
+          <span class="mf warn">Dimensions — vide</span>
+        </div>
+        <div class="url-line">
+          <a href="https://drive.google.com/uc?export=view&id=1W9BS8qMqLYXihJ9NpnobeDonvhzgrJQr" target="_blank">
+            drive.google.com/uc?export=view&id=1W9BS8qMqLYXihJ9NpnobeDonvhzgrJQr
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 result 2 -->
+    <div class="result-card">
+      <div class="img-wrapper">
+        <img id="q2r2-img"
+             src="https://lh3.googleusercontent.com/d/1fuIC8TARau-sFwoxGDmixzGcGJG5i5rq"
+             alt="Transat vert studio"
+             onload="setStatus('q2r2','ok')"
+             onerror="setBroken('q2r2')">
+        <span class="img-status" id="q2r2-status">…</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Transat vert studio</div>
+        <div class="card-tags">
+          <span class="tag tag-type">Photo produit</span>
+          <span class="tag tag-entite">Factories</span>
+          <span class="tag tag-orient">Paysage</span>
+          <span class="tag tag-usage">Fiche produit</span>
+          <span class="tag tag-usage">Catalogue</span>
+        </div>
+        <div class="match-flags">
+          <span class="mf pass">Type ✓</span>
+          <span class="mf pass">Entité ✓</span>
+          <span class="mf pass">Orientation ✓</span>
+          <span class="mf warn">Dimensions — vide</span>
+        </div>
+        <div class="url-line">
+          <a href="https://drive.google.com/uc?export=view&id=1fuIC8TARau-sFwoxGDmixzGcGJG5i5rq" target="_blank">
+            drive.google.com/uc?export=view&id=1fuIC8TARau-sFwoxGDmixzGcGJG5i5rq
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /results-grid -->
+</div><!-- /query-block -->
+
+
+<!-- ══════════════════════════════════════════════
+     QUERY 3 — Team portrait
+     ══════════════════════════════════════════════ -->
+<div class="query-block">
+  <div class="query-header">
+    <span class="q-label">Query 3</span>
+    <span class="q-title">Team portrait use case — Photo équipe · Factories · Portrait | Carré</span>
+  </div>
+  <div class="query-filter">
+    <span class="filter-label">FILTER</span>
+    <span class="filter-tag">Type = Photo équipe</span>
+    <span class="filter-tag">Entité = Factories</span>
+    <span class="filter-tag approx">Orientation ~ Portrait, Carré</span>
+    <span class="filter-label" style="margin-left:8px;">TOP</span> 2
+  </div>
+
+  <div class="results-grid">
+
+    <!-- Q3 result 1 -->
+    <div class="result-card">
+      <div class="img-wrapper" style="aspect-ratio:3/4;">
+        <img id="q3r1-img"
+             src="https://lh3.googleusercontent.com/d/1TBXAgBk9Wrt0MSjbz996EGBTZNCy4jK3"
+             alt="Benoît Blancher — portrait usine"
+             onload="setStatus('q3r1','ok')"
+             onerror="setBroken('q3r1')"
+             style="object-position: top center;">
+        <span class="img-status" id="q3r1-status">…</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Benoît Blancher — portrait usine</div>
+        <div class="card-tags">
+          <span class="tag tag-type">Photo équipe</span>
+          <span class="tag tag-entite">Factories</span>
+          <span class="tag tag-orient">Portrait</span>
+          <span class="tag tag-usage">LinkedIn</span>
+          <span class="tag tag-usage">Deck</span>
+        </div>
+        <div class="match-flags">
+          <span class="mf pass">Type ✓</span>
+          <span class="mf pass">Entité ✓</span>
+          <span class="mf pass">Orientation ✓ (Portrait)</span>
+          <span class="mf warn">Dimensions — vide</span>
+        </div>
+        <div class="url-line">
+          <a href="https://drive.google.com/uc?export=view&id=1TBXAgBk9Wrt0MSjbz996EGBTZNCy4jK3" target="_blank">
+            drive.google.com/uc?export=view&id=1TBXAgBk9Wrt0MSjbz996EGBTZNCy4jK3
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 result 2 -->
+    <div class="result-card">
+      <div class="img-wrapper">
+        <img id="q3r2-img"
+             src="https://lh3.googleusercontent.com/d/1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI"
+             alt="Équipe Manille — portrait groupe"
+             onload="setStatus('q3r2','ok')"
+             onerror="setBroken('q3r2')">
+        <span class="img-status" id="q3r2-status">…</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Équipe Manille — portrait groupe</div>
+        <div class="card-tags">
+          <span class="tag tag-type">Photo équipe</span>
+          <span class="tag tag-entite">Factories</span>
+          <span class="tag tag-pays">Philippines</span>
+          <span class="tag tag-orient">Paysage</span>
+          <span class="tag tag-usage">LinkedIn</span>
+          <span class="tag tag-usage">Deck</span>
+        </div>
+        <div class="match-flags">
+          <span class="mf pass">Type ✓</span>
+          <span class="mf pass">Entité ✓</span>
+          <span class="mf fail">Orientation ✗ (Paysage ≠ Portrait/Carré)</span>
+          <span class="mf warn">Dimensions — vide</span>
+        </div>
+        <div class="url-line">
+          <a href="https://drive.google.com/uc?export=view&id=1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI" target="_blank">
+            drive.google.com/uc?export=view&id=1C_hCb7Ce8E57teG5-pJMBrcNzxsafGGI
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /results-grid -->
+</div><!-- /query-block -->
+
+
+<!-- ══════════════════════════════════════════════
+     REPORT
+     ══════════════════════════════════════════════ -->
+<div class="report">
+  <h2>Pipeline QA Report</h2>
+
+  <table class="report-table">
+    <thead>
+      <tr>
+        <th>Query</th>
+        <th>Use case</th>
+        <th>Results returned</th>
+        <th>URL fichier</th>
+        <th>Img loaded</th>
+        <th>Filter match accuracy</th>
+        <th>Blocking fields missing</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Q1</strong></td>
+        <td>Cover slide</td>
+        <td>5 (top 3 rendered)</td>
+        <td>
+          <span class="pill ok">R1 ✓ présent</span><br>
+          <span class="pill ok">R2 ✓ présent</span><br>
+          <span class="pill ok">R3 ✓ présent</span>
+        </td>
+        <td id="q1-img-report">–</td>
+        <td>
+          R1 — Type incorrect (Photo produit)<br>
+          R2 — Type incorrect (Illustration) + pas Deck<br>
+          R3 — Type incorrect + Pays vide + pas Deck<br>
+          <span class="pill warn">0/3 correspondances exactes</span>
+        </td>
+        <td>
+          <code>Dimensions</code> vide sur tous.<br>
+          <code>Pays</code> absent sur R3.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Q2</strong></td>
+        <td>Content + Image</td>
+        <td>5 (top 2 rendus)</td>
+        <td>
+          <span class="pill ok">R1 ✓ présent</span><br>
+          <span class="pill ok">R2 ✓ présent</span>
+        </td>
+        <td id="q2-img-report">–</td>
+        <td>
+          R1 — Type incorrect (Photo terrain)<br>
+          R2 — correspondance exacte ✓<br>
+          <span class="pill warn">1/2 correspondances exactes</span>
+        </td>
+        <td><code>Dimensions</code> vide sur tous.</td>
+      </tr>
+      <tr>
+        <td><strong>Q3</strong></td>
+        <td>Team portrait</td>
+        <td>5 (top 2 rendus)</td>
+        <td>
+          <span class="pill ok">R1 ✓ présent</span><br>
+          <span class="pill ok">R2 ✓ présent</span>
+        </td>
+        <td id="q3-img-report">–</td>
+        <td>
+          R1 — correspondance exacte ✓<br>
+          R2 — Orientation incorrecte (Paysage)<br>
+          <span class="pill warn">1/2 correspondances exactes</span>
+        </td>
+        <td><code>Dimensions</code> vide sur tous.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ul class="blocking-list" style="margin-top:28px;">
+    <li>
+      <strong>⚠ Moteur de recherche sémantique ≠ filtre structuré.</strong>
+      Le MCP Notion disponible expose uniquement <code>notion-search</code> (sémantique) — pas <code>notion-query-data</code> (SQL/filtres stricts).
+      Résultat : les records retournés sont thématiquement proches mais ne respectent pas les filtres exacts <code>Type</code>, <code>Usage</code>, <code>Orientation</code>.
+      <strong>Action :</strong> activer ou implémenter <code>notion-query-data</code> pour filtres SQL stricts (voir DB schema SQLite disponible dans le MCP fetch).
+    </li>
+    <li>
+      <strong>⚠ Champ <code>Dimensions</code> vide sur tous les 7 records testés.</strong>
+      Manque à l'exigence «minimum viable record» de ASSETS.md v3.3.6. Bloquant pour le ranking heuristique (critère 3 : résolution).
+      <strong>Action :</strong> enrichissement batch prioritaire sur tous les assets existants.
+    </li>
+    <li>
+      <strong>ℹ Query 1 — 0 Photo terrain · Sénégal · Paysage · Deck dans le top 5 sémantique.</strong>
+      Soit les records exacts n'existent pas encore en DB, soit le moteur sémantique ne les remonte pas sans filtres stricts.
+      <strong>Action :</strong> vérifier la présence de records <code>Type=Photo terrain</code> + <code>Pays=Sénégal</code> + <code>Usage=Deck</code> en consultation directe Notion.
+    </li>
+    <li>
+      <strong>✅ URLs fichier — toutes présentes et non vides</strong> sur les 7 records testés. Les URLs Google Drive lh3.googleusercontent.com sont directement accessibles en lecture. Résultat URL à confirmer visuellement avec le statut img ci-dessus.
+    </li>
+    <li>
+      <strong>ℹ Branch Git.</strong> Ce fichier est livré dans <code>examples/test/notion-photo-pipeline.html</code>. Le push vers la branche <code>test/photo-pipeline</code> requiert une opération git locale — non exécutable depuis cet environnement. Créer la branche manuellement depuis <code>main</code> et y committer ce fichier.
+    </li>
+  </ul>
+</div>
+
+<footer>
+  <span>POF Design System · Notion Media Assets Pipeline Test · 2026-04-27</span>
+  <span>DB: <a href="https://www.notion.so/25bd7cc0e7454f0f9cb8607870f59738" target="_blank">notion.so/25bd7cc0…</a> · Feedback: <a href="https://www.notion.so/d100a1de858f4d7d9391dbcd5c8cd7e0" target="_blank">Design System Feedback</a></span>
+</footer>
+
+<script>
+  function setStatus(id, state) {
+    const el = document.getElementById(id + '-status');
+    if (!el) return;
+    el.textContent = state === 'ok' ? 'OK' : 'BROKEN';
+    el.className = 'img-status ' + state;
+    updateReportCell(id, state);
+  }
+
+  function setBroken(id) {
+    const img = document.getElementById(id + '-img');
+    if (img) {
+      const wrapper = img.closest('.img-wrapper');
+      img.remove();
+      wrapper.innerHTML = `<div class="broken-placeholder">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          <line x1="2" y1="2" x2="22" y2="22" stroke="#b91c1c"/>
+        </svg>
+        <span>Image non accessible</span>
+        <span style="font-size:9px;margin-top:2px;">${id}</span>
+      </div>`;
+      const statusEl = document.createElement('span');
+      statusEl.id = id + '-status';
+      statusEl.className = 'img-status broken';
+      statusEl.textContent = 'BROKEN';
+      wrapper.appendChild(statusEl);
+    }
+    updateReportCell(id, 'broken');
+  }
+
+  const imgStates = {};
+  function updateReportCell(id, state) {
+    imgStates[id] = state;
+
+    const groups = {
+      q1: ['q1r1','q1r2','q1r3'],
+      q2: ['q2r1','q2r2'],
+      q3: ['q3r1','q3r2']
+    };
+
+    for (const [qkey, ids] of Object.entries(groups)) {
+      if (!ids.includes(id)) continue;
+      if (ids.every(i => imgStates[i])) {
+        const cell = document.getElementById(qkey + '-img-report');
+        if (!cell) continue;
+        cell.innerHTML = ids.map(i => {
+          const s = imgStates[i];
+          const num = i.slice(-1);
+          return `<span class="pill ${s === 'ok' ? 'ok' : 'broken'}">R${num} ${s === 'ok' ? '✓ chargée' : '✗ brisée'}</span><br>`;
+        }).join('');
+      }
+    }
+  }
+
+  // Timeout fallback — mark still-pending as broken after 12s
+  setTimeout(() => {
+    ['q1r1','q1r2','q1r3','q2r1','q2r2','q3r1','q3r2'].forEach(id => {
+      if (!imgStates[id]) setBroken(id);
+    });
+  }, 12000);
+</script>
+
+</body>
+</html>

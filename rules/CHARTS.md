@@ -25,9 +25,10 @@
 | 13 | `13-org.html` | Org chart | Hierarchy, max 3 levels |
 | 14 | `14-table.html` | Financial tables | P&L, balance sheet, cash flow, CAPEX |
 | 14b | `14-table-v1.html` | Comparison table | Specs comparison, options, scenarios |
+| 14c | `Tableaux-financiers.html` | Financial tables variant | P&L FR variant, multi-currency, scenarios |
 | 15 | `15-radar.html` | Radar | Multi-criteria assessment, max 6 axes |
 
-For maps, see separate `docs/MAPS.md`.
+For maps, see separate `rules/MAPS.md`.
 
 ---
 
@@ -103,7 +104,7 @@ POF brand requires identical rendering across all output media. Constraints :
 1. Browse `examples/charts/index.html` to find the closest template
 2. Copy the HTML+CSS of the chosen template
 3. Replace data + labels (no styling change)
-4. Validate output against the QA checklist in `docs/DESIGN.md`
+4. Validate output against the QA checklist in `rules/HARD-LOCKS.md`
 5. If a chart variant is needed that is not in the catalog : propose addition to v3.2.x as a new file `examples/charts/NN-name.html`, never inline a one-off
 
 The catalog is the source. Single chats producing one-off charts must NOT be the norm.

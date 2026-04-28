@@ -49,3 +49,29 @@
 ## Exemples golden
 
 Voir `/golden/report/` (max 5 par layout).
+
+---
+
+## Chart usage in reports
+
+Charts in reports follow `rules/CHARTS.md` strict catalog. Reference HTML in `examples/charts/`. Allowed templates per layout:
+
+| Layout | Recommended charts |
+|---|---|
+| R05 KPI page | `01-kpi.html` (mandatory), max 6 KPIs |
+| R09 Chart page | `02-bar`, `03-stacked`, `04-grouped`, `05-line`, `06-donut`, `07-progress`, `08-funnel`, `11-sankey`, `15-radar` |
+| R09 Chart page (financial) | `14-table.html`, `14-table-v1.html`, `Tableaux-financiers.html` |
+| R08 Map page | `16-map.html` + `assets/maps/svg/<region>.svg` (see `rules/MAPS.md`) |
+| R04 Body text inline | `12-process`, `09-timeline`, `13-org` if needed |
+
+**Hard rule:** before generating a chart in a report, read `rules/CHARTS.md` AND the canonical example file in `examples/charts/<id>.html`. Apply hard locks from `rules/HARD-LOCKS.md`.
+
+## Cross-references
+
+- Hard locks and palette: `rules/HARD-LOCKS.md`
+- Chart catalog: `rules/CHARTS.md`
+- Map patterns: `rules/MAPS.md`
+- Photo overlays: `rules/PHOTOS.md`
+- Tables: `rules/TABLES.md`
+- Icons: `rules/ICONS.md` (use `assets/icons/ecology/` for impact/environment)
+- Master template: `templates/master-deck-current.pptx` (deck) — for reports use docx generation via `scripts/generate-docx-templates.js`

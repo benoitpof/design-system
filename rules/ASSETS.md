@@ -37,13 +37,13 @@ This document covers two complementary asset stores:
 
 These are the brand symbol (waves stacked). Use as: standalone mark, loading states, favicon, decorative corner, internal asset only. **NOT a UI icon.** For UI icons see `/assets/icons/` below.
 
-### UI icons — `/assets/icons/` — see `docs/ICONS.md`
+### UI icons — `/assets/icons/` — see `rules/ICONS.md`
 
 170 SVG icons in 2 folders (v3.2.6):
 - `ecology/` — 8 themes × 4 variants (currentColor, _navy, _teal, _white) = 32 SVG
 - `environment/` — 46 themes × 3 variants (_navy, _teal, _white) = 138 SVG
 
-For full inventory and selection workflow, see `docs/ICONS.md`. For Tabler CDN fallback, see same doc section 2.
+For full inventory and selection workflow, see `rules/ICONS.md`. For Tabler CDN fallback, see same doc section 2.
 
 55 SVG icons (47 root + 8 in `/ecology/` subfolder) covering POF use cases:
 factory & production (barrel, tools, cash, flag), ecology (leaf-2, plant-2, seedling, tree, recycle), logistics (ship, plane, plane-arrival, plane-departure, truck), people & impact (heart, hand-stop, lifebuoy, trophy, sparkles), data & process (chart, refresh, settings, arrows-shuffle), comms (mail, microphone, video, camera).
@@ -82,7 +82,7 @@ Always full-bleed when used. Text on top: white only (never navy or teal). For t
 
 ### Maps — `/assets/maps/`
 
-POF cartographic system — see `docs/MAPS.md` for full charter.
+POF cartographic system — see `rules/MAPS.md` for full charter.
 
 | File | Type | Description |
 |------|------|-------------|
@@ -97,7 +97,7 @@ POF cartographic system — see `docs/MAPS.md` for full charter.
 | `USAGE.md` | Asset guide | Use case + layer structure for each regional SVG |
 | `_map-data.js` | Data utility | JS helpers for country selection and coloring |
 
-For map patterns spec (heatmap, categorical, dots, anchored), see `docs/MAPS.md`.
+For map patterns spec (heatmap, categorical, dots, anchored), see `rules/MAPS.md`.
 
 
 ---
@@ -208,10 +208,10 @@ For periodic audits (missing fields, broken URLs, duplicates):
 When in doubt about a brand value:
 1. `tokens/brand-tokens.json` — colors, typography, spacing, components
 2. `tokens/brand-rules-per-format.json` — format-specific rules (slides, docs, web, excel, linkedin)
-3. `docs/DESIGN.md` — narrative spec, hard locks
-4. `docs/LAYOUTS.md` — slide layouts L01–L15
-5. `docs/CONTENT-RULES.md` — narrative content rules per layout
-6. **This file (`docs/ASSETS.md`)** — asset index, photo DB schema and query protocol
+3. `rules/HARD-LOCKS.md` — narrative spec, hard locks
+4. `layouts/DECK.md` — slide layouts L01–L15
+5. `rules/CONTENT-RULES.md` — narrative content rules per layout
+6. **This file (`rules/ASSETS.md`)** — asset index, photo DB schema and query protocol
 
 For dynamic media (photos), Notion DB is the source. This repo is the index and protocol.
 

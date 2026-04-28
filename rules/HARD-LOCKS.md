@@ -186,7 +186,7 @@ Marges symétriques L/R = 26.7 mm (1.051"). Top header = 50.8 mm (2.0"). Bottom 
 
 ## 5. Brand elements
 
-See `docs/ASSETS.md` for full index.
+See `rules/ASSETS.md` for full index.
 
 - **Wave motif** (`assets/brand-elements/wave-teal.svg`, `wave-white.svg`) — signature element, bottom-left or decorative
 - **Corner bracket** (`assets/brand-elements/corner-bracket.svg`) — matches the `grpSp` corner marks in template
@@ -197,7 +197,7 @@ See `docs/ASSETS.md` for full index.
 
 ## 6. Icons
 
-See `docs/ICONS.md` — Tabler Icons curated list.
+See `rules/ICONS.md` — Tabler Icons curated list.
 CDN: `https://unpkg.com/@tabler/icons/icons/[name].svg`
 
 ---

@@ -41,3 +41,28 @@
 ## Exemples golden
 
 Voir `/golden/social/` (max 5 par format).
+
+---
+
+## Chart usage on social
+
+Social posts use simplified chart variants from `examples/charts/` adapted to small viewport reading distance (mobile, 50cm).
+
+| Format | Recommended charts | Notes |
+|---|---|---|
+| S01 LinkedIn 1:1 | `01-kpi.html` (single big number) | Coral highlight on lead KPI |
+| S02 LinkedIn 1.91:1 | `02-bar` 3 categories max, `06-donut` 4 slices max | Title 64pt min |
+| S03 LinkedIn carousel | Mix : KPI cover + chart + insight | 5-10 slides |
+| S04 IG feed | Quote + 1 KPI + photo | Photo overlay heavy |
+| S05 IG story | Single stat, vertical layout | No chart, just KPI + icon |
+| S06 X post | `01-kpi.html` simplified | Max 2 datapoints |
+
+**Hard rule:** any chart on social must pass mobile-readability check — minimum text size 32pt at 1080px width. Coral max 1 element. Logo POF + corner bracket teal mandatory.
+
+## Cross-references
+
+- Hard locks: `rules/HARD-LOCKS.md`
+- Chart catalog: `rules/CHARTS.md`
+- Photo overlays: `rules/PHOTOS.md`
+- Icons (env/impact): `assets/icons/ecology/` + `rules/ICONS.md`
+- Brand DNA + voice: `DESIGN.md` (root) + `rules/CONTENT-RULES.md`
