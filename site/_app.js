@@ -128,18 +128,13 @@
 
   // ----------- TOPBAR -----------
   const NAV_ITEMS = [
-    { href: 'index.html',        label: 'Overview' },
-    { href: 'architecture.html', label: 'Architecture' },
-    { href: 'tree.html',         label: 'Tree' },
-    { href: 'rules.html',        label: 'Rules' },
-    { href: 'layouts.html',      label: 'Layouts' },
-    { href: 'memory.html',       label: 'Memory' },
-    { href: 'examples.html',     label: 'Examples' },
-    { href: 'tokens.html',       label: 'Tokens' },
-    { href: 'assets.html',       label: 'Assets' },
-    { href: 'charts.html',       label: 'Charts' },
-    { href: 'maps.html',         label: 'Maps' },
-    { href: 'icons.html',        label: 'Icons' }
+    { href: 'index.html',    label: 'Overview' },
+    { href: 'tree.html',     label: 'Tree' },
+    { href: 'examples.html', label: 'Examples' },
+    { href: 'assets.html',   label: 'Assets' },
+    { href: 'charts.html',   label: 'Charts' },
+    { href: 'maps.html',     label: 'Maps' },
+    { href: 'icons.html',    label: 'Icons' }
   ];
 
   function injectTopbar(opts = {}) {

@@ -5,6 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>POF Design System · Assets</title>
 <link rel="stylesheet" href="styles.css">
+<style>
+.cat-block{margin:0 0 56px}
+.cat-head{
+  display:flex;align-items:baseline;gap:14px;
+  font-family:'Poppins',sans-serif;
+  margin:0 0 18px;padding-bottom:10px;
+  border-bottom:1px solid var(--neutral-mid);
+}
+.cat-head h2{
+  font-weight:600;font-size:13px;letter-spacing:2px;
+  color:var(--steel);text-transform:uppercase;margin:0;
+}
+.cat-head .count{
+  font-family:'Roboto Mono',monospace;font-size:11px;
+  color:var(--gray-600);
+}
+.cat-head .pathlbl{
+  margin-left:auto;
+  font-family:'Roboto Mono',monospace;font-size:11px;
+  color:var(--gray-600);
+}
+.asset-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:14px;
+}
+.asset-tile{
+  display:flex;flex-direction:column;
+  background:var(--white);
+  border:1px solid var(--neutral-mid);border-radius:6px;
+  padding:0;text-decoration:none;color:var(--navy);
+  transition:border-color .15s,box-shadow .15s;
+  overflow:hidden;
+}
+.asset-tile:hover{border-color:var(--teal);box-shadow:0 4px 12px rgba(28,31,59,.06)}
+.asset-tile .preview{
+  aspect-ratio:1.6/1;background:var(--gris-pof);
+  display:flex;align-items:center;justify-content:center;padding:16px;overflow:hidden;
+  border-bottom:1px solid var(--neutral-mid);
+}
+.asset-tile .preview.dark{background:var(--navy)}
+.asset-tile .preview img{max-width:100%;max-height:100%;object-fit:contain}
+.asset-tile .nm{
+  padding:10px 14px;
+  font-family:'Roboto Mono',monospace;font-size:11px;
+  color:var(--navy);word-break:break-all;line-height:1.35;
+}
+.cat-link{
+  font-family:'Poppins',sans-serif;font-size:11px;
+  color:var(--teal-dark);text-decoration:none;
+  border:1px solid var(--neutral-mid);
+  padding:6px 12px;border-radius:5px;
+}
+.cat-link:hover{border-color:var(--teal)}
+</style>
 </head>
 <body class="ds-page" data-breadcrumb="Design System · Assets">
 
@@ -14,93 +69,76 @@
     <div>
       <div class="eyebrow">POF · Assets</div>
       <h1>Assets bruts</h1>
-      <p>Logos, brand-elements, backgrounds, monogramme, icons, maps. Liste live de <code>assets/</code>.</p>
+      <p>Logos, brand-elements, backgrounds, monogramme. Listés par catégorie, depuis <code>assets/</code>. Icons et maps ont leur galerie dédiée.</p>
     </div>
   </div>
 </header>
 
-<section class="section">
-  <h2>Catégories</h2>
-  <div class="grid-3" id="cat-grid"></div>
-</section>
-
-<section class="section">
-  <h2>Logos</h2>
-  <p class="lead">Catalog logos POF avec aperçu inline.</p>
-  <div class="grid-auto" id="logos-grid"></div>
-</section>
-
-<section class="section">
-  <h2>Brand elements & backgrounds</h2>
-  <div class="grid-auto" id="brand-grid"></div>
-</section>
-
-<section class="section">
-  <h2>Monogramme</h2>
-  <div class="grid-auto" id="mono-grid"></div>
-</section>
+<section class="section" id="sections-host"></section>
 
 <script src="_app.js"></script>
 <script>
-const CAT_HINTS = {
-  logos:           { name: 'Logos',           desc: 'POF logo en variantes (color, navy, white, monochrome).' },
-  'brand-elements':{ name: 'Brand elements',  desc: 'Corner brackets, waves.' },
-  backgrounds:     { name: 'Backgrounds',     desc: 'Backgrounds vectoriels (waves).' },
-  monogramme:      { name: 'Monogramme',      desc: 'Picto P sans texte (color, white).' },
-  icons:           { name: 'Icons',           desc: 'Tabler outline + brand pictos. Voir Icons →' },
-  maps:            { name: 'Maps',            desc: 'World map base + crops régionaux. Voir Maps →' },
-};
-
-function svgCard(entry) {
-  const fn = entry.path.split('/').pop();
-  const raw = POF.RAW(entry.path);
-  return `<a class="card" href="${POF.escapeHtml(POF.BLOB(entry.path))}" target="_blank" rel="noopener" data-name="${POF.escapeHtml(fn.toLowerCase())}">
-    <div class="thumb"><img src="${POF.escapeHtml(raw)}" alt="${POF.escapeHtml(fn)}" loading="lazy" onerror="this.style.opacity=0.2"></div>
-    <div class="meta">
-      <span class="num">SVG</span>
-      <span class="name">${POF.escapeHtml(fn)}</span>
-      <span class="desc">${POF.escapeHtml(entry.path)}</span>
-    </div>
-  </a>`;
-}
+// Each entry maps a folder path to its display label and preview style.
+// Order here = display order on the page.
+const SECTIONS = [
+  { path: 'assets/logos',          title: 'Logos',           dark: false, hint: 'Variantes navy / monochrome / teal-on-white / white.' },
+  { path: 'assets/monogramme',     title: 'Monogramme',      dark: false, hint: 'Picto P sans texte (color, white).' },
+  { path: 'assets/brand-elements', title: 'Brand elements',  dark: false, hint: 'Corner brackets, waves.' },
+  { path: 'assets/backgrounds',    title: 'Backgrounds',     dark: false, hint: 'Backgrounds vectoriels (waves).' },
+];
+// External catalogues (not detailed here)
+const EXTERNAL = [
+  { path: 'assets/icons', title: 'Icons',  count_glob: '.svg', target: 'icons.html' },
+  { path: 'assets/maps',  title: 'Maps',   count_glob: '.svg', target: 'maps.html' },
+];
 
 (async function () {
-  const cat = document.getElementById('cat-grid');
-  POF.renderLoading(cat);
+  const host = document.getElementById('sections-host');
+  POF.renderLoading(host);
   const { tree } = await POF.loadTree();
-  if (!tree.length) { POF.renderError(cat, 'Tree fetch a échoué.'); return; }
+  if (!tree.length) { POF.renderError(host, 'Tree fetch a échoué — recharge la page.'); return; }
 
-  // Categories
-  const cats = POF.listDir(tree, 'assets').filter(e => e.type === 'tree');
-  cat.innerHTML = cats.map(e => {
-    const name = e.path.split('/').pop();
-    const hint = CAT_HINTS[name] || { name, desc: 'Sous-dossier de assets/.' };
-    const blobs = POF.listRecursive(tree, e.path).length;
-    const intern = name === 'icons' ? 'icons.html' : name === 'maps' ? 'maps.html' : null;
-    const href = intern || ('tree.html?path=' + encodeURIComponent(e.path));
-    return `<a class="card" href="${POF.escapeHtml(href)}">
-      <div class="meta">
-        <span class="num">Folder</span>
-        <span class="name">${POF.escapeHtml(hint.name)}</span>
-        <span class="desc">${POF.escapeHtml(hint.desc)} (${blobs} fichiers)</span>
-        <span class="badge dim">${POF.escapeHtml(e.path)}/</span>
+  let html = '';
+
+  for (const section of SECTIONS) {
+    const items = POF.listRecursive(tree, section.path).filter(e => e.path.endsWith('.svg'));
+    if (!items.length) continue;
+    html += `<div class="cat-block">
+      <div class="cat-head">
+        <h2>${POF.escapeHtml(section.title)}</h2>
+        <span class="count">${items.length} fichier${items.length>1?'s':''}</span>
+        <span class="pathlbl">${POF.escapeHtml(section.path)}/</span>
+      </div>
+      <div class="asset-grid">
+        ${items.map(e => {
+          const fn = e.path.split('/').pop();
+          const previewClass = (fn.includes('white') && !fn.includes('teal-white')) ? 'preview dark' : 'preview';
+          return `<a class="asset-tile" href="${POF.escapeHtml(POF.BLOB(e.path))}" target="_blank" rel="noopener" title="${POF.escapeHtml(e.path)}">
+            <div class="${previewClass}"><img src="${POF.escapeHtml(POF.RAW(e.path))}" alt="${POF.escapeHtml(fn)}" loading="lazy" onerror="this.style.opacity=.2"></div>
+            <div class="nm">${POF.escapeHtml(fn)}</div>
+          </a>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }
+
+  // External catalogue cards (single line each)
+  html += '<div class="cat-block">';
+  html += '<div class="cat-head"><h2>Galeries dédiées</h2><span class="count">2 sous-dossiers</span></div>';
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">';
+  for (const x of EXTERNAL) {
+    const items = POF.listRecursive(tree, x.path).filter(e => e.path.endsWith('.svg'));
+    html += `<a class="asset-tile" href="${POF.escapeHtml(x.target)}" style="aspect-ratio:auto">
+      <div style="padding:18px 20px;display:flex;flex-direction:column;gap:6px">
+        <div style="font-family:Poppins;font-weight:600;font-size:14px;color:var(--navy)">${POF.escapeHtml(x.title)}</div>
+        <div style="font-family:Raleway;font-size:12px;color:var(--gray-600)">${items.length} SVG dans <code>${POF.escapeHtml(x.path)}/</code></div>
+        <div style="font-family:Poppins;font-size:11px;color:var(--teal-dark);margin-top:4px">Voir la galerie →</div>
       </div>
     </a>`;
-  }).join('') || '<div class="empty-state">Aucune catégorie dans assets/.</div>';
+  }
+  html += '</div></div>';
 
-  // Specific galleries
-  const fillGallery = (containerId, dirPath) => {
-    const c = document.getElementById(containerId);
-    const items = POF.listRecursive(tree, dirPath).filter(e => e.path.endsWith('.svg'));
-    if (!items.length) { POF.renderEmpty(c, 'Vide.'); return; }
-    c.innerHTML = items.map(svgCard).join('');
-  };
-  fillGallery('logos-grid',  'assets/logos');
-  fillGallery('brand-grid',  'assets/brand-elements');
-  // Append backgrounds into brand grid
-  const bgs = POF.listRecursive(tree, 'assets/backgrounds').filter(e => e.path.endsWith('.svg'));
-  if (bgs.length) document.getElementById('brand-grid').insertAdjacentHTML('beforeend', bgs.map(svgCard).join(''));
-  fillGallery('mono-grid',   'assets/monogramme');
+  host.outerHTML = `<section class="section">${html}</section>`;
 })();
 </script>
 

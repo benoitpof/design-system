@@ -178,14 +178,14 @@
   }).join('');
   document.getElementById('grid-memory').innerHTML = memoryHtml || '<div class="empty-state">Mémoire vide.</div>';
 
-  // ------ RESOURCES (tokens, assets, examples) ------
+  // ------ RESOURCES (assets, examples, tree, README) ------
   document.getElementById('grid-resources').innerHTML = [
-    card({ href: 'tokens.html',   eyebrow: 'Tokens',   title: 'Tokens & rules', desc: 'brand-tokens.json, brand-tokens.css, brand-rules-per-format.json. SSOT colors, typography, spacing, components.', badge: 'tokens/' }),
-    card({ href: 'assets.html',   eyebrow: 'Assets',   title: 'Assets bruts', desc: 'logos, brand-elements, backgrounds, monogramme. Source primaire pour skills DS.', badge: 'assets/' }),
-    card({ href: 'examples.html', eyebrow: 'Examples', title: 'Examples par medium', desc: 'charts, maps, icons, deck, report, web, social, photo, tables, sheets.', badge: 'examples/' }),
-    card({ href: 'tree.html',     eyebrow: 'Repo',     title: 'File tree',  desc: 'Arborescence complète live. Recherche par chemin. Lien direct GitHub.', badge: 'tree.html' }),
-    card({ href: 'architecture.html', eyebrow: 'Doc',  title: 'Architecture', desc: 'Diagrammes Mermaid : couches DS, flux génération, cycle d\'itération.', badge: 'architecture.html' }),
-    card({ href: 'docs.html?path=README.md', eyebrow: 'Doc', title: 'README', desc: 'Vue d\'ensemble du repo, comment l\'utiliser, structure.', badge: 'README.md', badgeKind: 'dim' })
+    card({ href: 'tree.html',     eyebrow: 'Repo',     title: 'File tree',  desc: 'Arborescence complète live, dépliée. Tous les .md, html, json, svg navigables.', badge: 'tree.html' }),
+    card({ href: 'assets.html',   eyebrow: 'Assets',   title: 'Assets bruts', desc: 'Logos, brand-elements, backgrounds, monogramme. Listés par catégorie.', badge: 'assets/' }),
+    card({ href: 'examples.html', eyebrow: 'Examples', title: 'Examples par medium', desc: 'Charts, maps, icons, deck, report, web, social, photo, tables, sheets.', badge: 'examples/' }),
+    card({ href: 'tree.html?path=tokens', eyebrow: 'Tokens',   title: 'Tokens & rules', desc: 'brand-tokens.json, brand-tokens.css, brand-rules-per-format.json. SSOT colors, typography, components.', badge: 'tokens/', badgeKind: 'dim' }),
+    card({ href: 'docs.html?path=README.md', eyebrow: 'Doc', title: 'README', desc: 'Vue d\'ensemble du repo, comment l\'utiliser, structure.', badge: 'README.md', badgeKind: 'dim' }),
+    card({ href: 'docs.html?path=ITERATE.md', eyebrow: 'Doc', title: 'ITERATE', desc: 'Guide ds-iterate : niveaux risque A/B/C/D, validation Benoît, format PR.', badge: 'ITERATE.md', badgeKind: 'dim' })
   ].join('');
 })();
 </script>

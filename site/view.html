@@ -10,7 +10,7 @@
 .viewer-head .crumbs{font-family:'Roboto Mono',monospace;font-size:12px;color:var(--gray-600);flex-grow:1}
 .viewer-head .crumbs a{color:var(--teal-dark);text-decoration:none}
 .viewer-host{max-width:1280px;margin:0 auto 32px;padding:0 32px}
-.viewer-host iframe{width:100%;height:calc(100vh - 200px);min-height:600px;border:1px solid var(--neutral-mid);border-radius:8px;background:var(--white);display:block}
+.viewer-host iframe{width:100%;height:calc(100vh - 200px);min-height:780px;border:1px solid var(--neutral-mid);border-radius:8px;background:var(--white);display:block}
 </style>
 </head>
 <body class="ds-page" data-breadcrumb="Design System · HTML Viewer">
@@ -21,7 +21,7 @@
 </div>
 
 <div class="viewer-host">
-  <iframe id="frame" sandbox="allow-scripts" loading="lazy"></iframe>
+  <iframe id="frame" sandbox="allow-scripts allow-same-origin" loading="lazy"></iframe>
 </div>
 
 <script src="_app.js"></script>
@@ -30,8 +30,47 @@ function getPath() {
   return new URLSearchParams(location.search).get('path') || 'examples/charts/01-kpi.html';
 }
 
+// Pre-existing broken refs in chart pages (path → fixed URL)
+// The chart files reference ../styles.css which doesn't exist at examples/styles.css.
+// They actually need the chart-bank styles which sit at examples/charts/styles.css.
+// Same for the logo: pof-logo-color.svg doesn't exist; use pof-logo-navy.svg.
+function rewriteChartPagePaths(html, sourceDir) {
+  const repoStylesUrl = `https://cdn.jsdelivr.net/gh/${POF.REPO}@${POF.BRANCH}/examples/charts/styles.css`;
+  const logoUrl = POF.RAW('assets/logos/pof-logo-navy.svg');
+  const indexUrl = location.origin + location.pathname.replace(/[^/]*$/, '') + 'index.html';
+
+  return html
+    .replace(/href="\.\.\/styles\.css(\?[^"]*)?"/g, `href="${repoStylesUrl}"`)
+    .replace(/src="\.\.\/assets\/pof-logo-color\.svg"/g, `src="${logoUrl}"`)
+    .replace(/href="\.\.\/index\.html"/g, `href="${indexUrl}"`);
+}
+
+// Generic URL rewriter for everything else (relative paths in srcdoc)
+function rewriteGenericPaths(html, sourceDir) {
+  return html.replace(/(href|src)="([^"]+)"/g, (m, attr, url) => {
+    if (/^(https?:|data:|#|mailto:)/.test(url)) return m;
+    if (url.startsWith('//')) return m;
+    const resolved = POF.resolvePath(sourceDir, url);
+    let target;
+    if (/\.(svg|png|jpe?g|gif|webp|ico)$/i.test(resolved)) {
+      target = POF.RAW(resolved);
+    } else if (/\.(html|htm)$/i.test(resolved)) {
+      // Other HTML referenced from inside this HTML — let's open in our viewer
+      target = location.origin + location.pathname.replace(/[^/]*$/, '') + 'view.html?path=' + encodeURIComponent(resolved);
+    } else {
+      // CSS / JS / JSON / md → jsdelivr serves with proper content-type
+      target = `https://cdn.jsdelivr.net/gh/${POF.REPO}@${POF.BRANCH}/${resolved}`;
+    }
+    return `${attr}="${target}"`;
+  });
+}
+
 (async function () {
   const path = getPath();
+  const sourceDir = path.split('/').slice(0, -1).join('/');
+  const fileName = path.split('/').pop();
+
+  // Crumbs
   const segs = path.split('/');
   const crumbHtml = ['<a href="tree.html">root</a>'];
   let cur = '';
@@ -45,38 +84,29 @@ function getPath() {
   document.getElementById('actions').innerHTML = `
     <a class="btn primary" href="${POF.BLOB(path)}" target="_blank" rel="noopener">View on GitHub ↗</a>
     <a class="btn" href="https://cdn.jsdelivr.net/gh/${POF.REPO}@${POF.BRANCH}/${path}" target="_blank" rel="noopener">jsdelivr URL</a>
-    <a class="btn" href="tree.html?path=${encodeURIComponent(segs.slice(0, -1).join('/'))}">Up to folder</a>
+    <a class="btn" href="tree.html?path=${encodeURIComponent(sourceDir)}">Up to folder</a>
   `;
 
   const { tree } = await POF.loadTree();
   if (tree.length && !POF.findExact(tree, path)) {
-    document.querySelector('.viewer-host').innerHTML = `<div class="error-state">Le fichier <code>${POF.escapeHtml(path)}</code> n'existe pas dans le repo. Vérifie l'URL ou ouvre la <a href="tree.html">vue arbre</a>.</div>`;
+    document.querySelector('.viewer-host').innerHTML = `<div class="error-state">Le fichier <code>${POF.escapeHtml(path)}</code> n'existe pas dans le repo. <a href="tree.html">Vue arbre</a>.</div>`;
     return;
   }
 
-  // Fetch HTML content and inject into iframe via srcdoc.
-  // We rewrite relative resource URLs (CSS, JS, images) to absolute raw/jsdelivr URLs
-  // so the iframe renders correctly even with sandbox.
   try {
     let html = await POF.fetchRaw(path);
-    const baseDir = segs.slice(0, -1).join('/');
 
-    function rewrite(url) {
-      if (/^(https?:|data:|#)/.test(url)) return url;
-      // Resolve relative to baseDir
-      const resolved = POF.resolvePath(baseDir, url);
-      // Use jsdelivr for HTML/JS/CSS (browser-friendly content-type), raw for SVG/PNG
-      if (/\.(svg|png|jpe?g|gif|webp|ico)$/i.test(resolved)) {
-        return POF.RAW(resolved);
-      }
-      return `https://cdn.jsdelivr.net/gh/${POF.REPO}@${POF.BRANCH}/${resolved}`;
+    // Step 1: explicitly fix the broken references in chart/map pages
+    if (sourceDir === 'examples/charts' || sourceDir === 'examples/maps' || sourceDir.startsWith('examples/')) {
+      html = rewriteChartPagePaths(html, sourceDir);
     }
 
-    // Rewrite href / src in HTML
-    html = html.replace(/(href|src)="([^"]+)"/g, (m, a, v) => `${a}="${rewrite(v)}"`);
-    // Inject a <base> just in case relative URLs slip through
-    if (!/<base\s/i.test(html)) {
-      html = html.replace(/<head>/i, `<head>\n<base href="https://cdn.jsdelivr.net/gh/${POF.REPO}@${POF.BRANCH}/${baseDir}/">`);
+    // Step 2: rewrite all remaining relative URLs to absolute jsdelivr/raw equivalents
+    html = rewriteGenericPaths(html, sourceDir);
+
+    // Step 3: ensure font and viewport are sane (most chart pages don't include viewport meta)
+    if (!/<meta\s+name=["']viewport["']/i.test(html)) {
+      html = html.replace(/<head>/i, '<head>\n<meta name="viewport" content="width=device-width, initial-scale=1">');
     }
 
     document.getElementById('frame').srcdoc = html;

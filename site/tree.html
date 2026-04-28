@@ -6,9 +6,33 @@
 <title>POF Design System · Tree</title>
 <link rel="stylesheet" href="styles.css">
 <style>
-.crumbs{font-family:'Roboto Mono',monospace;font-size:13px;color:var(--gray-600);margin:24px 0 16px}
-.crumbs a{color:var(--teal-dark);text-decoration:none}
-.crumbs a:hover{text-decoration:underline}
+.tree-host{
+  background:var(--white);
+  border:1px solid var(--neutral-mid);
+  border-radius:8px;
+  padding:24px 28px;
+  font-family:'Roboto Mono','Menlo',monospace;
+  font-size:13px;
+  line-height:1.7;
+  color:var(--navy);
+  margin-bottom:48px;
+}
+.tnode{display:block;padding:1px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tnode.dir{font-weight:600;color:var(--teal-deep);margin-top:6px}
+.tnode.dir.collapsed > .toggle::before{content:'▶ '}
+.tnode.dir > .toggle{cursor:pointer;color:var(--steel-light);font-weight:400;display:inline-block;width:18px;text-align:left;user-select:none}
+.tnode.dir > .toggle::before{content:'▼ '}
+.tnode.dir.collapsed + .tchildren{display:none}
+.tnode > .name{padding-left:0}
+.tnode a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color .1s}
+.tnode a:hover{border-bottom-color:var(--teal-dark);color:var(--teal-dark)}
+.tnode .meta{color:var(--gray-600);font-size:11px;font-weight:400;margin-left:8px}
+.tnode .ext{color:var(--steel-light);font-size:11px;text-transform:uppercase;margin-left:8px}
+.tnode.file .name{color:var(--navy)}
+.tnode.file.md .name{color:var(--teal-deep)}
+.tnode.file.html .name{color:var(--steel)}
+.tchildren{padding-left:22px;border-left:1px dotted var(--neutral-mid);margin-left:8px}
+.tnode.hidden,.tnode.hidden + .tchildren{display:none}
 </style>
 </head>
 <body class="ds-page" data-breadcrumb="Design System · Tree">
@@ -18,83 +42,163 @@
     <div class="pipe"></div>
     <div>
       <div class="eyebrow">POF · Tree</div>
-      <h1>File tree</h1>
-      <p>Arborescence live du repo. Naviguer dans les sous-dossiers, ouvrir les fichiers (markdown rendu, autres → GitHub blob).</p>
+      <h1>Arborescence complète</h1>
+      <p>Toute l'arbo de <code>benoitpof/design-system@main</code> dépliée, fichiers <code>.md</code> en saillance. Cliquer sur un fichier ouvre le rendu adapté (markdown, HTML, GitHub blob).</p>
     </div>
   </div>
 </header>
 
 <section class="section">
-  <div id="crumbs" class="crumbs"></div>
   <div class="toolbar">
-    <input type="search" id="q" placeholder="Filtrer dans ce dossier…">
-    <a class="btn" id="gh-link" href="#" target="_blank" rel="noopener">View on GitHub ↗</a>
+    <input type="search" id="q" placeholder="Filtrer (chemin, extension)…">
+    <button class="btn" id="expand-all">Tout déplier</button>
+    <button class="btn" id="collapse-all">Tout replier</button>
+    <a class="btn" href="https://github.com/benoitpof/design-system" target="_blank" rel="noopener">View on GitHub ↗</a>
   </div>
-  <ul class="tree-list" id="list"></ul>
+  <div class="tree-host" id="host">Chargement…</div>
 </section>
 
 <script src="_app.js"></script>
 <script>
-function getPathParam() {
-  const p = new URLSearchParams(location.search).get('path') || '';
-  // Normalize: no leading/trailing slash
-  return p.replace(/^\/+|\/+$/g, '');
-}
-
-function fileIcon(name, isDir) {
-  if (isDir) return '<svg class="icon dir" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 3v8a1 1 0 001 1h10a1 1 0 001-1V5a1 1 0 00-1-1H7L5.5 2.5H2a1 1 0 00-1 .5z" stroke="currentColor" stroke-width="1.2"/></svg>';
-  return '<svg class="icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 1h6l3 3v9H3V1z" stroke="currentColor" stroke-width="1.2"/><path d="M9 1v3h3" stroke="currentColor" stroke-width="1.2"/></svg>';
-}
+const COLLAPSE_BY_DEFAULT = new Set([
+  'assets/icons',  // 480 SVG, too noisy expanded
+  '.archive',      // historical
+  '.github',       // CI infra
+]);
+const HIDE_PATHS = new Set([
+  '.gitignore',
+]);
 
 (async function () {
-  const path = getPathParam();
-  const list = document.getElementById('list');
-  const crumbs = document.getElementById('crumbs');
-  const ghLink = document.getElementById('gh-link');
-  ghLink.href = path ? POF.TREE_VIEW(path) : `https://github.com/${POF.REPO}/tree/${POF.BRANCH}`;
-
-  // Crumbs
-  const segs = path ? path.split('/') : [];
-  const crumbHtml = ['<a href="tree.html">root</a>'];
-  let cur = '';
-  for (const s of segs) {
-    cur = cur ? cur + '/' + s : s;
-    crumbHtml.push(' / <a href="tree.html?path=' + encodeURIComponent(cur) + '">' + POF.escapeHtml(s) + '</a>');
-  }
-  crumbs.innerHTML = crumbHtml.join('');
-
-  POF.renderLoading(list);
+  const host = document.getElementById('host');
   const { tree } = await POF.loadTree();
-  if (!tree.length) { list.outerHTML = '<div class="error-state">Tree fetch a échoué.</div>'; return; }
+  if (!tree.length) { host.textContent = 'Tree fetch a échoué — recharge dans quelques minutes (rate limit).'; return; }
 
-  let items = POF.listDir(tree, path);
-  // Filter out hidden / ignored
-  items = items.filter(e => !e.path.endsWith('.gitignore'));
-  if (!items.length) { list.outerHTML = '<div class="empty-state">Dossier vide.</div>'; return; }
+  // Build a nested structure from the flat list
+  const root = { name: '', path: '', children: [], type: 'tree' };
+  const dirs = new Map();
+  dirs.set('', root);
 
-  list.innerHTML = items.map(e => {
-    const name = e.path.split('/').pop();
-    const isDir = e.type === 'tree';
-    const fn = name;
-    let href;
-    if (isDir) href = 'tree.html?path=' + encodeURIComponent(e.path);
-    else if (fn.endsWith('.md')) href = 'docs.html?path=' + encodeURIComponent(e.path);
-    else if (/\.(html|htm)$/i.test(fn)) href = 'view.html?path=' + encodeURIComponent(e.path);
-    else href = POF.BLOB(e.path);
-    const target = (isDir || fn.endsWith('.md') || /\.(html|htm)$/i.test(fn)) ? '' : ' target="_blank" rel="noopener"';
-    const sizeBadge = e.size ? `<span class="size">${(e.size / 1024).toFixed(1)} KB</span>` : '';
-    return `<li data-name="${POF.escapeHtml(fn.toLowerCase())}">
-      <span class="${isDir ? 'icon dir' : 'icon'}">${fileIcon(fn, isDir)}</span>
-      <a href="${POF.escapeHtml(href)}"${target}>${POF.escapeHtml(name)}${isDir ? '/' : ''}</a>
-      ${sizeBadge}
-    </li>`;
-  }).join('');
+  // First, ensure every directory exists in the map
+  for (const e of tree) {
+    if (HIDE_PATHS.has(e.path)) continue;
+    const parts = e.path.split('/');
+    let cur = '';
+    for (let i = 0; i < parts.length; i++) {
+      const next = cur ? cur + '/' + parts[i] : parts[i];
+      const isLast = i === parts.length - 1;
+      const isDir = !isLast || e.type === 'tree';
+      if (isDir && !dirs.has(next)) {
+        const node = { name: parts[i], path: next, children: [], type: 'tree' };
+        dirs.get(cur).children.push(node);
+        dirs.set(next, node);
+      } else if (!isDir) {
+        dirs.get(cur).children.push({ name: parts[i], path: next, type: 'blob', size: e.size });
+      }
+      cur = next;
+    }
+  }
 
+  // Sort: directories first (alpha), then files (alpha)
+  function sortTree(node) {
+    if (!node.children) return;
+    node.children.sort((a, b) => {
+      if (a.type !== b.type) return a.type === 'tree' ? -1 : 1;
+      return a.name.localeCompare(b.name);
+    });
+    for (const c of node.children) sortTree(c);
+  }
+  sortTree(root);
+
+  // Render
+  function fileHref(path) {
+    if (/\.md$/i.test(path)) return 'docs.html?path=' + encodeURIComponent(path);
+    if (/\.(html|htm)$/i.test(path)) return 'view.html?path=' + encodeURIComponent(path);
+    return POF.BLOB(path);
+  }
+  function fileTarget(path) {
+    return /\.(md|html|htm)$/i.test(path) ? '' : ' target="_blank" rel="noopener"';
+  }
+  function ext(name) {
+    const dot = name.lastIndexOf('.');
+    return dot > 0 ? name.slice(dot + 1).toLowerCase() : '';
+  }
+  function fileClass(name) {
+    const e = ext(name);
+    return ['md','html','htm','svg','json','css','js'].includes(e) ? e : '';
+  }
+
+  function renderNode(node, depth) {
+    if (node.type === 'tree') {
+      const blobs = countBlobs(node);
+      const collapsed = COLLAPSE_BY_DEFAULT.has(node.path) ? ' collapsed' : '';
+      const meta = blobs > 0 ? ` <span class="meta">${blobs} file${blobs>1?'s':''}</span>` : '';
+      let html = `<div class="tnode dir${collapsed}" data-path="${POF.escapeHtml(node.path)}"><span class="toggle"></span><span class="name">${POF.escapeHtml(node.name)}/</span>${meta}</div>`;
+      if (node.children && node.children.length) {
+        html += `<div class="tchildren">${node.children.map(c => renderNode(c, depth + 1)).join('')}</div>`;
+      }
+      return html;
+    } else {
+      const cls = fileClass(node.name);
+      const e = ext(node.name);
+      const sizeKb = node.size ? ` <span class="meta">${(node.size/1024).toFixed(1)} KB</span>` : '';
+      return `<div class="tnode file ${cls}" data-path="${POF.escapeHtml(node.path)}"><a href="${POF.escapeHtml(fileHref(node.path))}"${fileTarget(node.path)}><span class="name">${POF.escapeHtml(node.name)}</span></a>${e ? ` <span class="ext">.${e}</span>` : ''}${sizeKb}</div>`;
+    }
+  }
+  function countBlobs(node) {
+    if (node.type === 'blob') return 1;
+    return (node.children || []).reduce((s, c) => s + countBlobs(c), 0);
+  }
+
+  // Render top-level children (skip the synthetic root)
+  const html = root.children.map(c => renderNode(c, 0)).join('');
+  host.innerHTML = html;
+
+  // Toggle dir on click
+  host.addEventListener('click', e => {
+    const t = e.target;
+    if (t.classList.contains('toggle')) {
+      const dir = t.parentElement;
+      dir.classList.toggle('collapsed');
+    }
+  });
+
+  // Expand / Collapse all
+  document.getElementById('expand-all').addEventListener('click', () => {
+    host.querySelectorAll('.tnode.dir.collapsed').forEach(n => n.classList.remove('collapsed'));
+  });
+  document.getElementById('collapse-all').addEventListener('click', () => {
+    host.querySelectorAll('.tnode.dir').forEach(n => n.classList.add('collapsed'));
+  });
+
+  // Filter
   const q = document.getElementById('q');
   q.addEventListener('input', () => {
     const term = q.value.trim().toLowerCase();
-    list.querySelectorAll('li').forEach(li => {
-      li.style.display = (!term || (li.dataset.name || '').includes(term)) ? '' : 'none';
+    if (!term) {
+      host.querySelectorAll('.tnode').forEach(n => n.classList.remove('hidden'));
+      return;
+    }
+    // Show nodes whose path contains the term, plus their ancestor dirs
+    const visiblePaths = new Set();
+    host.querySelectorAll('.tnode[data-path]').forEach(n => {
+      const p = n.dataset.path.toLowerCase();
+      if (p.includes(term)) {
+        visiblePaths.add(n.dataset.path);
+        // ancestors
+        let cur = n.dataset.path;
+        while (cur.includes('/')) {
+          cur = cur.slice(0, cur.lastIndexOf('/'));
+          visiblePaths.add(cur);
+        }
+      }
+    });
+    host.querySelectorAll('.tnode[data-path]').forEach(n => {
+      n.classList.toggle('hidden', !visiblePaths.has(n.dataset.path));
+    });
+    // expand all matching dirs
+    host.querySelectorAll('.tnode.dir').forEach(d => {
+      if (visiblePaths.has(d.dataset.path)) d.classList.remove('collapsed');
     });
   });
 })();
