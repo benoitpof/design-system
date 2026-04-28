@@ -39,7 +39,7 @@ print(f'[1] Copied site/ -> _site/')
 def fix_charts_static_links():
     """If examples/ folder doesn't exist (post-cleanup), patch site/charts.html and maps.html
     so links to ../examples/* go to GitHub instead of broken local paths."""
-    if (ROOT / 'docs/Exemple').exists():
+    if (ROOT / 'examples').exists():
         return
     for filename in ['charts.html', 'maps.html']:
         f = BUILD / filename
@@ -61,8 +61,8 @@ fix_charts_static_links()
 
 
 # ---------- 2. Copy examples/ and assets/ ----------
-if (ROOT / 'docs/Exemple').exists():
-    shutil.copytree(ROOT / 'docs/Exemple', BUILD / 'examples')
+if (ROOT / 'examples').exists():
+    shutil.copytree(ROOT / 'examples', BUILD / 'examples')
 shutil.copytree(ROOT / 'assets', BUILD / 'assets')
 print(f'[2] Copied examples/ + assets/ -> _site/')
 
@@ -248,7 +248,7 @@ def render_md(md_path, out_path, title=None, breadcrumb=None, css_path='styles.c
     out_path.write_text(page)
 
 # Render docs/rules/*.md
-for f in sorted((ROOT / 'docs/Rules').glob('*.md')):
+for f in sorted((ROOT / 'rules').glob('*.md')):
     render_md(f, BUILD / 'rules' / f"{f.stem}.html",
               breadcrumb=f"Rules / {f.stem}",
               css_path='../styles.css',
@@ -257,7 +257,7 @@ for f in sorted((ROOT / 'docs/Rules').glob('*.md')):
 print(f'[3a] Rendered docs/rules/*.md -> _site/rules/*.html')
 
 # Render docs/layouts/*.md
-for f in sorted((ROOT / 'docs/Layout').glob('*.md')):
+for f in sorted((ROOT / 'layouts').glob('*.md')):
     render_md(f, BUILD / 'layouts' / f"{f.stem}.html",
               breadcrumb=f"Layouts / {f.stem}",
               css_path='../styles.css',
@@ -266,7 +266,7 @@ for f in sorted((ROOT / 'docs/Layout').glob('*.md')):
 print(f'[3b] Rendered docs/layouts/*.md -> _site/layouts/*.html')
 
 # Render memory/*.md (optional)
-mem_dir = ROOT / 'docs/Memory'
+mem_dir = ROOT / 'memory'
 if mem_dir.exists():
     for f in sorted(mem_dir.glob('*.md')):
         render_md(f, BUILD / 'memory' / f"{f.stem}.html",

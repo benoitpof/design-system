@@ -1,3 +1,34 @@
+# Changelog
+
+## v4.0.0 — 2026-04-28
+
+**Type:** MAJOR (breaking changes on directory structure)
+**PR:** feat/v4.0-architecture-claude-design
+
+### Added
+- `DESIGN.md` racine — canonical Source of Truth (SSOT) for Claude Design ingestion (9 sections).
+- `rules/HARD-LOCKS.md` (renamed from `docs/Rules/DESIGN.md` to free `DESIGN.md` slot at root).
+
+### Changed (directory structure flattened)
+- `docs/Rules/` → `rules/`
+- `docs/Layout/` → `layouts/`
+- `docs/Memory/` → `memory/`
+- `docs/Exemple/` → `examples/`
+- `docs/Golden/<type>/README.md` → `examples/<type>/golden-spec.md` (merged in-place).
+- `docs/Golden/README.md` → `examples/GOLDEN-SPEC.md`.
+- `scripts/build-gallery.py` paths updated to new structure.
+- `tokens/brand-rules-per-format.json` paths updated.
+
+### Rationale
+- Repo flat-structure now compatible with Claude Design canonical ingestion format (DESIGN.md at root + tokens/ + rules/ + examples/).
+- Single SSOT entry point for any AI agent (Claude Design, Cowork, Claude Code).
+- All 18 chart HTML examples preserved in `examples/charts/`.
+- All 8 rules files preserved (renamed Rules/DESIGN.md → rules/HARD-LOCKS.md only).
+- All 8 memory Rex files preserved.
+- No content lost. `git mv` preserves history.
+
+---
+
 # CHANGELOG — POF Design System
 
 **Format :** sections par version, plus récente en haut. Breaking changes signalés en gras.

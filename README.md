@@ -1,157 +1,149 @@
-# POF Design System — `benoitpof/design-system`
+# POF Design System
 
-**Version:** 3.5.0 | **Updated:** 2026-04-28
-**Slide format:** LAYOUT_WIDE 20 × 11.25" (508 × 285.75 mm), 16:9
-**Coordinates:** mm primary (SSOT). Inches in comments only when needed for legacy pptxgenjs code.
+**Repo:** `benoitpof/design-system` · **Version:** 4.0.0 · **Updated:** 2026-04-28
+**Owner:** Benoît Blancher · benoit@plasticodyssey.org
 
-Source de vérité unique pour tous les assets, layouts, et règles de génération de contenus Plastic Odyssey Factories. Cross-medium consistent : web, slide deck, report A4, social media.
-
-**Galerie visuelle :** https://benoitpof.github.io/design-system/
+Plastic Odyssey Factories visual identity SSOT. Compatible with Claude Design ingestion.
 
 ---
 
-## Comment utiliser ce repo
-
-Avant de générer un asset (slide, page, report, chart, map, icon, photo), lire ces fichiers dans cet ordre :
-
-1. `docs/Rules/DESIGN.md` — brand DNA, hard locks (type-scale, weight, gradient, corner marks)
-2. `tokens/brand-tokens.json` — colors, typography, spacing, components, entity overrides
-3. `tokens/brand-rules-per-format.json` — slides, docs, web, excel, linkedin, charts, maps, icons rules
-4. `docs/Layout/<MEDIUM>.md` — DECK / REPORT / WEB / SOCIAL selon le livrable
-5. `docs/Rules/CONTENT-RULES.md` — narrative content rules + RAW vs FINAL confirmation step
-
-Références spécialisées sur demande :
-
-- `docs/Rules/ASSETS.md` — index assets + Notion Media Assets DB schema et query protocol
-- `docs/Rules/ICONS.md` — Tabler CDN + brand pictos POF
-- `docs/Rules/MAPS.md` — 5 patterns (heatmap, categorical, neutral dots, data dots, anchored faded)
-- `docs/Rules/CHARTS.md` — 16 chart templates catalog
-- `docs/Rules/PHOTOS.md` — sources autorisées, recadrage, overlay system 3 presets
-- `docs/Rules/TABLES.md` — règles tableaux par medium (slide, report, web, excel)
-- `assets/maps/map-charter.html` — interactive visual charter for map patterns
-- `docs/Exemple/charts/index.html` — 19 ready-to-use chart/table/icon templates HTML+CSS
-
----
-
-## Master template (SSOT)
-
-**Single source of truth pour la génération deck :** `templates/master-deck-current.pptx`. Toute skill DOIT dupliquer un layout depuis ce fichier (`master.slide_layouts[i]`), jamais dessiner from-scratch.
-
-**SHA preflight** : avant tout render, valider que le SHA-256 du master local correspond à `templates/MASTER_SHA.txt`. Mismatch = abort.
-
-Voir `templates/README.md` pour la liste exacte des layouts (12 layouts canoniques nommés `TITLE`, `SECTION_HEADER`, `TITLE_AND_BODY`, etc.).
-
----
-
-## Repo structure (v3.5.0)
+## Architecture
 
 ```
-/tokens/                            ← SSOT colors, typography, components
-  brand-tokens.json
-  brand-tokens.css
-  brand-rules-per-format.json
-
-/docs/
-  /Rules/                           ← règles par sujet (transverses)
-    DESIGN.md  CONTENT-RULES.md  ASSETS.md
-    CHARTS.md  MAPS.md  ICONS.md  PHOTOS.md  TABLES.md
-
-  /Layout/                          ← layouts par medium
-    DECK.md  REPORT.md  WEB.md  SOCIAL.md
-
-  /Memory/                          ← Rex capitalisés par ds-iterate
-    deck.md  report.md  web.md  social.md
-    chart.md  map.md  photo.md  icon.md
-
-  /Exemple/                         ← exemples par type (working examples)
-    /charts/   (19 HTML templates : KPI, bar, stacked, …, table, radar, map, icons, images)
-    /maps/     /deck/     /report/    /web/   /social/   /tables/   /icons/   /photo/
-    /Sheets/   /Other/
-
-  /Golden/                          ← golden references (hard limit 5 par type)
-    /deck/     /chart/    /map/      /report/   /web/   /social/   /photo/
-    /tables/   /icons/    /Sheets/   /Other/
-
-/assets/                            ← static brand assets
-  /logos/        (4 SVG logos)
-  /monogramme/   (2 SVG pictos)
-  /icons/        (332 SVG, Tabler-derived, 4 variantes)
-  /brand-elements/ (waves, corner brackets)
-  /backgrounds/  (2 SVG bg waves)
-  /maps/
-    pof-world-map-blank.svg
-    pof-world-map-annotated.svg
-    /svg/        (7 cropped regional maps + 00-monde-cropped)
-    /png-source/ (PNG sources)
-    map-charter.html
-
-/templates/                         ← master files (binary SSOT)
-  master-deck-current.pptx          ← THE master, SHA-locked
-  master-deck-base-layout.pptx      ← compact 16:9 alternate
-  MASTER_SHA.txt                    ← preflight check
-  README.md                         ← layout inventory
-
-/site/                              ← GitHub Pages V1
-  index.html  architecture.html
-  charts.html  maps.html
-  styles.css   _nav.js
-
-/scripts/                           ← générateurs et outils
-  build-gallery.py
-  generate-pptx-layouts.js
-  generate-docx-templates.js
-  (à venir : composition_qa.py, path_router.py)
-
-/.archive/                          ← archives (ne pas modifier)
-  /changelogs/                      ← CHANGELOG-v3.X.X.md historiques
-
-CHANGELOG.md                        ← historique consolidé
-ITERATE.md                          ← guide ds-iterate
-VISUALIZE.md                        ← URL gallery + local preview
-README.md                           ← ce fichier
+.
+├── DESIGN.md                    # SSOT canonical (Claude Design 9 sections)
+├── README.md                    # This file
+├── CHANGELOG.md                 # Version history
+├── ITERATE.md                   # PR risk levels A/B/C/D
+├── VISUALIZE.md                 # Site renderer instructions
+│
+├── tokens/                      # Atoms (machine-readable)
+│   ├── brand-tokens.json        # Colors, typography, spacing
+│   ├── brand-tokens.css         # CSS variables (generated)
+│   └── brand-rules-per-format.json
+│
+├── rules/                       # Hard rules (human + Claude readable)
+│   ├── HARD-LOCKS.md            # Strict enforcement (palette, typo, overlays)
+│   ├── CONTENT-RULES.md         # Editorial rules
+│   ├── ASSETS.md                # Logos, corner, wave usage
+│   ├── CHARTS.md                # 16 chart templates spec
+│   ├── MAPS.md                  # 5 map presets + white_fade
+│   ├── TABLES.md                # Tables per medium
+│   ├── ICONS.md                 # Tabler + custom POF icons
+│   └── PHOTOS.md                # Photos, crops, overlay system
+│
+├── examples/                    # Canonical references (HTML, golden specs)
+│   ├── charts/                  # 18 SVG chart templates HTML
+│   ├── maps/                    # Map examples
+│   ├── tables/                  # Table examples
+│   ├── deck/                    # Deck examples
+│   ├── report/                  # Report examples
+│   ├── web/                     # Web examples
+│   ├── social/                  # LinkedIn / IG examples
+│   ├── photo/                   # Photo overlay examples
+│   ├── icons/                   # Icon usage examples
+│   ├── Other/                   # Email signatures by entity
+│   ├── Sheets/                  # Excel dashboard templates
+│   └── GOLDEN-SPEC.md           # Goldens overview
+│
+├── layouts/                     # Layout specs per medium
+│   ├── REPORT.md                # A4 docx/pdf
+│   ├── WEB.md                   # Landing page
+│   └── SOCIAL.md                # LinkedIn / Instagram
+│
+├── assets/                      # Binary library
+│   ├── logos/                   # Per entity
+│   ├── monogramme/              # Compact mark
+│   ├── brand-elements/          # Corner brackets, wave
+│   ├── backgrounds/             # Wave SVGs
+│   ├── icons/                   # Custom POF icons
+│   └── maps/                    # SVG map sources
+│       ├── svg/
+│       └── png-source/
+│
+├── templates/                   # Master binaries (locked)
+│   ├── master-deck-current.pptx
+│   ├── master-deck-base-layout.pptx
+│   ├── MASTER_SHA.txt           # SHA preflight
+│   └── README.md
+│
+├── memory/                      # Learnings (Rex) per medium
+│   ├── chart.md, deck.md, icon.md, map.md
+│   ├── photo.md, report.md, social.md, web.md
+│   ├── Other/, Sheets/, tables/
+│   └── README.md
+│
+├── scripts/                     # QA + build tools
+│   ├── build-gallery.py         # Builds site/ from examples + rules
+│   ├── generate-pptx-layouts.js
+│   └── generate-docx-templates.js
+│
+└── site/                        # Static gallery (rendered docs)
 ```
 
 ---
 
-## Architecture v3.5.0 — 3 skills
+## Reading order (for AI agents)
 
-1. **DS-Dataviz-generator** — génère charts, maps, tables atomiques. Cherche d'abord dans Notion, sinon génère depuis `docs/Exemple/charts/<id>.html` ou `assets/maps/svg/<id>.svg`.
-2. **ds-file-assembler** — assemble decks, reports, web pages, social posts. Master template obligatoire (PJ ou fallback Git). SHA preflight. Layout whitelist. Visual diff vs `docs/Golden/<medium>/`.
-3. **ds-iterate** — capitalise les apprentissages dans `docs/Memory/` et propose des modifs sur les `docs/Rules/` via PR.
-
-Loops :
-- **ds-feedback** (skill atomique) — log ingest des Rex en mode quick / iterate.
-- **Notion = working memory** uniquement (Media Assets DB, DS Feedback DB).
-- **GitHub = SSOT** : règles, golden, code, templates.
-
-Voir `site/architecture.html` pour les diagrammes mermaid.
-
----
-
-## Versioning et release
-
-- Modif `docs/Rules/` ou `docs/Layout/` = bump patch (v3.5.1, v3.5.2, …)
-- Modif `tokens/` = bump minor (v3.5.x → v3.6.0)
-- Modif `templates/master-deck-current.pptx` = bump minor + nouveau `MASTER_SHA.txt`
-- Modif structure repo / Skills = bump major (v3.x → v4.0)
-- Toute modif passe par PR (jamais commit direct sur `main`). Voir `ITERATE.md`.
+1. **`DESIGN.md`** (root) — SSOT canonical, 9 sections compiled from tokens + rules.
+2. **`tokens/brand-tokens.json`** — machine-readable atoms.
+3. **`tokens/brand-rules-per-format.json`** — per-medium constraints.
+4. **`rules/HARD-LOCKS.md`** — strict enforcement spec.
+5. **`rules/<MEDIUM>.md`** — medium-specific rules (CHARTS, MAPS, TABLES, etc.).
+6. **`layouts/<MEDIUM>.md`** — layout spec (REPORT, WEB, SOCIAL).
+7. **`examples/<MEDIUM>/`** — canonical reference HTML/SVG.
+8. **`templates/master-*.pptx`** — binary master, validate SHA before use.
+9. **`memory/<MEDIUM>.md`** — capitalised Rex / learnings.
 
 ---
 
-## Paths à ne JAMAIS utiliser (ghost paths)
+## Skills consuming this DS
 
-Les paths suivants ne sont PAS dans ce repo. Toute skill ou doc qui les référence est buggée :
+- **`ds-file-assembler`** — assembles decks, reports, web pages, social posts. Validates master SHA, inherits canonical layouts only, runs visual diff.
+- **`ds-dataviz-generator`** — generates atomic charts, maps, tables. Reads tokens + rules + examples. Pushes to Notion Media Assets DB.
+- **`ds-iterate`** — capitalises Rex into `memory/`, proposes PRs on `rules/` and `tokens/`.
+- **`ds-feedback`** — atomic Rex logger to Notion DS Feedback DB.
 
-| Ghost path | Vrai path |
-|---|---|
-| `docs/rules/` | `docs/Rules/` |
-| `docs/layouts/` | `docs/Layout/` (sans S) |
-| `examples/` | `docs/Exemple/` (FR + capital E) |
-| `golden/` | `docs/Golden/` |
-| `memory/` | `docs/Memory/` |
-| `playbooks/` | n/a (n'existe pas) |
-| `evals/` | n/a (à créer si besoin) |
-| `assets/maps/cooked/` | `assets/maps/svg/` |
-| `tokens/colors.json` | `tokens/brand-tokens.json` (palette interne) |
-| `templates/master-deck-v3.4.0.pptx` | `templates/master-deck-current.pptx` |
-| `git checkout v3.4.0` | aucun tag historique avant v3.5.0, utiliser HEAD |
+---
+
+## Versioning
+
+Semantic versioning per `ITERATE.md`:
+- Modif `rules/`, `layouts/`, `examples/` = bump patch (v4.0.1, v4.0.2…)
+- Modif `tokens/`, `templates/` = bump minor (v4.1.0)
+- Modif `DESIGN.md` racine ou breaking arbo = bump major (v5.0.0)
+
+PR risk levels:
+- **A** (auto-merge eligible): docs, examples, READMEs
+- **B** (PR review): `rules/`, `layouts/`, `memory/`
+- **C** (Benoît validation): `tokens/`
+- **D** (Benoît formal validation): `templates/`, `DESIGN.md`, schema changes
+
+---
+
+## Migration v3.5 → v4.0
+
+Done in PR #2 (this commit):
+- `docs/Rules/` → `rules/`
+- `docs/Rules/DESIGN.md` → `rules/HARD-LOCKS.md` (rename to free DESIGN.md slot)
+- `docs/Layout/` → `layouts/`
+- `docs/Memory/` → `memory/`
+- `docs/Exemple/` → `examples/`
+- `docs/Golden/<type>/README.md` → `examples/<type>/golden-spec.md` (merged)
+- `docs/Golden/README.md` → `examples/GOLDEN-SPEC.md`
+- New `DESIGN.md` at root (canonical Claude Design v1.0)
+- `scripts/build-gallery.py` and `tokens/brand-rules-per-format.json` paths updated
+
+---
+
+## Compatibility
+
+- **Claude Design** (Anthropic Labs, April 2026) — `DESIGN.md` racine compatible. Ingestible directement.
+- **PPTX skills** — `templates/master-deck-current.pptx` SHA-locked.
+- **Web** — `site/` static gallery published via GitHub Pages.
+
+---
+
+## Contact
+
+Benoît Blancher · CEO Plastic Odyssey Factories · benoit@plasticodyssey.org

@@ -364,8 +364,8 @@
     },
     "layout_defaults": {},
     "picto_policy": {
-      "description": "Politique pictogrammes : pas d'imposition stricte mais lecture de docs/Rules/ICONS.md obligatoire avant generation. Forcer la question : ce slide gagnerait-il en clarte avec un picto pour structurer ou illustrer un propos ?",
-      "mandatory_read": "docs/Rules/ICONS.md",
+      "description": "Politique pictogrammes : pas d'imposition stricte mais lecture de rules/ICONS.md obligatoire avant generation. Forcer la question : ce slide gagnerait-il en clarte avec un picto pour structurer ou illustrer un propos ?",
+      "mandatory_read": "rules/ICONS.md",
       "consideration_required": true,
       "enforcement": "soft",
       "rationale": "Trop de pictos = bruit visuel. Pas de pictos = slides moins lisibles. La skill doit lire la doc et se poser la question slide par slide, sans seuil mecanique."
