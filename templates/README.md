@@ -1,50 +1,73 @@
-# /templates/ — Master files binaires (SSOT pour skills)
+# /templates/ — Master files (SSOT for skills)
 
-**Ces fichiers sont la source unique de vérité pour la génération de livrables. Toute skill (ds-file-assembler, DS-Dataviz-generator) DOIT dupliquer un layout depuis ces fichiers, jamais dessiner from-scratch.**
+**These files are the unique source of truth for deliverable generation. Every skill (ds-file-assembler, DS-Dataviz-generator) MUST duplicate a layout from these files, never draw from scratch.**
 
-## Fichiers
+## Files
 
-| Fichier | Format | Layouts | Usage | Status |
+| File | Format | Layouts | Usage | Status |
 |---|---|---|---|---|
-| `master-deck-v3.4.0.pptx` | LAYOUT_WIDE 20×11.25" (508×285.75 mm) | 12 layouts | Slide deck POF (cover, sections, KPI, charts, etc.) | ✅ Actif |
-| `trame-verge-deck-v2.pptx` | LAYOUT_WIDE 20×11.25" | 12 layouts | Trame de référence avec exemples remplis | 📐 Référence |
+| `master-deck-current.pptx` | LAYOUT_WIDE 20×11.25" (508×285.75 mm) | 12 layouts | Deck SSOT — duplicate this, never modify in place | ✅ Active |
+| `master-deck-base-layout.pptx` | 16:9 (254×142.9 mm) | 11 layouts | Compact slides (web embed, doc inserts) | 📐 Reference |
+| `MASTER_SHA.txt` | text | — | SHA-256 of `master-deck-current.pptx` for preflight checks | 🔒 Lock |
 
-## Layouts disponibles (master-deck-v3.4.0.pptx)
+## Layouts available (master-deck-current.pptx)
 
-| ID | Nom (PPTX) | Description | Placeholders |
+12 layouts, indices 0-11. Names below are exact PPTX layout names — these are the SSOT identifiers used by skills.
+
+| Index | PPTX layout name | Description | Placeholders |
 |---|---|---|---|
-| L00 | TITLE | Cover slide, photo full-bleed + titre + subtitle | 3 |
-| L01 | SECTION_HEADER | Section divider, photo + roman numeral + titre | 2 |
-| L02 | TITLE_AND_BODY | Slide standard texte | 3 |
-| L03 | TITLE_AND_TWO_COLUMNS | 2 colonnes texte ou texte+visuel | 4 |
-| L04 | TITLE_ONLY | Titre + zone libre | 2 |
-| L05 | ONE_COLUMN_TEXT | 1 colonne texte central | 3 |
-| L06 | MAIN_POINT | Citation / point clé | 2 |
-| L07 | SECTION_TITLE_AND_DESCRIPTION | Titre section + description longue | 4 |
-| L08 | CAPTION_ONLY | Image + caption uniquement | 2 |
-| L09 | BIG_NUMBER | KPI grand format | 3 |
-| L10 | BLANK | Slide vide pour layouts custom | 1 |
-| L11 | Generated | Layout custom personnalisé | 0 |
+| 0 | `TITLE` | Cover slide, photo full-bleed + title + subtitle | 3 |
+| 1 | `SECTION_HEADER` | Section divider, photo + roman numeral + title | 2 |
+| 2 | `TITLE_AND_BODY` | Standard text slide | 3 |
+| 3 | `TITLE_AND_TWO_COLUMNS` | 2 columns text or text+visual | 4 |
+| 4 | `TITLE_ONLY` | Title + free zone | 2 |
+| 5 | `ONE_COLUMN_TEXT` | Centered single column text | 3 |
+| 6 | `MAIN_POINT` | Quote / key point | 2 |
+| 7 | `SECTION_TITLE_AND_DESCRIPTION` | Section title + long description | 4 |
+| 8 | `CAPTION_ONLY` | Image + caption only | 2 |
+| 9 | `BIG_NUMBER` | Large KPI | 3 |
+| 10 | `BLANK` | Empty slide for custom layouts | 1 |
+| 11 | `Generated (g3d916d2d710_33_0)` | Custom personalized layout | 0 |
 
-**Note importante :** Les noms de layouts dans le PPTX (TITLE, SECTION_HEADER, etc.) NE correspondent PAS aux IDs L01-L15 référencés dans `docs/Layout/DECK.md`. La doc DECK.md doit être mise à jour pour s'aligner sur les 12 layouts réels du master.
-
-## Comment l'utiliser dans une skill
+## How to use in a skill
 
 ```python
 from pptx import Presentation
-master = Presentation('templates/master-deck-v3.4.0.pptx')
-# Pour chaque slide à générer :
-slide_layout = master.slide_layouts[2]  # L02 TITLE_AND_BODY
+import hashlib
+
+# 1. Load master
+master = Presentation('templates/master-deck-current.pptx')
+
+# 2. SHA preflight
+with open('templates/master-deck-current.pptx', 'rb') as f:
+    sha = hashlib.sha256(f.read()).hexdigest()
+expected = open('templates/MASTER_SHA.txt').read().strip()
+assert sha == expected, f"Master SHA mismatch — abort"
+
+# 3. Whitelist
+allowed = [l.name for l in master.slide_layouts]
+
+# 4. Add slide via canonical layout (NEVER draw from scratch)
+slide_layout = master.slide_layouts[2]  # TITLE_AND_BODY
 new_slide = master.slides.add_slide(slide_layout)
-# Remplir les placeholders nommés
+assert new_slide.slide_layout.name in allowed
+
+# 5. Fill named placeholders only
 for ph in new_slide.placeholders:
-    if ph.placeholder_format.type == ...:
-        ph.text = "..."
+    ph.text = "..."
+
 master.save('outputs/POF-<title>.pptx')
 ```
 
 ## Versioning
 
-- `master-deck-v3.4.0.pptx` = version courante
-- À chaque modif structurelle du template : bump version (v3.4.1, v3.5.0, etc.) + push nouveau fichier
-- Garder les 3 dernières versions pour rollback
+- `master-deck-current.pptx` = always the production version. Bump SHA on every change.
+- Past versions kept in `.archive/templates/master-deck-vYYYYMMDD.pptx` for rollback.
+- Any structural change to the master = PR with explicit changelog entry + SHA bump in `MASTER_SHA.txt`.
+
+## Forbidden
+
+1. Drawing layouts via `add_shape` outside placeholder grid.
+2. Loading a master that doesn't match `MASTER_SHA.txt`.
+3. Keeping multiple "current" master files (only one).
+4. Direct commit on `main` — PR only (`ITERATE.md`).
