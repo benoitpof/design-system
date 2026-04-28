@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POF Design System · Examples</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="ds-page" data-breadcrumb="Design System · Examples">
+
+<header class="hero">
+  <div class="pipe-row">
+    <div class="pipe"></div>
+    <div>
+      <div class="eyebrow">POF · Examples</div>
+      <h1>Examples par medium</h1>
+      <p>Sources réelles utilisables pour générer slides, reports, web, social. Liste live de <code>examples/</code>.</p>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <h2>Sous-catégories</h2>
+  <div class="grid-3" id="grid"></div>
+</section>
+
+<script src="_app.js"></script>
+<script>
+const HINTS = {
+  charts:  { name: 'Charts',          desc: '16+ chart templates HTML+CSS (canonical bar bank).' },
+  maps:    { name: 'Maps',            desc: 'Maps examples (vers map-charter).' },
+  icons:   { name: 'Icons',           desc: 'Icon usage examples.' },
+  deck:    { name: 'Deck',            desc: 'Slide deck examples.' },
+  report:  { name: 'Report',          desc: 'Report A4 examples.' },
+  web:     { name: 'Web',             desc: 'Web page examples.' },
+  social:  { name: 'Social',          desc: 'Social posts examples.' },
+  photo:   { name: 'Photo',           desc: 'Photography examples + overlays.' },
+  tables:  { name: 'Tables',          desc: 'Table layouts par medium.' },
+  Sheets:  { name: 'Sheets',          desc: 'Excel dashboards templates.' },
+  Other:   { name: 'Other',           desc: 'Email signatures, divers.' },
+  test:    { name: 'Test',            desc: 'Sandbox tests.' },
+  'GOLDEN-SPEC.md': { name: 'GOLDEN-SPEC', desc: 'Spec doc des goldens.' },
+  'README.md':      { name: 'README',      desc: 'Index examples.' }
+};
+
+(async function () {
+  const grid = document.getElementById('grid');
+  POF.renderLoading(grid);
+  const { tree } = await POF.loadTree();
+  if (!tree.length) { POF.renderError(grid, 'Tree fetch a échoué.'); return; }
+
+  const items = POF.listDir(tree, 'examples');
+  if (!items.length) { POF.renderEmpty(grid, 'examples/ vide.'); return; }
+
+  grid.innerHTML = items.map(e => {
+    const name = e.path.split('/').pop();
+    const hint = HINTS[name] || { name, desc: '' };
+    if (e.type === 'tree') {
+      const blobs = POF.listRecursive(tree, e.path).length;
+      const intern = name === 'charts' ? 'charts.html' : name === 'maps' ? 'maps.html' : name === 'icons' ? 'icons.html' : null;
+      const href = intern || ('tree.html?path=' + encodeURIComponent(e.path));
+      return `<a class="card" href="${POF.escapeHtml(href)}">
+        <div class="meta">
+          <span class="num">Folder</span>
+          <span class="name">${POF.escapeHtml(hint.name)}</span>
+          <span class="desc">${POF.escapeHtml(hint.desc)} (${blobs} fichiers)</span>
+          <span class="badge dim">${POF.escapeHtml(e.path)}/</span>
+        </div>
+      </a>`;
+    }
+    if (name.endsWith('.md')) {
+      return `<a class="card" href="docs.html?path=${encodeURIComponent(e.path)}">
+        <div class="meta">
+          <span class="num">Doc</span>
+          <span class="name">${POF.escapeHtml(hint.name)}</span>
+          <span class="desc">${POF.escapeHtml(hint.desc)}</span>
+          <span class="badge dim">${POF.escapeHtml(e.path)}</span>
+        </div>
+      </a>`;
+    }
+    return `<a class="card" href="${POF.escapeHtml(POF.BLOB(e.path))}" target="_blank" rel="noopener">
+      <div class="meta">
+        <span class="num">File</span>
+        <span class="name">${POF.escapeHtml(name)}</span>
+        <span class="desc">Voir sur GitHub.</span>
+        <span class="badge dim">${POF.escapeHtml(e.path)}</span>
+      </div>
+    </a>`;
+  }).join('');
+})();
+</script>
+
+</body>
+</html>

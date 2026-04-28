@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POF Design System · Memory</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="ds-page" data-breadcrumb="Design System · Memory">
+
+<header class="hero">
+  <div class="pipe-row">
+    <div class="pipe"></div>
+    <div>
+      <div class="eyebrow">POF · Memory</div>
+      <h1>Capitalisation Rex</h1>
+      <p>Retex par type. Mis à jour par <code>ds-iterate</code>. Liste live de <code>memory/</code>.</p>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <h2>Mémoire par type</h2>
+  <div class="grid-3" id="grid"></div>
+</section>
+
+<script src="_app.js"></script>
+<script>
+const HINTS = {
+  'chart.md':  'Rex chart templates : ce qui marche, ce qui bloque, conventions.',
+  'deck.md':   'Rex deck production.',
+  'web.md':    'Rex web pages.',
+  'report.md': 'Rex reports A4.',
+  'social.md': 'Rex social formats.',
+  'photo.md':  'Rex photographie + overlay.',
+  'icon.md':   'Rex iconographie.',
+  'map.md':    'Rex cartographie.',
+  'README.md': 'Index mémoire.',
+};
+
+(async function () {
+  const grid = document.getElementById('grid');
+  POF.renderLoading(grid);
+  const { tree } = await POF.loadTree();
+  if (!tree.length) { POF.renderError(grid, 'Tree fetch a échoué.'); return; }
+
+  const items = POF.listDir(tree, 'memory');
+  if (!items.length) { POF.renderEmpty(grid, 'Mémoire vide.'); return; }
+
+  grid.innerHTML = items.map(e => {
+    if (e.type === 'tree') {
+      return `<a class="card" href="tree.html?path=${encodeURIComponent(e.path)}">
+        <div class="meta">
+          <span class="num">Folder</span>
+          <span class="name">${POF.escapeHtml(e.path.split('/').pop())}/</span>
+          <span class="desc">Sous-dossier de memory/.</span>
+          <span class="badge dim">${POF.escapeHtml(e.path)}/</span>
+        </div>
+      </a>`;
+    }
+    const fn = e.path.split('/').pop();
+    if (!fn.endsWith('.md')) {
+      return `<a class="card" href="${POF.escapeHtml(POF.BLOB(e.path))}" target="_blank" rel="noopener">
+        <div class="meta">
+          <span class="num">File</span>
+          <span class="name">${POF.escapeHtml(fn)}</span>
+          <span class="desc">Voir sur GitHub.</span>
+          <span class="badge dim">${POF.escapeHtml(e.path)}</span>
+        </div>
+      </a>`;
+    }
+    return `<a class="card" href="docs.html?path=${encodeURIComponent(e.path)}">
+      <div class="meta">
+        <span class="num">Memory</span>
+        <span class="name">${POF.escapeHtml(fn.replace(/\.md$/, ''))}</span>
+        <span class="desc">${POF.escapeHtml(HINTS[fn] || ('Memory : ' + fn))}</span>
+        <span class="badge dim">${POF.escapeHtml(e.path)}</span>
+      </div>
+    </a>`;
+  }).join('');
+})();
+</script>
+
+</body>
+</html>

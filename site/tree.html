@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POF Design System · Tree</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.crumbs{font-family:'Roboto Mono',monospace;font-size:13px;color:var(--gray-600);margin:24px 0 16px}
+.crumbs a{color:var(--teal-dark);text-decoration:none}
+.crumbs a:hover{text-decoration:underline}
+</style>
+</head>
+<body class="ds-page" data-breadcrumb="Design System · Tree">
+
+<header class="hero">
+  <div class="pipe-row">
+    <div class="pipe"></div>
+    <div>
+      <div class="eyebrow">POF · Tree</div>
+      <h1>File tree</h1>
+      <p>Arborescence live du repo. Naviguer dans les sous-dossiers, ouvrir les fichiers (markdown rendu, autres → GitHub blob).</p>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <div id="crumbs" class="crumbs"></div>
+  <div class="toolbar">
+    <input type="search" id="q" placeholder="Filtrer dans ce dossier…">
+    <a class="btn" id="gh-link" href="#" target="_blank" rel="noopener">View on GitHub ↗</a>
+  </div>
+  <ul class="tree-list" id="list"></ul>
+</section>
+
+<script src="_app.js"></script>
+<script>
+function getPathParam() {
+  const p = new URLSearchParams(location.search).get('path') || '';
+  // Normalize: no leading/trailing slash
+  return p.replace(/^\/+|\/+$/g, '');
+}
+
+function fileIcon(name, isDir) {
+  if (isDir) return '<svg class="icon dir" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 3v8a1 1 0 001 1h10a1 1 0 001-1V5a1 1 0 00-1-1H7L5.5 2.5H2a1 1 0 00-1 .5z" stroke="currentColor" stroke-width="1.2"/></svg>';
+  return '<svg class="icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 1h6l3 3v9H3V1z" stroke="currentColor" stroke-width="1.2"/><path d="M9 1v3h3" stroke="currentColor" stroke-width="1.2"/></svg>';
+}
+
+(async function () {
+  const path = getPathParam();
+  const list = document.getElementById('list');
+  const crumbs = document.getElementById('crumbs');
+  const ghLink = document.getElementById('gh-link');
+  ghLink.href = path ? POF.TREE_VIEW(path) : `https://github.com/${POF.REPO}/tree/${POF.BRANCH}`;
+
+  // Crumbs
+  const segs = path ? path.split('/') : [];
+  const crumbHtml = ['<a href="tree.html">root</a>'];
+  let cur = '';
+  for (const s of segs) {
+    cur = cur ? cur + '/' + s : s;
+    crumbHtml.push(' / <a href="tree.html?path=' + encodeURIComponent(cur) + '">' + POF.escapeHtml(s) + '</a>');
+  }
+  crumbs.innerHTML = crumbHtml.join('');
+
+  POF.renderLoading(list);
+  const { tree } = await POF.loadTree();
+  if (!tree.length) { list.outerHTML = '<div class="error-state">Tree fetch a échoué.</div>'; return; }
+
+  let items = POF.listDir(tree, path);
+  // Filter out hidden / ignored
+  items = items.filter(e => !e.path.endsWith('.gitignore'));
+  if (!items.length) { list.outerHTML = '<div class="empty-state">Dossier vide.</div>'; return; }
+
+  list.innerHTML = items.map(e => {
+    const name = e.path.split('/').pop();
+    const isDir = e.type === 'tree';
+    const fn = name;
+    let href;
+    if (isDir) href = 'tree.html?path=' + encodeURIComponent(e.path);
+    else if (fn.endsWith('.md')) href = 'docs.html?path=' + encodeURIComponent(e.path);
+    else if (/\.(html|htm)$/i.test(fn)) href = 'view.html?path=' + encodeURIComponent(e.path);
+    else href = POF.BLOB(e.path);
+    const target = (isDir || fn.endsWith('.md') || /\.(html|htm)$/i.test(fn)) ? '' : ' target="_blank" rel="noopener"';
+    const sizeBadge = e.size ? `<span class="size">${(e.size / 1024).toFixed(1)} KB</span>` : '';
+    return `<li data-name="${POF.escapeHtml(fn.toLowerCase())}">
+      <span class="${isDir ? 'icon dir' : 'icon'}">${fileIcon(fn, isDir)}</span>
+      <a href="${POF.escapeHtml(href)}"${target}>${POF.escapeHtml(name)}${isDir ? '/' : ''}</a>
+      ${sizeBadge}
+    </li>`;
+  }).join('');
+
+  const q = document.getElementById('q');
+  q.addEventListener('input', () => {
+    const term = q.value.trim().toLowerCase();
+    list.querySelectorAll('li').forEach(li => {
+      li.style.display = (!term || (li.dataset.name || '').includes(term)) ? '' : 'none';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
