@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>POF Design System · HTML Viewer</title>
+<title>POF Design System · Viewer</title>
 <link rel="stylesheet" href="styles.css">
 <style>
 .viewer-head{max-width:1280px;margin:24px auto 16px;padding:0 32px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
@@ -11,66 +11,90 @@
 .viewer-head .crumbs a{color:var(--teal-dark);text-decoration:none}
 .viewer-host{max-width:1280px;margin:0 auto 32px;padding:0 32px}
 .viewer-host iframe{width:100%;height:calc(100vh - 200px);min-height:780px;border:1px solid var(--neutral-mid);border-radius:8px;background:var(--white);display:block}
+.svg-host{
+  background:var(--gris-pof);border:1px solid var(--neutral-mid);border-radius:8px;
+  padding:32px;display:flex;align-items:center;justify-content:center;min-height:600px;overflow:auto;
+}
+.svg-host.dark{background:var(--navy)}
+.svg-host svg{max-width:100%;height:auto;display:block}
+.svg-host .svg-wrap{width:100%;max-width:1100px}
+.svg-toolbar{
+  display:flex;gap:8px;justify-content:flex-end;
+  padding:8px 16px;background:var(--white);border:1px solid var(--neutral-mid);border-bottom:none;
+  border-top-left-radius:8px;border-top-right-radius:8px;
+  font-family:'Poppins',sans-serif;font-size:11px;
+}
+.svg-toolbar button{
+  background:var(--white);border:1px solid var(--neutral-mid);border-radius:5px;
+  padding:5px 10px;cursor:pointer;font-family:inherit;font-size:11px;color:var(--navy);
+}
+.svg-toolbar button:hover{border-color:var(--teal)}
+.svg-toolbar button.on{background:var(--navy);color:var(--white);border-color:var(--navy)}
+.svg-host + .svg-toolbar,
+.svg-toolbar + .svg-host{border-top-left-radius:0;border-top-right-radius:0}
+.svg-toolbar + .svg-host{border-top:none}
+.json-host{
+  background:var(--navy);color:var(--teal);
+  font-family:'Roboto Mono',monospace;font-size:13px;line-height:1.5;
+  padding:24px 32px;border-radius:8px;overflow-x:auto;
+  white-space:pre;
+}
 </style>
 </head>
-<body class="ds-page" data-breadcrumb="Design System · HTML Viewer">
+<body class="ds-page" data-breadcrumb="Design System · Viewer">
 
 <div class="viewer-head">
   <div class="crumbs" id="crumbs">…</div>
   <div class="actions" id="actions"></div>
 </div>
 
-<div class="viewer-host">
-  <iframe id="frame" sandbox="allow-scripts allow-same-origin" loading="lazy"></iframe>
-</div>
+<div class="viewer-host" id="viewer-host"></div>
 
 <script src="_app.js"></script>
 <script>
 function getPath() {
   return new URLSearchParams(location.search).get('path') || 'examples/charts/01-kpi.html';
 }
+function getHash() {
+  // Hash from URL ; e.g. view.html?path=...#pattern-1 → "pattern-1"
+  return location.hash ? location.hash.slice(1) : '';
+}
 
-// Pre-existing broken refs in chart pages (path → fixed URL)
-// The chart files reference ../styles.css which doesn't exist at examples/styles.css.
-// They actually need the chart-bank styles which sit at examples/charts/styles.css.
-// Same for the logo: pof-logo-color.svg doesn't exist; use pof-logo-navy.svg.
-function rewriteChartPagePaths(html, sourceDir) {
+// ---------- chart-page-specific URL repair ----------
+function rewriteChartPagePaths(html) {
   const repoStylesUrl = `https://cdn.jsdelivr.net/gh/${POF.REPO}@${POF.BRANCH}/examples/charts/styles.css`;
   const logoUrl = POF.RAW('assets/logos/pof-logo-navy.svg');
   const indexUrl = location.origin + location.pathname.replace(/[^/]*$/, '') + 'index.html';
-
   return html
     .replace(/href="\.\.\/styles\.css(\?[^"]*)?"/g, `href="${repoStylesUrl}"`)
     .replace(/src="\.\.\/assets\/pof-logo-color\.svg"/g, `src="${logoUrl}"`)
-    .replace(/href="\.\.\/index\.html"/g, `href="${indexUrl}"`);
+    .replace(/href="\.\.\/index\.html"/g, `href="${indexUrl}"`)
+    .replace(/href="\.\.\/examples\/index\.html"/g, `href="${indexUrl}"`)
+    .replace(/src="\.\.\/assets\/logos\/pof-logo-color\.svg"/g, `src="${logoUrl}"`);
 }
 
-// Generic URL rewriter for everything else (relative paths in srcdoc)
+// ---------- generic relative-URL rewrite ----------
 function rewriteGenericPaths(html, sourceDir) {
   return html.replace(/(href|src)="([^"]+)"/g, (m, attr, url) => {
     if (/^(https?:|data:|#|mailto:)/.test(url)) return m;
     if (url.startsWith('//')) return m;
     const resolved = POF.resolvePath(sourceDir, url);
     let target;
-    if (/\.(svg|png|jpe?g|gif|webp|ico)$/i.test(resolved)) {
-      target = POF.RAW(resolved);
-    } else if (/\.(html|htm)$/i.test(resolved)) {
-      // Other HTML referenced from inside this HTML — let's open in our viewer
-      target = location.origin + location.pathname.replace(/[^/]*$/, '') + 'view.html?path=' + encodeURIComponent(resolved);
-    } else {
-      // CSS / JS / JSON / md → jsdelivr serves with proper content-type
-      target = `https://cdn.jsdelivr.net/gh/${POF.REPO}@${POF.BRANCH}/${resolved}`;
-    }
+    if (/\.(svg|png|jpe?g|gif|webp|ico)$/i.test(resolved)) target = POF.RAW(resolved);
+    else if (/\.(html|htm)$/i.test(resolved)) target = location.origin + location.pathname.replace(/[^/]*$/, '') + 'view.html?path=' + encodeURIComponent(resolved);
+    else target = `https://cdn.jsdelivr.net/gh/${POF.REPO}@${POF.BRANCH}/${resolved}`;
     return `${attr}="${target}"`;
   });
 }
 
 (async function () {
   const path = getPath();
+  const hash = getHash();
   const sourceDir = path.split('/').slice(0, -1).join('/');
   const fileName = path.split('/').pop();
+  const ext = (fileName.match(/\.([^.]+)$/) || [])[1]?.toLowerCase() || '';
 
-  // Crumbs
+  // ---------- crumbs + actions ----------
   const segs = path.split('/');
   const crumbHtml = ['<a href="tree.html">root</a>'];
   let cur = '';
@@ -80,38 +104,96 @@ function rewriteGenericPaths(html, sourceDir) {
   }
   crumbHtml.push(' / <span>' + POF.escapeHtml(segs[segs.length - 1]) + '</span>');
   document.getElementById('crumbs').innerHTML = crumbHtml.join('');
-
   document.getElementById('actions').innerHTML = `
     <a class="btn primary" href="${POF.BLOB(path)}" target="_blank" rel="noopener">View on GitHub ↗</a>
-    <a class="btn" href="https://cdn.jsdelivr.net/gh/${POF.REPO}@${POF.BRANCH}/${path}" target="_blank" rel="noopener">jsdelivr URL</a>
+    <a class="btn" href="${POF.RAW(path)}" target="_blank" rel="noopener">Raw</a>
     <a class="btn" href="tree.html?path=${encodeURIComponent(sourceDir)}">Up to folder</a>
   `;
 
+  // Sanity-check
   const { tree } = await POF.loadTree();
   if (tree.length && !POF.findExact(tree, path)) {
-    document.querySelector('.viewer-host').innerHTML = `<div class="error-state">Le fichier <code>${POF.escapeHtml(path)}</code> n'existe pas dans le repo. <a href="tree.html">Vue arbre</a>.</div>`;
+    document.getElementById('viewer-host').innerHTML = `<div class="error-state">Le fichier <code>${POF.escapeHtml(path)}</code> n'existe pas dans le repo. <a href="tree.html">Vue arbre</a>.</div>`;
     return;
   }
 
+  const host = document.getElementById('viewer-host');
+
+  // ---------- BRANCH BY EXTENSION ----------
   try {
-    let html = await POF.fetchRaw(path);
-
-    // Step 1: explicitly fix the broken references in chart/map pages
-    if (sourceDir === 'examples/charts' || sourceDir === 'examples/maps' || sourceDir.startsWith('examples/')) {
-      html = rewriteChartPagePaths(html, sourceDir);
+    if (ext === 'svg') {
+      // Inline SVG — fetch raw and embed so we can apply background switch & download cleanly
+      const text = await POF.fetchRaw(path);
+      host.innerHTML = `
+        <div class="svg-toolbar">
+          <button id="bg-light" class="on">Light bg</button>
+          <button id="bg-dark">Dark bg</button>
+          <button id="bg-white">White bg</button>
+        </div>
+        <div class="svg-host" id="svg-host"><div class="svg-wrap"></div></div>
+      `;
+      host.querySelector('.svg-wrap').innerHTML = text;
+      const svgHost = document.getElementById('svg-host');
+      document.getElementById('bg-light').addEventListener('click', e => { svgHost.style.background = 'var(--gris-pof)'; toggleOn(e.target); });
+      document.getElementById('bg-dark').addEventListener('click', e => { svgHost.style.background = 'var(--navy)'; toggleOn(e.target); });
+      document.getElementById('bg-white').addEventListener('click', e => { svgHost.style.background = 'var(--white)'; toggleOn(e.target); });
+      function toggleOn(btn) { document.querySelectorAll('.svg-toolbar button').forEach(b => b.classList.toggle('on', b === btn)); }
+      return;
     }
 
-    // Step 2: rewrite all remaining relative URLs to absolute jsdelivr/raw equivalents
-    html = rewriteGenericPaths(html, sourceDir);
-
-    // Step 3: ensure font and viewport are sane (most chart pages don't include viewport meta)
-    if (!/<meta\s+name=["']viewport["']/i.test(html)) {
-      html = html.replace(/<head>/i, '<head>\n<meta name="viewport" content="width=device-width, initial-scale=1">');
+    if (ext === 'json') {
+      const text = await POF.fetchRaw(path);
+      let pretty = text;
+      try { pretty = JSON.stringify(JSON.parse(text), null, 2); } catch (e) {}
+      host.innerHTML = `<pre class="json-host">${POF.escapeHtml(pretty)}</pre>`;
+      return;
     }
 
-    document.getElementById('frame').srcdoc = html;
+    if (ext === 'css' || ext === 'js') {
+      const text = await POF.fetchRaw(path);
+      host.innerHTML = `<pre class="json-host">${POF.escapeHtml(text)}</pre>`;
+      return;
+    }
+
+    if (ext === 'md' || ext === 'markdown') {
+      // Forward to docs.html for proper markdown rendering
+      location.replace('docs.html?path=' + encodeURIComponent(path));
+      return;
+    }
+
+    if (ext === 'html' || ext === 'htm') {
+      // HTML viewer (chart pages, map-charter, etc.)
+      let html = await POF.fetchRaw(path);
+      if (sourceDir.startsWith('examples/charts') || sourceDir.startsWith('examples/maps') || sourceDir.startsWith('examples/')) {
+        html = rewriteChartPagePaths(html);
+      }
+      html = rewriteGenericPaths(html, sourceDir);
+      if (!/<meta\s+name=["']viewport["']/i.test(html)) {
+        html = html.replace(/<head>/i, '<head>\n<meta name="viewport" content="width=device-width, initial-scale=1">');
+      }
+      // Pass URL hash through to iframe so anchors work (#pattern-1 etc.)
+      const iframe = document.createElement('iframe');
+      iframe.id = 'frame';
+      iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+      iframe.loading = 'lazy';
+      host.innerHTML = '';
+      host.appendChild(iframe);
+      iframe.srcdoc = html;
+      if (hash) {
+        iframe.addEventListener('load', () => {
+          try {
+            const target = iframe.contentDocument.getElementById(hash);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } catch (e) { /* cross-origin */ }
+        });
+      }
+      return;
+    }
+
+    // Default — binary or unknown : link to GitHub
+    host.innerHTML = `<div class="empty-state">Type de fichier <code>.${POF.escapeHtml(ext)}</code> non rendu inline. <a href="${POF.BLOB(path)}" target="_blank" rel="noopener">Ouvrir sur GitHub ↗</a></div>`;
   } catch (e) {
-    document.querySelector('.viewer-host').innerHTML = `<div class="error-state">⚠ ${POF.escapeHtml(e.message)}</div>`;
+    host.innerHTML = `<div class="error-state">⚠ ${POF.escapeHtml(e.message)}</div>`;
   }
 })();
 </script>

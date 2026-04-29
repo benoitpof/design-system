@@ -49,7 +49,13 @@ const HINTS = {
   const { tree } = await POF.loadTree();
   if (!tree.length) { POF.renderError(grid, 'Tree fetch a échoué.'); return; }
 
-  const items = POF.listDir(tree, 'examples');
+  // Skip charts / maps / icons : they have their own dedicated top-nav entry,
+  // listing them again here would duplicate the navigation.
+  const SKIP = new Set(['charts', 'maps', 'icons']);
+  const items = POF.listDir(tree, 'examples').filter(e => {
+    const n = e.path.split('/').pop();
+    return !SKIP.has(n);
+  });
   if (!items.length) { POF.renderEmpty(grid, 'examples/ vide.'); return; }
 
   grid.innerHTML = items.map(e => {
@@ -57,8 +63,7 @@ const HINTS = {
     const hint = HINTS[name] || { name, desc: '' };
     if (e.type === 'tree') {
       const blobs = POF.listRecursive(tree, e.path).length;
-      const intern = name === 'charts' ? 'charts.html' : name === 'maps' ? 'maps.html' : name === 'icons' ? 'icons.html' : null;
-      const href = intern || ('tree.html?path=' + encodeURIComponent(e.path));
+      const href = 'tree.html?path=' + encodeURIComponent(e.path);
       return `<a class="card" href="${POF.escapeHtml(href)}">
         <div class="meta">
           <span class="num">Folder</span>

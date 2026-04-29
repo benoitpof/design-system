@@ -86,11 +86,7 @@ const SECTIONS = [
   { path: 'assets/brand-elements', title: 'Brand elements',  dark: false, hint: 'Corner brackets, waves.' },
   { path: 'assets/backgrounds',    title: 'Backgrounds',     dark: false, hint: 'Backgrounds vectoriels (waves).' },
 ];
-// External catalogues (not detailed here)
-const EXTERNAL = [
-  { path: 'assets/icons', title: 'Icons',  count_glob: '.svg', target: 'icons.html' },
-  { path: 'assets/maps',  title: 'Maps',   count_glob: '.svg', target: 'maps.html' },
-];
+// assets/icons and assets/maps live under their own top-nav entries (Icons, Maps).
 
 (async function () {
   const host = document.getElementById('sections-host');
@@ -122,21 +118,8 @@ const EXTERNAL = [
     </div>`;
   }
 
-  // External catalogue cards (single line each)
-  html += '<div class="cat-block">';
-  html += '<div class="cat-head"><h2>Galeries dédiées</h2><span class="count">2 sous-dossiers</span></div>';
-  html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">';
-  for (const x of EXTERNAL) {
-    const items = POF.listRecursive(tree, x.path).filter(e => e.path.endsWith('.svg'));
-    html += `<a class="asset-tile" href="${POF.escapeHtml(x.target)}" style="aspect-ratio:auto">
-      <div style="padding:18px 20px;display:flex;flex-direction:column;gap:6px">
-        <div style="font-family:Poppins;font-weight:600;font-size:14px;color:var(--navy)">${POF.escapeHtml(x.title)}</div>
-        <div style="font-family:Raleway;font-size:12px;color:var(--gray-600)">${items.length} SVG dans <code>${POF.escapeHtml(x.path)}/</code></div>
-        <div style="font-family:Poppins;font-size:11px;color:var(--teal-dark);margin-top:4px">Voir la galerie →</div>
-      </div>
-    </a>`;
-  }
-  html += '</div></div>';
+  // Note: assets/icons and assets/maps have their own top-nav entries (Icons, Maps).
+  // We don't duplicate them here as cards — the topbar covers it.
 
   host.outerHTML = `<section class="section">${html}</section>`;
 })();

@@ -5,6 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>POF Design System · Map Bank</title>
 <link rel="stylesheet" href="styles.css">
+<style>
+.map-tile{
+  display:flex;flex-direction:column;
+  background:var(--white);
+  border:1px solid var(--neutral-mid);border-radius:8px;
+  text-decoration:none;color:var(--navy);overflow:hidden;
+  transition:border-color .15s,box-shadow .15s;
+}
+.map-tile:hover{border-color:var(--teal);box-shadow:0 4px 12px rgba(28,31,59,.08)}
+.map-tile .preview{
+  aspect-ratio:1.94/1;background:var(--navy);
+  display:flex;align-items:center;justify-content:center;padding:0;overflow:hidden;
+  border-bottom:1px solid var(--neutral-mid);
+}
+.map-tile .preview img{width:100%;height:100%;object-fit:contain}
+.map-tile .meta{padding:14px 18px}
+.map-tile .meta .num{font-family:'Poppins',sans-serif;font-weight:700;font-size:10px;letter-spacing:1.5px;color:var(--steel-light);text-transform:uppercase}
+.map-tile .meta .name{font-family:'Poppins',sans-serif;font-weight:600;font-size:14px;color:var(--navy);margin:2px 0}
+.map-tile .meta .desc{font-family:'Raleway',sans-serif;font-size:12px;color:var(--gray-600);line-height:1.4}
+</style>
 </head>
 <body class="ds-page" data-breadcrumb="Design System · Map Bank">
 
@@ -14,7 +34,7 @@
     <div>
       <div class="eyebrow">POF · Map Bank</div>
       <h1>Cartes POF</h1>
-      <p>5 patterns canoniques + world map base + crops régionaux. Liste live depuis <code>assets/maps/</code> et <code>examples/maps/</code>.</p>
+      <p>5 patterns canoniques + world map base + crops régionaux. Liste live depuis <code>assets/maps/</code>.</p>
     </div>
   </div>
 </header>
@@ -28,42 +48,60 @@
 
 <section class="section">
   <h2>5 patterns canoniques</h2>
-  <p class="lead">Chaque card pointe vers le map-charter interactif (assets/maps/map-charter.html).</p>
+  <p class="lead">Charte cartographique interactive — chaque pattern lié à sa section dans le map-charter.</p>
   <div class="grid-3" id="pattern-grid"></div>
 </section>
 
 <section class="section">
-  <h2>Tous les SVG cartes</h2>
-  <p class="lead">Sources brutes utilisables par les skills POF. Cliquer ouvre le SVG sur GitHub.</p>
+  <h2>World map + crops régionaux</h2>
+  <p class="lead">Base mondiale (projection Robinson) + crops vectorisés par région.</p>
   <div class="toolbar">
     <input type="search" id="q" placeholder="Filtrer (nom, région)…">
     <a class="btn" href="docs.html?path=rules/MAPS.md">Voir MAPS.md</a>
     <a class="btn" href="docs.html?path=memory/map.md">Voir memory/map.md</a>
+    <a class="btn" href="docs.html?path=assets/maps/POF-WORLD-MAP-GUIDE.md">Voir le guide</a>
   </div>
-  <div class="grid-auto" id="svg-grid"></div>
+  <div class="grid-2" id="svg-grid"></div>
 </section>
 
 <script src="_app.js"></script>
 <script>
 const PATTERN_CARDS = [
-  { num: 'P1 · Heatmap',     name: 'Continuous gradient', desc: 'Density per country, 3 navy variants (N1/N2/N3).', svg: `<svg viewBox="0 0 240 135"><rect width="240" height="135" fill="#F9FCFF"/><path d="M20 50 Q 70 30 120 45 Q 170 55 220 50 L 220 95 Q 170 100 120 95 Q 70 90 20 95 Z" fill="#1C1F3B"/><path d="M40 60 Q 80 50 130 60 Q 180 70 210 65 L 210 88 Q 180 92 130 88 Q 80 84 40 88 Z" fill="#435D74" opacity="0.6"/><path d="M70 70 Q 110 65 150 72 L 150 85 Q 110 88 70 85 Z" fill="#80C7C2" opacity="0.5"/></svg>`, hash: '#pattern-1' },
-  { num: 'P2 · Categorical', name: 'Status by country',  desc: 'Active / pipeline / featured.',                       svg: `<svg viewBox="0 0 240 135"><rect width="240" height="135" fill="#F9FCFF"/><path d="M20 40 L 70 30 L 80 65 L 25 75 Z" fill="#1C1F3B"/><path d="M75 60 L 130 50 L 140 90 L 80 100 Z" fill="#435D74"/><path d="M135 45 L 200 40 L 210 80 L 145 95 Z" fill="#80C7C2"/></svg>`, hash: '#pattern-2' },
-  { num: 'P3 · Neutral dots',name: 'Dotted reference',    desc: 'Neutral grid for context.',                            svg: `<svg viewBox="0 0 240 135"><rect width="240" height="135" fill="#F9FCFF"/><g fill="#CFD9E0"><circle cx="40" cy="50" r="3"/><circle cx="60" cy="60" r="3"/><circle cx="90" cy="55" r="3"/><circle cx="120" cy="65" r="3"/><circle cx="150" cy="60" r="3"/><circle cx="180" cy="70" r="3"/><circle cx="50" cy="80" r="3"/><circle cx="100" cy="90" r="3"/><circle cx="160" cy="85" r="3"/></g></svg>`, hash: '#pattern-3' },
-  { num: 'P4 · Data dots',   name: 'Sized by value',      desc: 'Bubble sizes from a metric.',                          svg: `<svg viewBox="0 0 240 135"><rect width="240" height="135" fill="#F9FCFF"/><circle cx="60" cy="60" r="4" fill="#1C1F3B"/><circle cx="120" cy="65" r="9" fill="#1C1F3B"/><circle cx="180" cy="55" r="6" fill="#1C1F3B"/><circle cx="80" cy="90" r="5" fill="#80C7C2"/></svg>`, hash: '#pattern-4' },
-  { num: 'P5 · Anchored',    name: 'Anchored faded',      desc: 'Highlight one geography vs faded base.',              svg: `<svg viewBox="0 0 240 135"><rect width="240" height="135" fill="#F9FCFF"/><path d="M20 40 L 220 40 L 220 95 L 20 95 Z" fill="#EAEBED"/><circle cx="160" cy="65" r="14" fill="#E8546C"/></svg>`, hash: '#pattern-5' },
+  { num: 'P1 · Heatmap',     name: 'Continuous gradient', desc: 'Density per country, 3 navy variants (N1/N2/N3).', svg: `<svg viewBox="0 0 240 135"><rect width="240" height="135" fill="#F9FCFF"/><path d="M20 50 Q 70 30 120 45 Q 170 55 220 50 L 220 95 Q 170 100 120 95 Q 70 90 20 95 Z" fill="#1C1F3B"/><path d="M40 60 Q 80 50 130 60 Q 180 70 210 65 L 210 88 Q 180 92 130 88 Q 80 84 40 88 Z" fill="#435D74" opacity="0.6"/><path d="M70 70 Q 110 65 150 72 L 150 85 Q 110 88 70 85 Z" fill="#80C7C2" opacity="0.5"/></svg>`, hash: 'pattern-1' },
+  { num: 'P2 · Categorical', name: 'Status by country',  desc: 'Active / pipeline / featured.',                       svg: `<svg viewBox="0 0 240 135"><rect width="240" height="135" fill="#F9FCFF"/><path d="M20 40 L 70 30 L 80 65 L 25 75 Z" fill="#1C1F3B"/><path d="M75 60 L 130 50 L 140 90 L 80 100 Z" fill="#435D74"/><path d="M135 45 L 200 40 L 210 80 L 145 95 Z" fill="#80C7C2"/></svg>`, hash: 'pattern-2' },
+  { num: 'P3 · Neutral dots',name: 'Dotted reference',    desc: 'Neutral grid for context.',                            svg: `<svg viewBox="0 0 240 135"><rect width="240" height="135" fill="#F9FCFF"/><g fill="#5F7D95"><circle cx="40" cy="50" r="3"/><circle cx="60" cy="60" r="3"/><circle cx="90" cy="55" r="3"/><circle cx="120" cy="65" r="3"/><circle cx="150" cy="60" r="3"/><circle cx="180" cy="70" r="3"/><circle cx="50" cy="80" r="3"/><circle cx="100" cy="90" r="3"/><circle cx="160" cy="85" r="3"/><circle cx="200" cy="50" r="3"/></g></svg>`, hash: 'pattern-3' },
+  { num: 'P4 · Data dots',   name: 'Sized by value',      desc: 'Bubble sizes from a metric.',                          svg: `<svg viewBox="0 0 240 135"><rect width="240" height="135" fill="#F9FCFF"/><circle cx="60" cy="60" r="4" fill="#1C1F3B"/><circle cx="120" cy="65" r="9" fill="#1C1F3B"/><circle cx="180" cy="55" r="6" fill="#1C1F3B"/><circle cx="80" cy="90" r="5" fill="#80C7C2"/></svg>`, hash: 'pattern-4' },
+  { num: 'P5 · Anchored',    name: 'Anchored faded',      desc: 'Highlight one geography vs faded base.',              svg: `<svg viewBox="0 0 240 135"><rect width="240" height="135" fill="#F9FCFF"/><path d="M20 40 L 220 40 L 220 95 L 20 95 Z" fill="#EAEBED"/><circle cx="160" cy="65" r="14" fill="#E8546C"/></svg>`, hash: 'pattern-5' },
 ];
+
+// SVG_LABELS = pretty names for the regional crops
+const SVG_LABELS = {
+  'pof-world-map-annotated.svg': { name: 'World — annotated',     desc: 'Robinson, Natural Earth 110m. Hover, IDs ISO2, groupes UEMOA / CEDEAO / ASEAN.' },
+  'svg/00-monde-cropped.svg':    { name: 'World — cropped',       desc: 'World map base recadrée pour formats slide.' },
+  'svg/01-monde.svg':            { name: 'World',                 desc: 'World map vectorisée 1920×1080, overlay v2.' },
+  'svg/02-asie-du-sud-est.svg':  { name: 'Asie du Sud-Est',       desc: 'Crop régional ASEAN.' },
+  'svg/03-afrique.svg':          { name: 'Afrique',               desc: 'Continent africain.' },
+  'svg/04-indonesie.svg':        { name: 'Indonésie',             desc: 'Crop national.' },
+  'svg/05-philippines.svg':      { name: 'Philippines',           desc: 'Crop national.' },
+  'svg/06-afrique-de-louest.svg':{ name: 'Afrique de l\'Ouest',  desc: 'Crop UEMOA / CEDEAO.' },
+  'svg/07-ocean-indien-est.svg': { name: 'Océan Indien Est',      desc: 'Crop régional.' },
+};
+// Skip pof-world-map-blank.svg in the listing — it is the no-data / no-region base
+// and renders as a near-blank tile (light-grey fill on light bg). The annotated version
+// covers the same geography with usable visual signal.
+const SVG_SKIP = new Set(['pof-world-map-blank.svg']);
 
 (async function () {
   // Patterns
   const pgrid = document.getElementById('pattern-grid');
   pgrid.innerHTML = PATTERN_CARDS.map(p => `
-    <a class="card" href="https://cdn.jsdelivr.net/gh/${POF.REPO}@${POF.BRANCH}/assets/maps/map-charter.html${p.hash}" target="_blank" rel="noopener">
+    <a class="card" href="view.html?path=${encodeURIComponent('assets/maps/map-charter.html')}#${POF.escapeHtml(p.hash)}">
       <div class="thumb">${p.svg}</div>
       <div class="meta">
         <span class="num">${POF.escapeHtml(p.num)}</span>
         <span class="name">${POF.escapeHtml(p.name)}</span>
         <span class="desc">${POF.escapeHtml(p.desc)}</span>
-        <span class="badge dim">map-charter${POF.escapeHtml(p.hash)}</span>
+        <span class="badge dim">map-charter#${POF.escapeHtml(p.hash)}</span>
       </div>
     </a>`).join('');
 
@@ -73,7 +111,9 @@ const PATTERN_CARDS = [
   const { tree } = await POF.loadTree();
   if (!tree.length) { POF.renderError(sgrid, 'Tree fetch a échoué.'); return; }
 
-  const svgs = POF.listRecursive(tree, 'assets/maps').filter(e => e.path.endsWith('.svg'));
+  const svgs = POF.listRecursive(tree, 'assets/maps')
+    .filter(e => e.path.endsWith('.svg'))
+    .filter(e => !SVG_SKIP.has(e.path.split('/').pop()) && !SVG_SKIP.has(e.path.replace('assets/maps/', '')));
   document.getElementById('stat-svg').textContent = svgs.length;
 
   if (!svgs.length) {
@@ -81,13 +121,14 @@ const PATTERN_CARDS = [
   } else {
     sgrid.innerHTML = svgs.map(e => {
       const fn = e.path.split('/').pop();
-      const rawSrc = POF.RAW(e.path);
-      return `<a class="card" data-name="${POF.escapeHtml(fn.toLowerCase())}" href="${POF.escapeHtml(POF.BLOB(e.path))}" target="_blank" rel="noopener">
-        <div class="thumb"><img src="${POF.escapeHtml(rawSrc)}" alt="${POF.escapeHtml(fn)}" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=color:var(--coral);font-size:10px>SVG load failed</span>'"></div>
+      const relInMaps = e.path.replace('assets/maps/', '');
+      const label = SVG_LABELS[relInMaps] || SVG_LABELS[fn] || { name: fn, desc: e.path };
+      return `<a class="map-tile" data-name="${POF.escapeHtml((label.name + ' ' + fn).toLowerCase())}" href="view.html?path=${encodeURIComponent(e.path)}">
+        <div class="preview"><img src="${POF.escapeHtml(POF.RAW(e.path))}" alt="${POF.escapeHtml(label.name)}" loading="lazy" onerror="this.style.opacity=.2"></div>
         <div class="meta">
           <span class="num">SVG</span>
-          <span class="name">${POF.escapeHtml(fn)}</span>
-          <span class="desc">${POF.escapeHtml(e.path)}</span>
+          <span class="name">${POF.escapeHtml(label.name)}</span>
+          <span class="desc">${POF.escapeHtml(label.desc)}</span>
         </div>
       </a>`;
     }).join('');
@@ -96,8 +137,8 @@ const PATTERN_CARDS = [
   const q = document.getElementById('q');
   q.addEventListener('input', () => {
     const term = q.value.trim().toLowerCase();
-    sgrid.querySelectorAll('.card').forEach(c => {
-      c.style.display = (!term || (c.dataset.name || '').includes(term) || c.textContent.toLowerCase().includes(term)) ? '' : 'none';
+    sgrid.querySelectorAll('.map-tile').forEach(c => {
+      c.style.display = (!term || (c.dataset.name || '').includes(term)) ? '' : 'none';
     });
   });
 })();

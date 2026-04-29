@@ -62,6 +62,12 @@
   <div class="grid-3" id="grid-resources"></div>
 </section>
 
+<section class="section">
+  <h2>Documentation racine</h2>
+  <p class="lead">Tous les <code>.md</code> à la racine du repo, listés dynamiquement.</p>
+  <div class="grid-3" id="grid-rootdocs"></div>
+</section>
+
 <script src="_app.js"></script>
 <script>
 (async function () {
@@ -178,15 +184,36 @@
   }).join('');
   document.getElementById('grid-memory').innerHTML = memoryHtml || '<div class="empty-state">Mémoire vide.</div>';
 
-  // ------ RESOURCES (assets, examples, tree, README) ------
+  // ------ RESOURCES (tree, assets, examples, tokens, templates) ------
   document.getElementById('grid-resources').innerHTML = [
     card({ href: 'tree.html',     eyebrow: 'Repo',     title: 'File tree',  desc: 'Arborescence complète live, dépliée. Tous les .md, html, json, svg navigables.', badge: 'tree.html' }),
     card({ href: 'assets.html',   eyebrow: 'Assets',   title: 'Assets bruts', desc: 'Logos, brand-elements, backgrounds, monogramme. Listés par catégorie.', badge: 'assets/' }),
-    card({ href: 'examples.html', eyebrow: 'Examples', title: 'Examples par medium', desc: 'Charts, maps, icons, deck, report, web, social, photo, tables, sheets.', badge: 'examples/' }),
-    card({ href: 'tree.html?path=tokens', eyebrow: 'Tokens',   title: 'Tokens & rules', desc: 'brand-tokens.json, brand-tokens.css, brand-rules-per-format.json. SSOT colors, typography, components.', badge: 'tokens/', badgeKind: 'dim' }),
-    card({ href: 'docs.html?path=README.md', eyebrow: 'Doc', title: 'README', desc: 'Vue d\'ensemble du repo, comment l\'utiliser, structure.', badge: 'README.md', badgeKind: 'dim' }),
-    card({ href: 'docs.html?path=ITERATE.md', eyebrow: 'Doc', title: 'ITERATE', desc: 'Guide ds-iterate : niveaux risque A/B/C/D, validation Benoît, format PR.', badge: 'ITERATE.md', badgeKind: 'dim' })
+    card({ href: 'examples.html', eyebrow: 'Examples', title: 'Examples par medium', desc: 'Deck, report, web, social, photo, tables, sheets, golden-spec, other.', badge: 'examples/' }),
+    card({ href: 'tree.html?path=tokens',    eyebrow: 'Tokens',    title: 'Tokens', desc: 'brand-tokens.json, brand-tokens.css, brand-rules-per-format.json.', badge: 'tokens/', badgeKind: 'dim' }),
+    card({ href: 'tree.html?path=templates', eyebrow: 'Templates', title: 'Master templates', desc: 'master-deck-base-layout.pptx, master-deck-current.pptx, MASTER_SHA.txt.', badge: 'templates/', badgeKind: 'dim' }),
+    card({ href: 'tree.html?path=scripts',   eyebrow: 'Scripts',   title: 'Build scripts', desc: 'build-gallery.py, generate-docx-templates.js, generate-pptx-layouts.js.', badge: 'scripts/', badgeKind: 'dim' })
   ].join('');
+
+  // ------ ROOT DOCS (top-level .md) — dynamic ------
+  const ROOT_DOC_DESC = {
+    'README.md':    'Vue d\'ensemble du repo, comment l\'utiliser, structure.',
+    'DESIGN.md':    'Canonical SSOT pour Claude Design ingestion (v4.0.0). 9 sections : visual theme, palette, typography, layouts, etc.',
+    'ITERATE.md':   'Guide ds-iterate : niveaux risque A/B/C/D, validation Benoît, format PR.',
+    'CHANGELOG.md': 'Historique consolidé des versions.',
+    'VISUALIZE.md': 'Guide DS-Dataviz-generator : conventions de génération.',
+  };
+  const rootDocs = POF.listDir(tree, '').filter(e => e.type === 'blob' && e.path.endsWith('.md'));
+  document.getElementById('grid-rootdocs').innerHTML = rootDocs.map(e => {
+    const fn = e.path;
+    return card({
+      href: 'docs.html?path=' + encodeURIComponent(fn),
+      eyebrow: 'Root',
+      title: fn.replace(/\.md$/, ''),
+      desc: ROOT_DOC_DESC[fn] || ('Doc racine : ' + fn),
+      badge: fn,
+      badgeKind: 'dim'
+    });
+  }).join('') || '<div class="empty-state">Aucun .md à la racine.</div>';
 })();
 </script>
 
